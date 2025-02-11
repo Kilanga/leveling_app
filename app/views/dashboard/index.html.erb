@@ -1,0 +1,26 @@
+<h1>Bienvenue, <%= current_user.email %> !</h1>
+
+<h2>Votre progression :</h2>
+<ul>
+  <% @stats.each do |stat| %>
+    <li><strong><%= stat.category.name %></strong> : Niveau <%= stat.level %> | XP : <%= stat.xp %></li>
+  <% end %>
+</ul>
+
+<h2>Quêtes suivies :</h2>
+<ul>
+  <% @user_quests.each do |uq| %>
+    <li>
+      <strong><%= uq.quest.title %></strong> 
+      - Progression : <%= uq.progress %>%
+      <% unless uq.completed %>
+        <%= button_to "Compléter", user_quest_path(uq), method: :patch, class: "btn btn-success" %>
+      <% else %>
+        ✅ Terminé !
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Voir toutes les quêtes", quests_path, class: "btn btn-primary" %>
+<%= link_to "Boutique", new_purchase_path, class: "btn btn-warning" %>

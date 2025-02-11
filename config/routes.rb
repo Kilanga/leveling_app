@@ -1,15 +1,36 @@
 Rails.application.routes.draw do
+  get "leaderboard/index"
+  get "purchases/new"
+  get "purchases/create"
+  get "user_quests/update"
+  get "quests/index"
+  get "quests/show"
+  get "dashboard/index"
+
+  root "dashboard#index"
+
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get "leaderboard", to: "leaderboard#index"
+  resources :quests, only: [ :index, :show ]
+  resources :user_quests, only: [ :update ]
+  resources :purchases, only: [ :new, :create ] do
+    collection do
+      get "success"
+      get "cancel"
+    end
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  namespace :admin do
+    get "users/index"
+    get "users/edit"
+    get "users/update"
+    get "quests/index"
+    get "quests/new"
+    get "quests/create"
+    get "quests/edit"
+    get "quests/update"
+    get "quests/destroy"
+    resources :quests, except: [ :show ]
+    resources :users, only: [ :index, :edit, :update ]
+  end
 end

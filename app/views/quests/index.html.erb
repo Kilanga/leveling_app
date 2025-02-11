@@ -1,0 +1,10 @@
+<h1>Liste des quêtes</h1>
+
+<ul>
+  <% @quests.each do |quest| %>
+    <li>
+      <strong><%= quest.title %></strong> - <%= quest.category.name %> - <%= quest.xp %> XP
+      <%= link_to "Voir", quest_path(quest), class: "btn btn-primary" %>
+    </li>
+  <% end %>
+</ul>

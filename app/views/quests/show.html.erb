@@ -1,0 +1,12 @@
+<h1><%= @quest.title %></h1>
+<p><%= @quest.description %></p>
+<p><strong>XP :</strong> <%= @quest.xp %></p>
+<p><strong>Catégorie :</strong> <%= @quest.category.name %></p>
+
+<% if @user_quest.new_record? %>
+  <%= button_to "Suivre cette quête", user_quests_path(user_quest: { quest_id: @quest.id, progress: 0, completed: false }), method: :post, class: "btn btn-success" %>
+<% else %>
+  <p>Vous suivez déjà cette quête.</p>
+<% end %>
+
+<%= link_to "Retour aux quêtes", quests_path, class: "btn btn-secondary" %>

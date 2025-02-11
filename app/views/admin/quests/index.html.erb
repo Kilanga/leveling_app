@@ -1,0 +1,27 @@
+<h1>Gestion des quêtes</h1>
+
+<%= link_to "Créer une quête", new_admin_quest_path, class: "btn btn-primary" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Titre</th>
+      <th>XP</th>
+      <th>Catégorie</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @quests.each do |quest| %>
+      <tr>
+        <td><%= quest.title %></td>
+        <td><%= quest.xp %></td>
+        <td><%= quest.category.name %></td>
+        <td>
+          <%= link_to "Modifier", edit_admin_quest_path(quest), class: "btn btn-warning" %>
+          <%= link_to "Supprimer", admin_quest_path(quest), method: :delete, data: { confirm: "Supprimer cette quête ?" }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

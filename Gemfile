@@ -21,6 +21,10 @@ gem "cloudinary"
 gem "image_processing", "~> 1.2"
 gem "dartsass-rails"
 
+group :development do
+  gem "letter_opener"
+  gem "letter_opener_web"
+end
 
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
@@ -67,3 +71,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "rspec-rails", "~> 7.1"

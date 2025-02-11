@@ -1,0 +1,15 @@
+<h1>Acheter des pièces ou des boosts</h1>
+
+<ul>
+  <% @prices.each do |item, price| %>
+    <li>
+      <%= form_with url: purchases_path, method: :post do %>
+        <input type="hidden" name="amount" value="<%= price %>">
+        <input type="hidden" name="item_type" value="<%= item %>">
+        <%= submit_tag "#{item} - #{price}€", class: "btn btn-success" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Retour", root_path, class: "btn btn-secondary" %>

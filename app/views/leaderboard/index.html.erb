@@ -1,0 +1,20 @@
+<h1>Classement des joueurs</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Rang</th>
+      <th>Email</th>
+      <th>XP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @players.each_with_index do |player, index| %>
+      <tr>
+        <td>#<%= index + 1 %></td>
+        <td><%= player.email %></td>
+        <td><%= player.xp %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,26 @@
+<h1>Gestion des utilisateurs</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>XP</th>
+      <th>Pièces</th>
+      <th>Admin</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.xp %></td>
+        <td><%= user.coins %></td>
+        <td><%= user.admin? ? "✅" : "❌" %></td>
+        <td>
+          <%= link_to "Modifier", edit_admin_user_path(user), class: "btn btn-warning" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
