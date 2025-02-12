@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+ruby "3.2.2" # Mets la version qui correspond à ta machine
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
@@ -10,6 +11,7 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+
 
 gem "devise"
 gem "stripe"
