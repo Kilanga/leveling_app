@@ -1,6 +1,5 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [ :new ]
   def new
     @prices = {
       "100 pièces" => 5,
