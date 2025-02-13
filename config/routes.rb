@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   get "leaderboard", to: "leaderboard#index"
+  resources :users, only: [ :index ]
   resources :quests, only: [ :index, :show ]
   resources :user_quests, only: [ :update ]
   resources :purchases, only: [ :new, :create ] do

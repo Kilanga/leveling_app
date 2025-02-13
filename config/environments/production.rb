@@ -31,4 +31,16 @@ Rails.application.configure do
 
   # Configuration de l'email
   config.action_mailer.default_url_options = { host: ENV["APP_HOST"] || "https://leveling-app-f7f0867fb53e.herokuapp.com/" }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: "ton-site.herokuapp.com", protocol: "https" }
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true,
+    user_name: "apikey", # Toujours utiliser "apikey" comme username
+    password: ENV["SENDGRID_API_KEY"],
+    domain: "heroku.com"
+  }
 end
