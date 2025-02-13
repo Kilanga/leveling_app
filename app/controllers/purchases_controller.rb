@@ -10,6 +10,7 @@ class PurchasesController < ApplicationController
   end
 
   def create
+    Stripe.api_key = Rails.configuration.stripe[:secret_key]
     amount = params[:amount].to_i
     item_type = params[:item_type]
 
