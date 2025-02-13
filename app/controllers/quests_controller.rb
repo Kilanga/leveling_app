@@ -2,7 +2,15 @@ class QuestsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @quests = Quest.includes(:category).all
+    @quests = Quest.includes(:category)
+
+    if params[:query].present?
+      @quests = @quests.where("title ILIKE ?", "%#{params[:query]}%")
+    end
+
+    if params[:category_id].present?
+      @quests = @quests.where(category_id: params[:category_id])
+    end
   end
 
   def show

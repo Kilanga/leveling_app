@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "leaderboard", to: "leaderboard#index"
   resources :users, only: [ :index ]
   resources :quests, only: [ :index, :show ]
-  resources :user_quests, only: [ :update ]
+  resources :user_quests, only: [ :update, :create, :destroy ]
   resources :purchases, only: [ :new, :create ] do
     collection do
       get "success"

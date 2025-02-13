@@ -42,7 +42,7 @@
             </li>
             <li class="nav-item">
               <%= form_with url: destroy_user_session_path, method: :delete, local: true do %>
-    <%= submit_tag "Déconnexion", class: "btn btn-outline-light" %>
+    <%= submit_tag "Déconnexion", class: "nav-link" %>
   <% end %>
             </li>
           <% else %>
