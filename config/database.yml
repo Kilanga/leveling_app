@@ -82,3 +82,7 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>?sslmode=require
+
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>?sslmode=require
