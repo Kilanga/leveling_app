@@ -21,6 +21,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.active_record.attributes_for_inspect = [ :id ]
 
+  config.stripe_publishable_key = ENV["STRIPE_PUBLIC_KEY"]
+  config.stripe_secret_key = ENV["STRIPE_SECRET_KEY"]
   # Désactiver ActionCable si non utilisé
   config.action_cable.mount_path = nil
   config.action_cable.disable_request_forgery_protection = true
