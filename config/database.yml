@@ -81,8 +81,8 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>?sslmode=require
-
-  cable:
-    <<: *default
-    url: <%= ENV["DATABASE_URL"] %>?sslmode=require
+  url: <%= ENV["DATABASE_URL"] %>
+  connects_to:
+    database:
+      writing: primary
+      queue: primary
