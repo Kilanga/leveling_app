@@ -1,12 +1,19 @@
 <h1>Bienvenue, <%= current_user.email %> !</h1>
 
-<h2>Votre progression :</h2>
-<ul>
-  <% @stats.each do |stat| %>
-    <li><strong><%= stat.category.name %></strong> : Niveau <%= stat.level %> | XP : <%= stat.xp %></li>
-  <% end %>
-</ul>
+<h1>Bienvenue, <%= current_user.email %> !</h1>
 
+<h2>Votre progression :</h2>
+
+<div class="d-flex justify-content-center position-relative">
+  <canvas id="statsChart" width="400" height="400"
+          data-stats='<%= @stats_data.to_json.html_safe %>'></canvas>
+  <div id="totalLevelDisplay" class="position-absolute fw-bold fs-4"
+       style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    Niveau Total: <%= @total_level %>
+  </div>
+</div>
+
+<%= javascript_include_tag "stats_chart", type: "module" %>
 
 <h2>Quêtes en cours</h2>
 <ul class="list-group">
