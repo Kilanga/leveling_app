@@ -15,13 +15,16 @@ class UserQuestsController < ApplicationController
 
     # Ajoute l'XP au joueur
     stat = current_user.user_stats.find_or_create_by(category: @user_quest.quest.category)
-    stat.xp += @user_quest.quest.xp * current_user.xp_multiplier
+    stat.total_xp ||= 0  # On s'assure d'avoir une variable pour l'XP totale accumulée
+    stat.total_xp += @user_quest.quest.xp * current_user.xp_multiplier
 
-    # Passage de niveau si XP suffisant
-    while stat.xp >= xp_needed_for_next_level(stat.level)
-      stat.xp -= xp_needed_for_next_level(stat.level)
+    # Gestion du niveau
+    while stat.total_xp >= xp_needed_until_level(stat.level + 1)
       stat.level += 1
     end
+
+    # Calcul de l'XP dans le niveau actuel
+    stat.xp = stat.total_xp - xp_needed_until_level(stat.level)
 
     stat.save
 
@@ -46,6 +49,11 @@ class UserQuestsController < ApplicationController
   end
 
   private
+
+  # Calcule l'XP totale nécessaire pour atteindre un niveau donné
+  def xp_needed_until_level(level)
+    (1...level).sum { |lvl| xp_needed_for_next_level(lvl) }
+  end
 
   # Fonction pour calculer l'XP nécessaire en fonction du niveau
   def xp_needed_for_next_level(level)
