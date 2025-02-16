@@ -1,23 +1,18 @@
-<h1>Bienvenue, <%= current_user.email %> !</h1>
+<h1>Bienvenue, <%= current_user.pseudo %> !</h1>
 
-<h1>Bienvenue, <%= current_user.email %> !</h1>
-
-<h2>Votre progression :</h2>
+<h2></h2>
 
 <div class="d-flex justify-content-center position-relative">
   <canvas id="statsChart" width="400" height="400"
           data-stats='<%= @stats_data.to_json.html_safe %>'></canvas>
   <div id="totalLevelDisplay" class="position-absolute fw-bold fs-4"
        style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    Niveau Total: <%= @total_level %>
   </div>
 </div>
 
-<%= javascript_include_tag "stats_chart", type: "module" %>
-
 <h2>Quêtes en cours</h2>
 <ul class="list-group">
-  <% current_user.user_quests.includes(:quest).each do |user_quest| %>
+  <% current_user.user_quests.includes(:quest).where(completed: false).each do |user_quest| %>
     <li class="list-group-item">
       <strong><%= user_quest.quest.title %></strong>
       <p class="text-muted"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
@@ -29,6 +24,5 @@
     </li>
   <% end %>
 </ul>
-
 <%= link_to "Voir toutes les quêtes", quests_path, class: "btn btn-primary" %>
 <%= link_to "Boutique", new_purchase_path, class: "btn btn-warning" %>

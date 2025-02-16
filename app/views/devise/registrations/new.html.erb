@@ -1,38 +1,64 @@
-<h2>Sign up</h2>
+<h2 class="text-center">Inscription</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "card p-4 shadow-sm" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <!-- Email -->
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email" %>
+        </div>
+
+        <!-- Pseudo -->
+        <div class="mb-3">
+          <%= f.label :pseudo, class: "form-label" %>
+          <%= f.text_field :pseudo, class: "form-control", required: true %>
+        </div>
+
+ <!-- Avatar (choix avec images + URLs) -->
+<div class="mb-3">
+  <%= f.label :avatar, "Choisissez votre avatar", class: "form-label d-block text-center" %>
+  <div class="avatar-selection">
+    <label class="avatar-option">
+      <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
+      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="avatar-img" alt="Avatar 1">
+    </label>
+    
+    <label class="avatar-option">
+      <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
+      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="avatar-img" alt="Avatar 2">
+    </label>
   </div>
-  <div class="field">
-  <%= f.label :pseudo %>
-  <%= f.text_field :pseudo, required: true %>
 </div>
 
-<div class="field">
-  <%= f.label :avatar %>
-  <%= f.select :avatar, options_for_select([['Avatar 1', 'avatar1'], ['Avatar 2', 'avatar2']]), {}, required: true %>
+
+        <!-- Mot de passe -->
+        <div class="mb-3">
+          <%= f.label :password, class: "form-label" %>
+          <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> caractères minimum)</em>
+          <% end %>
+          <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+        </div>
+
+        <!-- Confirmation mot de passe -->
+        <div class="mb-3">
+          <%= f.label :password_confirmation, class: "form-label" %>
+          <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+        </div>
+
+        <!-- Bouton d'inscription -->
+        <div class="text-center">
+          <%= f.submit "S'inscrire", class: "btn btn-primary w-100" %>
+        </div>
+      <% end %>
+
+      <div class="text-center mt-3">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
 </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
