@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "quests/index"
   get "quests/show"
   get "dashboard/index"
+  get "dashboard.json", to: "dashboard#index", defaults: { format: :json } # ✅ Ajout du support JSON
 
   root "dashboard#index"
 
