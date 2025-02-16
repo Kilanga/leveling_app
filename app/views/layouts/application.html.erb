@@ -6,6 +6,8 @@
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag "application", media: "all" %>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+
   <%= javascript_importmap_tags %>
 </head>
 <body>
@@ -59,5 +61,8 @@
     <%= render 'layouts/flash' %>
     <%= yield %>
   </div>
+  <script>
+  console.log("🚀 Rails charge bien le JavaScript !");
+</script>
 </body>
 </html>
