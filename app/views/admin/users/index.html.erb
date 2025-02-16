@@ -3,7 +3,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Email</th>
+      <th>Pseudo</th>
       <th>XP</th>
       <th>Pièces</th>
       <th>Admin</th>
@@ -13,7 +13,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.email %></td>
+        <td><%= user.pseudo %></td>
         <td><%= user.xp %></td>
         <td><%= user.coins %></td>
         <td><%= user.admin? ? "✅" : "❌" %></td>

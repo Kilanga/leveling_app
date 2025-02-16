@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :user_stats, dependent: :destroy
   has_many :purchases, dependent: :destroy
 
+  validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }
+  validates :avatar, presence: true, format: { with: URI.regexp(%w[http https]), message: "doit être une URL valide" }
+
   validates :email, presence: true, uniqueness: true
   def xp_multiplier
     boost_active? ? 2 : 1

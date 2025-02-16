@@ -1,2 +1,32 @@
 @use "sass:meta";
 @use "bootstrap" as *;
+
+.avatar-selection {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .avatar-option {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .avatar-img {
+    width: 100px !important; /* Taille fixée */
+    height: 100px !important;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+  
+  input[type="radio"]:checked + img {
+    border: 3px solid #007bff;
+    transform: scale(1.1);
+  }
+  
