@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_14_104413) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_180046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_104413) do
     t.boolean "completed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "completed_count", default: 0
     t.index ["quest_id"], name: "index_user_quests_on_quest_id"
     t.index ["user_id"], name: "index_user_quests_on_user_id"
   end

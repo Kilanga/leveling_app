@@ -1,6 +1,5 @@
 <h1>Liste des quêtes</h1>
 
-<!-- Formulaire de recherche -->
 <%= form_with url: quests_path, method: :get, local: true, class: "mb-4" do %>
   <div class="input-group">
     <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Rechercher une quête..." %>
@@ -16,11 +15,16 @@
         <strong><%= quest.title %></strong>
         <p class="text-muted"><%= quest.category.name %> - <%= quest.xp %> XP</p>
       </div>
-
       <div>
-        <%= form_with url: user_quests_path, method: :post, class: "d-inline" do %>
-          <%= hidden_field_tag :quest_id, quest.id %>
-          <%= check_box_tag "follow_quest", quest.id, current_user.user_quests.exists?(quest: quest), { class: "form-check-input", onchange: "this.form.submit();" } %>
+        <% if current_user.user_quests.exists?(quest: quest) %>
+          <%= form_with url: user_quests_path(current_user.user_quests.find_by(quest: quest)), method: :delete, class: "d-inline" do %>
+            <%= submit_tag "❌ Ne plus suivre", class: "btn btn-danger btn-sm" %>
+          <% end %>
+        <% else %>
+          <%= form_with url: user_quests_path, method: :post, class: "d-inline" do %>
+            <%= hidden_field_tag :quest_id, quest.id %>
+            <%= submit_tag "➕ Suivre", class: "btn btn-primary btn-sm" %>
+          <% end %>
         <% end %>
       </div>
     </li>

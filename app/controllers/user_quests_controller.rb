@@ -11,6 +11,8 @@ class UserQuestsController < ApplicationController
 
     @user_quest.progress = 100
     @user_quest.completed = true
+    @user_quest.completed_count ||= 0
+    @user_quest.completed_count += 1
     @user_quest.save
 
     # Ajoute l'XP au joueur
@@ -25,8 +27,10 @@ class UserQuestsController < ApplicationController
 
     # Calcul de l'XP dans le niveau actuel
     stat.xp = stat.total_xp - xp_needed_until_level(stat.level)
-
     stat.save
+
+    # Réinitialiser la quête pour être disponible à nouveau
+    @user_quest.update(progress: 0, completed: false)
 
     redirect_to root_path, notice: "Quête complétée, XP ajouté !"
   end
@@ -38,6 +42,7 @@ class UserQuestsController < ApplicationController
     if user_quest.new_record?
       user_quest.progress = 0
       user_quest.completed = false
+      user_quest.completed_count ||= 0
       user_quest.save
       flash[:notice] = "Quête ajoutée avec succès !"
     else
