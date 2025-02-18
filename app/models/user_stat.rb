@@ -4,4 +4,5 @@ class UserStat < ApplicationRecord
 
   validates :level, numericality: { greater_than_or_equal_to: 1 }
   validates :xp, numericality: { greater_than_or_equal_to: 0 }
+  validates :total_xp, numericality: { greater_than_or_equal_to: 0 }
 end

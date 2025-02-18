@@ -1,3 +1,5 @@
+
+
 <h1>Bienvenue, <%= current_user.pseudo %> !</h1>
 
 <h2></h2>
@@ -13,28 +15,29 @@
 <h2 class="mt-4">Progression des catégories</h2>
 
 <% @stats.each do |stat| %>
-  <% # Recalculer dynamiquement le niveau en fonction de l'XP totale %>
+  <% # Utiliser le même calcul que pour le chart %>
   <% level = 1 %>
+  <% xp_remaining = stat.total_xp %>
   <% xp_needed_for_next = xp_needed_for_next_level(level) %>
-  <% while stat.xp >= xp_needed_for_next %>
-    <% stat.xp -= xp_needed_for_next %>
+
+  <% while xp_remaining >= xp_needed_for_next %>
+    <% xp_remaining -= xp_needed_for_next %>
     <% level += 1 %>
     <% xp_needed_for_next = xp_needed_for_next_level(level) %>
   <% end %>
 
-  <% # L'XP nécessaire pour atteindre le niveau suivant %>
   <% xp_needed = xp_needed_for_next %>
 
   <div class="progress-container mb-3">
     <div class="progress-label">
       <strong><%= stat.category.name %> (Niveau <%= level %>)</strong>
-      <span class="xp-info"><%= stat.xp %> / <%= xp_needed %> XP</span>
+      <span class="xp-info"><%= xp_remaining %> / <%= xp_needed %> XP</span>
     </div>
     <div class="progress" style="height: 20px; background-color: #333;">
       <div class="progress-bar" role="progressbar"
-           style="width: <%= (stat.xp.to_f / xp_needed * 100).round %>%;
+           style="width: <%= (xp_remaining.to_f / xp_needed * 100).round %>%;
                   background: linear-gradient(90deg, #ffcc00, #ff6600);"
-           aria-valuenow="<%= stat.xp %>" aria-valuemin="0" aria-valuemax="<%= xp_needed %>">
+           aria-valuenow="<%= xp_remaining %>" aria-valuemin="0" aria-valuemax="<%= xp_needed %>">
       </div>
     </div>
   </div>
@@ -45,7 +48,7 @@
 
 <h2>Quêtes en cours</h2>
 <ul class="list-group">
-  <% current_user.user_quests.includes(:quest).where(completed: false).each do |user_quest| %>
+  <% current_user.user_quests.includes(:quest).where(completed: false, active: true).each do |user_quest| %>
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <div>
         <strong><%= user_quest.quest.title %></strong>
@@ -65,7 +68,6 @@
       </div>
     </li>
   <% end %>
-</ul>
 </ul>
 <%= link_to "Voir toutes les quêtes", quests_path, class: "btn btn-primary" %>
 <%= link_to "Boutique", new_purchase_path, class: "btn btn-warning" %>
