@@ -1,6 +1,5 @@
 <h1>Liste des quêtes</h1>
 
-<!-- Formulaire de recherche -->
 <%= form_with url: quests_path, method: :get, local: true, class: "mb-4" do %>
   <div class="input-group">
     <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Rechercher une quête..." %>
@@ -11,18 +10,29 @@
 
 <ul class="list-group">
   <% @quests.each do |quest| %>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <div>
-        <strong><%= quest.title %></strong>
-        <p class="text-muted"><%= quest.category.name %> - <%= quest.xp %> XP</p>
-      </div>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div>
+      <strong><%= quest.title %></strong>
+      <p class="text-muted"><%= quest.category.name %> - <%= quest.xp %> XP</p>
+    </div>
+    <div>
+      <% user_quest = current_user.user_quests.find_by(quest: quest) %>
 
-      <div>
+      <% if user_quest && user_quest.active? %>
+        <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline" do %>
+          <%= hidden_field_tag :action_type, "unfollow" %>
+          <%= submit_tag "❌ Ne plus suivre", class: "btn btn-danger btn-sm" %>
+        <% end %>
+      <% else %>
         <%= form_with url: user_quests_path, method: :post, class: "d-inline" do %>
           <%= hidden_field_tag :quest_id, quest.id %>
-          <%= check_box_tag "follow_quest", quest.id, current_user.user_quests.exists?(quest: quest), { class: "form-check-input", onchange: "this.form.submit();" } %>
+          <% if user_quest %>
+            <%= hidden_field_tag :reactivate, true %>
+          <% end %>
+          <%= submit_tag "➕ Suivre", class: "btn btn-primary btn-sm" %>
         <% end %>
-      </div>
-    </li>
-  <% end %>
+      <% end %>
+    </div>
+  </li>
+<% end %>
 </ul>
