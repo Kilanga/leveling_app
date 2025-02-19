@@ -1,0 +1,20 @@
+<h1>Rechercher un ami</h1>
+
+<%= form_with url: search_friends_path, method: :get, local: true do |form| %>
+  <%= form.label :query, "Rechercher par pseudo :" %>
+  <%= form.text_field :query, class: "form-control" %>
+  <%= form.submit "Rechercher", class: "btn btn-primary mt-2" %>
+<% end %>
+
+<% if @users %>
+  <h2>Résultats :</h2>
+  <ul class="list-group">
+    <% @users.each do |user| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= user.pseudo %>
+        <%= button_to "Ajouter en ami", friends_path(friend_id: user.id), method: :post, class: "btn btn-primary" %>
+
+      </li>
+    <% end %>
+  </ul>
+<% end %>

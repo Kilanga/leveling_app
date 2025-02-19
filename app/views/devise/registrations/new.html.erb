@@ -18,22 +18,21 @@
           <%= f.text_field :pseudo, class: "form-control", required: true %>
         </div>
 
- <!-- Avatar (choix avec images + URLs) -->
-<div class="mb-3">
-  <%= f.label :avatar, "Choisissez votre avatar", class: "form-label d-block text-center" %>
-  <div class="avatar-selection">
-    <label class="avatar-option">
-      <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
-      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="avatar-img" alt="Avatar 1">
-    </label>
-    
-    <label class="avatar-option">
-      <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
-      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="avatar-img" alt="Avatar 2">
-    </label>
-  </div>
-</div>
-
+        <!-- Avatar (choix avec images + upload personnalisé) -->
+        <div class="mb-3">
+          <%= f.label :avatar, "Choisissez votre avatar", class: "form-label d-block text-center" %>
+          <div class="avatar-selection">
+            <label class="avatar-option">
+              <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
+              <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="avatar-img" alt="Avatar 1">
+            </label>
+            
+            <label class="avatar-option">
+              <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
+              <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="avatar-img" alt="Avatar 2">
+            </label>
+          </div>
+        </div>
 
         <!-- Mot de passe -->
         <div class="mb-3">

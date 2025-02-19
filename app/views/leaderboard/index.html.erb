@@ -9,12 +9,50 @@
     </tr>
   </thead>
   <tbody>
-    <% @players.each_with_index do |player, index| %>
+    <% if @players.any? %>
+      <% @players.each_with_index do |player, index| %>
+        <tr>
+          <td>#<%= index + 1 %></td>
+          <td>
+            <%= link_to player.pseudo, leaderboard_path(player), class: "text-primary fw-bold" %>
+          </td>
+          <td><%= player.xp %></td>
+        </tr>
+      <% end %>
+    <% else %>
       <tr>
-        <td>#<%= index + 1 %></td>
-        <td><%= player.pseudo %></td>
-        <td><%= player.xp %></td>
+        <td colspan="3" class="text-center">Aucun joueur trouvé.</td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<hr>
+
+<h2>Quêtes les plus réalisées par mes amis</h2>
+<% if @most_completed_quests.any? %>
+  <ul class="list-group">
+    <% @most_completed_quests.each do |quest| %>
+      <li class="list-group-item">
+        <strong><%= quest.quest.title %></strong> - Complétée <%= quest.completed_count %> fois par 
+        <%= link_to quest.user.pseudo, leaderboard_path(quest.user), class: "text-primary fw-bold" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune quête populaire chez tes amis.</p>
+<% end %>
+
+<h2>Dernières quêtes réalisées par mes amis</h2>
+<% if @recent_quests.any? %>
+  <ul class="list-group">
+    <% @recent_quests.each do |user_quest| %>
+      <li class="list-group-item">
+        <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %> par 
+        <%= link_to user_quest.user.pseudo, leaderboard_path(user_quest.user), class: "text-primary fw-bold" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune quête récente.</p>
+<% end %>
