@@ -2,7 +2,17 @@ class LeaderboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @players = User.order(xp: :desc).limit(10)
+    if params[:category_id].present? && !params[:category_id].empty?
+      @players = User.joins(:user_stats)
+                     .where(user_stats: { category_id: params[:category_id] })
+                     .select("users.*, user_stats.total_xp")
+                     .order("user_stats.total_xp DESC")
+    else
+      @players = User.joins(:user_stats)
+                     .group("users.id")
+                     .select("users.*, COALESCE(SUM(user_stats.total_xp), 0) as total_xp_sum")
+                     .order("total_xp_sum DESC")
+    end
 
     friend_ids = current_user.friendships.where(status: "accepted").pluck(:friend_id) +
                  Friendship.where(friend: current_user, status: "accepted").pluck(:user_id)
@@ -12,7 +22,7 @@ class LeaderboardController < ApplicationController
                                         .where(user_id: friend_ids)
                                         .select("user_quests.*, COUNT(user_quests.id) AS completed_count")
                                         .group("user_quests.id, quests.id, users.id")
-                                        .order(Arel.sql("COUNT(user_quests.id) DESC")) # ✅ Correction ici
+                                        .order(Arel.sql("COUNT(user_quests.id) DESC"))
                                         .limit(5)
                                         .includes(:user, :quest)
 
@@ -30,8 +40,7 @@ class LeaderboardController < ApplicationController
     @player = User.find(params[:id])
 
     # Top 3 catégories du joueur
-    @top_categories = @player.user_stats.order(xp: :desc).limit(3)
-
+    @top_categories = @player.user_stats.order(total_xp: :desc).limit(3)
 
     # Quêtes les plus complétées par ce joueur
     @most_completed_quests = @player.user_quests.joins(:quest)
