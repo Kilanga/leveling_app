@@ -1,0 +1,67 @@
+<h1>Liste de mes amis</h1>
+
+<% if @friends.any? %>
+  <ul>
+    <% @friends.each do |friend| %>
+      <li>
+        <%= friend.pseudo %>
+        <%= button_to "Supprimer", friend_path(friend), method: :delete, class: "btn btn-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Tu n'as pas encore d'amis.</p>
+<% end %>
+
+<h2>Demandes d’amis reçues</h2>
+<% if @pending_received_requests&.any? %>
+  <ul>
+    <% @pending_received_requests.each do |friend| %>
+      <li>
+        <%= friend.pseudo %>
+        <%= button_to "Accepter", accept_friend_path(friend), method: :post, class: "btn btn-success" %>
+        <%= button_to "Refuser", reject_friend_path(friend), method: :delete, class: "btn btn-warning" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune demande en attente.</p>
+<% end %>
+
+
+<h3>Demandes envoyées</h3>
+<% if @pending_sent_requests.any? %>
+  <ul>
+    <% @pending_sent_requests.each do |friend| %>
+      <li>
+        <%= friend.pseudo %>
+        <%= button_to "Annuler", reject_friend_path(friend), method: :delete, class: "btn btn-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune demande en attente.</p>
+<% end %>
+
+
+
+
+
+<h2>Rechercher un ami</h2>
+<%= form_with url: search_friends_path, method: :get, local: true do |form| %>
+  <%= form.label :query, "Rechercher par pseudo :" %>
+  <%= form.text_field :query, class: "form-control" %>
+  <%= form.submit "Rechercher", class: "btn btn-primary mt-2" %>
+<% end %>
+
+<% if @users %>
+  <h3>Résultats :</h3>
+  <ul class="list-group">
+    <% @users.each do |user| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= user.pseudo %>
+        <%= button_to "Envoyer une demande", send_request_friends_path(friend_id: user.id), method: :post, class: "btn btn-success btn-sm" unless current_user.friends.include?(user) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

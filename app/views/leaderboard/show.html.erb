@@ -1,0 +1,46 @@
+<h1>Profil de <%= @player.pseudo %></h1>
+
+<div class="profile-info text-center">
+<%= image_tag @player.avatar, alt: "Avatar de #{@player.pseudo}", class: "img-thumbnail", size: "150x150" %>
+
+</div>
+
+
+<h3>Statistiques</h3>
+<% if @top_categories.any? %>
+  <ul>
+    <% @top_categories.each do |stat| %>
+      <li><strong><%= stat.category.name %></strong> : Niveau <%= stat.level %> | XP : <%= stat.xp %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune statistique disponible.</p>
+<% end %>
+
+<h3>Quêtes les plus réalisées</h3>
+<% if @most_completed_quests.any? %>
+  <ul class="list-group">
+    <% @most_completed_quests.each do |quest| %>
+      <li class="list-group-item">
+        <strong><%= quest.title %></strong> - Complétée <%= quest.completed_count %> fois
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune quête populaire.</p>
+<% end %>
+
+<h3>Dernières quêtes réalisées</h3>
+<% if @recent_quests.any? %>
+  <ul class="list-group">
+    <% @recent_quests.each do |user_quest| %>
+      <li class="list-group-item">
+        <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune quête récente.</p>
+<% end %>
+
+<%= link_to "Retour au classement", leaderboard_index_path, class: "btn btn-secondary mt-3" %>

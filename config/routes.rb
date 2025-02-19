@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
-  get "leaderboard/index"
-  get "purchases/new"
-  get "purchases/create"
-  get "user_quests/update"
-  get "quests/index"
-  get "quests/show"
-  get "dashboard/index"
-  get "dashboard.json", to: "dashboard#index", defaults: { format: :json } # ✅ Ajout du support JSON
-
   root "dashboard#index"
-
+  get "dashboard", to: "dashboard#index", defaults: { format: :html }
   devise_for :users
-  get "leaderboard", to: "leaderboard#index"
+
+  # Classement
+  resources :leaderboard, only: [ :index, :show ]
+
+  # Gestion des utilisateurs
   resources :users, only: [ :index ]
+
+  # Quêtes et progression
   resources :quests, only: [ :index, :show ]
   resources :user_quests, only: [ :update, :create, :destroy ]
+
+  # Achats et paiements
   resources :purchases, only: [ :new, :create ] do
     collection do
       get "success"
@@ -22,16 +21,20 @@ Rails.application.routes.draw do
     end
   end
 
+  # Amis
+  resources :friends, only: [ :index, :create, :destroy ] do
+    collection do
+      get :search  # ✅ Ajoute la recherche d'amis
+    end
+    member do
+      post :accept
+      delete :reject
+    end
+  end
+
+
+  # Admin
   namespace :admin do
-    get "users/index"
-    get "users/edit"
-    get "users/update"
-    get "quests/index"
-    get "quests/new"
-    get "quests/create"
-    get "quests/edit"
-    get "quests/update"
-    get "quests/destroy"
     resources :quests, except: [ :show ]
     resources :users, only: [ :index, :edit, :update ]
   end
