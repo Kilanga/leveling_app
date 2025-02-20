@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_many :purchases, dependent: :destroy
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships, source: :friend
+  has_many :user_weekly_quests, dependent: :destroy
+has_many :weekly_quests, through: :user_weekly_quests
+has_many :user_badges, dependent: :destroy
+  has_many :badges, through: :user_badges
 
   validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }
   validates :email, presence: true, uniqueness: true

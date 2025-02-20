@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "users/show"
+  get "user_weekly_quests/update"
   root "dashboard#index"
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
   devise_for :users
@@ -31,7 +33,10 @@ Rails.application.routes.draw do
       delete :reject
     end
   end
+  resources :user_weekly_quests, only: [:update]
 
+
+  get 'profil', to: 'users#show', as: :user_profile
 
   # Admin
   namespace :admin do
