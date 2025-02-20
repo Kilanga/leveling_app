@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   root "dashboard#index"
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
   devise_for :users
+  post "activate_title", to: "users#activate_title"
+post "deactivate_title", to: "users#deactivate_title"
 
   # Classement
   resources :leaderboard, only: [ :index, :show ]

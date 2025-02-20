@@ -9,9 +9,13 @@ class User < ApplicationRecord
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships, source: :friend
   has_many :user_weekly_quests, dependent: :destroy
-has_many :weekly_quests, through: :user_weekly_quests
-has_many :user_badges, dependent: :destroy
+  has_many :weekly_quests, through: :user_weekly_quests
+  has_many :user_badges, dependent: :destroy
   has_many :badges, through: :user_badges
+  has_many :user_items
+  has_many :shop_items, through: :user_items
+
+  belongs_to :active_title, class_name: "ShopItem", optional: true
 
   validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }
   validates :email, presence: true, uniqueness: true
@@ -30,5 +34,28 @@ has_many :user_badges, dependent: :destroy
 
   def admin?
     self.admin
+  end
+
+  # Gestion des titres
+  def activate_title(title)
+    update(active_title: title)
+  end
+
+  def deactivate_title
+    update(active_title: nil)
+  end
+
+  # Retourne la classe de couleur pour le titre du joueur
+  def title_rarity_class
+    case active_title&.rarity
+    when "rare"
+      "primary" # Bleu
+    when "epic"
+      "purple" # Violet
+    when "legendary"
+      "warning" # Or
+    else
+      "secondary" # Par défaut
+    end
   end
 end
