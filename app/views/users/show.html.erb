@@ -1,0 +1,41 @@
+<h1>Profil de <%= @user.pseudo %></h1>
+
+<!-- Avatar de l'utilisateur -->
+<div class="text-center">
+  <%= image_tag @user.avatar, class: "rounded-circle", width: 150, height: 150, alt: "Avatar de #{@user.pseudo}" %>
+</div>
+
+
+
+<!-- Bouton vers modification de mot de passe -->
+<div class="mt-3">
+  <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-primary" %>
+</div>
+
+<hr>
+
+<!-- 🚀 Section des Badges -->
+<h2>🏆 Badges débloqués</h2>
+<div class="d-flex flex-wrap">
+  <% @user_badges.each do |user_badge| %>
+    <div class="text-center m-3">
+      <%= image_tag user_badge.badge.image.attached? ? user_badge.badge.image : "default_badge.png", 
+        width: 120, height: 120, 
+        alt: user_badge.badge.description %>
+      <p class="mt-2"><strong><%= user_badge.badge.name %></strong></p>
+      <p class="text-muted small"><%= user_badge.badge.description %></p>
+    </div>
+  <% end %>
+</div>
+
+
+
+<!-- 🚀 Section de l'historique des quêtes -->
+<h2>📜 Historique des quêtes</h2>
+<ul class="list-group">
+  <% @user_quests.each do |user_quest| %>
+    <li class="list-group-item">
+      <strong><%= user_quest.quest.title %></strong> - Complété <%= user_quest.completed_count %> fois
+    </li>
+  <% end %>
+</ul>

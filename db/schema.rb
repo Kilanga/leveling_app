@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_19_083404) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_160404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_083404) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "badges", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "categories", force: :cascade do |t|
@@ -77,7 +84,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_083404) do
     t.datetime "valid_until"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "daily_featured", default: false
     t.index ["category_id"], name: "index_quests_on_category_id"
+  end
+
+  create_table "user_badges", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "badge_id", null: false
+    t.datetime "awarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["badge_id"], name: "index_user_badges_on_badge_id"
+    t.index ["user_id"], name: "index_user_badges_on_user_id"
   end
 
   create_table "user_quests", force: :cascade do |t|
@@ -105,6 +123,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_083404) do
     t.index ["user_id"], name: "index_user_stats_on_user_id"
   end
 
+  create_table "user_weekly_quests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "weekly_quest_id", null: false
+    t.boolean "completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_weekly_quests_on_user_id"
+    t.index ["weekly_quest_id"], name: "index_user_weekly_quests_on_weekly_quest_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -129,14 +157,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_083404) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weekly_quests", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.integer "xp_reward", default: 300
+    t.bigint "category_id", null: false
+    t.datetime "valid_until"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_weekly_quests_on_category_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
   add_foreign_key "purchases", "users"
   add_foreign_key "quests", "categories"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
   add_foreign_key "user_quests", "quests"
   add_foreign_key "user_quests", "users"
   add_foreign_key "user_stats", "categories"
   add_foreign_key "user_stats", "users"
+  add_foreign_key "user_weekly_quests", "users"
+  add_foreign_key "user_weekly_quests", "weekly_quests"
+  add_foreign_key "weekly_quests", "categories"
 end

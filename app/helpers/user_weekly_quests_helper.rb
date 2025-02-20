@@ -1,0 +1,2 @@
+module UserWeeklyQuestsHelper
+end

@@ -44,7 +44,29 @@
 <% end %>
 
 
+<h2>🔹 Quêtes Hebdomadaires</h2>
 
+<% if @weekly_quests.any? %>
+  <ul class="list-group">
+    <% @weekly_quests.each do |user_weekly_quest| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong><%= user_weekly_quest.weekly_quest.title %></strong>
+          <p><%= user_weekly_quest.weekly_quest.description %></p>
+        </div>
+        <% unless user_weekly_quest.completed? %>
+          <%= button_to "✔ Valider", user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-success btn-sm" %>
+        <% else %>
+          <span class="badge bg-success">✅ Complétée</span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="alert alert-info text-center">
+    🌟 Les quêtes hebdomadaires arrivent bientôt ! Reviens plus tard pour relever de nouveaux défis. 🚀
+  </div>
+<% end %>
 
 <h2>Quêtes en cours</h2>
 <ul class="list-group">
