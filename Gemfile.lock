@@ -133,7 +133,7 @@ GEM
     drb (2.2.1)
     ed25519 (1.3.0)
     erubi (1.13.1)
-    event_stream_parser (0.3.0)
+    event_stream_parser (1.0.0)
     execjs (2.10.0)
     factory_bot (6.5.1)
       activesupport (>= 6.1.0)
@@ -385,8 +385,8 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
-    ruby-openai (5.2.0)
-      event_stream_parser (>= 0.3.0, < 1.0.0)
+    ruby-openai (7.4.0)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
@@ -497,7 +497,7 @@ DEPENDENCIES
   rails (~> 8.0.1)
   rspec-rails (~> 7.1)
   rubocop-rails-omakase
-  ruby-openai (~> 5.0)
+  ruby-openai (~> 7.4)
   selenium-webdriver
   stimulus-rails
   stripe
