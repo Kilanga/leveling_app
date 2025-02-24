@@ -1,13 +1,15 @@
 require "open-uri"
+require "faker"
 
 puts "🔄 Suppression des anciennes données..."
 
 # 🔥 Supprimer les relations dépendantes AVANT les entités principales
 UserWeeklyQuest.destroy_all
-WeeklyQuest.destroy_all   # Ajout de cette ligne pour éviter l'erreur
+WeeklyQuest.destroy_all
 UserQuest.destroy_all
 UserStat.destroy_all
 UserBadge.destroy_all
+UserItem.destroy_all
 Friendship.destroy_all
 
 # 🔥 Ensuite, supprimer les entités principales
@@ -15,35 +17,7 @@ User.destroy_all
 Quest.destroy_all
 Category.destroy_all
 Badge.destroy_all
-
-
-
-BADGES = [
-  { name: "Débutant", description: "A complété 10 quêtes", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071281/D%C3%A9butant-removebg-preview_1_xhmriw.png" },
-  { name: "Aventurier", description: "A complété 50 quêtes", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071281/Aventurier-removebg-preview_i7jmlj.png" },
-  { name: "Expert", description: "A complété 100 quêtes", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071281/Expert-removebg-preview_v6u6uk.png" },
-  { name: "Maître", description: "A complété 500 quêtes", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071281/Maitre-removebg-preview_dlncnk.png" },
-  { name: "Conquérant", description: "A complété 1000 quêtes", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071280/conquerant-removebg-preview_s1h57m.png" },
-  { name: "Maître de la Discipline", description: "A atteint 5000 XP en Discipline", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071280/Discipline-removebg-preview_ncxv0u.png" },
-  { name: "Athlète Élite", description: "A atteint 5000 XP en Physique", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071280/Athlete-removebg-preview_1_dtu24h.png" },
-  { name: "Erudit Suprême", description: "A atteint 5000 XP en Savoir", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071280/Erudit-removebg-preview_ytsdlv.png" },
-  { name: "Charisme Légendaire", description: "A atteint 5000 XP en Social", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071280/charisme-removebg-preview_rywu4u.png" },
-  { name: "Maître des Défis", description: "A atteint 5000 XP en Défi", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071280/defi-removebg-preview_1_gamk3u.png" },
-  { name: "Légende", description: "A terminé toutes les quêtes du jeu au moins une fois", image_url: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1740071279/legende-removebg-preview_vwpdqr.png" }
-]
-
-
-BADGES.each do |badge_data|
-  badge = Badge.find_or_create_by!(name: badge_data[:name]) do |b|
-    b.description = badge_data[:description]
-  end
-
-  # 🔥 Attache l'image depuis Cloudinary uniquement si elle n'est pas déjà attachée
-  unless badge.image.attached?
-    file = URI.open(badge_data[:image_url])
-    badge.image.attach(io: file, filename: "#{badge.name.downcase.gsub(" ", "_")}.png", content_type: "image/png")
-  end
-end
+ShopItem.destroy_all
 
 # 📌 Création des catégories
 puts "🔄 Création des catégories..."
@@ -80,6 +54,37 @@ admin_user = User.create!(
   avatar: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp"
 )
 
+# 📌 **Création des titres disponibles à l'achat**
+puts "🔄 Création des titres en boutique..."
+titles = [
+  { name: "Héros Local", item_type: "title", rarity: "rare", price_coins: 150 },
+  { name: "Champion Réputé", item_type: "title", rarity: "epic", price_coins: 600 },
+  { name: "Légende Vivante", item_type: "title", rarity: "legendary", price_coins: 1200 }
+]
+
+titles.each do |title|
+  item = ShopItem.find_or_create_by!(name: title[:name]) do |shop_item|
+    shop_item.item_type = title[:item_type]
+    shop_item.rarity = title[:rarity]
+    shop_item.price_coins = title[:price_coins]
+    shop_item.description = "Un titre prestigieux affiché sur votre profil."
+  end
+
+  # 📌 Attache une image depuis Cloudinary
+  unless item.image.attached?
+    file = URI.open("https://res.cloudinary.com/dqpfnffmi/image/upload/v1728248261/image-cake-thumbnail_wwxfii.jpg")
+    item.image.attach(io: file, filename: "#{item.name.parameterize}.jpg", content_type: "image/jpeg")
+    item.save!
+  end
+end
+
+# 📌 **Attribution d’un titre légendaire à AdminUser**
+legendary_title = ShopItem.find_by(name: "Légende Vivante")
+admin_user.activate_title(legendary_title)
+
+# 📌 **Activation d’un Boost XP pour AdminUser (durée : 1 semaine)**
+admin_user.update!(boost_expires_at: 7.days.from_now)
+
 # 📌 Création des quêtes
 puts "🔄 Création des quêtes..."
 quests = [
@@ -102,8 +107,8 @@ end
 # 📌 Associer des quêtes accomplies aux utilisateurs
 puts "🔄 Attribution des quêtes aux utilisateurs..."
 completed_quests = {
-  user1 => ["Compléter un exercice de concentration", "Lire un livre de développement personnel"],
-  admin_user => ["Faire une séance de sport intense", "Organiser un événement social", "Relever un défi en dehors de sa zone de confort"]
+  user1 => [ "Compléter un exercice de concentration", "Lire un livre de développement personnel" ],
+  admin_user => [ "Faire une séance de sport intense", "Organiser un événement social", "Relever un défi en dehors de sa zone de confort" ]
 }
 
 completed_quests.each do |user, quest_titles|
@@ -115,7 +120,7 @@ end
 
 # 📌 Mise à jour des stats utilisateur
 puts "🔄 Mise à jour des statistiques des utilisateurs..."
-[user1, admin_user].each do |user|
+[ user1, admin_user ].each do |user|
   categories.each do |_, category|
     xp_gained = user.user_quests.joins(:quest).where(quests: { category_id: category.id }, completed: true).sum(:xp)
     if xp_gained > 0

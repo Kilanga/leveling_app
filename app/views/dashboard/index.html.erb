@@ -1,16 +1,12 @@
 
 
-<h1>Bienvenue, <%= current_user.pseudo %> !</h1>
-
-<h2></h2>
-
-<div class="d-flex justify-content-center position-relative">
-  <canvas id="statsChart" width="400" height="400"
-          data-stats='<%= @stats_data.to_json.html_safe %>'></canvas>
-  <div id="totalLevelDisplay" class="position-absolute fw-bold fs-4"
-       style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-  </div>
-</div>
+<h1>
+  Bienvenue, <%= current_user.pseudo %> !
+  <% if current_user.boost_active? %>
+    <span class="badge bg-warning text-dark">🔥 Boost XP actif</span>
+    <small>(Expire dans <%= distance_of_time_in_words(Time.current, current_user.boost_expires_at) %>)</small>
+  <% end %>
+</h1>
 
 <h2 class="mt-4">Progression des catégories</h2>
 

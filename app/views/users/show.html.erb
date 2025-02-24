@@ -1,18 +1,30 @@
 <h1>Profil de <%= @user.pseudo %></h1>
 
-<!-- Avatar de l'utilisateur -->
-<div class="text-center">
-  <%= image_tag @user.avatar, class: "rounded-circle", width: 150, height: 150, alt: "Avatar de #{@user.pseudo}" %>
+<!-- Conteneur responsive -->
+<div class="row align-items-center">
+  <!-- Avatar (colonne gauche) -->
+  <div class="col-md-4 text-center">
+    <%= image_tag @user.avatar, class: "rounded-circle", width: 250, height: 250, alt: "Avatar de #{@user.pseudo}" %>
+  </div>
+
+  <!-- Graphique de stats (colonne droite) -->
+  <div class="col-md-8">
+    <div class="d-flex justify-content-center position-relative">
+      <canvas id="statsChart" width="400" height="400"
+              data-stats='<%= @stats_data.to_json.html_safe %>'></canvas>
+      <div id="totalLevelDisplay" class="position-absolute fw-bold fs-4"
+           style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+      </div>
+    </div>
+  </div>
 </div>
 
-
-
 <!-- Bouton vers modification de mot de passe -->
-<div class="mt-3">
+<div class="mt-3 text-center">
   <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-primary" %>
 </div>
 
-<hr>
+
 
 <!-- 🚀 Section des Badges -->
 <h2>🏆 Badges débloqués</h2>

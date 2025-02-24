@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_160404) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_214112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,6 +88,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_160404) do
     t.index ["category_id"], name: "index_quests_on_category_id"
   end
 
+  create_table "shop_items", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "rarity"
+    t.integer "price_coins"
+    t.integer "price_euros"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "item_type"
+  end
+
   create_table "user_badges", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "badge_id", null: false
@@ -96,6 +107,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_160404) do
     t.datetime "updated_at", null: false
     t.index ["badge_id"], name: "index_user_badges_on_badge_id"
     t.index ["user_id"], name: "index_user_badges_on_user_id"
+  end
+
+  create_table "user_items", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "shop_item_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_item_id"], name: "index_user_items_on_shop_item_id"
+    t.index ["user_id"], name: "index_user_items_on_user_id"
   end
 
   create_table "user_quests", force: :cascade do |t|
@@ -151,6 +172,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_160404) do
     t.datetime "boost_expires_at"
     t.string "pseudo"
     t.string "avatar"
+    t.integer "active_title_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["pseudo"], name: "index_users_on_pseudo", unique: true
@@ -176,6 +198,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_160404) do
   add_foreign_key "quests", "categories"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
+  add_foreign_key "user_items", "shop_items"
+  add_foreign_key "user_items", "users"
   add_foreign_key "user_quests", "quests"
   add_foreign_key "user_quests", "users"
   add_foreign_key "user_stats", "categories"

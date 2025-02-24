@@ -1,14 +1,46 @@
-<h1>Acheter des pièces ou des boosts</h1>
+<h1>Acheter des objets et des pièces</h1>
 
+<h2>💰 Acheter des Coins</h2>
 <ul>
-  <% @prices.each do |item, price| %>
+  <% @coins_prices.each do |option| %>
     <li>
       <%= form_with url: purchases_path, method: :post do %>
-        <input type="hidden" name="amount" value="<%= price %>">
-        <input type="hidden" name="item_type" value="<%= item %>">
-        <%= submit_tag "#{item} - #{price}€", class: "btn btn-success" %>
+        <input type="hidden" name="amount" value="<%= option[:amount] %>">
+        <input type="hidden" name="item_type" value="<%= option[:coins] %> pièces">
+        <%= submit_tag "#{option[:label]} - #{option[:amount]}€", class: "btn btn-warning" %>
       <% end %>
     </li>
+  <% end %>
+</ul>
+
+<h2>⚡ Acheter des Boosts XP</h2>
+<ul>
+  <% @boosts.each do |boost| %>
+    <li>
+      <%= form_with url: purchases_path, method: :post do %>
+        <input type="hidden" name="amount" value="<%= boost[:amount] %>">
+        <input type="hidden" name="item_type" value="<%= boost[:label] %>">
+        <%= submit_tag "#{boost[:label]} - #{boost[:amount]}€", class: "btn btn-success" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>🏆 Acheter des Titres & Avatars</h2>
+<ul>
+  <% @shop_items.each do |item| %>
+    <li>
+  <strong class="<%= item.rarity_class %>"><%= item.name %></strong> - <%= item.item_type %>
+  <%= image_tag item.image.variant(resize: "50x50"), class: "rounded", if: item.image.attached? %>
+  <br>
+  <% if item.price_coins.present? %>
+    <%= form_with url: purchases_path, method: :post do %>
+      <input type="hidden" name="shop_item_id" value="<%= item.id %>">
+      <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+</li>
+
   <% end %>
 </ul>
 
