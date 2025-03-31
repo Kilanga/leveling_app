@@ -16,18 +16,28 @@
   <thead>
     <tr>
       <th>Rang</th>
+      <th>Avatar</th>
       <th>Pseudo</th>
       <th>XP Total</th>
     </tr>
   </thead>
   <tbody>
     <% if @players.any? %>
-      <% sorted_players = params[:category_id].present? ? @players.sort_by { |player| -(player.user_stats.find_by(category_id: params[:category_id].to_i)&.total_xp || 0) } : @players.sort_by { |player| -player.total_xp_sum.to_i } %>
-      <% sorted_players.each_with_index do |player, index| %>
+      <% @players.each_with_index do |player, index| %>
         <tr>
           <td>#<%= index + 1 %></td>
           <td>
+            <% if player.avatar.present? %>
+              <img src="<%= player.avatar %>" class="rounded-circle" width="50" height="50">
+            <% else %>
+              <span class="text-muted">Aucun avatar</span>
+            <% end %>
+          </td>
+          <td>
             <%= link_to player.pseudo, leaderboard_path(player), class: "text-primary fw-bold" %>
+            <% if player.active_title %>
+              <span class="badge bg-<%= player.title_rarity_class %>"><%= player.active_title.name %></span>
+            <% end %>
           </td>
           <td>
             <%= params[:category_id].present? ? (player.user_stats.find_by(category_id: params[:category_id].to_i)&.total_xp || 0) : player.total_xp_sum.to_i %>
@@ -36,7 +46,7 @@
       <% end %>
     <% else %>
       <tr>
-        <td colspan="3" class="text-center">Aucun joueur trouvé.</td>
+        <td colspan="4" class="text-center">Aucun joueur trouvé.</td>
       </tr>
     <% end %>
   </tbody>
