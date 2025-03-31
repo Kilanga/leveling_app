@@ -28,7 +28,7 @@ group :development do
   gem "letter_opener_web"
 end
 
-gem "ruby-openai", "~> 5.0"
+gem "ruby-openai", "~> 8.1"
 gem "dotenv-rails", groups: [:development, :test]
 
 
