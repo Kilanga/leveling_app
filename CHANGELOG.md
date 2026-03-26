@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.5] - 2026-03-26
+
+### Added
+- Add a Kiviat (radar) progression chart on the dashboard by quest category
+
+### Changed
+- Use embedded dashboard stats data for the chart instead of extra JSON fetch calls
+- Refine chart visuals and tooltips for level and XP readability
+
 ## [1.2.4] - 2026-03-26
 
 ### Added
