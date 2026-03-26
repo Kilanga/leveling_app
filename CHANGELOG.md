@@ -7,6 +7,12 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.13] - 2026-03-26
+
+### Modifié
+- Réaffichage de l'échelle numérique du diagramme radar
+- Conservation d'un rendu sans effet toile d'araignée (grille et lignes angulaires désactivées)
+
 ## [1.2.12] - 2026-03-26
 
 ### Modifié
