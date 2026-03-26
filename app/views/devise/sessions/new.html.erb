@@ -1,26 +1,71 @@
-<h2>Log in</h2>
+<div class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="card border-0 shadow-lg" style="border-radius: 12px;">
+          <div class="card-body p-5">
+            <!-- Header -->
+            <h1 class="h3 fw-bold text-center mb-1 text-dark">Bienvenue !</h1>
+            <p class="text-center text-muted mb-4">Connectez-vous pour continuer</p>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+            <!-- Form -->
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+              <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+              <!-- Email -->
+              <div class="mb-3">
+                <%= f.label :email, class: "form-label fw-semibold" %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", placeholder: "votre@email.com" %>
+              </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+              <!-- Password -->
+              <div class="mb-3">
+                <%= f.label :password, "Mot de passe", class: "form-label fw-semibold" %>
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-lg", placeholder: "••••••••" %>
+              </div>
+
+              <!-- Remember Me -->
+              <% if devise_mapping.rememberable? %>
+                <div class="mb-3 form-check">
+                  <%= f.check_box :remember_me, class: "form-check-input" %>
+                  <%= f.label :remember_me, "Se souvenir de moi", class: "form-check-label" %>
+                </div>
+              <% end %>
+
+              <!-- Submit Button -->
+              <div class="d-grid gap-2 mb-4">
+                <%= f.submit "Se connecter", class: "btn btn-primary btn-lg fw-semibold" %>
+              </div>
+            <% end %>
+
+            <!-- Divider -->
+            <div class="position-relative mb-4">
+              <hr />
+              <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">ou</span>
+            </div>
+
+            <!-- OAuth Links -->
+            <div class="d-grid gap-2">
+              <% if devise_mapping.omniauthable? %>
+                <% resource_class.omniauth_providers.each do |provider| %>
+                  <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :get, class: "btn btn-outline-dark btn-lg fw-semibold d-flex align-items-center justify-content-center gap-2" %>
+                <% end %>
+              <% end %>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center mt-4">
+              <p class="mb-2">
+                <%= link_to "Oublié votre mot de passe ?", new_password_path(resource_name), class: "text-decoration-none" %>
+              </p>
+              <p class="mb-0">
+                Pas encore inscrit ?
+                <%= link_to "Créer un compte", new_registration_path(resource_name), class: "fw-semibold text-decoration-none" %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
