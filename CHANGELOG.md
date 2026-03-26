@@ -7,6 +7,12 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.18] - 2026-03-26
+
+### Modifié
+- Le diagramme radar affiche désormais uniquement la valeur numérique de chaque point
+- Suppression de l'affichage des valeurs d'échelle intermédiaires pour un rendu plus lisible
+
 ## [1.2.17] - 2026-03-26
 
 ### Modifié

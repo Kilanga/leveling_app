@@ -15,16 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const maxLevel = Math.max(...levels, 1);
   const ctx = canvas.getContext("2d");
 
-  const multiAxisScalePlugin = {
-    id: "multiAxisScalePlugin",
+  const pointValueLabelsPlugin = {
+    id: "pointValueLabelsPlugin",
     afterDraw(chart) {
       const radial = chart.scales.r;
-      if (!radial || !Array.isArray(radial.ticks) || radial.ticks.length === 0) return;
-
-      const labels = chart.data.labels || [];
-      const tickValues = radial.ticks
-        .map((tick) => Number(tick.value))
-        .filter((value) => Number.isFinite(value) && value > 0);
+      const dataset = chart.data.datasets?.[0];
+      if (!radial || !dataset || !Array.isArray(dataset.data)) return;
 
       const context = chart.ctx;
       context.save();
@@ -33,11 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
       context.textAlign = "center";
       context.textBaseline = "middle";
 
-      labels.forEach((_, axisIndex) => {
-        tickValues.forEach((value) => {
-          const point = radial.getPointPositionForValue(axisIndex, value);
-          context.fillText(String(value), point.x, point.y);
-        });
+      dataset.data.forEach((rawValue, axisIndex) => {
+        const value = Number(rawValue);
+        if (!Number.isFinite(value)) return;
+
+        const labelPoint = radial.getPointPositionForValue(axisIndex, value + 0.45);
+
+        context.fillText(String(value), labelPoint.x, labelPoint.y);
       });
 
       context.restore();
@@ -45,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   new window.Chart(ctx, {
-    plugins: [multiAxisScalePlugin],
+    plugins: [pointValueLabelsPlugin],
     type: "radar",
     data: {
       labels: statsData.map((stat) => stat.name),
