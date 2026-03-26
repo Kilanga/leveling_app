@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.23] - 2026-03-26
+
+### Modifié
+- Augmentation des espacements verticaux globaux pour améliorer la respiration visuelle des pages HUD
+- Aération renforcée des sections et séparateurs dans les conteneurs principaux
+- Espacement interne de la Boutique (lignes plates, textes et actions) pour un rendu moins tassé
+
 ## [1.2.22] - 2026-03-26
 
 ### Modifié

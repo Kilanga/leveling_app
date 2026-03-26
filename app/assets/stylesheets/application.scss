@@ -110,22 +110,22 @@ body::before {
 }
 
 .surface-card--shell .card-body {
-  padding: 1.55rem;
+  padding: 1.8rem;
 }
 
 .hud-section {
   background: transparent;
-  padding: 0.3rem 0;
+  padding: 0.45rem 0;
 }
 
 .hud-section + .hud-section {
-  margin-top: 0.25rem;
+  margin-top: 0.7rem;
 }
 
 .hud-divider {
   border: 0;
   border-top: 1px solid rgba(70, 133, 174, 0.35);
-  margin: 1rem 0 1.15rem;
+  margin: 1.35rem 0 1.45rem;
 }
 
 .hud-column-divider {
@@ -145,7 +145,7 @@ body::before {
 .section-title {
   font-size: 1.15rem;
   font-weight: 700;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.05rem;
 }
 
 .quest-list,
@@ -171,12 +171,22 @@ body::before {
   border-radius: 0;
   background: transparent;
   border-bottom: 1px solid rgba(64, 124, 166, 0.35);
-  padding: 0.95rem 0.1rem;
+  padding: 1.2rem 0.2rem;
 }
 
 .shop-row--flat:last-child {
   border-bottom: 0;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.55rem;
+}
+
+.shop-row--flat strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.shop-row--flat .quest-meta {
+  margin-bottom: 0.7rem !important;
+  line-height: 1.45;
 }
 
 .quest-list--flat {
