@@ -7,6 +7,14 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.10] - 2026-03-26
+
+### Modifié
+- Refonte visuelle du thème global vers une palette charbon et ambre (abandon du rendu bleu/blanc)
+- Modernisation des boutons avec un style moins Bootstrap classique et plus cohérent avec l'identité du jeu
+- Refonte des barres de progression (piste + remplissage) pour un rendu plus premium et lisible
+- Harmonisation des tableaux, listes, liens et champs de formulaire avec la nouvelle direction graphique
+
 ## [1.2.9] - 2026-03-26
 
 ### Modifié
