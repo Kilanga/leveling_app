@@ -2,8 +2,8 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    ensure_global_weekly_quest!
-    attach_current_user_to_active_weekly_quests!
+    active_weekly_quest = ensure_single_active_global_weekly_quest!
+    attach_current_user_to_active_weekly_quest!(active_weekly_quest)
 
     @weekly_quests = current_user.user_weekly_quests
       .joins(:weekly_quest)
@@ -40,24 +40,34 @@ class DashboardController < ApplicationController
 
   private
 
-  def ensure_global_weekly_quest!
-    return if WeeklyQuest.where("valid_until >= ?", Time.current).exists?
+  def ensure_single_active_global_weekly_quest!
+    active_quests = WeeklyQuest.where("valid_until >= ?", Time.current).order(valid_until: :desc, created_at: :desc)
+    current_active = active_quests.first
 
-    source_quest = Quest.includes(:category).order("RANDOM()").first
-    return unless source_quest
+    unless current_active
+      source_quest = Quest.includes(:category).order("RANDOM()").first
+      return nil unless source_quest
 
-    WeeklyQuest.create!(
-      title: "Hebdo: #{source_quest.title}",
-      description: source_quest.description.presence || "Complete cette quete hebdomadaire pour un gros bonus.",
-      xp_reward: [source_quest.xp.to_i * 2, 300].max,
-      category: source_quest.category,
-      valid_until: 7.days.from_now
-    )
+      current_active = WeeklyQuest.create!(
+        title: "Hebdo: #{source_quest.title}",
+        description: source_quest.description.presence || "Complete cette quete hebdomadaire pour un gros bonus.",
+        xp_reward: [source_quest.xp.to_i * 2, 300].max,
+        category: source_quest.category,
+        valid_until: 7.days.from_now
+      )
+    end
+
+    duplicate_ids = active_quests.where.not(id: current_active.id).pluck(:id)
+    if duplicate_ids.any?
+      WeeklyQuest.where(id: duplicate_ids).update_all(valid_until: 1.second.ago)
+    end
+
+    current_active
   end
 
-  def attach_current_user_to_active_weekly_quests!
-    WeeklyQuest.where("valid_until >= ?", Time.current).find_each do |weekly_quest|
-      current_user.user_weekly_quests.find_or_create_by!(weekly_quest: weekly_quest)
-    end
+  def attach_current_user_to_active_weekly_quest!(weekly_quest)
+    return unless weekly_quest
+
+    current_user.user_weekly_quests.find_or_create_by!(weekly_quest: weekly_quest)
   end
 end

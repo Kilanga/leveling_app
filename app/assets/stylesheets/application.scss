@@ -2,16 +2,16 @@
 @use "bootstrap" as *;
 
 :root {
-  --bg: #f5efe3;
-  --bg-soft: #fbf7ef;
-  --ink: #1f2023;
-  --muted: #5d5d63;
-  --line: #d5c7ae;
-  --brand: #7c4d1f;
-  --brand-2: #bc7a32;
-  --accent: #0f5568;
-  --success: #2f7c4a;
-  --danger: #8f2d1c;
+  --bg: #070b12;
+  --bg-soft: #0c121b;
+  --ink: #e7edf5;
+  --muted: #95a5bd;
+  --line: #1d2f44;
+  --brand: #1da6d6;
+  --brand-2: #34c4f5;
+  --accent: #9fd6ff;
+  --success: #3dc98d;
+  --danger: #e36b78;
   --radius-lg: 18px;
 }
 
@@ -19,8 +19,8 @@ body {
   min-height: 100vh;
   color: var(--ink);
   background:
-    radial-gradient(circle at 12% 8%, #fff6dd 0%, rgba(255, 246, 221, 0) 35%),
-    radial-gradient(circle at 86% 4%, #efd9b3 0%, rgba(239, 217, 179, 0) 30%),
+    radial-gradient(circle at 15% 10%, rgba(38, 173, 231, 0.16) 0%, rgba(38, 173, 231, 0) 38%),
+    radial-gradient(circle at 82% 6%, rgba(73, 88, 255, 0.14) 0%, rgba(73, 88, 255, 0) 32%),
     linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
 }
 
@@ -31,29 +31,34 @@ body {
 }
 
 .topbar-leveling {
-  border-bottom: 1px solid rgba(213, 199, 174, 0.45);
-  background: linear-gradient(120deg, #131417, #24272e);
-  box-shadow: 0 10px 24px rgba(17, 15, 12, 0.25);
+  border-bottom: 1px solid rgba(78, 140, 189, 0.4);
+  background: linear-gradient(120deg, #090f18, #111a28);
+  box-shadow: 0 10px 28px rgba(3, 8, 15, 0.5);
 }
 
 .topbar-leveling .navbar-brand {
   font-weight: 800;
-  letter-spacing: 0.03em;
-  color: #f8efdc;
+  letter-spacing: 0.07em;
+  color: #e5f4ff;
+  text-transform: uppercase;
+  font-size: 0.95rem;
 }
 
 .topbar-leveling .nav-link {
-  color: rgba(255, 244, 230, 0.78);
+  color: rgba(210, 225, 246, 0.84);
   border-radius: 999px;
   padding: 0.42rem 0.8rem;
   transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
 }
 
 .topbar-leveling .nav-link:hover,
 .topbar-leveling .nav-link:focus,
 .topbar-leveling .nav-link.active {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
+  color: #e9f7ff;
+  background: rgba(33, 138, 200, 0.25);
 }
 
 .topbar-leveling .btn-link.nav-link {
@@ -69,8 +74,9 @@ body {
 .page-title {
   font-size: clamp(1.5rem, 2.7vw, 2.2rem);
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.08em;
   margin-bottom: 0.25rem;
+  text-transform: uppercase;
 }
 
 .page-subtitle {
@@ -81,8 +87,8 @@ body {
 .surface-card {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, #fefcf7 0%, #f5ecdc 100%);
-  box-shadow: 0 8px 24px rgba(69, 46, 17, 0.1);
+  background: linear-gradient(180deg, rgba(14, 23, 35, 0.92) 0%, rgba(10, 18, 29, 0.92) 100%);
+  box-shadow: 0 10px 28px rgba(4, 10, 19, 0.5);
 }
 
 .surface-card .card-body {
@@ -105,7 +111,7 @@ body {
 .shop-row {
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255, 252, 247, 0.88);
+  background: rgba(14, 24, 36, 0.86);
   padding: 0.85rem 0.95rem;
 }
 
@@ -158,7 +164,7 @@ body {
 .xp-track {
   border-radius: 999px;
   overflow: hidden;
-  background: #d8ccb8;
+  background: #152535;
   height: 0.95rem;
 }
 
@@ -181,15 +187,28 @@ body {
 }
 
 .btn-outline-quest {
-  border: 1px solid #b18a58;
-  color: #6a4721;
-  background: #fff9ef;
+  border: 1px solid #2c78a9;
+  color: #8dd4ff;
+  background: rgba(20, 41, 59, 0.7);
 }
 
 .btn-outline-quest:hover,
 .btn-outline-quest:focus {
   border-color: var(--brand);
-  color: var(--brand);
+  color: #d8f3ff;
+}
+
+.btn-outline-secondary {
+  border-color: #375574;
+  color: #b8d2ef;
+  background: rgba(15, 29, 44, 0.75);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  border-color: #4f84b1;
+  color: #e4f4ff;
+  background: rgba(22, 43, 64, 0.9);
 }
 
 .alert {
@@ -197,15 +216,34 @@ body {
 }
 
 .alert-warning {
-  color: #5e4905;
-  border-color: #d8c26d;
-  background: #fff8dc;
+  color: #f5e3a0;
+  border-color: #695a2e;
+  background: rgba(73, 58, 20, 0.6);
 }
 
 .alert-danger {
-  color: #672114;
-  border-color: #d39f95;
-  background: #f8dfda;
+  color: #ffd5dc;
+  border-color: #7d3a46;
+  background: rgba(91, 35, 45, 0.55);
+}
+
+.form-control,
+.form-select {
+  border-color: #2a445e;
+  color: #e9f2ff;
+  background: rgba(11, 24, 38, 0.9);
+}
+
+.form-control::placeholder {
+  color: #6e859f;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #47baed;
+  box-shadow: 0 0 0 0.2rem rgba(52, 196, 245, 0.2);
+  background: rgba(11, 24, 38, 0.98);
+  color: #f2f8ff;
 }
 
 .avatar-card {

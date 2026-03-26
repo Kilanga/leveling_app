@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.8] - 2026-03-26
+
+### Fixed
+- Enforce a single active global weekly quest by expiring duplicate active weekly quests
+
+### Changed
+- Refresh the global visual theme to an immersive dark "system" style
+- Update navigation branding and interface contrast for stronger readability
+- Restyle cards, buttons, alerts, and form inputs to match the new interface direction
+
 ## [1.2.7] - 2026-03-26
 
 ### Fixed
