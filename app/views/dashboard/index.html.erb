@@ -17,6 +17,23 @@
   </div>
 <% end %>
 
+<div class="surface-card daily-objective-card mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+      <div>
+        <h2 class="section-title mb-1">Objectif du jour</h2>
+        <p class="quest-meta mb-0">Valider <%= @daily_target %> quetes pour maintenir ton rythme.</p>
+      </div>
+      <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+        <%= @completed_today_count %> / <%= @daily_target %>
+      </span>
+    </div>
+    <div class="xp-track mt-3">
+      <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
+    </div>
+  </div>
+</div>
+
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
     <div class="row g-4">

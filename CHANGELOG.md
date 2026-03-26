@@ -7,9 +7,17 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.4.0] - 2026-03-26
+
 ### Modifié
 - Refonte complete des formulaires Devise (connexion, inscription, mot de passe oublie, confirmation, deblocage, edition compte) pour harmonisation avec le design HUD de l'application
 - Uniformisation des boutons OAuth/liaisons Devise et des messages d'erreur avec le style visuel global
+- Ajout d'un objectif quotidien sur le dashboard avec progression visuelle (quetes validees du jour)
+- Refonte de la boutique avec navigation par onglets (Packs, Boosts, Cosmetiques)
+- Ajout d'etats visuels explicites en boutique (Disponible, Possede, Equipe)
+- Ajout d'un marquage "Best value" sur le pack coins le plus rentable
+- Ajout d'un apercu profil dans la boutique (avatar, niveau global, titre actif)
+- Ajout d'un bloc "Recommande pour toi" en boutique base sur le niveau global, la rarete cible et les objets deja possedes
 
 ### Corrigé
 - Suppression des encarts de flash parasites (clés techniques de streak) qui s'affichaient comme de fausses erreurs sur le dashboard

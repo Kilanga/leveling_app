@@ -13,11 +13,16 @@ class PurchasesController < ApplicationController
   }.freeze
 
   def new
+    @active_shop_tab = params[:tab].presence_in(%w[packs boosts cosmetics]) || "packs"
     @coins_prices = COIN_PACKS.map { |label, config| { label: label, amount: config[:amount], coins: config[:coins] } }
     @boosts = BOOST_PACKS.map { |label, config| { label: label, amount: config[:amount], duration: config[:duration] } }
+    @best_value_pack_label = @coins_prices.max_by { |option| option[:coins].to_f / [option[:amount], 1].max }[:label]
 
     @title_items = ShopItem.where(item_type: "title").order(rarity: :asc, name: :asc)
+    @cosmetic_items = ShopItem.where(item_type: "cosmetic").order(rarity: :asc, name: :asc)
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
+    @total_level = current_user.user_stats.sum(:level)
+    @recommended_shop_items = recommended_shop_items
   end
 
   def create
@@ -149,5 +154,29 @@ class PurchasesController < ApplicationController
     redirect_to uri.to_s, allow_other_host: true
   rescue URI::InvalidURIError
     redirect_to new_purchase_path, alert: "URL de paiement invalide."
+  end
+
+  def recommended_shop_items
+    rarity_order = preferred_rarity_order
+    candidates = ShopItem.where(item_type: %w[title cosmetic]).where.not(id: @owned_item_ids).to_a
+
+    candidates
+      .sort_by do |item|
+        affordable_rank = item.price_coins.present? && item.price_coins <= current_user.coins ? 0 : 1
+        rarity_rank = rarity_order.fetch(item.rarity, 9)
+        price_rank = item.price_coins || (item.price_euros.to_i * 100)
+        [affordable_rank, rarity_rank, price_rank, item.name]
+      end
+      .first(4)
+  end
+
+  def preferred_rarity_order
+    if @total_level >= 40
+      { "legendary" => 0, "epic" => 1, "rare" => 2 }
+    elsif @total_level >= 20
+      { "epic" => 0, "rare" => 1, "legendary" => 2 }
+    else
+      { "rare" => 0, "epic" => 1, "legendary" => 2 }
+    end
   end
 end

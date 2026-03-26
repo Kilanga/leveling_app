@@ -31,6 +31,12 @@ class DashboardController < ApplicationController
     end
 
     @total_level = @stats.sum(&:level)
+    @daily_target = 2
+    @completed_today_count = current_user.user_quests
+      .where(completed: true)
+      .where(updated_at: Time.zone.today.all_day)
+      .count
+    @daily_progress_percent = [(@completed_today_count.to_f / @daily_target * 100).round, 100].min
 
     respond_to do |format|
       format.html

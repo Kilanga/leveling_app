@@ -294,6 +294,81 @@ body::before {
   padding-bottom: 1.1rem;
 }
 
+.shop-tab-nav {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.shop-tab {
+  text-decoration: none;
+  color: #cbeafe;
+  border: 1px solid rgba(86, 202, 248, 0.36);
+  background: rgba(13, 27, 38, 0.86);
+  padding: 0.36rem 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.78rem;
+}
+
+.shop-tab:hover,
+.shop-tab:focus,
+.shop-tab--active {
+  color: #f0fbff;
+  border-color: rgba(126, 219, 255, 0.9);
+  box-shadow: 0 0 0 1px rgba(126, 219, 255, 0.28);
+}
+
+.shop-state-chip {
+  border: 1px solid transparent;
+  padding: 0.16rem 0.46rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shop-state-chip--available {
+  color: #b9dbec;
+  border-color: #5d84a0;
+}
+
+.shop-state-chip--owned {
+  color: #bce8d4;
+  border-color: #5f9d83;
+}
+
+.shop-state-chip--equipped {
+  color: #d8f2ff;
+  border-color: #6ebfe0;
+  box-shadow: 0 0 0 1px rgba(110, 191, 224, 0.2);
+}
+
+.shop-state-chip--best {
+  color: #ffe5a8;
+  border-color: #c78f2d;
+  box-shadow: 0 0 0 1px rgba(199, 143, 45, 0.18);
+}
+
+.shop-preview-card {
+  border: 1px solid rgba(86, 202, 248, 0.4);
+  background: linear-gradient(180deg, rgba(15, 28, 41, 0.9), rgba(9, 18, 28, 0.9));
+  padding: 0.85rem;
+}
+
+.shop-preview-avatar {
+  border: 1px solid rgba(86, 202, 248, 0.45);
+}
+
+.shop-reco-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.daily-objective-card {
+  border-color: rgba(113, 216, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(113, 216, 255, 0.15), 0 8px 18px rgba(8, 35, 58, 0.35);
+}
+
 .quest-list--flat {
   gap: 0;
 }
@@ -852,6 +927,11 @@ body::before {
   .quest-mission-board,
   .quest-grid {
     grid-template-columns: 1fr;
+  }
+
+  .shop-tab {
+    width: 100%;
+    text-align: center;
   }
 
   .quest-reco-grid {
