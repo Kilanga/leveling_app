@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Enforce profile completion after first Google OAuth signup (pseudo + avatar required)
+- Add dedicated profile completion page for Google users before entering the app
+- Add `profile_completed` flag on users to track onboarding state
+
+### Fixed
+- Resolve OmniAuth CSRF/authenticity failures in production request phase
+- Ensure OAuth submit form fully bypasses Turbo at form level
+
+### Changed
+- Remove non-essential authentication flash messages (success/info noise)
+- Keep authentication feedback focused on actionable warnings/errors
+
 ## [1.2.2] - 2026-03-27
 ### Fixed
 - Fix OmniAuth route 404 error by changing link method from GET to POST
