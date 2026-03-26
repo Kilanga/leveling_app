@@ -1,4 +1,4 @@
-# Changelog
+# Journal des modifications
 
 Toutes les modifications notables de ce projet sont documentées dans ce fichier.
 
@@ -6,6 +6,14 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Non publié]
+
+## [1.2.9] - 2026-03-26
+
+### Modifié
+- Harmonisation visuelle du classement avec un rendu sombre cohérent (suppression du fond blanc du tableau)
+- Harmonisation du style de l'historique des quêtes dans le profil avec le thème global
+- Refonte du style des boutons pour réduire l'aspect Bootstrap par défaut
+- Traduction complète du changelog en français
 
 ## [1.2.8] - 2026-03-26
 
