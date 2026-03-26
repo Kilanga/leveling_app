@@ -41,9 +41,7 @@ class PurchasesController < ApplicationController
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
     @total_level = current_user.user_stats.sum(:level)
     @recommended_shop_items = recommended_shop_items
-    @item_personalized_descriptions = (@title_items + @cosmetic_items + @recommended_shop_items).uniq.index_with do |item|
-      personalized_item_description(item)
-    end
+    @item_personalized_descriptions = personalized_descriptions_by_item_id(@title_items + @cosmetic_items + @recommended_shop_items)
 
     @shop_challenge = build_shop_challenge
     @shop_challenge_claimed = shop_challenge_claimed?
@@ -216,9 +214,15 @@ class PurchasesController < ApplicationController
         affordable_rank = item.price_coins.present? && item.price_coins <= current_user.coins ? 0 : 1
         rarity_rank = rarity_order.fetch(item.rarity, 9)
         price_rank = item.price_coins || (item.price_euros.to_i * 100)
-        [affordable_rank, rarity_rank, price_rank, item.name]
+        [affordable_rank, rarity_rank, price_rank, item.name.to_s]
       end
       .first(4)
+  end
+
+  def personalized_descriptions_by_item_id(items)
+    items.uniq.each_with_object({}) do |item, result|
+      result[item.id] = personalized_item_description(item)
+    end
   end
 
   def personalized_item_description(item)
@@ -274,10 +278,18 @@ class PurchasesController < ApplicationController
       total_count: steps.size,
       completed_all: completed_count == steps.size
     }
+  rescue StandardError => e
+    Rails.logger.error("Shop challenge build failed: #{e.class} #{e.message}")
+    {
+      steps: [],
+      completed_count: 0,
+      total_count: 0,
+      completed_all: false
+    }
   end
 
   def weekly_shop_challenge_token
-    now = Time.zone.now
+    now = Time.zone.now.to_date
     "shop_weekly_challenge:#{current_user.id}:#{now.cwyear}-#{now.cweek}"
   end
 

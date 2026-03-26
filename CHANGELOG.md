@@ -7,6 +7,11 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+### Corrigé
+- Durcissement de la page Boutique pour eviter les erreurs 500 en presence de donnees partielles (rarete/nom) et en cas d'echec du calcul du defi hebdomadaire
+
+## [1.5.0] - 2026-03-26
+
 ### Modifié
 - Personnalisation des descriptions boutique: packs de coins adaptes au profil joueur et boosts contextualises selon la progression
 - Coloration du texte des objets boutique selon la rarete pour une lecture plus immediate des paliers de valeur
