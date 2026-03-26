@@ -2,7 +2,8 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    ensure_weekly_quest_for_current_user!
+    ensure_global_weekly_quest!
+    attach_current_user_to_active_weekly_quests!
 
     @weekly_quests = current_user.user_weekly_quests
       .joins(:weekly_quest)
@@ -39,29 +40,24 @@ class DashboardController < ApplicationController
 
   private
 
-  def ensure_weekly_quest_for_current_user!
-    has_active_weekly = current_user.user_weekly_quests
-      .joins(:weekly_quest)
-      .where("weekly_quests.valid_until >= ?", Time.current)
-      .exists?
+  def ensure_global_weekly_quest!
+    return if WeeklyQuest.where("valid_until >= ?", Time.current).exists?
 
-    return if has_active_weekly
+    source_quest = Quest.includes(:category).order("RANDOM()").first
+    return unless source_quest
 
-    weekly_quest = WeeklyQuest.where("valid_until >= ?", Time.current).order(:created_at).first
+    WeeklyQuest.create!(
+      title: "Hebdo: #{source_quest.title}",
+      description: source_quest.description.presence || "Complete cette quete hebdomadaire pour un gros bonus.",
+      xp_reward: [source_quest.xp.to_i * 2, 300].max,
+      category: source_quest.category,
+      valid_until: 7.days.from_now
+    )
+  end
 
-    unless weekly_quest
-      source_quest = Quest.includes(:category).order("RANDOM()").first
-      return unless source_quest
-
-      weekly_quest = WeeklyQuest.create!(
-        title: "Hebdo: #{source_quest.title}",
-        description: source_quest.description.presence || "Complete cette quete hebdomadaire pour un gros bonus.",
-        xp_reward: [source_quest.xp.to_i * 2, 300].max,
-        category: source_quest.category,
-        valid_until: 7.days.from_now
-      )
+  def attach_current_user_to_active_weekly_quests!
+    WeeklyQuest.where("valid_until >= ?", Time.current).find_each do |weekly_quest|
+      current_user.user_weekly_quests.find_or_create_by!(weekly_quest: weekly_quest)
     end
-
-    current_user.user_weekly_quests.find_or_create_by!(weekly_quest: weekly_quest)
   end
 end

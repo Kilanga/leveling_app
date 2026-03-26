@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.7] - 2026-03-26
+
+### Fixed
+- Weekly quests are now global/shared across all users instead of being user-specific
+
+### Changed
+- Dashboard now ensures one active global weekly quest and links each user to that same quest
+
 ## [1.2.6] - 2026-03-26
 
 ### Added
