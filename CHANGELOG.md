@@ -7,6 +7,12 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.15] - 2026-03-26
+
+### Modifié
+- Affichage de l'échelle numérique du radar sur chaque axe (et non plus sur un seul)
+- Conservation du mode sans toile d'araignée (grille interne toujours masquée)
+
 ## [1.2.14] - 2026-03-26
 
 ### Modifié

@@ -15,7 +15,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const maxLevel = Math.max(...levels, 1);
   const ctx = canvas.getContext("2d");
 
+  const multiAxisScalePlugin = {
+    id: "multiAxisScalePlugin",
+    afterDraw(chart) {
+      const radial = chart.scales.r;
+      if (!radial || !Array.isArray(radial.ticks) || radial.ticks.length === 0) return;
+
+      const labels = chart.data.labels || [];
+      const tickValues = radial.ticks
+        .map((tick) => Number(tick.value))
+        .filter((value) => Number.isFinite(value) && value > 0);
+
+      const context = chart.ctx;
+      context.save();
+      context.fillStyle = "rgba(184, 170, 149, 0.9)";
+      context.font = "11px system-ui, sans-serif";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+
+      labels.forEach((_, axisIndex) => {
+        tickValues.forEach((value) => {
+          const point = radial.getPointPositionForValue(axisIndex, value);
+          context.fillText(String(value), point.x, point.y);
+        });
+      });
+
+      context.restore();
+    }
+  };
+
   new window.Chart(ctx, {
+    plugins: [multiAxisScalePlugin],
     type: "radar",
     data: {
       labels: statsData.map((stat) => stat.name),
@@ -55,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
           suggestedMax: maxLevel + 2,
           ticks: {
             stepSize: 1,
-            display: true,
+            display: false,
             color: "#b8aa95",
             backdropColor: "transparent",
             z: 10
