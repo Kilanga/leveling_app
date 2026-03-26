@@ -46,6 +46,28 @@
     <div class="surface-card h-100">
       <div class="card-body">
         <h2 class="section-title">Titres et avatars</h2>
+        <p class="quest-meta mb-3">Objets de prestige visibles par les autres joueurs sur profil et classement.</p>
+
+        <% if current_user.active_title.present? %>
+          <div class="shop-row mb-3">
+            <span class="badge text-bg-dark mb-2">Titre actif</span>
+            <div class="d-flex align-items-center justify-content-between gap-2">
+              <strong><%= current_user.active_title.name %></strong>
+              <%= button_to "Retirer", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if current_user.active_avatar_item.present? %>
+          <div class="shop-row mb-3">
+            <span class="badge text-bg-dark mb-2">Avatar actif</span>
+            <div class="d-flex align-items-center gap-2">
+              <%= image_tag current_user.active_avatar_item.image.variant(resize: "48x48"), class: "rounded shop-thumb", width: 48, height: 48 if current_user.active_avatar_item.image.attached? %>
+              <strong><%= current_user.active_avatar_item.name %></strong>
+            </div>
+          </div>
+        <% end %>
+
         <div class="shop-list mb-3">
           <h3 class="h6 mb-1">Titres</h3>
           <% @title_items.each do |item| %>
@@ -56,9 +78,14 @@
                 <strong><%= item.name %></strong>
                 <span class="<%= rarity_css %>"><%= item.rarity.capitalize %></span>
               </div>
-              <p class="quest-meta mb-2"><%= item.description %></p>
-              <% if owned %>
-                <span class="badge text-bg-success">Deja possede</span>
+              <p class="quest-meta mb-2"><%= item.description %> Affiche ce titre sur votre profil.</p>
+              <% if owned && current_user.active_title_id == item.id %>
+                <span class="badge text-bg-primary">Equipe</span>
+              <% elsif owned %>
+                <div class="d-grid gap-2">
+                  <span class="badge text-bg-success">Deja possede</span>
+                  <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
+                </div>
               <% elsif item.price_coins.present? %>
                 <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                   <%= hidden_field_tag :shop_item_id, item.id %>
@@ -89,8 +116,13 @@
                   <p class="quest-meta mb-0"><%= item.description %></p>
                 </div>
               </div>
-              <% if owned %>
-                <span class="badge text-bg-success">Deja possede</span>
+              <% if owned && current_user.active_avatar_item_id == item.id %>
+                <span class="badge text-bg-primary">Equipe</span>
+              <% elsif owned %>
+                <div class="d-grid gap-2">
+                  <span class="badge text-bg-success">Deja possede</span>
+                  <%= button_to "Equiper", activate_avatar_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
+                </div>
               <% elsif item.price_coins.present? %>
                 <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                   <%= hidden_field_tag :shop_item_id, item.id %>

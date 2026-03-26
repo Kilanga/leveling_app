@@ -4,7 +4,7 @@
 <div class="row align-items-center">
   <!-- Avatar (colonne gauche) -->
   <div class="col-md-4 text-center">
-    <%= image_tag @user.avatar, class: "rounded-circle", width: 250, height: 250, alt: "Avatar de #{@user.pseudo}" %>
+    <%= user_avatar_image(@user, width: 250, height: 250, css_class: "rounded-circle", alt: "Avatar de #{@user.pseudo}") %>
   </div>
 
   <!-- Graphique de stats (colonne droite) -->

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   }
   post "activate_title", to: "users#activate_title"
   post "deactivate_title", to: "users#deactivate_title"
+  post "activate_avatar", to: "users#activate_avatar"
 
   # Classement
   resources :leaderboard, only: [ :index, :show ]

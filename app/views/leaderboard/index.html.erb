@@ -28,11 +28,7 @@
           <tr>
             <td>#<%= index + 1 %></td>
             <td>
-              <% if player.avatar.present? %>
-                <img src="<%= player.avatar %>" class="rounded-circle" width="50" height="50">
-              <% else %>
-                <span class="text-muted">Aucun avatar</span>
-              <% end %>
+              <%= user_avatar_image(player, width: 50, height: 50, css_class: "rounded-circle", alt: "Avatar de #{player.pseudo}") %>
             </td>
             <td>
               <%= link_to player.pseudo, leaderboard_path(player), class: "text-primary fw-bold" %>

@@ -29,6 +29,7 @@ class User < ApplicationRecord
   has_many :shop_items, through: :user_items
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
+  belongs_to :active_avatar_item, class_name: "ShopItem", optional: true
 
   validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }
   validates :email, presence: true, uniqueness: true
@@ -56,6 +57,13 @@ class User < ApplicationRecord
 
   def deactivate_title
     update(active_title: nil)
+  end
+
+  def activate_avatar(item)
+    return false unless item&.item_type == "cosmetic"
+    return false unless user_items.exists?(shop_item_id: item.id)
+
+    update(active_avatar_item: item)
   end
 
   # Retourne la classe de couleur pour le titre du joueur

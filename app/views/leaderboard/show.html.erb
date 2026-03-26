@@ -1,7 +1,7 @@
 <h1>Profil de <%= @player.pseudo %></h1>
 
 <div class="profile-info text-center">
-<%= image_tag @player.avatar, alt: "Avatar de #{@player.pseudo}", class: "img-thumbnail", size: "150x150" %>
+<%= user_avatar_image(@player, width: 150, height: 150, css_class: "img-thumbnail", alt: "Avatar de #{@player.pseudo}") %>
 
 </div>
 

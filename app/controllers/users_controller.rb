@@ -24,6 +24,17 @@ class UsersController < ApplicationController
     redirect_to user_profile_path, notice: "Titre retiré."
   end
 
+  def activate_avatar
+    item = current_user.shop_items.find_by(id: params[:shop_item_id], item_type: "cosmetic")
+    return redirect_to new_purchase_path, alert: "Avatar introuvable." unless item
+
+    if current_user.activate_avatar(item)
+      redirect_to new_purchase_path, notice: "Avatar equipe avec succes."
+    else
+      redirect_to new_purchase_path, alert: "Impossible d'equiper cet avatar."
+    end
+  end
+
   def complete_profile
     @user = current_user
   end

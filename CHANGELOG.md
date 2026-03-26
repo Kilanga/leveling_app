@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enforce profile completion after first Google OAuth signup (pseudo + avatar required)
 - Add dedicated profile completion page for Google users before entering the app
 - Add `profile_completed` flag on users to track onboarding state
+- Add equip flow for owned cosmetic avatars directly from the shop
+- Add active cosmetic avatar support on users (`active_avatar_item_id`)
 
 ### Fixed
 - Resolve OmniAuth CSRF/authenticity failures in production request phase
@@ -19,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Remove non-essential authentication flash messages (success/info noise)
 - Keep authentication feedback focused on actionable warnings/errors
+- Redesign shop Titles/Avatars section with stronger rarity framing and ownership states
+- Add direct "Equiper" actions for owned titles and avatars to increase cosmetic value
+- Display equipped cosmetic avatars in profile and leaderboard views
 
 ## [1.2.2] - 2026-03-27
 ### Fixed
