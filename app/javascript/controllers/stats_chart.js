@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
           beginAtZero: true,
           suggestedMin: 0,
           suggestedMax: maxLevel + 2,
-          ticks: { stepSize: 1, backdropColor: "transparent", color: "#7a6750" },
-          grid: { color: "rgba(124, 77, 31, 0.2)" },
-          angleLines: { color: "rgba(124, 77, 31, 0.2)" },
+          ticks: { stepSize: 1, display: false, backdropColor: "transparent" },
+          grid: { display: false },
+          angleLines: { display: false },
           pointLabels: { color: "#4c3b25", font: { size: 12, weight: "600" } }
         }
       }

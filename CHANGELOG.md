@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.11] - 2026-03-26
+
+### Modifié
+- Suppression du titre affiché au-dessus du diagramme radar pour une interface plus épurée
+- Retrait du quadrillage intérieur du diagramme radar pour un rendu plus propre
+- Renforcement du style personnalisé des boutons d'actions principales pour s'éloigner davantage du rendu Bootstrap
+
 ## [1.2.10] - 2026-03-26
 
 ### Modifié

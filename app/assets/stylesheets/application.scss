@@ -247,6 +247,23 @@ body {
 
 .btn {
   border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-arcade {
+  border-radius: 10px;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.btn-arcade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%);
+  pointer-events: none;
 }
 
 .btn-primary,
