@@ -12,6 +12,8 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.7.2] - 2026-03-27
+
 ### Corrigé
 - Nettoyage visuel de la zone compte du profil (alignement des actions, reduction de l'espace vide en haut)
 - Affichage du titre actif au format badge, coherent avec le rendu du leaderboard
