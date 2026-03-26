@@ -7,6 +7,8 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.3.3] - 2026-03-26
+
 ### Modifié
 - Refonte de la page Quetes en mode "mission board" pour limiter l'effet liste longue
 - Ajout de tuiles de synthese (missions visibles, suivies, categories) pour une lecture immediate
