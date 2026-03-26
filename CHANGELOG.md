@@ -7,6 +7,12 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.20] - 2026-03-26
+
+### Modifié
+- Amélioration de la lisibilité des chiffres du radar: labels décalés des points et contour de texte pour éviter le chevauchement
+- Alignement visuel des cards sur la signature des boutons HUD (bordure, angles et glow cohérents)
+
 ## [1.2.19] - 2026-03-26
 
 ### Modifié

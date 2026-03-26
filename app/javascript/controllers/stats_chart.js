@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const context = chart.ctx;
       context.save();
       context.fillStyle = "rgba(167, 205, 231, 0.9)";
-      context.font = "11px system-ui, sans-serif";
+      context.strokeStyle = "rgba(6, 19, 31, 0.95)";
+      context.lineWidth = 3;
+      context.font = "600 12px system-ui, sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
 
@@ -33,8 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const value = Number(rawValue);
         if (!Number.isFinite(value)) return;
 
-        const labelPoint = radial.getPointPositionForValue(axisIndex, value + 0.45);
+        const point = radial.getPointPositionForValue(axisIndex, value);
+        const dx = point.x - radial.xCenter;
+        const dy = point.y - radial.yCenter;
+        const distance = Math.hypot(dx, dy) || 1;
+        const offset = 12;
 
+        const labelPoint = {
+          x: point.x + (dx / distance) * offset,
+          y: point.y + (dy / distance) * offset
+        };
+
+        context.strokeText(String(value), labelPoint.x, labelPoint.y);
         context.fillText(String(value), labelPoint.x, labelPoint.y);
       });
 
