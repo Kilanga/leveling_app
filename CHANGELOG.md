@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.21] - 2026-03-26
+
+### Modifié
+- Harmonisation de la page Boutique avec le même langage visuel HUD que le reste de l'interface
+- Epuration de la Boutique avec sections plates et suppression du rendu "card dans card"
+- Harmonisation de la page Classement (index et profil joueur) vers un conteneur principal unique avec sections internes
+
 ## [1.2.20] - 2026-03-26
 
 ### Modifié

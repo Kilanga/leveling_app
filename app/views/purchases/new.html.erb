@@ -1,91 +1,89 @@
 <h1 class="page-title">Marche des aventuriers</h1>
 <p class="page-subtitle">Obtenez des ressources premium pour accelerer votre progression.</p>
 
-<div class="row g-4">
-  <div class="col-lg-4">
-    <div class="surface-card h-100">
-      <div class="card-body">
-        <h2 class="section-title">Packs de coins</h2>
-        <div class="shop-list">
-          <% @coins_prices.each do |option| %>
-            <div class="shop-row">
-              <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
-                <%= hidden_field_tag :amount, option[:amount] %>
-                <%= hidden_field_tag :item_type, option[:label] %>
-                <strong><%= option[:label] %></strong>
-                <%= submit_tag "Acheter - #{option[:amount]} EUR", class: "btn btn-brand" %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4">
-    <div class="surface-card h-100">
-      <div class="card-body">
-        <h2 class="section-title">Boosts XP</h2>
-        <div class="shop-list">
-          <% @boosts.each do |boost| %>
-            <div class="shop-row">
-              <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
-                <%= hidden_field_tag :amount, boost[:amount] %>
-                <%= hidden_field_tag :item_type, boost[:label] %>
-                <strong><%= boost[:label] %></strong>
-                <%= submit_tag "Activer - #{boost[:amount]} EUR", class: "btn btn-success" %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4">
-    <div class="surface-card h-100">
-      <div class="card-body">
-        <h2 class="section-title">Titres</h2>
-        <p class="quest-meta mb-3">Objets de prestige visibles sur votre profil et le classement.</p>
-
-        <% if current_user.active_title.present? %>
-          <div class="shop-row mb-3">
-            <span class="badge text-bg-dark mb-2">Titre actif</span>
-            <div class="d-flex align-items-center justify-content-between gap-2">
-              <strong><%= current_user.active_title.name %></strong>
-              <%= button_to "Retirer", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
-            </div>
-          </div>
-        <% end %>
-
-        <div class="shop-list">
-          <% @title_items.each do |item| %>
-            <% rarity_css = "rarity-chip rarity-chip--#{item.rarity}" %>
-            <% owned = @owned_item_ids.include?(item.id) %>
-            <div class="shop-row">
-              <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
-                <strong><%= item.name %></strong>
-                <span class="<%= rarity_css %>"><%= item.rarity.capitalize %></span>
-              </div>
-              <p class="quest-meta mb-2"><%= item.description %> Affiche ce titre sur votre profil.</p>
-              <% if owned && current_user.active_title_id == item.id %>
-                <span class="badge text-bg-primary">Equipe</span>
-              <% elsif owned %>
-                <div class="d-grid gap-2">
-                  <span class="badge text-bg-success">Deja possede</span>
-                  <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
-                </div>
-              <% elsif item.price_coins.present? %>
-                <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
-                  <%= hidden_field_tag :shop_item_id, item.id %>
-                  <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-outline-quest" %>
+<div class="surface-card surface-card--shell">
+  <div class="card-body">
+    <div class="row g-4">
+      <div class="col-lg-4 hud-column-divider">
+        <section class="hud-section h-100">
+          <h2 class="section-title">Packs de coins</h2>
+          <div class="shop-list shop-list--flat">
+            <% @coins_prices.each do |option| %>
+              <div class="shop-row shop-row--flat">
+                <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
+                  <%= hidden_field_tag :amount, option[:amount] %>
+                  <%= hidden_field_tag :item_type, option[:label] %>
+                  <strong><%= option[:label] %></strong>
+                  <%= submit_tag "Acheter - #{option[:amount]} EUR", class: "btn btn-brand" %>
                 <% end %>
-              <% else %>
-                <span class="badge text-bg-secondary">Indisponible</span>
-              <% end %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-4 hud-column-divider">
+        <section class="hud-section h-100">
+          <h2 class="section-title">Boosts XP</h2>
+          <div class="shop-list shop-list--flat">
+            <% @boosts.each do |boost| %>
+              <div class="shop-row shop-row--flat">
+                <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
+                  <%= hidden_field_tag :amount, boost[:amount] %>
+                  <%= hidden_field_tag :item_type, boost[:label] %>
+                  <strong><%= boost[:label] %></strong>
+                  <%= submit_tag "Activer - #{boost[:amount]} EUR", class: "btn btn-success" %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-4">
+        <section class="hud-section h-100">
+          <h2 class="section-title">Titres</h2>
+          <p class="quest-meta mb-3">Objets de prestige visibles sur votre profil et le classement.</p>
+
+          <% if current_user.active_title.present? %>
+            <div class="shop-row shop-row--flat mb-3">
+              <span class="badge text-bg-dark mb-2">Titre actif</span>
+              <div class="d-flex align-items-center justify-content-between gap-2">
+                <strong><%= current_user.active_title.name %></strong>
+                <%= button_to "Retirer", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
+              </div>
             </div>
           <% end %>
-        </div>
+
+          <div class="shop-list shop-list--flat">
+            <% @title_items.each do |item| %>
+              <% rarity_css = "rarity-chip rarity-chip--#{item.rarity}" %>
+              <% owned = @owned_item_ids.include?(item.id) %>
+              <div class="shop-row shop-row--flat">
+                <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                  <strong><%= item.name %></strong>
+                  <span class="<%= rarity_css %>"><%= item.rarity.capitalize %></span>
+                </div>
+                <p class="quest-meta mb-2"><%= item.description %> Affiche ce titre sur votre profil.</p>
+                <% if owned && current_user.active_title_id == item.id %>
+                  <span class="badge text-bg-primary">Equipe</span>
+                <% elsif owned %>
+                  <div class="d-grid gap-2">
+                    <span class="badge text-bg-success">Deja possede</span>
+                    <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
+                  </div>
+                <% elsif item.price_coins.present? %>
+                  <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                    <%= hidden_field_tag :shop_item_id, item.id %>
+                    <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-outline-quest" %>
+                  <% end %>
+                <% else %>
+                  <span class="badge text-bg-secondary">Indisponible</span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </section>
       </div>
     </div>
   </div>

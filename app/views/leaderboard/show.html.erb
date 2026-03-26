@@ -1,46 +1,56 @@
-<h1>Profil de <%= @player.pseudo %></h1>
+<h1 class="page-title">Profil de <%= @player.pseudo %></h1>
 
-<div class="profile-info text-center">
-<%= user_avatar_image(@player, width: 150, height: 150, css_class: "img-thumbnail", alt: "Avatar de #{@player.pseudo}") %>
+<div class="surface-card surface-card--shell">
+  <div class="card-body">
+    <section class="hud-section text-center mb-4">
+      <%= user_avatar_image(@player, width: 150, height: 150, css_class: "rounded-circle", alt: "Avatar de #{@player.pseudo}") %>
+    </section>
 
+    <section class="hud-section">
+      <h3 class="section-title">Statistiques</h3>
+      <% if @top_categories.any? %>
+        <ul class="list-group surface-list">
+          <% @top_categories.each do |stat| %>
+            <li class="list-group-item"><strong><%= stat.category.name %></strong> : Niveau <%= stat.level %> | XP : <%= stat.xp %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>Aucune statistique disponible.</p>
+      <% end %>
+    </section>
+
+    <section class="hud-section mt-4">
+      <h3 class="section-title">Quêtes les plus réalisées</h3>
+      <% if @most_completed_quests.any? %>
+        <ul class="list-group surface-list">
+          <% @most_completed_quests.each do |user_quest| %>
+            <li class="list-group-item">
+              <strong><%= user_quest.quest.title %></strong> - Complétée <%= user_quest.completed_count %> fois
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>Aucune quête populaire.</p>
+      <% end %>
+    </section>
+
+    <section class="hud-section mt-4">
+      <h3 class="section-title">Dernières quêtes réalisées</h3>
+      <% if @recent_quests.any? %>
+        <ul class="list-group surface-list">
+          <% @recent_quests.each do |user_quest| %>
+            <li class="list-group-item">
+              <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>Aucune quête récente.</p>
+      <% end %>
+    </section>
+
+    <div class="mt-4">
+      <%= link_to "Retour au classement", leaderboard_index_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
 </div>
-
-
-<h3>Statistiques</h3>
-<% if @top_categories.any? %>
-  <ul>
-    <% @top_categories.each do |stat| %>
-      <li><strong><%= stat.category.name %></strong> : Niveau <%= stat.level %> | XP : <%= stat.xp %></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Aucune statistique disponible.</p>
-<% end %>
-
-<h3>Quêtes les plus réalisées</h3>
-<% if @most_completed_quests.any? %>
-  <ul class="list-group">
-    <% @most_completed_quests.each do |user_quest| %>
-      <li class="list-group-item">
-        <strong><%= user_quest.quest.title %></strong> - Complétée <%= user_quest.completed_count %> fois
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Aucune quête populaire.</p>
-<% end %>
-
-<h3>Dernières quêtes réalisées</h3>
-<% if @recent_quests.any? %>
-  <ul class="list-group">
-    <% @recent_quests.each do |user_quest| %>
-      <li class="list-group-item">
-        <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Aucune quête récente.</p>
-<% end %>
-
-<%= link_to "Retour au classement", leaderboard_index_path, class: "btn btn-secondary mt-3" %>
