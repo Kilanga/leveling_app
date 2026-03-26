@@ -17,13 +17,10 @@ class PurchasesController < ApplicationController
     @boosts = BOOST_PACKS.map { |label, config| { label: label, amount: config[:amount], duration: config[:duration] } }
 
     @title_items = ShopItem.where(item_type: "title").order(rarity: :asc, name: :asc)
-    @avatar_items = ShopItem.where(item_type: "cosmetic").order(rarity: :asc, name: :asc)
-    @bundles = build_shop_bundles
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
   end
 
   def create
-    return handle_bundle_purchase if params[:bundle_title_id].present? && params[:bundle_avatar_id].present?
     return handle_shop_item_purchase if params[:shop_item_id].present?
     return handle_pack_purchase if params[:item_type].present? && params[:amount].present?
 
@@ -101,32 +98,6 @@ class PurchasesController < ApplicationController
     else
       redirect_to new_purchase_path, alert: "Achat impossible."
     end
-  end
-
-  def handle_bundle_purchase
-    title_item = ShopItem.find_by(id: params[:bundle_title_id], item_type: "title")
-    avatar_item = ShopItem.find_by(id: params[:bundle_avatar_id], item_type: "cosmetic")
-    return redirect_to(new_purchase_path, alert: "Bundle invalide.") unless title_item && avatar_item
-
-    bundle = build_shop_bundles.find do |entry|
-      entry[:title_item].id == title_item.id && entry[:avatar_item].id == avatar_item.id
-    end
-    return redirect_to(new_purchase_path, alert: "Bundle indisponible.") unless bundle
-
-    if current_user.user_items.exists?(shop_item_id: title_item.id) || current_user.user_items.exists?(shop_item_id: avatar_item.id)
-      return redirect_to new_purchase_path, alert: "Vous possedez deja un objet de ce bundle."
-    end
-
-    bundle_price = bundle[:bundle_price]
-    return redirect_to(new_purchase_path, alert: "Pas assez de coins pour ce bundle.") if current_user.coins < bundle_price
-
-    ActiveRecord::Base.transaction do
-      current_user.decrement!(:coins, bundle_price)
-      current_user.user_items.find_or_create_by!(shop_item: title_item)
-      current_user.user_items.find_or_create_by!(shop_item: avatar_item)
-    end
-
-    redirect_to new_purchase_path, notice: "Bundle achete ! Economie: #{bundle[:savings]} coins."
   end
 
   def handle_pack_purchase
@@ -213,26 +184,4 @@ class PurchasesController < ApplicationController
     Rails.logger.warn("Purchase confirmation email failed: #{e.class} #{e.message}")
   end
 
-  def build_shop_bundles
-    titles = ShopItem.where(item_type: "title").where.not(price_coins: nil)
-    avatars = ShopItem.where(item_type: "cosmetic").where.not(price_coins: nil)
-
-    %w[rare epic legendary].filter_map do |rarity|
-      title_item = titles.select { |item| item.rarity == rarity }.min_by(&:price_coins)
-      avatar_item = avatars.select { |item| item.rarity == rarity }.min_by(&:price_coins)
-      next unless title_item && avatar_item
-
-      base_price = title_item.price_coins + avatar_item.price_coins
-      bundle_price = [ (base_price * 0.8).floor, 1 ].max
-
-      {
-        rarity: rarity,
-        title_item: title_item,
-        avatar_item: avatar_item,
-        base_price: base_price,
-        bundle_price: bundle_price,
-        savings: base_price - bundle_price
-      }
-    end
-  end
 end

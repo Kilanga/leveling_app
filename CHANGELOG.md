@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add a "Signaler un bug" button on the dashboard linking to GitHub Issues
+
+### Changed
+- Temporarily remove avatar and bundle offers from the shop interface
+- Keep the shop focused on title purchases and equipment actions
+
 ## [1.2.3] - 2026-03-26
 
 ### Added
