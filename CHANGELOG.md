@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enforce a single active global weekly quest by expiring duplicate active weekly quests
 
 ### Changed
-- Refresh the global visual theme to an immersive dark "system" style
+- Refonte globale de l'interface vers un style immersif sombre de type "system"
 - Update navigation branding and interface contrast for stronger readability
 - Restyle cards, buttons, alerts, and form inputs to match the new interface direction
 
