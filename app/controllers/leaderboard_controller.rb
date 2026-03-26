@@ -25,7 +25,7 @@ class LeaderboardController < ApplicationController
                                         .group("user_id, quest_id")
                                         .order(Arel.sql("COUNT(*) DESC"))
                                         .limit(5)
-                                        .includes(:user, :quest)
+                                        .preload(:user, :quest)
 
       @recent_quests = UserQuest.includes(:user, :quest)
                                 .where(user_id: friend_ids)
@@ -44,12 +44,12 @@ class LeaderboardController < ApplicationController
     @top_categories = @player.user_stats.includes(:category).order(total_xp: :desc).limit(3)
 
     # Quêtes les plus complétées par ce joueur
-    @most_completed_quests = @player.user_quests.joins(:quest)
+    @most_completed_quests = @player.user_quests
                       .select("user_quests.quest_id, COUNT(*) AS completed_count")
                       .group("user_quests.quest_id")
-                      .order("completed_count DESC")
+              .order(Arel.sql("COUNT(*) DESC"))
                       .limit(5)
-                      .includes(:quest)
+              .preload(:quest)
 
     # Ses dernières quêtes
     @recent_quests = @player.user_quests.includes(:quest).order(updated_at: :desc).limit(5)
