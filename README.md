@@ -38,18 +38,14 @@
 
 - `./bin/bundle exec rspec`
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Commit message guidelines
+- Semantic versioning rules
+- Release and tag process
+- Changelog format
+
 ## Changelog
 
-### v1.2.0 (2026-03-26)
-- **FEATURE**: Add Google OAuth integration via Devise OmniAuth
-  - Users can now sign up and log in with their Google account
-  - Auto-generates `pseudo` and assigns default avatar on first Google login
-  - Requires `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` env vars
-  - OAuth callback URL: `/users/auth/google_oauth2/callback`
-- **FEATURE**: Add Supabase Postgres Best Practices Agent Skill
-- **FIX**: Use Supabase IPv4 pooler endpoint (`aws-1-eu-north-1.pooler.supabase.com:6543`) for Heroku compatibility
-
-### v1.1.2 (2026-03-26)
-- **FEATURE**: Add Stripe webhook + idempotent purchase fulfillment
-- **FEATURE**: Add purchase confirmation emails via Action Mailer
-- **FIX**: Security dependency updates (Rails, Devise, Nokogiri, Rack)
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
