@@ -1,54 +1,182 @@
 <h1 class="page-title">Chasse aux quetes</h1>
-<p class="page-subtitle">Filtrez votre prochaine mission et suivez votre progression en continu.</p>
+<p class="page-subtitle">Transforme ta to-do list en missions: choisis vite, suis l'avancement et grind ton XP.</p>
 
 <div class="surface-card surface-card--shell">
   <div class="card-body">
+    <section class="hud-section quest-mission-board mb-3">
+      <div class="quest-stat-tile">
+        <span class="quest-stat-tile__label">Missions visibles</span>
+        <strong class="quest-stat-tile__value"><%= @quests.size %></strong>
+      </div>
+      <div class="quest-stat-tile">
+        <span class="quest-stat-tile__label">Missions suivies</span>
+        <strong class="quest-stat-tile__value"><%= @active_user_quests_count %></strong>
+      </div>
+      <div class="quest-stat-tile">
+        <span class="quest-stat-tile__label">Categories</span>
+        <strong class="quest-stat-tile__value"><%= @categories.size %></strong>
+      </div>
+    </section>
+
     <section class="hud-section">
       <%= form_with url: quests_path, method: :get, local: true, class: "row g-2 mobile-stack" do %>
-        <div class="col-md-5">
-          <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Rechercher une quete..." %>
-        </div>
+        <%= hidden_field_tag :difficulty, @selected_difficulty %>
         <div class="col-md-4">
-          <%= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id]), include_blank: "Toutes les categories", class: "form-select" %>
+          <%= text_field_tag :query, @query, class: "form-control", placeholder: "Rechercher une quete ou un objectif..." %>
         </div>
-        <div class="col-md-3 d-grid">
+        <div class="col-md-3">
+          <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, @selected_category_id), include_blank: "Toutes les categories", class: "form-select" %>
+        </div>
+        <div class="col-md-3">
+          <%= select_tag :sort, options_for_select([["Tri: mission du jour", "featured"], ["Tri: rapide a faire", "quick"], ["Tri: gros gain XP", "big_xp"]], @selected_sort), class: "form-select" %>
+        </div>
+        <div class="col-md-2 d-grid">
           <button type="submit" class="btn btn-brand">Lancer la recherche</button>
         </div>
       <% end %>
+
+      <div class="quest-difficulty-tabs mt-3">
+        <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: nil), class: "quest-tab #{'quest-tab--active' if @selected_difficulty.blank?}" do %>
+          Toutes difficultees <span><%= @difficulty_totals.values.sum %></span>
+        <% end %>
+        <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: "easy"), class: "quest-tab #{'quest-tab--active' if @selected_difficulty == 'easy'}" do %>
+          Easy <span><%= @difficulty_totals[:easy] %></span>
+        <% end %>
+        <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: "medium"), class: "quest-tab #{'quest-tab--active' if @selected_difficulty == 'medium'}" do %>
+          Medium <span><%= @difficulty_totals[:medium] %></span>
+        <% end %>
+        <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: "hard"), class: "quest-tab #{'quest-tab--active' if @selected_difficulty == 'hard'}" do %>
+          Hard <span><%= @difficulty_totals[:hard] %></span>
+        <% end %>
+      </div>
+
+      <div class="quest-category-chips mt-3">
+        <%= link_to quests_path(query: @query.presence, sort: @selected_sort, difficulty: @selected_difficulty.presence), class: "quest-chip #{'quest-chip--active' if @selected_category_id.blank?}" do %>
+          Toutes <span><%= @category_totals.values.sum %></span>
+        <% end %>
+        <% @categories.each do |category| %>
+          <%= link_to quests_path(category_id: category.id, query: @query.presence, sort: @selected_sort, difficulty: @selected_difficulty.presence), class: "quest-chip #{'quest-chip--active' if @selected_category_id.to_s == category.id.to_s}" do %>
+            <%= category.name %> <span><%= @category_totals[category.id].to_i %></span>
+          <% end %>
+        <% end %>
+      </div>
     </section>
 
     <hr class="hud-divider">
 
-    <section class="hud-section">
-      <div class="quest-list quest-list--flat">
-        <% @quests.each do |quest| %>
-          <div class="quest-row quest-row--flat">
-            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-              <div>
+    <section class="hud-section mb-3">
+      <h2 class="section-title">Recommandees pour toi</h2>
+      <% if @recommended_quests.any? %>
+        <div class="quest-reco-grid">
+          <% @recommended_quests.each do |quest| %>
+            <% user_quest = @user_quests_by_quest_id[quest.id] %>
+            <article class="quest-reco-card">
+              <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap">
                 <strong><%= quest.title %></strong>
-                <p class="quest-meta mb-0"><%= quest.category.name %> - <%= quest.xp %> XP</p>
+                <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
               </div>
-              <div class="quest-actions">
-                <% user_quest = current_user.user_quests.find_by(quest: quest) %>
-
+              <p class="quest-meta mb-2"><%= quest.category.name %></p>
+              <p class="quest-card__description"><%= quest.description %></p>
+              <div class="mt-2">
                 <% if user_quest && user_quest.active? %>
-                  <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
-                    <%= hidden_field_tag :action_type, "unfollow" %>
-                    <%= submit_tag "Ne plus suivre", class: "btn btn-sm btn-outline-danger" %>
-                  <% end %>
+                  <span class="quest-featured-tag">Deja suivie</span>
                 <% else %>
                   <%= form_with url: user_quests_path, method: :post, class: "d-inline", local: true do %>
                     <%= hidden_field_tag :quest_id, quest.id %>
-                    <% if user_quest %>
-                      <%= hidden_field_tag :reactivate, true %>
-                    <% end %>
-                    <%= submit_tag "Suivre", class: "btn btn-sm btn-brand" %>
+                    <%= submit_tag "Ajouter", class: "btn btn-sm btn-brand" %>
                   <% end %>
                 <% end %>
               </div>
-            </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="alert alert-warning mb-0">Pas encore de recommandations disponibles. Termine quelques missions pour personnaliser la suite.</div>
+      <% end %>
+    </section>
+
+    <section class="hud-section">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h2 class="section-title">Tes quetes actives</h2>
+          <div class="quest-list quest-list--flat">
+            <% if @active_user_quests.any? %>
+              <% @active_user_quests.limit(6).each do |user_quest| %>
+                <div class="quest-row quest-row--flat">
+                  <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                    <strong><%= user_quest.quest.title %></strong>
+                    <% streak = user_quest.completed_count.to_i %>
+                    <% streak_label, streak_class = if streak >= 15
+                        ["Legend", "quest-streak quest-streak--legend"]
+                      elsif streak >= 7
+                        ["En feu", "quest-streak quest-streak--fire"]
+                      elsif streak >= 3
+                        ["Regulier", "quest-streak quest-streak--steady"]
+                      else
+                        ["Debut", "quest-streak quest-streak--start"]
+                      end %>
+                    <span class="<%= streak_class %>"><%= streak_label %> x<%= streak %></span>
+                  </div>
+                  <p class="quest-meta mb-0"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
+                </div>
+              <% end %>
+              <% if @active_user_quests.size > 6 %>
+                <p class="quest-meta mt-2 mb-0">+<%= @active_user_quests.size - 6 %> autres missions actives</p>
+              <% end %>
+            <% else %>
+              <div class="alert alert-warning mb-0">Aucune mission suivie. Lance-en une dans le catalogue.</div>
+            <% end %>
           </div>
-        <% end %>
+        </div>
+
+        <div class="col-lg-8">
+          <h2 class="section-title">Catalogue des missions</h2>
+          <div class="quest-grid">
+            <% if @quests.any? %>
+              <% @quests.each do |quest| %>
+                <% user_quest = @user_quests_by_quest_id[quest.id] %>
+                <article class="quest-card <%= 'quest-card--featured' if quest.daily_featured? %>">
+                  <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap mb-2">
+                    <h3 class="quest-card__title mb-0"><%= quest.title %></h3>
+                    <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
+                  </div>
+                  <% difficulty_label, difficulty_class = if quest.xp <= 80
+                      ["Easy", "quest-difficulty quest-difficulty--easy"]
+                    elsif quest.xp <= 150
+                      ["Medium", "quest-difficulty quest-difficulty--medium"]
+                    else
+                      ["Hard", "quest-difficulty quest-difficulty--hard"]
+                    end %>
+                  <p class="quest-meta mb-2 d-flex align-items-center gap-2 flex-wrap"><%= quest.category.name %> <span class="<%= difficulty_class %>"><%= difficulty_label %></span></p>
+                  <p class="quest-card__description"><%= quest.description %></p>
+
+                  <div class="quest-card__footer">
+                    <% if user_quest && user_quest.active? %>
+                      <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
+                        <%= hidden_field_tag :action_type, "unfollow" %>
+                        <%= submit_tag "Ne plus suivre", class: "btn btn-sm btn-outline-danger" %>
+                      <% end %>
+                    <% else %>
+                      <%= form_with url: user_quests_path, method: :post, class: "d-inline", local: true do %>
+                        <%= hidden_field_tag :quest_id, quest.id %>
+                        <% if user_quest %>
+                          <%= hidden_field_tag :reactivate, true %>
+                        <% end %>
+                        <%= submit_tag "Suivre", class: "btn btn-sm btn-brand" %>
+                      <% end %>
+                    <% end %>
+
+                    <% if quest.daily_featured? %>
+                      <span class="quest-featured-tag">Mission du jour</span>
+                    <% end %>
+                  </div>
+                </article>
+              <% end %>
+            <% else %>
+              <div class="alert alert-warning mb-0">Aucune mission ne correspond a ta recherche. Essaie un autre mot-cle.</div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </section>
   </div>

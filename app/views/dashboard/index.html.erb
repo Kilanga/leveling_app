@@ -8,6 +8,15 @@
   <% end %>
 </p>
 
+<% if flash[:streak_up_quest_title].present? && flash[:streak_up_value].present? %>
+  <div class="surface-card streak-up-banner mb-4" role="status" aria-live="polite">
+    <div class="card-body d-flex justify-content-between align-items-center gap-2 flex-wrap">
+      <strong>Streak up: <%= flash[:streak_up_quest_title] %></strong>
+      <span class="streak-up-banner__value">x<%= flash[:streak_up_value] %></span>
+    </div>
+  </div>
+<% end %>
+
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
     <div class="row g-4">

@@ -39,6 +39,10 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "example.com" }
 
+  # Rails 8 host authorization can block request specs default hosts.
+  config.hosts << "www.example.com"
+  config.hosts << "example.org"
+
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 

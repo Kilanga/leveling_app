@@ -39,7 +39,11 @@ class UserQuestsController < ApplicationController
 
     case params[:action_type]
     when "complete"
+      quest_title = @user_quest.quest.title
       if XpAwarder.complete_user_quest!(@user_quest)
+        @user_quest.reload
+        flash[:streak_up_quest_title] = quest_title
+        flash[:streak_up_value] = @user_quest.completed_count.to_i
         redirect_to root_path, notice: "Quête complétée ! XP ajouté."
       else
         redirect_to root_path, alert: "Cette quête n'est plus active."

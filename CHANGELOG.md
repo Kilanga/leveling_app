@@ -7,6 +7,20 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+### Modifié
+- Refonte de la page Quetes en mode "mission board" pour limiter l'effet liste longue
+- Ajout de tuiles de synthese (missions visibles, suivies, categories) pour une lecture immediate
+- Ajout de filtres rapides par categories via chips avec compteurs
+- Separation claire entre "Tes quetes actives" et "Catalogue des missions"
+- Transformation du catalogue en cartes de mission plus lisibles (description, XP, statut, mission du jour)
+- Ajout d'onglets de difficulte (Easy, Medium, Hard) avec compteurs contextuels
+- Ajout d'un tri rapide (mission du jour, rapide a faire, gros gain XP)
+- Ajout d'un indicateur de streak sur les quetes actives pour visualiser la regularite
+- Ajout d'un feedback visuel anime de streak apres validation d'une quete
+- Ajout d'un bloc "Recommandees pour toi" base sur les categories de progression du joueur
+- Optimisation des requetes de la page Quetes pour eviter les recherches utilisateur N+1
+- Alignement du workflow CI GitHub Actions pour declencher sur `master` et `main`
+
 ## [1.3.2] - 2026-03-26
 
 ### Sécurité
