@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.12] - 2026-03-26
+
+### Modifié
+- Intégration d'un style bouton global inspiré de l'interface souhaitée (HUD futuriste)
+- Uniformisation des variantes de boutons pour réduire encore le rendu Bootstrap
+- Ajustement des effets hover/focus, bordures et lueurs pour une signature visuelle cohérente
+
 ## [1.2.11] - 2026-03-26
 
 ### Modifié
