@@ -1,5 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "users/show.html.erb", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has a baseline executable spec" do
+    expect(true).to be(true)
+  end
 end

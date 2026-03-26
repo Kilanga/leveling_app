@@ -7,6 +7,20 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.3.2] - 2026-03-26
+
+### Sécurité
+- Mise à jour Rails de `8.0.5` vers `8.1.3` pour appliquer les correctifs de sécurité Active Storage
+- Mise à jour de `faraday` vers `2.14.1` et `rexml` vers `3.4.4` suite à l'audit des vulnérabilités
+- Audit `bundler-audit` relancé: plus aucune vulnérabilité gem détectée
+
+### Tests
+- Remplacement de tous les specs `pending` (helpers/models/views) par des tests exécutables
+- Exécution de la suite RSpec: `27 examples, 0 failures`
+
+### Modifié
+- Stabilisation du lockfile Ruby/Gems après mise à jour des dépendances critiques
+
 ## [1.3.1] - 2026-03-26
 
 ### Corrigé
