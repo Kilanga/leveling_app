@@ -10,22 +10,20 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ## [1.2.25] - 2026-03-26
 
 ### Modifié
-- Suppression des lignes verticales de séparation dans la Boutique pour un rendu plus léger
-- Conservation du reste du layout et des espacements validés
+- Regroupement des itérations d'espacement de la Boutique (issues de 1.2.23 a 1.2.25)
+- Harmonisation de l'espacement vertical entre les colonnes Boosts/Titres et la colonne gauche
+- Suppression des lignes verticales de séparation pour un rendu plus léger
+- Ajustement des espacements internes des sections HUD et des lignes de Boutique pour une meilleure respiration visuelle
 
 ## [1.2.24] - 2026-03-26
 
 ### Modifié
-- Ajustement ciblé des espacements dans les colonnes Boosts et Titres de la Boutique
-- Conservation de la colonne gauche inchangée (rythme déjà validé)
-- Harmonisation du rythme vertical global entre les trois colonnes de la Boutique
+- Entree consolidee dans [1.2.25] pour eviter la repetition des memes ajustements d'espacement
 
 ## [1.2.23] - 2026-03-26
 
 ### Modifié
-- Augmentation des espacements verticaux globaux pour améliorer la respiration visuelle des pages HUD
-- Aération renforcée des sections et séparateurs dans les conteneurs principaux
-- Espacement interne de la Boutique (lignes plates, textes et actions) pour un rendu moins tassé
+- Entree consolidee dans [1.2.25] pour eviter la repetition des memes ajustements d'espacement
 
 ## [1.2.22] - 2026-03-26
 
@@ -191,7 +189,7 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Affichage des avatars cosmétiques équipés dans le profil et le classement
 - Mise en avant des économies sur bundles dans la boutique pour améliorer l'intention d'achat
 
-## [1.2.2] - 2026-03-27
+## [1.2.2] - 2026-03-26
 ### Corrigé
 - Correction de l'erreur 404 de route OmniAuth en passant la méthode du lien de GET à POST
 - Vérification que le bouton OmniAuth initialise correctement la requête POST vers `/users/auth/google_oauth2`
