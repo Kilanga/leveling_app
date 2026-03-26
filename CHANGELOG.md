@@ -2,8 +2,13 @@
 
 Toutes les modifications notables de ce projet sont documentées dans ce fichier.
 
-Le format suit [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+Le format suit [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) (version du format, pas version de l'app),
 et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Regle simple de versioning:
+- PATCH (x.y.Z): correctifs et petits ajustements sans impact structurel
+- MINOR (x.Y.0): nouvelles fonctionnalites ou changements structurants compatibles
+- MAJOR (X.0.0): rupture de compatibilite
 
 ## [Non publié]
 
