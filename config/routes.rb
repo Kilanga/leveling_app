@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   end
   resources :user_weekly_quests, only: [ :update ]
 
+  get "profil/completer", to: "users#complete_profile", as: :complete_profile
+  patch "profil/completer", to: "users#update_profile"
 
   get 'profil', to: 'users#show', as: :user_profile
 

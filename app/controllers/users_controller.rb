@@ -23,4 +23,23 @@ class UsersController < ApplicationController
     current_user.deactivate_title
     redirect_to user_profile_path, notice: "Titre retiré."
   end
+
+  def complete_profile
+    @user = current_user
+  end
+
+  def update_profile
+    @user = current_user
+    if @user.update(profile_params.merge(profile_completed: true))
+      redirect_to root_path
+    else
+      render :complete_profile, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def profile_params
+    params.require(:user).permit(:pseudo, :avatar)
+  end
 end

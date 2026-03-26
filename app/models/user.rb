@@ -73,7 +73,9 @@ class User < ApplicationRecord
   end
 
   def self.from_google_oauth2(auth)
+    new_user = false
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid)
+    new_user = user.new_record?
     email = auth.info.email.to_s.downcase
 
     user.email = email if user.email.blank?
@@ -81,10 +83,15 @@ class User < ApplicationRecord
     user.uid = auth.uid
     user.pseudo = unique_pseudo_for(auth.info.name, email) if user.pseudo.blank?
     user.avatar ||= "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp"
+    user.profile_completed = false if new_user
     user.password = Devise.friendly_token.first(20) if user.encrypted_password.blank?
     user.skip_confirmation! if user.respond_to?(:skip_confirmation!) && !user.confirmed?
     user.save!
     user
+  end
+
+  def needs_profile_completion?
+    provider == "google_oauth2" && !profile_completed?
   end
 
   def self.unique_pseudo_for(name, email)

@@ -1,0 +1,86 @@
+<div class="min-vh-100 d-flex align-items-center" style="background-color: white;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-6">
+        <div class="card border-0 shadow-lg" style="border-radius: 12px;">
+          <div class="card-body p-5">
+            <h1 class="h3 fw-bold text-center mb-1 text-dark">Finaliser votre profil</h1>
+            <p class="text-center text-muted mb-4">Choisissez votre pseudo et votre avatar pour commencer l'aventure.</p>
+
+            <%= render "devise/shared/error_messages", resource: @user %>
+
+            <%= form_with model: @user, url: complete_profile_path, method: :patch, local: true do |f| %>
+              <div class="mb-3">
+                <%= f.label :pseudo, "Pseudo (3-20 caractères)", class: "form-label fw-semibold" %>
+                <%= f.text_field :pseudo, class: "form-control form-control-lg", required: true, minlength: 3, maxlength: 20, placeholder: "votre_pseudo" %>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold d-block">Choisir votre avatar</label>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <label class="avatar-card">
+                      <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
+                      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="w-100" alt="Avatar Guerrier">
+                      <span class="avatar-badge">Guerrier</span>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <label class="avatar-card">
+                      <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
+                      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="w-100" alt="Avatar Guerrière">
+                      <span class="avatar-badge">Guerrière</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Commencer l'aventure", class: "btn btn-primary btn-lg fw-semibold" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .avatar-card {
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
+    display: block;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .avatar-card:hover {
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+  }
+
+  .avatar-card img {
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .avatar-badge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .avatar-card:has(input:checked) {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.18);
+  }
+</style>
