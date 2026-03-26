@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.4] - 2026-03-26
+
 ### Added
 - Add a "Signaler un bug" button on the dashboard linking to GitHub Issues
 
