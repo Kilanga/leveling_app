@@ -7,6 +7,14 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.26] - 2026-03-26
+
+### Modifié
+- Verification responsive complete sur les pages Accueil, Quetes, Boutique et Classement
+- Correction du conteneur du radar avec une classe dediee et hauteur adaptee sur mobile
+- Ajout de retours a la ligne sur des blocs flex de la Boutique et du Dashboard pour eviter les debordements
+- Amelioration du scroll horizontal tactile des tableaux sur mobile
+
 ## [1.2.25] - 2026-03-26
 
 ### Modifié

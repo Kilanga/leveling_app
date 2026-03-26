@@ -48,7 +48,7 @@
           <% if current_user.active_title.present? %>
             <div class="shop-row shop-row--flat shop-row--title-active mb-3">
               <span class="badge text-bg-dark mb-2">Titre actif</span>
-              <div class="d-flex align-items-center justify-content-between gap-2">
+              <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
                 <strong><%= current_user.active_title.name %></strong>
                 <%= button_to "Retirer", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
               </div>
