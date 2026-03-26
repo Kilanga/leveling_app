@@ -41,7 +41,7 @@ class LeaderboardController < ApplicationController
     @player = User.find(params[:id])
 
     # Top 3 catégories du joueur
-    @top_categories = @player.user_stats.order(total_xp: :desc).limit(3)
+    @top_categories = @player.user_stats.includes(:category).order(total_xp: :desc).limit(3)
 
     # Quêtes les plus complétées par ce joueur
     @most_completed_quests = @player.user_quests.joins(:quest)

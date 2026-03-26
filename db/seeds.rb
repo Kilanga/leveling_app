@@ -19,6 +19,28 @@ Category.destroy_all
 Badge.destroy_all
 ShopItem.destroy_all
 
+# 📌 Création des badges débloquables (par achievements)
+puts "🔄 Création des badges..."
+badges = [
+  { name: "Voyageur", description: "Première quête complétée, ton voyage commence.", rarity: "rare", is_free: true },
+  { name: "Persévérant", description: "10 quêtes complétées, ta persistance est remarquable.", rarity: "rare", is_free: true },
+  { name: "Combattant", description: "50 quêtes complétées, tu es un guerrier éprouvé.", rarity: "epic", is_free: true },
+  { name: "Vétéran", description: "200 quêtes complétées, tu es une légende en devenir.", rarity: "legendary", is_free: true },
+  { name: "Discipliné", description: "100 XP en Discipline, tu maîtrises l'autodiscipline.", rarity: "epic", is_free: true },
+  { name: "Polymathe", description: "50 XP dans 3 catégories différentes, tu es un généraliste redoutable.", rarity: "epic", is_free: true },
+  { name: "Athlète Élite", description: "5000 XP en Physique, tu ignores tes limites.", rarity: "epic", is_free: false },
+  { name: "Érudit Suprême", description: "5000 XP en Savoir, tu es réputé pour ton intelligence.", rarity: "epic", is_free: false },
+  { name: "Champion Hebdomadaire", description: "5 quêtes hebdo en 7 jours, tu domines chaque semaine.", rarity: "epic", is_free: true }
+]
+
+badges.each do |badge_data|
+  Badge.find_or_create_by!(name: badge_data[:name]) do |badge|
+    badge.description = badge_data[:description]
+    badge.rarity = badge_data[:rarity]
+    badge.is_free = badge_data[:is_free]
+  end
+end
+
 # 📌 Création des catégories
 puts "🔄 Création des catégories..."
 categories = {
@@ -72,13 +94,44 @@ titles.each do |title|
 
   # 📌 Attache une image depuis Cloudinary
   unless item.image.attached?
-    file = URI.open("https://res.cloudinary.com/dqpfnffmi/image/upload/v1728248261/image-cake-thumbnail_wwxfii.jpg")
-    item.image.attach(io: file, filename: "#{item.name.parameterize}.jpg", content_type: "image/jpeg")
-    item.save!
+    begin
+      file = URI.open("https://res.cloudinary.com/dqpfnffmi/image/upload/v1728248261/image-cake-thumbnail_wwxfii.jpg", read_timeout: 5)
+      item.image.attach(io: file, filename: "#{item.name.parameterize}.jpg", content_type: "image/jpeg")
+      item.save!
+    rescue StandardError => e
+      puts "⚠️ Erreur lors du téléchargement de l'image pour #{item.name}: #{e.message}"
+    end
   end
 end
 
-# 📌 **Attribution d’un titre légendaire à AdminUser**
+# 📌 **Création des titres libres débloquables par achievements**
+puts "🔄 Création des titres libres..."
+free_titles = [
+  { name: "Voyageur", rarity: "rare", description: "Premier titre débloqué: tu as entamé ton voyage." },
+  { name: "Persévérant", rarity: "rare", description: "Tu as complété 10 quêtes, ta détermination inspire." },
+  { name: "Combattant", rarity: "epic", description: "50 quêtes complétées, tu es un guerrier redoutable." },
+  { name: "Vétéran", rarity: "legendary", description: "200 quêtes, tu es devenu une légende." }
+]
+
+free_titles.each do |title_data|
+  item = ShopItem.find_or_create_by!(name: title_data[:name]) do |shop_item|
+    shop_item.item_type = "title"
+    shop_item.rarity = title_data[:rarity]
+    shop_item.price_coins = nil
+    shop_item.price_euros = nil
+    shop_item.description = title_data[:description]
+  end
+
+  unless item.image.attached?
+    begin
+      file = URI.open("https://res.cloudinary.com/dqpfnffmi/image/upload/v1728248261/image-cake-thumbnail_wwxfii.jpg", read_timeout: 5)
+      item.image.attach(io: file, filename: "#{item.name.parameterize}.jpg", content_type: "image/jpeg")
+      item.save!
+    rescue StandardError => e
+      puts "⚠️ Erreur lors du téléchargement de l'image pour #{item.name}: #{e.message}"
+    end
+  end
+end
 legendary_title = ShopItem.find_by(name: "Légende Vivante")
 admin_user.activate_title(legendary_title)
 

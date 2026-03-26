@@ -24,6 +24,36 @@
   <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest" %>
 </div>
 
+<!-- Gestion des titres -->
+<h2 class="section-title mt-4">Mes Titres</h2>
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <p class="text-muted small">Titre actuel: <strong class="text-primary"><%= @user.active_title&.name || "Aucun titre actif" %></strong></p>
+    
+    <% if @owned_titles.any? %>
+      <div class="d-flex flex-wrap gap-2">
+        <% @owned_titles.each do |title| %>
+          <% is_active = @user.active_title_id == title.id %>
+          <% rarity_class = title.rarity&.downcase || "common" %>
+          <% if is_active %>
+            <span class="btn btn-sm btn-brand" style="pointer-events: none; opacity: 1;">
+              ✓ <%= title.name %>
+            </span>
+          <% else %>
+            <%= link_to title.name, user_activate_title_path(shop_item_id: title.id), method: :post, class: "btn btn-sm btn-outline-quest" %>
+          <% end %>
+        <% end %>
+        
+        <% if @user.active_title.present? %>
+          <%= link_to "Retirer le titre", user_deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-muted small">Aucun titre disponible pour le moment. Gagnez-les en boutique!</p>
+    <% end %>
+  </div>
+</div>
+
 
 
 <h2 class="section-title mt-4">Badges débloqués</h2>

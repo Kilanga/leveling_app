@@ -74,13 +74,15 @@
 
             <div class="shop-list shop-list--flat shop-list--titles">
               <% (@title_items + @cosmetic_items).each do |item| %>
-                <% rarity_css = "rarity-chip rarity-chip--#{item.rarity}" %>
+                <% rarity_key = item.rarity.to_s.presence || "common" %>
+                <% rarity_label = item.rarity.to_s.capitalize.presence || "Common" %>
+                <% rarity_css = "rarity-chip rarity-chip--#{rarity_key}" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
                 <% equipped = (item.item_type == "title" && current_user.active_title_id == item.id) || (item.item_type == "cosmetic" && current_user.active_avatar_item_id == item.id) %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
-                    <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
-                    <span class="<%= rarity_css %>"><%= item.rarity.capitalize %></span>
+                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
+                    <span class="<%= rarity_css %>"><%= rarity_label %></span>
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
@@ -89,9 +91,9 @@
                       <%= equipped ? "Equipe" : owned ? "Possede" : "Disponible" %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.price_coins %> coins</span>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_coins %> coins</span>
                     <% elsif item.price_euros.present? %>
-                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.price_euros %> EUR</span>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_euros %> EUR</span>
                     <% end %>
                   </div>
 
@@ -138,10 +140,12 @@
           <% if @recommended_shop_items.any? %>
             <div class="shop-reco-list">
               <% @recommended_shop_items.each do |item| %>
+                <% rarity_key = item.rarity.to_s.presence || "common" %>
+                <% rarity_label = item.rarity.to_s.capitalize.presence || "Common" %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 flex-wrap mb-2">
-                    <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
-                    <span class="rarity-chip rarity-chip--<%= item.rarity %>"><%= item.rarity.capitalize %></span>
+                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
+                    <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= rarity_label %></span>
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
                   <% if item.price_coins.present? %>
@@ -167,7 +171,7 @@
           <h2 class="section-title">Defi boutique hebdo</h2>
           <p class="quest-meta mb-2">Complete les 3 objectifs et recupere <%= PurchasesController::SHOP_CHALLENGE_REWARD_COINS %> coins.</p>
           <div class="shop-challenge-card mb-3">
-            <% @shop_challenge[:steps].each do |step| %>
+            <% @shop_challenge.fetch(:steps, []).each do |step| %>
               <div class="shop-challenge-step">
                 <span class="shop-state-chip <%= step[:completed] ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
                   <%= step[:completed] ? 'OK' : 'A faire' %>
@@ -182,7 +186,7 @@
           <% elsif @shop_challenge[:completed_all] %>
             <%= button_to "Recuperer la recompense", claim_weekly_challenge_purchases_path, method: :post, class: "btn btn-brand" %>
           <% else %>
-            <span class="shop-state-chip shop-state-chip--available"><%= @shop_challenge[:completed_count] %>/<%= @shop_challenge[:total_count] %> objectifs completes</span>
+            <span class="shop-state-chip shop-state-chip--available"><%= @shop_challenge.fetch(:completed_count, 0) %>/<%= @shop_challenge.fetch(:total_count, 0) %> objectifs completes</span>
           <% end %>
         </section>
       </div>

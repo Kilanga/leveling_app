@@ -33,7 +33,7 @@
                     <%= user_avatar_image(player, width: 50, height: 50, css_class: "rounded-circle", alt: "Avatar de #{player.pseudo}") %>
                   </td>
                   <td>
-                    <%= link_to player.pseudo, leaderboard_path(player), class: "text-primary fw-bold" %>
+                    <%= link_to player.pseudo, leaderboard_path(player), class: "text-primary text-decoration-none fw-bold" %>
                     <% if player.active_title %>
                       <span class="badge bg-<%= player.title_rarity_class %>"><%= player.active_title.name %></span>
                     <% end %>
