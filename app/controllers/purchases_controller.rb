@@ -16,7 +16,9 @@ class PurchasesController < ApplicationController
     @coins_prices = COIN_PACKS.map { |label, config| { label: label, amount: config[:amount], coins: config[:coins] } }
     @boosts = BOOST_PACKS.map { |label, config| { label: label, amount: config[:amount], duration: config[:duration] } }
 
-    @shop_items = ShopItem.where.not(item_type: "currency")
+    @title_items = ShopItem.where(item_type: "title").order(rarity: :asc, name: :asc)
+    @avatar_items = ShopItem.where(item_type: "cosmetic").order(rarity: :asc, name: :asc)
+    @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
   end
 
   def create
@@ -74,6 +76,10 @@ class PurchasesController < ApplicationController
 
   def handle_shop_item_purchase
     item = ShopItem.find(params[:shop_item_id])
+
+    if current_user.user_items.exists?(shop_item: item)
+      return redirect_to new_purchase_path, alert: "Vous possedez deja cet objet."
+    end
 
     if item.price_coins.present? && current_user.coins >= item.price_coins
       current_user.decrement!(:coins, item.price_coins)

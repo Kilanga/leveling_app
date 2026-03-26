@@ -109,6 +109,40 @@ body {
   padding: 0.85rem 0.95rem;
 }
 
+.shop-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border: 1px solid #cab08a;
+}
+
+.rarity-chip {
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid transparent;
+}
+
+.rarity-chip--rare {
+  color: #0e5275;
+  background: #deedf7;
+  border-color: #9ac5df;
+}
+
+.rarity-chip--epic {
+  color: #5a2e6f;
+  background: #ead9f1;
+  border-color: #c8a4d8;
+}
+
+.rarity-chip--legendary {
+  color: #7a4d0f;
+  background: #fde8c8;
+  border-color: #e3b46b;
+}
+
 .quest-meta,
 .muted-label {
   color: var(--muted);

@@ -46,23 +46,58 @@
     <div class="surface-card h-100">
       <div class="card-body">
         <h2 class="section-title">Titres et avatars</h2>
-        <div class="shop-list">
-          <% @shop_items.each do |item| %>
+        <div class="shop-list mb-3">
+          <h3 class="h6 mb-1">Titres</h3>
+          <% @title_items.each do |item| %>
+            <% rarity_css = "rarity-chip rarity-chip--#{item.rarity}" %>
+            <% owned = @owned_item_ids.include?(item.id) %>
             <div class="shop-row">
-              <div class="d-flex align-items-center gap-2 mb-2">
-                <% if item.image.attached? %>
-                  <%= image_tag item.image.variant(resize: "48x48"), class: "rounded" %>
-                <% end %>
-                <div>
-                  <strong><%= item.name %></strong>
-                  <div class="quest-meta"><%= item.item_type %></div>
-                </div>
+              <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                <strong><%= item.name %></strong>
+                <span class="<%= rarity_css %>"><%= item.rarity.capitalize %></span>
               </div>
-              <% if item.price_coins.present? %>
+              <p class="quest-meta mb-2"><%= item.description %></p>
+              <% if owned %>
+                <span class="badge text-bg-success">Deja possede</span>
+              <% elsif item.price_coins.present? %>
                 <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                   <%= hidden_field_tag :shop_item_id, item.id %>
                   <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-outline-quest" %>
                 <% end %>
+              <% else %>
+                <span class="badge text-bg-secondary">Indisponible</span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="shop-list">
+          <h3 class="h6 mb-1">Avatars</h3>
+          <% @avatar_items.each do |item| %>
+            <% rarity_css = "rarity-chip rarity-chip--#{item.rarity}" %>
+            <% owned = @owned_item_ids.include?(item.id) %>
+            <div class="shop-row">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <% if item.image.attached? %>
+                  <%= image_tag item.image.variant(resize: "64x64"), class: "rounded shop-thumb" %>
+                <% end %>
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-start justify-content-between gap-2">
+                    <strong><%= item.name %></strong>
+                    <span class="<%= rarity_css %>"><%= item.rarity.capitalize %></span>
+                  </div>
+                  <p class="quest-meta mb-0"><%= item.description %></p>
+                </div>
+              </div>
+              <% if owned %>
+                <span class="badge text-bg-success">Deja possede</span>
+              <% elsif item.price_coins.present? %>
+                <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                  <%= hidden_field_tag :shop_item_id, item.id %>
+                  <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-outline-quest" %>
+                <% end %>
+              <% else %>
+                <span class="badge text-bg-secondary">Indisponible</span>
               <% end %>
             </div>
           <% end %>
