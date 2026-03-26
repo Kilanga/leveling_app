@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.14] - 2026-03-26
+
+### Modifié
+- Harmonisation des boutons HUD avec la palette globale charbon/ambre
+- Adoucissement de la forme des boutons pour mieux s'intégrer aux composants de l'interface
+- Réduction du contraste visuel des boutons afin de conserver une cohérence d'ensemble
+
 ## [1.2.13] - 2026-03-26
 
 ### Modifié
