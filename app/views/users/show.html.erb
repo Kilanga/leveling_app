@@ -34,18 +34,17 @@
       <div class="d-flex flex-wrap gap-2">
         <% @owned_titles.each do |title| %>
           <% is_active = @user.active_title_id == title.id %>
-          <% rarity_class = title.rarity&.downcase || "common" %>
           <% if is_active %>
             <span class="btn btn-sm btn-brand" style="pointer-events: none; opacity: 1;">
               ✓ <%= title.name %>
             </span>
           <% else %>
-            <%= link_to title.name, user_activate_title_path(shop_item_id: title.id), method: :post, class: "btn btn-sm btn-outline-quest" %>
+            <%= link_to title.name, activate_title_path(shop_item_id: title.id), method: :post, class: "btn btn-sm btn-outline-quest" %>
           <% end %>
         <% end %>
         
         <% if @user.active_title.present? %>
-          <%= link_to "Retirer le titre", user_deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
+          <%= link_to "Retirer le titre", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
         <% end %>
       </div>
     <% else %>
@@ -53,6 +52,71 @@
     <% end %>
   </div>
 </div>
+
+<h2 class="section-title mt-4">Titres Communs Gratuits</h2>
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <div class="shop-list shop-list--flat">
+      <% @common_unlockable_titles.each do |entry| %>
+        <div class="shop-row shop-row--flat">
+          <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+            <strong class="shop-rarity-text shop-rarity-text--common"><%= entry[:name] %></strong>
+            <span class="rarity-chip rarity-chip--common">Common</span>
+          </div>
+          <p class="quest-meta mb-1"><%= entry[:description] %></p>
+          <p class="quest-meta mb-2">Objectif: <%= entry[:objective] %></p>
+
+          <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+            <% if entry[:owned] %>
+              <span class="shop-state-chip shop-state-chip--owned">Debloque</span>
+              <% if entry[:active] %>
+                <span class="shop-state-chip shop-state-chip--equipped">Equipe</span>
+              <% else %>
+                <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: entry[:id] }, class: "btn btn-sm btn-brand" %>
+              <% end %>
+            <% else %>
+              <span class="shop-state-chip shop-state-chip--available">Bloque</span>
+              <span class="quest-meta">Objectif non atteint</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<h2 class="section-title mt-4">Titres Prestige Gratuits</h2>
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <div class="shop-list shop-list--flat">
+      <% @prestige_unlockable_titles.each do |entry| %>
+        <div class="shop-row shop-row--flat">
+          <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+            <strong class="shop-rarity-text shop-rarity-text--<%= entry[:rarity] %>"><%= entry[:name] %></strong>
+            <span class="rarity-chip rarity-chip--<%= entry[:rarity] %>"><%= entry[:rarity].capitalize %></span>
+          </div>
+          <p class="quest-meta mb-1"><%= entry[:description] %></p>
+          <p class="quest-meta mb-2">Objectif: <%= entry[:objective] %></p>
+
+          <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+            <% if entry[:owned] %>
+              <span class="shop-state-chip shop-state-chip--owned">Debloque</span>
+              <% if entry[:active] %>
+                <span class="shop-state-chip shop-state-chip--equipped">Equipe</span>
+              <% else %>
+                <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: entry[:id] }, class: "btn btn-sm btn-brand" %>
+              <% end %>
+            <% else %>
+              <span class="shop-state-chip shop-state-chip--available">Bloque</span>
+              <span class="quest-meta">Objectif non atteint</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <h2 class="section-title mt-4">Historique des quêtes</h2>
 <ul class="list-group surface-list">
   <% @user_quests.each do |user_quest| %>

@@ -639,6 +639,12 @@ body::before {
   border: 1px solid transparent;
 }
 
+.rarity-chip--common {
+  color: #405e70;
+  background: #d7e4ec;
+  border-color: #b3cad8;
+}
+
 .rarity-chip--rare {
   color: #0e5275;
   background: #deedf7;

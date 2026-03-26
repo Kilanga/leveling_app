@@ -14,6 +14,7 @@ class XpAwarder
         )
 
         user_quest.update!(active: false, completed: true)
+        TitleUnlocker.call(user_quest.user)
       end
 
       true
@@ -35,6 +36,8 @@ class XpAwarder
           category: weekly_quest.category,
           xp_amount: weekly_quest.xp_reward * user.xp_multiplier
         )
+
+        TitleUnlocker.call(user)
       end
 
       true

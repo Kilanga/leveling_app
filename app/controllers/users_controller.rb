@@ -7,8 +7,13 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
+    TitleUnlocker.call(@user)
+
     @user_quests = @user.user_quests.where("completed_count > 0").includes(:quest).order(completed_count: :desc)
     @owned_titles = @user.shop_items.where(item_type: "title").order(name: :asc)
+    @unlockable_title_progress = TitleUnlocker.progress_for(@user)
+    @common_unlockable_titles = @unlockable_title_progress.select { |entry| entry[:rarity] == "common" }
+    @prestige_unlockable_titles = @unlockable_title_progress.reject { |entry| entry[:rarity] == "common" }
   end
 
   def activate_title

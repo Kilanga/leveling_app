@@ -83,10 +83,13 @@ end
 # 📌 **Création des titres libres débloquables par achievements**
 puts "🔄 Création des titres libres..."
 free_titles = [
-  { name: "Voyageur", rarity: "common", description: "Premier titre débloqué: tu as entamé ton voyage." },
-  { name: "Persévérant", rarity: "common", description: "Tu as complété 10 quêtes, ta détermination inspire." },
-  { name: "Combattant", rarity: "common", description: "50 quêtes complétées, tu es un guerrier redoutable." },
-  { name: "Vétéran", rarity: "common", description: "200 quêtes, tu es devenu une légende." }
+  { name: "Eclaireur", rarity: "common", description: "Tu as fait tes premiers pas d'aventurier." },
+  { name: "Regulier", rarity: "common", description: "Ta constance commence a se voir." },
+  { name: "Polyvalent", rarity: "common", description: "Tu progresses sur plusieurs fronts." },
+  { name: "Cadence Hebdo", rarity: "common", description: "Ton rythme hebdomadaire est solide." },
+  { name: "Stratege Patient", rarity: "rare", description: "Tu construis ta progression avec discipline." },
+  { name: "Architecte du Progres", rarity: "epic", description: "Tu maitrises un large spectre de missions." },
+  { name: "Ascension Totale", rarity: "legendary", description: "Tu incarnes l'excellence globale du jeu." }
 ]
 
 free_titles.each do |title_data|
