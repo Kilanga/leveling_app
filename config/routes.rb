@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "users/show"
   post "stripe/webhook", to: "stripe_webhooks#create"
   root "dashboard#index"
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
@@ -43,7 +42,7 @@ Rails.application.routes.draw do
   get "profil/completer", to: "users#complete_profile", as: :complete_profile
   patch "profil/completer", to: "users#update_profile"
 
-  get 'profil', to: 'users#show', as: :user_profile
+  get "profil", to: "users#show", as: :user_profile
 
   # Admin
   namespace :admin do

@@ -26,7 +26,7 @@ class PurchaseFulfillmentService
       return if item.nil?
 
       user.user_items.find_or_create_by!(shop_item: item)
-      create_marker_purchase!(user, transaction_id, checkout_session)
+      create_purchase_record!(user, transaction_id, checkout_session, item_type: "shop_item")
       send_purchase_email!(user, "#{item.name} (#{item.item_type})", checkout_session)
     end
 
@@ -34,13 +34,8 @@ class PurchaseFulfillmentService
       coins = checkout_session.metadata["coins"].to_i
       return if coins <= 0
 
-      Purchase.create!(
-        user: user,
-        amount: coins,
-        item_type: "coins",
-        status: "completed",
-        transaction_id: transaction_id
-      )
+      user.increment!(:coins, coins)
+      create_purchase_record!(user, transaction_id, checkout_session, item_type: "coins")
 
       send_purchase_email!(user, "Pack coins: +#{coins}", checkout_session)
     end
@@ -53,21 +48,21 @@ class PurchaseFulfillmentService
       base_time = [user.boost_expires_at, Time.current].compact.max
       user.update!(boost_expires_at: base_time + duration)
 
-      create_marker_purchase!(user, transaction_id, checkout_session)
+      create_purchase_record!(user, transaction_id, checkout_session, item_type: "boost")
       duration_days = (duration_seconds / 1.day).to_i
       send_purchase_email!(user, "Boost XP x2 (#{duration_days} jour#{duration_days > 1 ? 's' : ''})", checkout_session)
     end
 
     def process_generic!(user, checkout_session, transaction_id)
-      create_marker_purchase!(user, transaction_id, checkout_session)
+      create_purchase_record!(user, transaction_id, checkout_session, item_type: "checkout")
       send_purchase_email!(user, "Achat boutique", checkout_session)
     end
 
-    def create_marker_purchase!(user, transaction_id, checkout_session)
+    def create_purchase_record!(user, transaction_id, checkout_session, item_type:)
       Purchase.create!(
         user: user,
         amount: [checkout_session.amount_total.to_i / 100, 1].max,
-        item_type: "checkout",
+        item_type: item_type,
         status: "completed",
         transaction_id: transaction_id
       )

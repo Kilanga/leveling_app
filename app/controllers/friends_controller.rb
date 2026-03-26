@@ -2,12 +2,14 @@ class FriendsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    sent_accepted = current_user.friendships.accepted.includes(:friend).map(&:friend)
-    received_accepted = Friendship.accepted.where(friend: current_user).includes(:user).map(&:user)
-    @friends = (sent_accepted + received_accepted).uniq
+    sent_friend_ids = current_user.friendships.accepted.pluck(:friend_id)
+    received_friend_ids = Friendship.accepted.where(friend_id: current_user.id).pluck(:user_id)
+    @friends = User.where(id: sent_friend_ids + received_friend_ids).distinct
 
-    @pending_sent_requests = current_user.friendships.pending.includes(:friend).map(&:friend)
-    @pending_received_requests = Friendship.pending.where(friend: current_user).includes(:user).map(&:user)
+    pending_sent_ids = current_user.friendships.pending.pluck(:friend_id)
+    pending_received_ids = Friendship.pending.where(friend_id: current_user.id).pluck(:user_id)
+    @pending_sent_requests = User.where(id: pending_sent_ids)
+    @pending_received_requests = User.where(id: pending_received_ids)
   end
 
 

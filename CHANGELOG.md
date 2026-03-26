@@ -7,6 +7,27 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.3.1] - 2026-03-26
+
+### Corrigé
+- Sécurisation du flux d'achat Stripe: la confirmation applique désormais la logique de fulfillment centralisée au lieu de dépendre des données de session navigateur
+- Correction du traitement webhook des packs de coins avec crédit effectif des coins utilisateur
+- Renforcement de l'idempotence des achats Stripe via un index unique sur `purchases.transaction_id` (hors valeurs nulles)
+- Blocage des confirmations Stripe incohérentes quand la session de checkout ne correspond pas à l'utilisateur connecté
+
+### Sécurité
+- Durcissement des redirections checkout Stripe avec validation explicite de l'URL et de l'hôte Stripe avant redirection externe
+- Réduction de la surface de mass assignment admin (retrait de `admin` des paramètres autorisés de mise à jour utilisateur)
+
+### Tests
+- Correction des specs request `user_weekly_quests` et `users` pour utiliser les routes réelles et l'authentification Devise
+- Exécution de la suite RSpec: plus d'échec, uniquement des tests en attente
+
+### Modifié
+- Suppression de la route legacy `users/show` au profit de la route profil canonique
+- Optimisation de la récupération des relations d'amis dans `FriendsController#index` (requêtes SQL directes sur IDs)
+- Mise à jour de `.ruby-version` vers `3.2.10`
+
 ## [1.3.0] - 2026-03-26
 
 ### Ajouté

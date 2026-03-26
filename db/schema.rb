@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_26_164000) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_26_213500) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_26_164000) do
     t.string "transaction_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["transaction_id"], name: "index_purchases_on_transaction_id_unique", unique: true, where: "(transaction_id IS NOT NULL)"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -194,6 +195,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_26_164000) do
     t.integer "active_title_id"
     t.string "provider"
     t.string "uid"
+    t.boolean "profile_completed", default: true, null: false
+    t.bigint "active_avatar_item_id"
+    t.index ["active_avatar_item_id"], name: "index_users_on_active_avatar_item_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
@@ -228,5 +232,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_26_164000) do
   add_foreign_key "user_stats", "users"
   add_foreign_key "user_weekly_quests", "users"
   add_foreign_key "user_weekly_quests", "weekly_quests"
+  add_foreign_key "users", "shop_items", column: "active_avatar_item_id"
   add_foreign_key "weekly_quests", "categories"
 end

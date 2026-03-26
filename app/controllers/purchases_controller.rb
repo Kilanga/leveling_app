@@ -36,35 +36,21 @@ class PurchasesController < ApplicationController
       return redirect_to new_purchase_path, alert: "Paiement non validé."
     end
 
-    if Purchase.exists?(transaction_id: checkout_session.id)
-      return redirect_to root_path, notice: "Achat deja confirme !"
+    metadata_user_id = checkout_session.metadata["user_id"].to_i
+    if metadata_user_id.positive? && metadata_user_id != current_user.id
+      return redirect_to new_purchase_path, alert: "Session de paiement invalide pour cet utilisateur."
     end
 
-    email_summary = nil
-    email_amount_eur = nil
+    PurchaseFulfillmentService.process_checkout_session(checkout_session)
 
-    if (shop_item_id = session.delete(:shop_item_id)).present?
-      item = ShopItem.find(shop_item_id)
-      current_user.user_items.find_or_create_by!(shop_item: item)
-      email_summary = "#{item.name} (#{item.item_type})"
-      email_amount_eur = item.price_euros
-    elsif (pending_purchase = session.delete(:pending_purchase)).present?
-      apply_pending_purchase!(pending_purchase)
-      email_summary = pending_purchase_summary(pending_purchase)
-      email_amount_eur = checkout_session.amount_total.to_i / 100.0
-    end
+    # Keep these keys short-lived and best-effort cleaned after checkout return.
+    session.delete(:shop_item_id)
+    session.delete(:pending_purchase)
 
-    Purchase.create!(
-      user: current_user,
-      amount: [checkout_session.amount_total.to_i / 100, 1].max,
-      item_type: "checkout",
-      status: "completed",
-      transaction_id: checkout_session.id
-    )
-
-    send_purchase_confirmation_email(summary: email_summary, amount_eur: email_amount_eur)
-
-    redirect_to root_path, notice: "Achat réussi !"
+    redirect_to root_path, notice: "Achat confirme !"
+  rescue StandardError => e
+    Rails.logger.error("Purchase success flow failed: #{e.class} #{e.message}")
+    redirect_to new_purchase_path, alert: "Achat impossible pour le moment."
   end
 
   def cancel
@@ -86,7 +72,7 @@ class PurchasesController < ApplicationController
       redirect_to new_purchase_path, notice: "Objet acheté avec succès !"
     elsif item.price_euros.present?
       session[:shop_item_id] = item.id
-      redirect_to create_checkout_session(
+      checkout_url = create_checkout_session(
         item.name,
         item.price_euros,
         {
@@ -94,7 +80,8 @@ class PurchasesController < ApplicationController
           user_id: current_user.id,
           shop_item_id: item.id
         }
-      ), allow_other_host: true
+      )
+      safe_redirect_to_checkout(checkout_url)
     else
       redirect_to new_purchase_path, alert: "Achat impossible."
     end
@@ -106,7 +93,7 @@ class PurchasesController < ApplicationController
 
     if (coin_pack = COIN_PACKS[item_type]) && coin_pack[:amount] == amount
       session[:pending_purchase] = { "kind" => "coins", "coins" => coin_pack[:coins] }
-      redirect_to create_checkout_session(
+      checkout_url = create_checkout_session(
         item_type,
         amount,
         {
@@ -114,10 +101,11 @@ class PurchasesController < ApplicationController
           user_id: current_user.id,
           coins: coin_pack[:coins]
         }
-      ), allow_other_host: true
+      )
+      safe_redirect_to_checkout(checkout_url)
     elsif (boost_pack = BOOST_PACKS[item_type]) && boost_pack[:amount] == amount
       session[:pending_purchase] = { "kind" => "boost", "duration_seconds" => boost_pack[:duration].to_i }
-      redirect_to create_checkout_session(
+      checkout_url = create_checkout_session(
         item_type,
         amount,
         {
@@ -125,20 +113,10 @@ class PurchasesController < ApplicationController
           user_id: current_user.id,
           duration_seconds: boost_pack[:duration].to_i
         }
-      ), allow_other_host: true
+      )
+      safe_redirect_to_checkout(checkout_url)
     else
       redirect_to new_purchase_path, alert: "Pack invalide."
-    end
-  end
-
-  def apply_pending_purchase!(pending_purchase)
-    case pending_purchase["kind"]
-    when "coins"
-      current_user.increment!(:coins, pending_purchase["coins"].to_i)
-    when "boost"
-      duration = pending_purchase["duration_seconds"].to_i.seconds
-      base_time = [current_user.boost_expires_at, Time.current].compact.max
-      current_user.update!(boost_expires_at: base_time + duration)
     end
   end
 
@@ -160,28 +138,16 @@ class PurchasesController < ApplicationController
     ).url
   end
 
-  def pending_purchase_summary(pending_purchase)
-    case pending_purchase["kind"]
-    when "coins"
-      "Pack coins: +#{pending_purchase["coins"].to_i}"
-    when "boost"
-      duration_days = (pending_purchase["duration_seconds"].to_i / 1.day).to_i
-      "Boost XP x2 (#{duration_days} jour#{duration_days > 1 ? 's' : ''})"
-    else
-      "Achat boutique"
+  def safe_redirect_to_checkout(checkout_url)
+    uri = URI.parse(checkout_url)
+    allowed_hosts = [ "checkout.stripe.com", "pay.stripe.com" ]
+
+    unless uri.is_a?(URI::HTTPS) && allowed_hosts.include?(uri.host)
+      return redirect_to new_purchase_path, alert: "URL de paiement invalide."
     end
+
+    redirect_to uri.to_s, allow_other_host: true
+  rescue URI::InvalidURIError
+    redirect_to new_purchase_path, alert: "URL de paiement invalide."
   end
-
-  def send_purchase_confirmation_email(summary:, amount_eur:)
-    return if summary.blank?
-
-    UserMailer.purchase_confirmation(
-      user: current_user,
-      summary: summary,
-      amount_eur: amount_eur
-    ).deliver_later
-  rescue StandardError => e
-    Rails.logger.warn("Purchase confirmation email failed: #{e.class} #{e.message}")
-  end
-
 end
