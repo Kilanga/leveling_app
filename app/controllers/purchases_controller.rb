@@ -36,7 +36,10 @@ class PurchasesController < ApplicationController
     end
     @best_value_pack_label = @coins_prices.max_by { |option| option[:coins].to_f / [option[:amount], 1].max }[:label]
 
-    @title_items = ShopItem.where(item_type: "title").order(rarity: :asc, name: :asc)
+    @title_items = ShopItem.where(item_type: "title")
+                 .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
+                 .where.not(rarity: "common")
+                 .order(rarity: :asc, name: :asc)
     @cosmetic_items = ShopItem.where(item_type: "cosmetic").order(rarity: :asc, name: :asc)
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
     @total_level = current_user.user_stats.sum(:level)
@@ -115,6 +118,10 @@ class PurchasesController < ApplicationController
 
   def handle_shop_item_purchase
     item = ShopItem.find(params[:shop_item_id])
+
+    if item.item_type == "title" && (item.rarity == "common" || (item.price_coins.blank? && item.price_euros.blank?))
+      return redirect_to new_purchase_path, alert: "Ce titre se débloque via des objectifs, pas en boutique."
+    end
 
     if current_user.user_items.exists?(shop_item: item)
       return redirect_to new_purchase_path, alert: "Vous possedez deja cet objet."
@@ -207,7 +214,11 @@ class PurchasesController < ApplicationController
 
   def recommended_shop_items
     rarity_order = preferred_rarity_order
-    candidates = ShopItem.where(item_type: %w[title cosmetic]).where.not(id: @owned_item_ids).to_a
+    candidates = ShopItem.where(item_type: %w[title cosmetic])
+                         .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
+                         .where.not(id: @owned_item_ids)
+                         .where.not(rarity: "common")
+                         .to_a
 
     candidates
       .sort_by do |item|

@@ -14,7 +14,6 @@ class XpAwarder
         )
 
         user_quest.update!(active: false, completed: true)
-        BadgeAwarder.call(user_quest.user)
       end
 
       true
@@ -36,8 +35,6 @@ class XpAwarder
           category: weekly_quest.category,
           xp_amount: weekly_quest.xp_reward * user.xp_multiplier
         )
-
-        BadgeAwarder.call(user)
       end
 
       true

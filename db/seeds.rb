@@ -8,7 +8,6 @@ UserWeeklyQuest.destroy_all
 WeeklyQuest.destroy_all
 UserQuest.destroy_all
 UserStat.destroy_all
-UserBadge.destroy_all
 UserItem.destroy_all
 Friendship.destroy_all
 
@@ -16,30 +15,7 @@ Friendship.destroy_all
 User.destroy_all
 Quest.destroy_all
 Category.destroy_all
-Badge.destroy_all
 ShopItem.destroy_all
-
-# 📌 Création des badges débloquables (par achievements)
-puts "🔄 Création des badges..."
-badges = [
-  { name: "Voyageur", description: "Première quête complétée, ton voyage commence.", rarity: "rare", is_free: true },
-  { name: "Persévérant", description: "10 quêtes complétées, ta persistance est remarquable.", rarity: "rare", is_free: true },
-  { name: "Combattant", description: "50 quêtes complétées, tu es un guerrier éprouvé.", rarity: "epic", is_free: true },
-  { name: "Vétéran", description: "200 quêtes complétées, tu es une légende en devenir.", rarity: "legendary", is_free: true },
-  { name: "Discipliné", description: "100 XP en Discipline, tu maîtrises l'autodiscipline.", rarity: "epic", is_free: true },
-  { name: "Polymathe", description: "50 XP dans 3 catégories différentes, tu es un généraliste redoutable.", rarity: "epic", is_free: true },
-  { name: "Athlète Élite", description: "5000 XP en Physique, tu ignores tes limites.", rarity: "epic", is_free: false },
-  { name: "Érudit Suprême", description: "5000 XP en Savoir, tu es réputé pour ton intelligence.", rarity: "epic", is_free: false },
-  { name: "Champion Hebdomadaire", description: "5 quêtes hebdo en 7 jours, tu domines chaque semaine.", rarity: "epic", is_free: true }
-]
-
-badges.each do |badge_data|
-  Badge.find_or_create_by!(name: badge_data[:name]) do |badge|
-    badge.description = badge_data[:description]
-    badge.rarity = badge_data[:rarity]
-    badge.is_free = badge_data[:is_free]
-  end
-end
 
 # 📌 Création des catégories
 puts "🔄 Création des catégories..."
@@ -107,10 +83,10 @@ end
 # 📌 **Création des titres libres débloquables par achievements**
 puts "🔄 Création des titres libres..."
 free_titles = [
-  { name: "Voyageur", rarity: "rare", description: "Premier titre débloqué: tu as entamé ton voyage." },
-  { name: "Persévérant", rarity: "rare", description: "Tu as complété 10 quêtes, ta détermination inspire." },
-  { name: "Combattant", rarity: "epic", description: "50 quêtes complétées, tu es un guerrier redoutable." },
-  { name: "Vétéran", rarity: "legendary", description: "200 quêtes, tu es devenu une légende." }
+  { name: "Voyageur", rarity: "common", description: "Premier titre débloqué: tu as entamé ton voyage." },
+  { name: "Persévérant", rarity: "common", description: "Tu as complété 10 quêtes, ta détermination inspire." },
+  { name: "Combattant", rarity: "common", description: "50 quêtes complétées, tu es un guerrier redoutable." },
+  { name: "Vétéran", rarity: "common", description: "200 quêtes, tu es devenu une légende." }
 ]
 
 free_titles.each do |title_data|

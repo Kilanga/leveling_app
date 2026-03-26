@@ -8,10 +8,12 @@ class ShopItem < ApplicationRecord
   validates :price_coins, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :price_euros, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :item_type, presence: true, inclusion: { in: ["title", "boost", "cosmetic", "currency"] }
-  validates :rarity, presence: true, inclusion: { in: ["rare", "epic", "legendary"] }
+  validates :rarity, presence: true, inclusion: { in: ["common", "rare", "epic", "legendary"] }
 
   def rarity_class
     case rarity
+    when "common"
+      "text-muted"
     when "rare"
       "text-primary" # Bleu
     when "epic"

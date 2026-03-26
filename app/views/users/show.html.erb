@@ -53,24 +53,6 @@
     <% end %>
   </div>
 </div>
-
-
-
-<h2 class="section-title mt-4">Badges débloqués</h2>
-<div class="d-flex flex-wrap">
-  <% @user_badges.each do |user_badge| %>
-    <div class="text-center m-3">
-      <%= image_tag user_badge.badge.image.attached? ? user_badge.badge.image : "default_badge.png", 
-        width: 120, height: 120, 
-        alt: user_badge.badge.description %>
-      <p class="mt-2"><strong><%= user_badge.badge.name %></strong></p>
-      <p class="text-muted small"><%= user_badge.badge.description %></p>
-    </div>
-  <% end %>
-</div>
-
-
-
 <h2 class="section-title mt-4">Historique des quêtes</h2>
 <ul class="list-group surface-list">
   <% @user_quests.each do |user_quest| %>

@@ -18,7 +18,7 @@ RSpec.describe ShopItem, type: :model do
       name: "Objet Invalide",
       description: "Objet de test",
       item_type: "title",
-      rarity: "common"
+      rarity: "mythic"
     )
 
     expect(item).not_to be_valid

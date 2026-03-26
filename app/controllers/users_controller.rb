@@ -8,7 +8,6 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @user_quests = @user.user_quests.where("completed_count > 0").includes(:quest).order(completed_count: :desc)
-    @user_badges = @user.user_badges.includes(:badge).order(awarded_at: :desc)
     @owned_titles = @user.shop_items.where(item_type: "title").order(name: :asc)
   end
 
