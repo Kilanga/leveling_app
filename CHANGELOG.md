@@ -7,16 +7,27 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
-### Modifié
-- Refonte de la zone haute du profil: avatar a gauche, actions compte (mot de passe + changement pseudo) alignees a droite
-- Bloc "Mes Titres" ajuste avec "Titre actuel" affiche en blanc pour meilleure lisibilite
-- Les titres affiches dans le profil ne sont plus des liens implicites vers la boutique; l'equipement passe par un bouton dedie
-- Mise en place d'un systeme de titres gratuits a objectifs avec deux sections profil: "Titres Communs Gratuits" et "Titres Prestige Gratuits"
-- Masquage des objectifs des titres prestige tant qu'ils sont bloques (affichage "Objectif: secret")
+## [1.7.1] - 2026-03-27
 
 ### Corrigé
-- Erreur 500 du leaderboard au clic sur un joueur (correction de la requete agregee incompatible PostgreSQL)
-- Validation pseudo harmonisee a 22 caracteres maximum sur inscription, finalisation profil et changement de pseudo
+- Ajustement de la zone haute du profil pour un rendu plus propre: avatar a gauche et actions compte alignees a droite
+- Amelioration de la lisibilite du bloc "Mes Titres" avec la valeur de "Titre actuel" en blanc
+- Harmonisation de la limite pseudo a 22 caracteres sur inscription, finalisation profil et changement de pseudo
+
+## [1.7.0] - 2026-03-27
+
+### Modifié
+- Refonte structurante de la progression cosmetique: abandon des badges en affichage profil au profit d'un systeme centre sur les titres
+- Mise en place d'un moteur de deblocage des titres gratuits par objectifs (`TitleUnlocker`), avec attribution automatique selon la progression joueur
+- Ajout de deux sections dediees dans le profil: "Titres Communs Gratuits" et "Titres Prestige Gratuits"
+- Ajout du changement de pseudo dans le profil (cooldown 1 fois par semaine) avec filtrage de pseudo reserve
+- Masquage des objectifs des titres prestige tant qu'ils ne sont pas debloques
+- Suppression des liens implicites sur les libelles de titres dans le profil; l'equipement passe par des actions explicites
+
+## [1.6.1] - 2026-03-27
+
+### Corrigé
+- Erreur 500 du leaderboard au clic sur un joueur (requete agregee PostgreSQL corrigee)
 
 ## [1.6.0] - 2026-03-26
 
@@ -28,7 +39,6 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Gestion des titres multiples: un utilisateur peut changer activement son titre affiché
 
 ### Corrigé
-- Erreur 500 lors de l'accès au profil d'un autre joueur via le leaderboard (missing .includes(:category) sur les stats)
 - Apparence visuelle des noms au leaderboard (suppression de text-decoration: underline via text-decoration-none)
 - Durcissement de la page Boutique pour eviter les erreurs 500 en presence de donnees partielles (rarete/nom) et en cas d'echec du calcul du defi hebdomadaire
 
