@@ -133,13 +133,7 @@ body::before {
 }
 
 .hud-column-divider::after {
-  content: "";
-  position: absolute;
-  top: 0.35rem;
-  bottom: 0.35rem;
-  right: calc(var(--bs-gutter-x) * -0.5);
-  width: 1px;
-  background: linear-gradient(180deg, rgba(70, 133, 174, 0), rgba(70, 133, 174, 0.42), rgba(70, 133, 174, 0));
+  display: none;
 }
 
 .section-title {

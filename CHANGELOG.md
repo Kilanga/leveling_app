@@ -7,6 +7,12 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.25] - 2026-03-26
+
+### Modifié
+- Suppression des lignes verticales de séparation dans la Boutique pour un rendu plus léger
+- Conservation du reste du layout et des espacements validés
+
 ## [1.2.24] - 2026-03-26
 
 ### Modifié
