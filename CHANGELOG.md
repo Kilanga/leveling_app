@@ -15,6 +15,8 @@ Regle simple de versioning:
 ### Corrigé
 - Nettoyage visuel de la zone compte du profil (alignement des actions, reduction de l'espace vide en haut)
 - Affichage du titre actif au format badge, coherent avec le rendu du leaderboard
+- Alignement vertical des controles compte (mot de passe + changement pseudo) pour une lecture plus claire
+- Affichage des titres possedes en liste ligne par ligne avec un rendu badge de type leaderboard, y compris pour les titres non selectionnes
 
 ## [1.7.1] - 2026-03-27
 

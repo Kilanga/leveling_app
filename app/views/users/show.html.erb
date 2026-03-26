@@ -12,14 +12,14 @@
     <div class="surface-card surface-card--shell">
       <div class="card-body">
         <div class="row g-3 align-items-start">
-          <div class="col-lg-5">
-            <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest w-100" %>
-          </div>
-          <div class="col-lg-7">
-            <%= form_with url: update_pseudo_path, method: :patch, local: true, class: "d-grid gap-2" do %>
-              <%= text_field_tag "user[pseudo]", nil, class: "form-control", placeholder: "Nouveau pseudo", minlength: 3, maxlength: 22 %>
-              <%= submit_tag "Changer mon pseudo", class: "btn btn-outline-quest w-100" %>
-            <% end %>
+          <div class="col-lg-8">
+            <div class="d-grid gap-2">
+              <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest" %>
+              <%= form_with url: update_pseudo_path, method: :patch, local: true, class: "d-grid gap-2" do %>
+                <%= text_field_tag "user[pseudo]", nil, class: "form-control", placeholder: "Nouveau pseudo", minlength: 3, maxlength: 22 %>
+                <%= submit_tag "Changer mon pseudo", class: "btn btn-outline-quest" %>
+              <% end %>
+            </div>
           </div>
         </div>
 
@@ -47,7 +47,7 @@
     </p>
     
     <% if @owned_titles.any? %>
-      <div class="d-flex flex-wrap gap-2">
+      <div class="shop-list shop-list--flat">
         <% @owned_titles.each do |title| %>
           <% is_active = @user.active_title_id == title.id %>
           <% badge_class = case title.rarity
@@ -56,18 +56,24 @@
                           when "legendary" then "warning"
                           else "secondary"
                           end %>
-          <% if is_active %>
-            <span class="badge bg-<%= badge_class %>"><%= title.name %></span>
-          <% else %>
-            <span class="btn btn-sm btn-outline-quest" style="pointer-events: none;"><%= title.name %></span>
-            <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: title.id }, class: "btn btn-sm btn-brand" %>
-          <% end %>
-        <% end %>
-        
-        <% if @user.active_title.present? %>
-          <%= link_to "Retirer le titre", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
+          <div class="shop-row shop-row--flat d-flex align-items-center justify-content-between gap-2 flex-wrap">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <span class="badge bg-<%= badge_class %>"><%= title.name %></span>
+              <% if is_active %>
+                <span class="shop-state-chip shop-state-chip--equipped">Equipe</span>
+              <% end %>
+            </div>
+            <% unless is_active %>
+              <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: title.id }, class: "btn btn-sm btn-brand" %>
+            <% end %>
+          </div>
         <% end %>
       </div>
+      <% if @user.active_title.present? %>
+        <div class="mt-2">
+          <%= link_to "Retirer le titre", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
+        </div>
+      <% end %>
     <% else %>
       <p class="text-muted small">Aucun titre disponible pour le moment. Gagnez-les en boutique!</p>
     <% end %>
