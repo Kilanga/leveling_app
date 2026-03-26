@@ -7,6 +7,15 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.3.0] - 2026-03-26
+
+### Ajouté
+- Extension majeure du catalogue de quêtes: environ 20 quêtes par catégorie (Discipline, Physique, Savoir, Social, Défi)
+- Enrichissement des quêtes avec des descriptions dédiées et des récompenses XP calibrées par difficulté
+
+### Modifié
+- Refactorisation de la seed des quêtes vers une structure par catégorie pour faciliter la maintenance et les évolutions futures
+
 ## [1.2.26] - 2026-03-26
 
 ### Modifié
