@@ -1,7 +1,7 @@
 <% flash.each do |type, message| %>
   <% next if message.blank? %>
   <% normalized_type = type.to_s %>
-  <% next if ["notice", "success"].include?(normalized_type) %>
-  <% css_type = { "alert" => "warning", "error" => "danger" }.fetch(normalized_type, "info") %>
+  <% next unless ["alert", "error", "warning", "danger"].include?(normalized_type) %>
+  <% css_type = { "alert" => "warning", "error" => "danger" }.fetch(normalized_type, normalized_type) %>
   <div class="alert alert-<%= css_type %>"><%= message %></div>
 <% end %>
