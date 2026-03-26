@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_214112) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_26_123000) do
+  create_schema "auth"
+  create_schema "extensions"
+  create_schema "graphql"
+  create_schema "graphql_public"
+  create_schema "pgbouncer"
+  create_schema "realtime"
+  create_schema "storage"
+  create_schema "vault"
+
   # These are extensions that must be enabled in order to support this database
+  enable_extension "extensions.pg_stat_statements"
+  enable_extension "extensions.pgcrypto"
+  enable_extension "extensions.uuid-ossp"
+  enable_extension "graphql.pg_graphql"
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "vault.supabase_vault"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -60,9 +74,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_214112) do
     t.bigint "friend_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status", default: "pending"
+    t.string "status", default: "pending", null: false
     t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
     t.index ["user_id"], name: "index_friendships_on_user_id"
+    t.check_constraint "user_id <> friend_id", name: "friendships_user_not_self"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -116,6 +132,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_214112) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shop_item_id"], name: "index_user_items_on_shop_item_id"
+    t.index ["user_id", "shop_item_id"], name: "index_user_items_on_user_id_and_shop_item_id", unique: true
     t.index ["user_id"], name: "index_user_items_on_user_id"
   end
 
@@ -129,18 +146,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_214112) do
     t.integer "completed_count", default: 0
     t.boolean "active"
     t.index ["quest_id"], name: "index_user_quests_on_quest_id"
+    t.index ["user_id", "quest_id"], name: "index_user_quests_on_user_id_and_quest_id", unique: true
     t.index ["user_id"], name: "index_user_quests_on_user_id"
   end
 
   create_table "user_stats", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "category_id", null: false
-    t.integer "level"
-    t.integer "xp"
+    t.integer "level", default: 1, null: false
+    t.integer "xp", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "total_xp"
+    t.integer "total_xp", default: 0, null: false
     t.index ["category_id"], name: "index_user_stats_on_category_id"
+    t.index ["user_id", "category_id"], name: "index_user_stats_on_user_id_and_category_id", unique: true
     t.index ["user_id"], name: "index_user_stats_on_user_id"
   end
 

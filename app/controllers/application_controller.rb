@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def authenticate_admin!
+    authenticate_user!
+    redirect_to root_path, alert: "Accès interdit." unless current_user&.admin?
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:pseudo, :avatar])
     devise_parameter_sanitizer.permit(:account_update, keys: [:pseudo, :avatar])

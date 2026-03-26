@@ -20,9 +20,9 @@
 <h3>Quêtes les plus réalisées</h3>
 <% if @most_completed_quests.any? %>
   <ul class="list-group">
-    <% @most_completed_quests.each do |quest| %>
+    <% @most_completed_quests.each do |user_quest| %>
       <li class="list-group-item">
-        <strong><%= quest.title %></strong> - Complétée <%= quest.completed_count %> fois
+        <strong><%= user_quest.quest.title %></strong> - Complétée <%= user_quest.completed_count %> fois
       </li>
     <% end %>
   </ul>

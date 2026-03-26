@@ -26,20 +26,12 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
   end
-  Rails.configuration.stripe = {
-  public_key: Rails.application.credentials.dig(:stripe, :public_key),
-  secret_key: Rails.application.credentials.dig(:stripe, :secret_key)
-}
-
-Stripe.api_key = Rails.configuration.stripe[:secret_key]
-
-
 
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :cloudinary
+  config.active_storage.service = ENV["CLOUDINARY_URL"].present? ? :cloudinary : :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -48,7 +40,21 @@ Stripe.api_key = Rails.configuration.stripe[:secret_key]
   config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.delivery_method = :letter_opener
+  if ENV["SMTP_ADDRESS"].present? && ENV["SMTP_USERNAME"].present? && ENV["SMTP_PASSWORD"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV["SMTP_ADDRESS"],
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV.fetch("SMTP_DOMAIN", ENV.fetch("APP_HOST", "localhost")),
+      authentication: (ENV["SMTP_AUTHENTICATION"].presence || "plain").to_sym,
+      enable_starttls_auto: ENV.fetch("SMTP_STARTTLS", "true") == "true",
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"]
+    }
+    config.action_mailer.raise_delivery_errors = true
+  else
+    config.action_mailer.delivery_method = :letter_opener
+  end
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 

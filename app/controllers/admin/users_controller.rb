@@ -1,6 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin
+  before_action :authenticate_admin!
 
   def index
     @users = User.all
@@ -23,9 +22,5 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:xp, :admin, :coins)
-  end
-
-  def check_admin
-    redirect_to root_path, alert: "Accès interdit." unless current_user.admin?
   end
 end

@@ -1,6 +1,5 @@
 class Admin::QuestsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin
+  before_action :authenticate_admin!
 
   def index
     @quests = Quest.all
@@ -42,9 +41,5 @@ class Admin::QuestsController < ApplicationController
 
   def quest_params
     params.require(:quest).permit(:title, :description, :xp, :category_id, :valid_until)
-  end
-
-  def check_admin
-    redirect_to root_path, alert: "Accès interdit." unless current_user.admin?
   end
 end

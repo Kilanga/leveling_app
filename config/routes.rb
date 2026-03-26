@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   get "users/show"
-  get "user_weekly_quests/update"
+  post "stripe/webhook", to: "stripe_webhooks#create"
   root "dashboard#index"
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
   devise_for :users
   post "activate_title", to: "users#activate_title"
-post "deactivate_title", to: "users#deactivate_title"
+  post "deactivate_title", to: "users#deactivate_title"
 
   # Classement
   resources :leaderboard, only: [ :index, :show ]
@@ -28,14 +28,14 @@ post "deactivate_title", to: "users#deactivate_title"
   # Amis
   resources :friends, only: [ :index, :create, :destroy ] do
     collection do
-      get :search  # ✅ Ajoute la recherche d'amis
+      get :search
     end
     member do
       post :accept
       delete :reject
     end
   end
-  resources :user_weekly_quests, only: [:update]
+  resources :user_weekly_quests, only: [ :update ]
 
 
   get 'profil', to: 'users#show', as: :user_profile

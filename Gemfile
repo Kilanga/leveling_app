@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "3.2.2" # Mets la version qui correspond à ta machine
+ruby "~> 3.2.2" # Accepte les patchs 3.2.x (ex: 3.2.10)
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"

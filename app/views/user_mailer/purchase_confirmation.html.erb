@@ -1,0 +1,14 @@
+<h1>Confirmation d'achat</h1>
+
+<p>Bonjour <%= @user.pseudo.presence || @user.email %>,</p>
+
+<p>Votre achat a bien ete confirme.</p>
+
+<ul>
+  <li><strong>Objet:</strong> <%= @summary %></li>
+  <% if @amount_eur.present? %>
+    <li><strong>Montant:</strong> <%= sprintf('%.2f', @amount_eur) %> EUR</li>
+  <% end %>
+</ul>
+
+<p>Merci d'utiliser Leveling.</p>

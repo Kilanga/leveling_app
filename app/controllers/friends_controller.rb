@@ -2,15 +2,12 @@ class FriendsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @friends = (current_user.friendships.where(status: "accepted").map(&:friend) +
-                Friendship.where(friend: current_user, status: "accepted").map(&:user)).uniq || []
+    sent_accepted = current_user.friendships.accepted.includes(:friend).map(&:friend)
+    received_accepted = Friendship.accepted.where(friend: current_user).includes(:user).map(&:user)
+    @friends = (sent_accepted + received_accepted).uniq
 
-    @pending_sent_requests = current_user.friendships.where(status: "pending").map(&:friend) || []
-    @pending_received_requests = Friendship.where(friend: current_user, status: "pending").map(&:user) || []
-
-    Rails.logger.info "👀 Nombre d'amis acceptés trouvés : #{@friends.count}"
-    Rails.logger.info "📩 Nombre de demandes envoyées en attente : #{@pending_sent_requests.count}"
-    Rails.logger.info "📥 Nombre de demandes reçues en attente : #{@pending_received_requests.count}"
+    @pending_sent_requests = current_user.friendships.pending.includes(:friend).map(&:friend)
+    @pending_received_requests = Friendship.pending.where(friend: current_user).includes(:user).map(&:user)
   end
 
 
@@ -18,55 +15,34 @@ class FriendsController < ApplicationController
 
   def create
     friend = User.find(params[:friend_id])
-    friendship = Friendship.new(user: current_user, friend: friend, status: "pending")
-
-    Rails.logger.info "🟢 Tentative de création d'une amitié entre #{current_user.pseudo} et #{friend.pseudo}"
-
-    if friendship.save
-      Rails.logger.info "✅ Demande d'ami enregistrée en base avec ID #{friendship.id}"
-      redirect_to friends_path, notice: "Demande d'ami envoyée !"
-    else
-      Rails.logger.error "❌ Erreur lors de l'enregistrement de la demande d'ami : #{friendship.errors.full_messages.join(", ")}"
-      redirect_to friends_path, alert: "Erreur : #{friendship.errors.full_messages.join(", ")}"
-    end
-  end
-
-
-
-
-
-
-  def search
-    @users = User.where("pseudo ILIKE ?", "%#{params[:query]}%") if params[:query].present?
-  end
-
-  def send_request
-    Rails.logger.info "🔵 Début de send_request - Utilisateur: #{current_user.pseudo}"
-
-    friend = User.find_by(id: params[:friend_id])
-
-    if friend.nil?
-      Rails.logger.error "❌ ERREUR : L'utilisateur avec l'ID #{params[:friend_id]} n'existe pas !"
-      redirect_to friends_path, alert: "Utilisateur introuvable."
+    if friend == current_user
+      redirect_to friends_path, alert: "Tu ne peux pas t'ajouter en ami."
       return
     end
 
-    Rails.logger.info "🟢 Utilisateur ciblé pour l'amitié : #{friend.pseudo}"
+    existing = Friendship.where(user: current_user, friend: friend)
+                 .or(Friendship.where(user: friend, friend: current_user))
+                 .exists?
 
-    if Friendship.exists?(user: current_user, friend: friend)
-      Rails.logger.info "❌ Une demande existe déjà entre #{current_user.pseudo} et #{friend.pseudo}"
+    if existing
+      redirect_to friends_path, alert: "Une relation existe déjà avec cet utilisateur."
     else
-      friendship = Friendship.create(user: current_user, friend: friend, status: "pending")
+      friendship = Friendship.new(user: current_user, friend: friend, status: "pending")
 
-      if friendship.persisted?
-        Rails.logger.info "✅ Demande d'ami créée avec succès : #{current_user.pseudo} → #{friend.pseudo}"
+      if friendship.save
+        redirect_to friends_path, notice: "Demande d'ami envoyée !"
       else
-        Rails.logger.error "⚠️ Erreur lors de la création de la demande d'ami entre #{current_user.pseudo} et #{friend.pseudo}"
-        Rails.logger.error "🔴 Erreurs : #{friendship.errors.full_messages.join(', ')}"
+        redirect_to friends_path, alert: "Erreur : #{friendship.errors.full_messages.join(", ")}"
       end
     end
-
-    redirect_to friends_path, notice: "Demande envoyée !"
+  end
+  def search
+    if params[:query].present?
+      @users = User.where("pseudo ILIKE ?", "%#{params[:query]}%")
+                   .where.not(id: current_user.id)
+    else
+      @users = []
+    end
   end
 
 

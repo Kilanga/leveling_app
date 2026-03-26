@@ -5,8 +5,9 @@ class LeaderboardController < ApplicationController
     if params[:category_id].present? && !params[:category_id].empty?
       @players = User.joins(:user_stats)
                      .where(user_stats: { category_id: params[:category_id] })
-                     .select("users.*, user_stats.total_xp")
-                     .order("user_stats.total_xp DESC")
+                     .group("users.id")
+                     .select("users.*, MAX(user_stats.total_xp) AS total_xp_sum")
+                     .order("total_xp_sum DESC")
     else
       @players = User.joins(:user_stats)
                      .group("users.id")
@@ -20,9 +21,9 @@ class LeaderboardController < ApplicationController
     if friend_ids.any?
       @most_completed_quests = UserQuest.joins(:quest, :user)
                                         .where(user_id: friend_ids)
-                                        .select("user_quests.*, COUNT(user_quests.id) AS completed_count")
-                                        .group("user_quests.id, quests.id, users.id")
-                                        .order(Arel.sql("COUNT(user_quests.id) DESC"))
+                                        .select("user_id, quest_id, COUNT(*) AS completed_count")
+                                        .group("user_id, quest_id")
+                                        .order(Arel.sql("COUNT(*) DESC"))
                                         .limit(5)
                                         .includes(:user, :quest)
 
@@ -44,10 +45,11 @@ class LeaderboardController < ApplicationController
 
     # Quêtes les plus complétées par ce joueur
     @most_completed_quests = @player.user_quests.joins(:quest)
-                                      .select("quests.*, COUNT(user_quests.id) AS completed_count")
-                                      .group("quests.id")
-                                      .order("completed_count DESC")
-                                      .limit(5)
+                      .select("user_quests.quest_id, COUNT(*) AS completed_count")
+                      .group("user_quests.quest_id")
+                      .order("completed_count DESC")
+                      .limit(5)
+                      .includes(:quest)
 
     # Ses dernières quêtes
     @recent_quests = @player.user_quests.includes(:quest).order(updated_at: :desc).limit(5)

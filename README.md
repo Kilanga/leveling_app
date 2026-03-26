@@ -1,28 +1,34 @@
-Pense-bête appli :
+# Leveling App
 
-Mettre un cron pour les weekly
+## Prerequisites
 
-# README
+- Ruby 3.2.x
+- PostgreSQL (local or remote)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+1. Copy `.env.example` to `.env` and fill values.
+2. Install dependencies:
+	 - `./bin/bundle install`
+3. Setup database:
+	 - `./bin/rails db:create db:migrate`
+4. Start server:
+	 - `./bin/rails s`
 
-* Ruby version
+## External Services
 
-* System dependencies
+- Database:
+	- Use `DATABASE_URL` for remote databases.
+	- If no `DATABASE_URL`, app falls back to `DB_USERNAME`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`.
+- Stripe:
+	- Requires `STRIPE_PUBLIC_KEY` and `STRIPE_SECRET_KEY`.
+	- Webhooks require `STRIPE_WEBHOOK_SECRET`.
+- Cloudinary:
+	- Requires `CLOUDINARY_URL`.
+	- In development, app falls back to local storage if `CLOUDINARY_URL` is missing.
+- SendGrid:
+	- Requires `SENDGRID_API_KEY` in production.
 
-* Configuration
+## Tests
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `./bin/bundle exec rspec`

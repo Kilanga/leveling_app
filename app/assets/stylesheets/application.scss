@@ -1,6 +1,10 @@
 @use "sass:meta";
 @use "bootstrap" as *;
 
+.page-content {
+  padding-bottom: 2rem;
+}
+
 .avatar-selection {
     display: flex;
     gap: 15px;
@@ -55,4 +59,47 @@
     font-weight: bold;
     text-shadow: 1px 1px 2px black;
   }
+
+.table-responsive {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .input-group {
+    display: block;
+  }
+
+  .input-group .form-control,
+  .input-group .form-select,
+  .input-group .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: 0.375rem !important;
+  }
+
+  .list-group-item.d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.75rem;
+  }
+
+  .list-group-item .btn,
+  .list-group-item .btn-sm {
+    width: 100%;
+  }
+
+  .progress-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
   

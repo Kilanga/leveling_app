@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Leveling App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -60,12 +61,9 @@
     </div>
   </nav>
 
-  <div class="container mt-4">
+  <main class="container mt-4 page-content">
     <%= render 'layouts/flash' %>
     <%= yield %>
-  </div>
-  <script>
-  console.log("🚀 Rails charge bien le JavaScript !");
-</script>
+  </main>
 </body>
 </html>

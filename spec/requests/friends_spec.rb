@@ -1,25 +1,21 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Friends", type: :request do
-  describe "GET /index" do
-    it "returns http success" do
-      get "/friends/index"
-      expect(response).to have_http_status(:success)
+  describe "GET /friends" do
+    it "redirects unauthenticated users to sign in" do
+      get friends_path
+
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 
-  describe "GET /create" do
-    it "returns http success" do
-      get "/friends/create"
-      expect(response).to have_http_status(:success)
+  describe "POST /friends" do
+    it "redirects unauthenticated users to sign in" do
+      post friends_path, params: { friend_id: 1 }
+
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
-
-  describe "GET /destroy" do
-    it "returns http success" do
-      get "/friends/destroy"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
 end

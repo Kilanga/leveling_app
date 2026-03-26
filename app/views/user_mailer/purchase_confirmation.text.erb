@@ -1,0 +1,11 @@
+Confirmation d'achat
+
+Bonjour <%= @user.pseudo.presence || @user.email %>,
+
+Votre achat a bien ete confirme.
+
+Objet: <%= @summary %>
+<% if @amount_eur.present? %>Montant: <%= sprintf('%.2f', @amount_eur) %> EUR
+<% end %>
+
+Merci d'utiliser Leveling.

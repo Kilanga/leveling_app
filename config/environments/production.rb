@@ -31,18 +31,27 @@ Rails.application.configure do
   # config.action_cable.url = ENV["CABLE_URL"] || "redis://localhost:6379/1"
   # config.action_cable.allowed_request_origins = [ "https://yourapp.herokuapp.com", "http://yourapp.herokuapp.com" ]
 
-  # Configuration de l'email
-  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] || "https://leveling-app-f7f0867fb53e.herokuapp.com/" }
+  # Configuration email provider-agnostic (SMTP via variables d'env)
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch("APP_HOST", "localhost"),
+    protocol: "https"
+  }
 
-  config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  address: "smtp.sendgrid.net",
-  port: 587,
-  domain: "arnaudlothe.eu",
-  authentication: :plain,
-  enable_starttls_auto: true,
-  user_name: "apikey",
-  password: ENV["SENDGRID_API_KEY"]
-}
-config.action_mailer.default_url_options = { host: "leveling-app-f7f0867fb53e.herokuapp.com", protocol: "https" }
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_settings = {
+      address: ENV["SMTP_ADDRESS"],
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV.fetch("SMTP_DOMAIN", ENV.fetch("APP_HOST", "localhost")),
+      authentication: (ENV["SMTP_AUTHENTICATION"].presence || "plain").to_sym,
+      enable_starttls_auto: ENV.fetch("SMTP_STARTTLS", "true") == "true",
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"]
+    }
+  else
+    config.action_mailer.perform_deliveries = false
+    config.action_mailer.raise_delivery_errors = false
+  end
 end

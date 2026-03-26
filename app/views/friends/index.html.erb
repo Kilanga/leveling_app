@@ -1,11 +1,11 @@
 <h1>Liste de mes amis</h1>
 
 <% if @friends.any? %>
-  <ul>
+  <ul class="list-group mb-4">
     <% @friends.each do |friend| %>
-      <li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
         <%= friend.pseudo %>
-        <%= button_to "Supprimer", friend_path(friend), method: :delete, class: "btn btn-danger" %>
+        <%= button_to "Supprimer", friend_path(friend), method: :delete, class: "btn btn-danger btn-sm" %>
       </li>
     <% end %>
   </ul>
@@ -15,12 +15,14 @@
 
 <h2>Demandes d’amis reçues</h2>
 <% if @pending_received_requests&.any? %>
-  <ul>
+  <ul class="list-group mb-4">
     <% @pending_received_requests.each do |friend| %>
-      <li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
         <%= friend.pseudo %>
-        <%= button_to "Accepter", accept_friend_path(friend), method: :post, class: "btn btn-success" %>
-        <%= button_to "Refuser", reject_friend_path(friend), method: :delete, class: "btn btn-warning" %>
+        <div class="d-flex gap-2 w-100 w-md-auto">
+          <%= button_to "Accepter", accept_friend_path(friend), method: :post, class: "btn btn-success btn-sm" %>
+          <%= button_to "Refuser", reject_friend_path(friend), method: :delete, class: "btn btn-warning btn-sm" %>
+        </div>
       </li>
     <% end %>
   </ul>
@@ -31,11 +33,11 @@
 
 <h3>Demandes envoyées</h3>
 <% if @pending_sent_requests.any? %>
-  <ul>
+  <ul class="list-group mb-4">
     <% @pending_sent_requests.each do |friend| %>
-      <li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
         <%= friend.pseudo %>
-        <%= button_to "Annuler", reject_friend_path(friend), method: :delete, class: "btn btn-danger" %>
+        <%= button_to "Annuler", reject_friend_path(friend), method: :delete, class: "btn btn-danger btn-sm" %>
       </li>
     <% end %>
   </ul>
@@ -60,7 +62,7 @@
     <% @users.each do |user| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <%= user.pseudo %>
-        <%= button_to "Envoyer une demande", send_request_friends_path(friend_id: user.id), method: :post, class: "btn btn-success btn-sm" unless current_user.friends.include?(user) %>
+        <%= button_to "Envoyer une demande", friends_path(friend_id: user.id), method: :post, class: "btn btn-success btn-sm" unless current_user.friends.include?(user) %>
       </li>
     <% end %>
   </ul>

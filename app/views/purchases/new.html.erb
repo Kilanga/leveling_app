@@ -1,42 +1,42 @@
 <h1>Acheter des objets et des pièces</h1>
 
 <h2>💰 Acheter des Coins</h2>
-<ul>
+<ul class="list-group mb-4">
   <% @coins_prices.each do |option| %>
-    <li>
-      <%= form_with url: purchases_path, method: :post do %>
-        <input type="hidden" name="amount" value="<%= option[:amount] %>">
-        <input type="hidden" name="item_type" value="<%= option[:coins] %> pièces">
-        <%= submit_tag "#{option[:label]} - #{option[:amount]}€", class: "btn btn-warning" %>
+    <li class="list-group-item">
+      <%= form_with url: purchases_path, method: :post, local: true do %>
+        <%= hidden_field_tag :amount, option[:amount] %>
+        <%= hidden_field_tag :item_type, option[:label] %>
+        <%= submit_tag "#{option[:label]} - #{option[:amount]}€", class: "btn btn-warning w-100 w-md-auto" %>
       <% end %>
     </li>
   <% end %>
 </ul>
 
 <h2>⚡ Acheter des Boosts XP</h2>
-<ul>
+<ul class="list-group mb-4">
   <% @boosts.each do |boost| %>
-    <li>
-      <%= form_with url: purchases_path, method: :post do %>
-        <input type="hidden" name="amount" value="<%= boost[:amount] %>">
-        <input type="hidden" name="item_type" value="<%= boost[:label] %>">
-        <%= submit_tag "#{boost[:label]} - #{boost[:amount]}€", class: "btn btn-success" %>
+    <li class="list-group-item">
+      <%= form_with url: purchases_path, method: :post, local: true do %>
+        <%= hidden_field_tag :amount, boost[:amount] %>
+        <%= hidden_field_tag :item_type, boost[:label] %>
+        <%= submit_tag "#{boost[:label]} - #{boost[:amount]}€", class: "btn btn-success w-100 w-md-auto" %>
       <% end %>
     </li>
   <% end %>
 </ul>
 
 <h2>🏆 Acheter des Titres & Avatars</h2>
-<ul>
+<ul class="list-group mb-4">
   <% @shop_items.each do |item| %>
-    <li>
+    <li class="list-group-item">
   <strong class="<%= item.rarity_class %>"><%= item.name %></strong> - <%= item.item_type %>
   <%= image_tag item.image.variant(resize: "50x50"), class: "rounded", if: item.image.attached? %>
   <br>
   <% if item.price_coins.present? %>
-    <%= form_with url: purchases_path, method: :post do %>
-      <input type="hidden" name="shop_item_id" value="<%= item.id %>">
-      <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-primary" %>
+    <%= form_with url: purchases_path, method: :post, local: true do %>
+      <%= hidden_field_tag :shop_item_id, item.id %>
+      <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-primary w-100 w-md-auto" %>
     <% end %>
   <% end %>
 </li>
