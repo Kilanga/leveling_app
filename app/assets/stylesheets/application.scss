@@ -129,6 +129,23 @@ body::before {
   padding: 0.85rem 0.95rem;
 }
 
+.quest-list--flat {
+  gap: 0;
+}
+
+.quest-row--flat {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(64, 124, 166, 0.35);
+  padding: 0.95rem 0.1rem;
+}
+
+.quest-row--flat:last-child {
+  border-bottom: 0;
+  padding-bottom: 0.25rem;
+}
+
 .shop-thumb {
   width: 64px;
   height: 64px;

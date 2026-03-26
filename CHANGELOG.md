@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.17] - 2026-03-26
+
+### Modifié
+- Simplification visuelle des listes de quêtes sur l'accueil et la page quêtes
+- Suppression de l'effet "carte dans carte" au profit d'une présentation plus plate avec séparateurs
+- Conservation du style HUD global avec une hiérarchie visuelle plus propre
+
 ## [1.2.16] - 2026-03-26
 
 ### Modifié
