@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-03-27
+### Fixed
+- Fix OmniAuth route 404 error by changing link method from GET to POST
+- Ensure OmniAuth button properly initializes POST request to `/users/auth/google_oauth2`
+
+### Changed
+- Remove gradient background from login and signup pages
+- Replace purple gradient (667eea → 764ba2) with clean light background (`bg-light`)
+- Refine auth page styling while maintaining modern card-based design and responsiveness
+- Update Google OAuth button to use `button_to` with proper POST method and data-turbo: false
+
+### UI Improvements
+- Add Google logo SVG to OAuth authentication button
+- Improve button accessibility with proper semantic HTML (button instead of anchor)
+- Maintain card layout, spacing, and typography improvements from v1.2.1
+- Keep avatar selection UI and form styling on signup page
+
 ## [1.2.1] - 2026-03-26
 ### Fixed
 - Fix Google OAuth CSRF error by changing OmniAuth request method from POST to GET
