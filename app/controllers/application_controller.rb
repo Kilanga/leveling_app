@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_profile_completed
+    return if devise_controller?
     return unless user_signed_in?
     return unless current_user.needs_profile_completion?
     return if controller_name == "users" && ["complete_profile", "update_profile"].include?(action_name)

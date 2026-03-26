@@ -12,8 +12,9 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Coloration du texte des objets boutique selon la rarete pour une lecture plus immediate des paliers de valeur
 - Enrichissement du bloc "Recommande pour toi" avec les descriptions personnalisees
 - Ajout d'un defi boutique hebdomadaire (3 objectifs) avec recompense de coins recuperable une fois par semaine
-- Ajout d'une configuration VS Code locale pour des runs RSpec via tasks dedies, sans dependance au runner Python
-- Desactivation de la decouverte/execution de tests Python dans le workspace Rails pour eviter l'erreur "No Python interpreter is selected"
+
+### Corrigé
+- La finalisation du profil ne bloque plus les actions Devise (notamment deconnexion), ce qui permet de revenir a l'ecran de connexion au lieu de rester coince sur la page de completion
 
 ## [1.4.0] - 2026-03-26
 
