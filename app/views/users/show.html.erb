@@ -1,13 +1,13 @@
 <h1 class="page-title">Profil de <%= @user.pseudo %></h1>
 
 <!-- Conteneur responsive -->
-<div class="row align-items-start g-4">
+<div class="row align-items-center g-4">
   <!-- Avatar (colonne gauche) -->
   <div class="col-md-4 text-center">
     <%= user_avatar_image(@user, width: 250, height: 250, css_class: "rounded-circle", alt: "Avatar de #{@user.pseudo}") %>
   </div>
 
-  <!-- Actions compte + Graphique (colonne droite) -->
+  <!-- Actions compte (colonne droite) -->
   <div class="col-md-8">
     <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
       <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest" %>
@@ -20,15 +20,7 @@
     <% if @next_pseudo_change_at.present? %>
       <p class="text-muted small mt-1 mb-0">Prochain changement de pseudo possible le <%= @next_pseudo_change_at.strftime("%d/%m/%Y") %>.</p>
     <% end %>
-    <p class="text-muted small mt-1 mb-3">Le pseudo peut etre modifie une fois par semaine.</p>
-
-    <div class="d-flex justify-content-center position-relative mt-3">
-      <canvas id="statsChart" width="400" height="400"
-              data-stats='<%= @stats_data.to_json.html_safe %>'></canvas>
-      <div id="totalLevelDisplay" class="position-absolute fw-bold fs-4"
-           style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-      </div>
-    </div>
+    <p class="text-muted small mt-1 mb-0">Le pseudo peut etre modifie une fois par semaine.</p>
   </div>
 </div>
 
@@ -36,16 +28,27 @@
 <h2 class="section-title mt-4">Mes Titres</h2>
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
-    <p class="text-muted small">Titre actuel: <strong class="text-white"><%= @user.active_title&.name || "Aucun titre actif" %></strong></p>
+    <p class="mb-2">
+      <span class="shop-rarity-text shop-rarity-text--common">Titre actuel:</span>
+      <% if @user.active_title.present? %>
+        <span class="badge bg-<%= @user.title_rarity_class %>"><%= @user.active_title.name %></span>
+      <% else %>
+        <strong class="text-white">Aucun titre actif</strong>
+      <% end %>
+    </p>
     
     <% if @owned_titles.any? %>
       <div class="d-flex flex-wrap gap-2">
         <% @owned_titles.each do |title| %>
           <% is_active = @user.active_title_id == title.id %>
+          <% badge_class = case title.rarity
+                          when "rare" then "primary"
+                          when "epic" then "purple"
+                          when "legendary" then "warning"
+                          else "secondary"
+                          end %>
           <% if is_active %>
-            <span class="btn btn-sm btn-brand" style="pointer-events: none; opacity: 1;">
-              ✓ <%= title.name %>
-            </span>
+            <span class="badge bg-<%= badge_class %>"><%= title.name %></span>
           <% else %>
             <span class="btn btn-sm btn-outline-quest" style="pointer-events: none;"><%= title.name %></span>
             <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: title.id }, class: "btn btn-sm btn-brand" %>
