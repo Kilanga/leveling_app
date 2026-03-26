@@ -11,8 +11,8 @@
 
             <%= form_with model: @user, url: complete_profile_path, method: :patch, local: true do |f| %>
               <div class="mb-3">
-                <%= f.label :pseudo, "Pseudo (3-20 caractères)", class: "form-label fw-semibold" %>
-                <%= f.text_field :pseudo, class: "form-control form-control-lg", required: true, minlength: 3, maxlength: 20, placeholder: "votre_pseudo" %>
+                <%= f.label :pseudo, "Pseudo (3-22 caractères)", class: "form-label fw-semibold" %>
+                <%= f.text_field :pseudo, class: "form-control form-control-lg", required: true, minlength: 3, maxlength: 22, placeholder: "votre_pseudo" %>
               </div>
 
               <div class="mb-4">

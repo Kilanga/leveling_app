@@ -16,8 +16,8 @@
               </div>
 
               <div class="mb-3">
-                <%= f.label :pseudo, "Pseudo (3-20 caractères)", class: "form-label" %>
-                <%= f.text_field :pseudo, class: "form-control", required: true, placeholder: "votre_pseudo" %>
+                <%= f.label :pseudo, "Pseudo (3-22 caractères)", class: "form-label" %>
+                <%= f.text_field :pseudo, class: "form-control", required: true, minlength: 3, maxlength: 22, placeholder: "votre_pseudo" %>
               </div>
 
               <div class="mb-3">

@@ -31,7 +31,7 @@ class User < ApplicationRecord
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true
 
-  validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }
+  validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 22 }
   validates :email, presence: true, uniqueness: true
   validates :avatar, presence: true, inclusion: { in: [
     "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp",

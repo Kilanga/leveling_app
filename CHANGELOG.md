@@ -7,6 +7,17 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+### Modifié
+- Refonte de la zone haute du profil: avatar a gauche, actions compte (mot de passe + changement pseudo) alignees a droite
+- Bloc "Mes Titres" ajuste avec "Titre actuel" affiche en blanc pour meilleure lisibilite
+- Les titres affiches dans le profil ne sont plus des liens implicites vers la boutique; l'equipement passe par un bouton dedie
+- Mise en place d'un systeme de titres gratuits a objectifs avec deux sections profil: "Titres Communs Gratuits" et "Titres Prestige Gratuits"
+- Masquage des objectifs des titres prestige tant qu'ils sont bloques (affichage "Objectif: secret")
+
+### Corrigé
+- Erreur 500 du leaderboard au clic sur un joueur (correction de la requete agregee incompatible PostgreSQL)
+- Validation pseudo harmonisee a 22 caracteres maximum sur inscription, finalisation profil et changement de pseudo
+
 ## [1.6.0] - 2026-03-26
 
 ### Ajouté
