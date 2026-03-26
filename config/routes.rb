@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   get "profil/completer", to: "users#complete_profile", as: :complete_profile
   patch "profil/completer", to: "users#update_profile"
+  patch "profil/pseudo", to: "users#update_pseudo", as: :update_pseudo
 
   get "profil", to: "users#show", as: :user_profile
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_223332) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
   create_schema "extensions"
 
   # These are extensions that must be enabled in order to support this database
@@ -185,6 +185,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_223332) do
     t.boolean "profile_completed", default: true, null: false
     t.string "provider"
     t.string "pseudo"
+    t.datetime "pseudo_last_changed_at"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
