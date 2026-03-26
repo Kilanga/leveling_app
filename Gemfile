@@ -14,6 +14,7 @@ gem "jbuilder"
 
 
 gem "devise"
+gem "omniauth-google-oauth2"
 gem "stripe"
 gem "bootstrap"
 gem "stimulus-rails"

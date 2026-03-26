@@ -166,6 +166,8 @@ GEM
     google-protobuf (4.29.3-x86_64-linux)
       bigdecimal
       rake (>= 13)
+    hashie (5.1.0)
+      logger
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     image_processing (1.14.0)
@@ -185,6 +187,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.10.2)
+    jwt (3.1.2)
+      base64
     kamal (2.5.2)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -229,6 +233,8 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
+    multi_xml (0.8.1)
+      bigdecimal (>= 3.1, < 5)
     multipart-post (2.4.1)
     net-http (0.6.0)
       uri
@@ -254,6 +260,27 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.2-x86_64-linux-gnu)
       racc (~> 1.4)
+    oauth2 (2.0.18)
+      faraday (>= 0.17.3, < 4.0)
+      jwt (>= 1.0, < 4.0)
+      logger (~> 1.2)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 4)
+      snaky_hash (~> 2.0, >= 2.0.3)
+      version_gem (~> 1.1, >= 1.1.9)
+    omniauth (2.1.4)
+      hashie (>= 3.4.6)
+      logger
+      rack (>= 2.2.3)
+      rack-protection
+    omniauth-google-oauth2 (1.2.2)
+      jwt (>= 2.9.2)
+      oauth2 (~> 2.0)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8)
+    omniauth-oauth2 (1.9.0)
+      oauth2 (>= 2.0.2, < 3)
+      omniauth (~> 2.0)
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     parallel (1.26.3)
@@ -281,6 +308,10 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.5)
+    rack-protection (4.2.1)
+      base64 (>= 0.1.0)
+      logger (>= 1.6.0)
+      rack (>= 3.0.0, < 4)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -399,6 +430,9 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    snaky_hash (2.0.3)
+      hashie (>= 0.1.0, < 6)
+      version_gem (>= 1.1.8, < 3)
     sshkit (1.24.0)
       base64
       logger
@@ -427,6 +461,7 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.1.1)
     useragent (0.16.11)
+    version_gem (1.1.9)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -466,6 +501,7 @@ DEPENDENCIES
   kamal
   letter_opener
   letter_opener_web
+  omniauth-google-oauth2
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)

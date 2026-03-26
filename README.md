@@ -23,6 +23,11 @@
 - Stripe:
 	- Requires `STRIPE_PUBLIC_KEY` and `STRIPE_SECRET_KEY`.
 	- Webhooks require `STRIPE_WEBHOOK_SECRET`.
+- Google OAuth (Devise):
+	- Requires `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+	- Callback URL to configure in Google Cloud Console:
+	  - `https://your-domain.com/users/auth/google_oauth2/callback`
+	  - Example Heroku: `https://leveling-app.herokuapp.com/users/auth/google_oauth2/callback`
 - Cloudinary:
 	- Requires `CLOUDINARY_URL`.
 	- In development, app falls back to local storage if `CLOUDINARY_URL` is missing.

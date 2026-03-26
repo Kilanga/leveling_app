@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   post "stripe/webhook", to: "stripe_webhooks#create"
   root "dashboard#index"
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
-  devise_for :users
+  devise_for :users, controllers: {
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
   post "activate_title", to: "users#activate_title"
   post "deactivate_title", to: "users#deactivate_title"
 
