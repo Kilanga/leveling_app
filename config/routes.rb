@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     collection do
       get "success"
       get "cancel"
+      post "claim_weekly_challenge"
     end
   end
 

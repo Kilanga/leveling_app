@@ -7,6 +7,14 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+### Modifié
+- Personnalisation des descriptions boutique: packs de coins adaptes au profil joueur et boosts contextualises selon la progression
+- Coloration du texte des objets boutique selon la rarete pour une lecture plus immediate des paliers de valeur
+- Enrichissement du bloc "Recommande pour toi" avec les descriptions personnalisees
+- Ajout d'un defi boutique hebdomadaire (3 objectifs) avec recompense de coins recuperable une fois par semaine
+- Ajout d'une configuration VS Code locale pour des runs RSpec via tasks dedies, sans dependance au runner Python
+- Desactivation de la decouverte/execution de tests Python dans le workspace Rails pour eviter l'erreur "No Python interpreter is selected"
+
 ## [1.4.0] - 2026-03-26
 
 ### Modifié

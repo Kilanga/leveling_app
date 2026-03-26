@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+  SHOP_CHALLENGE_REWARD_COINS = 200
 
   COIN_PACKS = {
     "100 pièces" => { amount: 5, coins: 100 },
@@ -14,8 +15,25 @@ class PurchasesController < ApplicationController
 
   def new
     @active_shop_tab = params[:tab].presence_in(%w[packs boosts cosmetics]) || "packs"
-    @coins_prices = COIN_PACKS.map { |label, config| { label: label, amount: config[:amount], coins: config[:coins] } }
-    @boosts = BOOST_PACKS.map { |label, config| { label: label, amount: config[:amount], duration: config[:duration] } }
+    @focus_category_name = current_user.user_stats.includes(:category).order(total_xp: :desc).first&.category&.name || "tes objectifs"
+
+    @coins_prices = COIN_PACKS.map do |label, config|
+      {
+        label: label,
+        amount: config[:amount],
+        coins: config[:coins],
+        description: coin_pack_description(config[:coins])
+      }
+    end
+
+    @boosts = BOOST_PACKS.map do |label, config|
+      {
+        label: label,
+        amount: config[:amount],
+        duration: config[:duration],
+        description: boost_description(config[:duration])
+      }
+    end
     @best_value_pack_label = @coins_prices.max_by { |option| option[:coins].to_f / [option[:amount], 1].max }[:label]
 
     @title_items = ShopItem.where(item_type: "title").order(rarity: :asc, name: :asc)
@@ -23,6 +41,39 @@ class PurchasesController < ApplicationController
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
     @total_level = current_user.user_stats.sum(:level)
     @recommended_shop_items = recommended_shop_items
+    @item_personalized_descriptions = (@title_items + @cosmetic_items + @recommended_shop_items).uniq.index_with do |item|
+      personalized_item_description(item)
+    end
+
+    @shop_challenge = build_shop_challenge
+    @shop_challenge_claimed = shop_challenge_claimed?
+  end
+
+  def claim_weekly_challenge
+    challenge = build_shop_challenge
+
+    unless challenge[:completed_all]
+      return redirect_to new_purchase_path(tab: "cosmetics"), alert: "Defi hebdo incomplet pour le moment."
+    end
+
+    if shop_challenge_claimed?
+      return redirect_to new_purchase_path(tab: "cosmetics"), alert: "Recompense hebdo deja recuperee."
+    end
+
+    ActiveRecord::Base.transaction do
+      current_user.increment!(:coins, SHOP_CHALLENGE_REWARD_COINS)
+      Purchase.create!(
+        user: current_user,
+        amount: SHOP_CHALLENGE_REWARD_COINS,
+        item_type: "shop_challenge_reward",
+        status: "completed",
+        transaction_id: weekly_shop_challenge_token
+      )
+    end
+
+    redirect_to new_purchase_path(tab: "cosmetics"), notice: "+#{SHOP_CHALLENGE_REWARD_COINS} coins recuperees via le defi boutique !"
+  rescue ActiveRecord::RecordNotUnique
+    redirect_to new_purchase_path(tab: "cosmetics"), alert: "Recompense hebdo deja recuperee."
   end
 
   def create
@@ -168,6 +219,70 @@ class PurchasesController < ApplicationController
         [affordable_rank, rarity_rank, price_rank, item.name]
       end
       .first(4)
+  end
+
+  def personalized_item_description(item)
+    base = item.description.to_s.strip
+    base = "Objet cosmétique exclusif pour renforcer ton identité en jeu." if base.blank?
+
+    rarity_line = case item.rarity
+    when "legendary"
+      "Piece de prestige pour marquer ton statut de veteran."
+    when "epic"
+      "Look premium pour les joueurs qui accelerent fort."
+    else
+      "Bonus de style ideal pour progresser avec classe."
+    end
+
+    "#{base} #{rarity_line} Oriente vers #{@focus_category_name.downcase}."
+  end
+
+  def coin_pack_description(coins)
+    if coins >= 1000
+      "Gros refill pour enchainer les achats premium lies a #{@focus_category_name.downcase}."
+    elsif coins >= 500
+      "Pack equilibre pour maintenir ton rythme sur #{@focus_category_name.downcase}."
+    else
+      "Top-up rapide pour debloquer un premier item utile."
+    end
+  end
+
+  def boost_description(duration)
+    if duration >= 7.days
+      "Boost longue duree pour grinder toute la semaine."
+    else
+      "Coup d'accelerateur parfait pour une session intense."
+    end
+  end
+
+  def build_shop_challenge
+    equipped_cosmetic = current_user.active_title_id.present? || current_user.active_avatar_item_id.present?
+    owns_epic_or_legendary = current_user.user_items.joins(:shop_item).where(shop_items: { rarity: %w[epic legendary] }).exists?
+    collection_size = current_user.user_items.joins(:shop_item).where(shop_items: { item_type: %w[title cosmetic] }).distinct.count("shop_items.id")
+    owns_three_cosmetics = collection_size >= 3
+
+    steps = [
+      { label: "Equiper un cosmétique", completed: equipped_cosmetic },
+      { label: "Posseder un item Epic ou Legendary", completed: owns_epic_or_legendary },
+      { label: "Construire une collection de 3 cosmetiques", completed: owns_three_cosmetics }
+    ]
+
+    completed_count = steps.count { |step| step[:completed] }
+    {
+      steps: steps,
+      completed_count: completed_count,
+      total_count: steps.size,
+      completed_all: completed_count == steps.size
+    }
+  end
+
+  def weekly_shop_challenge_token
+    now = Time.zone.now
+    "shop_weekly_challenge:#{current_user.id}:#{now.cwyear}-#{now.cweek}"
+  end
+
+  def shop_challenge_claimed?
+    Purchase.exists?(transaction_id: weekly_shop_challenge_token)
   end
 
   def preferred_rarity_order

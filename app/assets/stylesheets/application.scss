@@ -364,6 +364,24 @@ body::before {
   gap: 0.5rem;
 }
 
+.shop-challenge-card {
+  border: 1px solid rgba(86, 202, 248, 0.33);
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: linear-gradient(140deg, rgba(14, 27, 41, 0.88), rgba(9, 20, 31, 0.92));
+}
+
+.shop-challenge-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.shop-challenge-step:last-child {
+  margin-bottom: 0;
+}
+
 .daily-objective-card {
   border-color: rgba(113, 216, 255, 0.5);
   box-shadow: inset 0 0 0 1px rgba(113, 216, 255, 0.15), 0 8px 18px rgba(8, 35, 58, 0.35);
@@ -637,6 +655,22 @@ body::before {
   color: #7a4d0f;
   background: #fde8c8;
   border-color: #e3b46b;
+}
+
+.shop-rarity-text--common {
+  color: #b9dbec;
+}
+
+.shop-rarity-text--rare {
+  color: #8fd2ff;
+}
+
+.shop-rarity-text--epic {
+  color: #e3b8ff;
+}
+
+.shop-rarity-text--legendary {
+  color: #ffd18d;
 }
 
 .bundle-card {
