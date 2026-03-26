@@ -109,6 +109,20 @@ body::before {
   padding: 1.2rem;
 }
 
+.surface-card--shell .card-body {
+  padding: 1.35rem;
+}
+
+.hud-section {
+  background: transparent;
+}
+
+.hud-divider {
+  border: 0;
+  border-top: 1px solid rgba(70, 133, 174, 0.35);
+  margin: 1rem 0 1.15rem;
+}
+
 .section-title {
   font-size: 1.15rem;
   font-weight: 700;

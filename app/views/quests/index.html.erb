@@ -1,53 +1,55 @@
 <h1 class="page-title">Chasse aux quetes</h1>
 <p class="page-subtitle">Filtrez votre prochaine mission et suivez votre progression en continu.</p>
 
-<div class="surface-card mb-4">
+<div class="surface-card surface-card--shell">
   <div class="card-body">
-    <%= form_with url: quests_path, method: :get, local: true, class: "row g-2 mobile-stack" do %>
-      <div class="col-md-5">
-        <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Rechercher une quete..." %>
-      </div>
-      <div class="col-md-4">
-        <%= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id]), include_blank: "Toutes les categories", class: "form-select" %>
-      </div>
-      <div class="col-md-3 d-grid">
-        <button type="submit" class="btn btn-brand">Lancer la recherche</button>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="surface-card">
-  <div class="card-body">
-    <div class="quest-list quest-list--flat">
-      <% @quests.each do |quest| %>
-        <div class="quest-row quest-row--flat">
-          <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-            <div>
-              <strong><%= quest.title %></strong>
-              <p class="quest-meta mb-0"><%= quest.category.name %> - <%= quest.xp %> XP</p>
-            </div>
-            <div class="quest-actions">
-              <% user_quest = current_user.user_quests.find_by(quest: quest) %>
-
-              <% if user_quest && user_quest.active? %>
-                <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
-                  <%= hidden_field_tag :action_type, "unfollow" %>
-                  <%= submit_tag "Ne plus suivre", class: "btn btn-sm btn-outline-danger" %>
-                <% end %>
-              <% else %>
-                <%= form_with url: user_quests_path, method: :post, class: "d-inline", local: true do %>
-                  <%= hidden_field_tag :quest_id, quest.id %>
-                  <% if user_quest %>
-                    <%= hidden_field_tag :reactivate, true %>
-                  <% end %>
-                  <%= submit_tag "Suivre", class: "btn btn-sm btn-brand" %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
+    <section class="hud-section">
+      <%= form_with url: quests_path, method: :get, local: true, class: "row g-2 mobile-stack" do %>
+        <div class="col-md-5">
+          <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Rechercher une quete..." %>
+        </div>
+        <div class="col-md-4">
+          <%= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id]), include_blank: "Toutes les categories", class: "form-select" %>
+        </div>
+        <div class="col-md-3 d-grid">
+          <button type="submit" class="btn btn-brand">Lancer la recherche</button>
         </div>
       <% end %>
-    </div>
+    </section>
+
+    <hr class="hud-divider">
+
+    <section class="hud-section">
+      <div class="quest-list quest-list--flat">
+        <% @quests.each do |quest| %>
+          <div class="quest-row quest-row--flat">
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+              <div>
+                <strong><%= quest.title %></strong>
+                <p class="quest-meta mb-0"><%= quest.category.name %> - <%= quest.xp %> XP</p>
+              </div>
+              <div class="quest-actions">
+                <% user_quest = current_user.user_quests.find_by(quest: quest) %>
+
+                <% if user_quest && user_quest.active? %>
+                  <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
+                    <%= hidden_field_tag :action_type, "unfollow" %>
+                    <%= submit_tag "Ne plus suivre", class: "btn btn-sm btn-outline-danger" %>
+                  <% end %>
+                <% else %>
+                  <%= form_with url: user_quests_path, method: :post, class: "d-inline", local: true do %>
+                    <%= hidden_field_tag :quest_id, quest.id %>
+                    <% if user_quest %>
+                      <%= hidden_field_tag :reactivate, true %>
+                    <% end %>
+                    <%= submit_tag "Suivre", class: "btn btn-sm btn-brand" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
   </div>
 </div>

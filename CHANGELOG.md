@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.19] - 2026-03-26
+
+### Modifié
+- Passage de l'accueil vers une structure plus fluide avec une seule enveloppe principale et des sections internes
+- Passage de la page quêtes vers un conteneur unique (filtres + liste) pour réduire la sensation d'empilement
+- Ajout de séparateurs visuels légers pour conserver la lisibilité sans multiplier les cartes
+
 ## [1.2.18] - 2026-03-26
 
 ### Modifié
