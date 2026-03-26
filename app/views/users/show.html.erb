@@ -1,4 +1,4 @@
-<h1>Profil de <%= @user.pseudo %></h1>
+<h1 class="page-title">Profil de <%= @user.pseudo %></h1>
 
 <!-- Conteneur responsive -->
 <div class="row align-items-center">
@@ -21,13 +21,12 @@
 
 <!-- Bouton vers modification de mot de passe -->
 <div class="mt-3 text-center">
-  <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-primary" %>
+  <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest" %>
 </div>
 
 
 
-<!-- 🚀 Section des Badges -->
-<h2>🏆 Badges débloqués</h2>
+<h2 class="section-title mt-4">Badges débloqués</h2>
 <div class="d-flex flex-wrap">
   <% @user_badges.each do |user_badge| %>
     <div class="text-center m-3">
@@ -42,9 +41,8 @@
 
 
 
-<!-- 🚀 Section de l'historique des quêtes -->
-<h2>📜 Historique des quêtes</h2>
-<ul class="list-group">
+<h2 class="section-title mt-4">Historique des quêtes</h2>
+<ul class="list-group surface-list">
   <% @user_quests.each do |user_quest| %>
     <li class="list-group-item">
       <strong><%= user_quest.quest.title %></strong> - Complété <%= user_quest.completed_count %> fois

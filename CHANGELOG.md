@@ -1,166 +1,166 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+Toutes les modifications notables de ce projet sont documentées dans ce fichier.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Le format suit [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Non publié]
 
 ## [1.2.8] - 2026-03-26
 
-### Fixed
-- Enforce a single active global weekly quest by expiring duplicate active weekly quests
+### Corrigé
+- Imposer une seule quête hebdomadaire globale active en expirant les doublons actifs
 
-### Changed
+### Modifié
 - Refonte globale de l'interface vers un style immersif sombre de type "system"
-- Update navigation branding and interface contrast for stronger readability
-- Restyle cards, buttons, alerts, and form inputs to match the new interface direction
+- Mise à jour de l'identité de navigation et du contraste de l'interface pour une meilleure lisibilité
+- Refonte des cartes, boutons, alertes et champs de formulaire pour s'aligner sur la nouvelle direction visuelle
 
 ## [1.2.7] - 2026-03-26
 
-### Fixed
-- Weekly quests are now global/shared across all users instead of being user-specific
+### Corrigé
+- Les quêtes hebdomadaires sont désormais globales/partagées entre tous les utilisateurs au lieu d'être spécifiques à chaque utilisateur
 
-### Changed
-- Dashboard now ensures one active global weekly quest and links each user to that same quest
+### Modifié
+- Le tableau de bord garantit maintenant une quête hebdomadaire globale active et relie chaque utilisateur à cette même quête
 
 ## [1.2.6] - 2026-03-26
 
-### Added
-- Auto-create a weekly quest for users when none is currently active
+### Ajouté
+- Création automatique d'une quête hebdomadaire lorsqu'aucune n'est active
 
-### Changed
-- Move "Quetes en cours" and "Quetes hebdomadaires" to the top of the dashboard
-- Integrate the Kiviat chart directly in the page flow (without dedicated card container)
+### Modifié
+- Déplacement de "Quetes en cours" et "Quetes hebdomadaires" en haut du tableau de bord
+- Intégration du graphique Kiviat directement dans le flux de page (sans carte dédiée)
 
 ## [1.2.5] - 2026-03-26
 
-### Added
-- Add a Kiviat (radar) progression chart on the dashboard by quest category
+### Ajouté
+- Ajout d'un graphique de progression Kiviat (radar) sur le tableau de bord par catégorie de quête
 
-### Changed
-- Use embedded dashboard stats data for the chart instead of extra JSON fetch calls
-- Refine chart visuals and tooltips for level and XP readability
+### Modifié
+- Utilisation des données de statistiques embarquées du tableau de bord pour le graphique au lieu d'appels JSON supplémentaires
+- Amélioration du rendu du graphique et des info-bulles pour la lisibilité des niveaux et de l'XP
 
 ## [1.2.4] - 2026-03-26
 
-### Added
-- Add a "Signaler un bug" button on the dashboard linking to GitHub Issues
+### Ajouté
+- Ajout d'un bouton "Signaler un bug" sur le tableau de bord, relié aux GitHub Issues
 
-### Changed
-- Temporarily remove avatar and bundle offers from the shop interface
-- Keep the shop focused on title purchases and equipment actions
+### Modifié
+- Suppression temporaire des offres d'avatars et de bundles dans la boutique
+- Boutique recentrée sur l'achat de titres et les actions d'équipement
 
 ## [1.2.3] - 2026-03-26
 
-### Added
-- Enforce profile completion after first Google OAuth signup (pseudo + avatar required)
-- Add dedicated profile completion page for Google users before entering the app
-- Add `profile_completed` flag on users to track onboarding state
-- Add equip flow for owned cosmetic avatars directly from the shop
-- Add active cosmetic avatar support on users (`active_avatar_item_id`)
-- Add rarity-based cosmetic bundles (title + avatar) with discounted coin price
+### Ajouté
+- Obligation de compléter le profil après la première inscription Google OAuth (pseudo + avatar requis)
+- Ajout d'une page dédiée de complétion de profil pour les utilisateurs Google avant l'accès à l'application
+- Ajout du drapeau `profile_completed` sur les utilisateurs pour suivre l'état d'onboarding
+- Ajout d'un flux d'équipement des avatars cosmétiques possédés directement depuis la boutique
+- Ajout du support d'avatar cosmétique actif sur l'utilisateur (`active_avatar_item_id`)
+- Ajout de bundles cosmétiques par rareté (titre + avatar) avec prix en pièces réduit
 
-### Fixed
-- Resolve OmniAuth CSRF/authenticity failures in production request phase
-- Ensure OAuth submit form fully bypasses Turbo at form level
-- Prevent invalid or tampered bundle purchases by server-side bundle validation
+### Corrigé
+- Résolution des erreurs CSRF/authenticity OmniAuth pendant la phase de requête en production
+- Garantie que le formulaire d'envoi OAuth contourne Turbo au niveau du formulaire
+- Prévention des achats de bundles invalides ou falsifiés via validation serveur
 
-### Changed
-- Remove non-essential authentication flash messages (success/info noise)
-- Keep authentication feedback focused on actionable warnings/errors
-- Redesign shop Titles/Avatars section with stronger rarity framing and ownership states
-- Add direct "Equiper" actions for owned titles and avatars to increase cosmetic value
-- Display equipped cosmetic avatars in profile and leaderboard views
-- Highlight bundle savings in the shop to improve purchase intent
+### Modifié
+- Suppression des messages flash d'authentification non essentiels (bruit success/info)
+- Retour d'authentification recentré sur les avertissements/erreurs actionnables
+- Refonte de la section Titres/Avatars de la boutique avec un cadrage de rareté plus fort et des états de possession
+- Ajout d'actions directes "Equiper" pour les titres et avatars possédés afin de renforcer leur valeur cosmétique
+- Affichage des avatars cosmétiques équipés dans le profil et le classement
+- Mise en avant des économies sur bundles dans la boutique pour améliorer l'intention d'achat
 
 ## [1.2.2] - 2026-03-27
-### Fixed
-- Fix OmniAuth route 404 error by changing link method from GET to POST
-- Ensure OmniAuth button properly initializes POST request to `/users/auth/google_oauth2`
+### Corrigé
+- Correction de l'erreur 404 de route OmniAuth en passant la méthode du lien de GET à POST
+- Vérification que le bouton OmniAuth initialise correctement la requête POST vers `/users/auth/google_oauth2`
 
-### Changed
-- Remove gradient background from login and signup pages
-- Replace purple gradient (667eea → 764ba2) with clean light background (`bg-light`)
-- Refine auth page styling while maintaining modern card-based design and responsiveness
-- Update Google OAuth button to use `button_to` with proper POST method and data-turbo: false
+### Modifié
+- Suppression du fond en dégradé sur les pages de connexion et d'inscription
+- Remplacement du dégradé violet (667eea → 764ba2) par un fond clair propre (`bg-light`)
+- Affinage du style des pages d'authentification tout en conservant un design moderne par cartes et responsive
+- Mise à jour du bouton Google OAuth avec `button_to`, méthode POST correcte et data-turbo: false
 
-### UI Improvements
-- Add Google logo SVG to OAuth authentication button
-- Improve button accessibility with proper semantic HTML (button instead of anchor)
-- Maintain card layout, spacing, and typography improvements from v1.2.1
-- Keep avatar selection UI and form styling on signup page
+### Améliorations UI
+- Ajout du logo Google SVG sur le bouton d'authentification OAuth
+- Amélioration de l'accessibilité des boutons avec une sémantique HTML correcte (button au lieu de anchor)
+- Conservation des améliorations de mise en page par cartes, espacements et typographie de la v1.2.1
+- Conservation de l'UI de sélection d'avatar et du style de formulaire sur la page d'inscription
 
 ## [1.2.1] - 2026-03-26
-### Fixed
-- Fix Google OAuth CSRF error by changing OmniAuth request method from POST to GET
-- Ensure OmniAuth route uses GET for initial authorization phase
+### Corrigé
+- Correction de l'erreur CSRF Google OAuth en passant la méthode OmniAuth de POST à GET
+- Vérification que la route OmniAuth utilise GET pour la phase initiale d'autorisation
 
-### Changed
-- Redesign login page (`/users/sign_in`) with modern gradient background and card-based layout
-- Redesign signup page (`/users/sign_up`) with improved avatar selection UI and interactive cards
-- Improve form spacing and typography for better readability
-- Style OAuth buttons consistently across all authentication pages
-- Add responsive design improvements for mobile and desktop views
+### Modifié
+- Refonte de la page de connexion (`/users/sign_in`) avec fond dégradé moderne et layout par cartes
+- Refonte de la page d'inscription (`/users/sign_up`) avec UI de sélection d'avatar améliorée et cartes interactives
+- Amélioration des espacements de formulaire et de la typographie pour une meilleure lisibilité
+- Harmonisation du style des boutons OAuth sur toutes les pages d'authentification
+- Ajout d'améliorations responsive pour mobile et desktop
 
-### UI Improvements
-- Add divider with "or" separator between form and OAuth options
-- Implement modern Bootstrap 5 styling with gradient background (667eea → 764ba2)
-- Add hover effects and visual feedback on interactive elements
-- Improve avatar selection with badges (Guerrier/Guerrière) and transition effects
+### Améliorations UI
+- Ajout d'un séparateur avec "or" entre le formulaire et les options OAuth
+- Implémentation d'un style Bootstrap 5 moderne avec fond dégradé (667eea → 764ba2)
+- Ajout d'effets hover et de retours visuels sur les éléments interactifs
+- Amélioration de la sélection d'avatar avec badges (Guerrier/Guerrière) et effets de transition
 
 ## [1.2.0] - 2026-03-26
-### Added
-- Google OAuth integration via Devise OmniAuth
-  - Users can now sign up and log in with their Google account
-  - Auto-generates `pseudo` and assigns default avatar on first Google login
-  - Requires `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` environment variables
-  - OAuth callback URL: `/users/auth/google_oauth2/callback`
-- Supabase Postgres Best Practices Agent Skill
-- Test coverage for Google OAuth user creation flow
+### Ajouté
+- Intégration Google OAuth via Devise OmniAuth
+  - Les utilisateurs peuvent désormais s'inscrire et se connecter avec leur compte Google
+  - Génération automatique du `pseudo` et attribution d'un avatar par défaut lors de la première connexion Google
+  - Variables d'environnement requises: `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET`
+  - URL de callback OAuth: `/users/auth/google_oauth2/callback`
+- Installation du skill Supabase Postgres Best Practices Agent
+- Couverture de tests pour le flux de création utilisateur via Google OAuth
 
-### Fixed
-- Use Supabase IPv4 pooler endpoint (`aws-1-eu-north-1.pooler.supabase.com:6543`) for Heroku compatibility
-- Resolve IPv6-only database connectivity issues on Heroku dynos
+### Corrigé
+- Utilisation de l'endpoint pooler Supabase IPv4 (`aws-1-eu-north-1.pooler.supabase.com:6543`) pour la compatibilité Heroku
+- Résolution des problèmes de connectivité base de données en IPv6-only sur les dynos Heroku
 
 ## [1.1.2] - 2026-03-26
-### Added
-- Stripe webhook endpoint with signature verification for payment events
-- Idempotent purchase fulfillment service using transaction IDs
-- Purchase confirmation emails via Action Mailer
+### Ajouté
+- Endpoint webhook Stripe avec vérification de signature des événements de paiement
+- Service idempotent de finalisation d'achat basé sur les IDs de transaction
+- Emails de confirmation d'achat via Action Mailer
 
-### Fixed
-- Security dependency updates for Rails, Devise, Nokogiri, and Rack gems
-- Address Dependabot vulnerabilities
+### Corrigé
+- Mises à jour de dépendances de sécurité pour Rails, Devise, Nokogiri et Rack
+- Correction des vulnérabilités signalées par Dependabot
 
 ## [1.1.1] - 2026-03-25
-### Added
-- Supabase Agent Skills installation support
+### Ajouté
+- Support d'installation des skills Supabase Agent
 
-### Changed
-- Improved database configuration documentation
+### Modifié
+- Amélioration de la documentation de configuration base de données
 
 ## [1.1.0] - 2026-03-25
-### Added
-- Comprehensive codebase refactoring with service objects
-- Centralized XP and badge awarding logic via service classes
-- DB integrity constraints and indexed queries
-- Responsive UI improvements for mobile and desktop
+### Ajouté
+- Refactorisation complète du code avec des objets de service
+- Centralisation de la logique d'attribution XP et badges via des classes de service
+- Contraintes d'intégrité base de données et requêtes indexées
+- Améliorations UI responsive pour mobile et desktop
 
-### Fixed
-- XP duplication issues across different quest completion paths
-- N+1 query problems in leaderboard and friends controllers
-- Purchase flow authorization and idempotency
+### Corrigé
+- Problèmes de duplication d'XP sur différents parcours de complétion de quêtes
+- Problèmes de requêtes N+1 dans les contrôleurs leaderboard et friends
+- Autorisation et idempotence du flux d'achat
 
 ## [1.0.0] - 2026-03-15
-### Added
-- Initial Rails 8 application setup
-- Devise authentication with email confirmation
-- Quest, user quest, and weekly quest systems
-- XP and leveling mechanics
-- Friendship system with status tracking
-- Stripe payment integration
-- Cloudinary image storage
-- Admin dashboard for quest management
-- Leaderboard and statistics pages
+### Ajouté
+- Initialisation de l'application Rails 8
+- Authentification Devise avec confirmation email
+- Systèmes de quêtes, quêtes utilisateur et quêtes hebdomadaires
+- Mécaniques d'XP et de progression de niveau
+- Système d'amis avec suivi des statuts
+- Intégration de paiement Stripe
+- Stockage d'images Cloudinary
+- Tableau de bord admin pour la gestion des quêtes
+- Pages de classement et de statistiques

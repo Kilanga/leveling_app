@@ -1,18 +1,18 @@
-<h1>Classement des joueurs</h1>
+<h1 class="page-title">Classement des joueurs</h1>
 
 <!-- Formulaire de filtrage par catégorie -->
-<%= form_with url: leaderboard_index_path, method: :get, local: true, class: "mb-3" do %>
-  <div class="row">
+<%= form_with url: leaderboard_index_path, method: :get, local: true, class: "mb-3 mobile-stack" do %>
+  <div class="row align-items-end g-2">
     <div class="col-md-6">
       <%= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id].presence), include_blank: "Toutes les catégories", class: "form-select" %>
     </div>
     <div class="col-md-6">
-      <%= submit_tag "Filtrer", class: "btn btn-primary" %>
+      <%= submit_tag "Filtrer", class: "btn btn-brand" %>
     </div>
   </div>
 <% end %>
 
-<div class="table-responsive">
+<div class="surface-card table-responsive">
   <table class="table">
     <thead>
       <tr>
@@ -50,9 +50,9 @@
 
 <hr>
 
-<h2>Quêtes les plus réalisées par mes amis</h2>
+<h2 class="section-title mt-4">Quêtes les plus réalisées par mes amis</h2>
 <% if @most_completed_quests.any? %>
-  <ul class="list-group">
+  <ul class="list-group surface-list">
     <% @most_completed_quests.each do |quest| %>
       <li class="list-group-item">
         <strong><%= quest.quest.title %></strong> - Complétée <%= quest.completed_count %> fois par 
@@ -64,9 +64,9 @@
   <p>Aucune quête populaire chez tes amis.</p>
 <% end %>
 
-<h2>Dernières quêtes réalisées par mes amis</h2>
+<h2 class="section-title mt-4">Dernières quêtes réalisées par mes amis</h2>
 <% if @recent_quests.any? %>
-  <ul class="list-group">
+  <ul class="list-group surface-list">
     <% @recent_quests.each do |user_quest| %>
       <li class="list-group-item">
         <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %> par 
