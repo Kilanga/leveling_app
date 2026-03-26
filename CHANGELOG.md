@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.22] - 2026-03-26
+
+### Modifié
+- Ajustement des espacements internes (padding/margin) pour aérer les sections HUD
+- Suppression des coins arrondis restants sur les champs de recherche et sélecteurs
+- Harmonisation des champs de formulaire avec la géométrie carrée du design global
+
 ## [1.2.21] - 2026-03-26
 
 ### Modifié

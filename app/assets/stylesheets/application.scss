@@ -110,11 +110,16 @@ body::before {
 }
 
 .surface-card--shell .card-body {
-  padding: 1.35rem;
+  padding: 1.55rem;
 }
 
 .hud-section {
   background: transparent;
+  padding: 0.3rem 0;
+}
+
+.hud-section + .hud-section {
+  margin-top: 0.25rem;
 }
 
 .hud-divider {
@@ -440,8 +445,10 @@ body::before {
 .form-control,
 .form-select {
   border-color: #3b6382;
+  border-radius: 2px;
   color: #e8f4ff;
   background: rgba(10, 21, 32, 0.9);
+  padding: 0.62rem 0.8rem;
 }
 
 .form-control::placeholder {
