@@ -9,18 +9,27 @@
 
   <!-- Actions compte (colonne droite) -->
   <div class="col-md-8">
-    <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
-      <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest" %>
-      <%= form_with url: update_pseudo_path, method: :patch, local: true, class: "d-flex flex-wrap gap-2 align-items-center" do %>
-        <%= text_field_tag "user[pseudo]", nil, class: "form-control", placeholder: "Nouveau pseudo", style: "max-width: 240px;", minlength: 3, maxlength: 22 %>
-        <%= submit_tag "Changer mon pseudo", class: "btn btn-outline-quest" %>
-      <% end %>
-    </div>
+    <div class="surface-card surface-card--shell">
+      <div class="card-body">
+        <div class="row g-3 align-items-start">
+          <div class="col-lg-5">
+            <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest w-100" %>
+          </div>
+          <div class="col-lg-7">
+            <%= form_with url: update_pseudo_path, method: :patch, local: true, class: "d-grid gap-2" do %>
+              <%= text_field_tag "user[pseudo]", nil, class: "form-control", placeholder: "Nouveau pseudo", minlength: 3, maxlength: 22 %>
+              <%= submit_tag "Changer mon pseudo", class: "btn btn-outline-quest w-100" %>
+            <% end %>
+          </div>
+        </div>
 
-    <% if @next_pseudo_change_at.present? %>
-      <p class="text-muted small mt-1 mb-0">Prochain changement de pseudo possible le <%= @next_pseudo_change_at.strftime("%d/%m/%Y") %>.</p>
-    <% end %>
-    <p class="text-muted small mt-1 mb-0">Le pseudo peut etre modifie une fois par semaine.</p>
+        <% if @next_pseudo_change_at.present? %>
+          <p class="quest-meta mt-3 mb-0">Prochain changement de pseudo possible le <%= @next_pseudo_change_at.strftime("%d/%m/%Y") %>.</p>
+        <% else %>
+          <p class="quest-meta mt-3 mb-0">Le pseudo peut etre modifie une fois par semaine.</p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
