@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.24] - 2026-03-26
+
+### Modifié
+- Ajustement ciblé des espacements dans les colonnes Boosts et Titres de la Boutique
+- Conservation de la colonne gauche inchangée (rythme déjà validé)
+- Harmonisation du rythme vertical global entre les trois colonnes de la Boutique
+
 ## [1.2.23] - 2026-03-26
 
 ### Modifié

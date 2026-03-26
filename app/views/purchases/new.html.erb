@@ -7,7 +7,7 @@
       <div class="col-lg-4 hud-column-divider">
         <section class="hud-section h-100">
           <h2 class="section-title">Packs de coins</h2>
-          <div class="shop-list shop-list--flat">
+          <div class="shop-list shop-list--flat shop-list--boosts">
             <% @coins_prices.each do |option| %>
               <div class="shop-row shop-row--flat">
                 <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
@@ -46,7 +46,7 @@
           <p class="quest-meta mb-3">Objets de prestige visibles sur votre profil et le classement.</p>
 
           <% if current_user.active_title.present? %>
-            <div class="shop-row shop-row--flat mb-3">
+            <div class="shop-row shop-row--flat shop-row--title-active mb-3">
               <span class="badge text-bg-dark mb-2">Titre actif</span>
               <div class="d-flex align-items-center justify-content-between gap-2">
                 <strong><%= current_user.active_title.name %></strong>
@@ -55,7 +55,7 @@
             </div>
           <% end %>
 
-          <div class="shop-list shop-list--flat">
+          <div class="shop-list shop-list--flat shop-list--titles">
             <% @title_items.each do |item| %>
               <% rarity_css = "rarity-chip rarity-chip--#{item.rarity}" %>
               <% owned = @owned_item_ids.include?(item.id) %>
