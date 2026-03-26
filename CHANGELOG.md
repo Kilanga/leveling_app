@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.3] - 2026-03-26
+
 ### Added
 - Enforce profile completion after first Google OAuth signup (pseudo + avatar required)
 - Add dedicated profile completion page for Google users before entering the app
