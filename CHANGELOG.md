@@ -7,6 +7,13 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.2.16] - 2026-03-26
+
+### Modifié
+- Adaptation du design global pour l'aligner sur le style HUD bleu des boutons
+- Harmonisation des cartes, tableaux, listes, formulaires et barres de progression avec la nouvelle direction visuelle
+- Ajustement des couleurs du diagramme radar pour une cohérence complète avec l'interface
+
 ## [1.2.15] - 2026-03-26
 
 ### Modifié

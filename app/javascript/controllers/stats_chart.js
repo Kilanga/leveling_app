@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const context = chart.ctx;
       context.save();
-      context.fillStyle = "rgba(184, 170, 149, 0.9)";
+      context.fillStyle = "rgba(167, 205, 231, 0.9)";
       context.font = "11px system-ui, sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
@@ -53,11 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           label: "Niveau",
           data: levels,
-          backgroundColor: "rgba(124, 77, 31, 0.18)",
-          borderColor: "#7c4d1f",
+          backgroundColor: "rgba(58, 188, 238, 0.18)",
+          borderColor: "#35b5e6",
           borderWidth: 2,
-          pointBackgroundColor: "#bc7a32",
-          pointBorderColor: "#fff9ef",
+          pointBackgroundColor: "#66d8ff",
+          pointBorderColor: "#e8f7ff",
           pointBorderWidth: 2,
           pointRadius: 5,
           pointHoverRadius: 7
@@ -86,13 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
           ticks: {
             stepSize: 1,
             display: false,
-            color: "#b8aa95",
+            color: "#a7cde7",
             backdropColor: "transparent",
             z: 10
           },
           grid: { display: false },
           angleLines: { display: false },
-          pointLabels: { color: "#4c3b25", font: { size: 12, weight: "600" } }
+          pointLabels: { color: "#7ca8c8", font: { size: 12, weight: "600" } }
         }
       }
     }
