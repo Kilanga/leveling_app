@@ -1,4 +1,4 @@
-<div class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+<div class="min-vh-100 d-flex align-items-center bg-light">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-5 col-lg-4">
@@ -46,11 +46,7 @@
 
             <!-- OAuth Links -->
             <div class="d-grid gap-2">
-              <% if devise_mapping.omniauthable? %>
-                <% resource_class.omniauth_providers.each do |provider| %>
-                  <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :get, class: "btn btn-outline-dark btn-lg fw-semibold d-flex align-items-center justify-content-center gap-2" %>
-                <% end %>
-              <% end %>
+              <%= render "devise/shared/links" %>
             </div>
 
             <!-- Footer Links -->
