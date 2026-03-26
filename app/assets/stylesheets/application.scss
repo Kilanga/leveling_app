@@ -143,6 +143,12 @@ body {
   border-color: #e3b46b;
 }
 
+.bundle-card {
+  border: 1px solid #c59657;
+  background: linear-gradient(160deg, #fff9ef 0%, #f4e2c4 100%);
+  box-shadow: 0 8px 18px rgba(99, 62, 19, 0.14);
+}
+
 .quest-meta,
 .muted-label {
   color: var(--muted);

@@ -48,6 +48,34 @@
         <h2 class="section-title">Titres et avatars</h2>
         <p class="quest-meta mb-3">Objets de prestige visibles par les autres joueurs sur profil et classement.</p>
 
+        <% if @bundles.any? %>
+          <div class="shop-list mb-3">
+            <h3 class="h6 mb-1">Bundles recommandes</h3>
+            <% @bundles.each do |bundle| %>
+              <% rarity_css = "rarity-chip rarity-chip--#{bundle[:rarity]}" %>
+              <% owned_any = @owned_item_ids.include?(bundle[:title_item].id) || @owned_item_ids.include?(bundle[:avatar_item].id) %>
+              <div class="shop-row bundle-card">
+                <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                  <strong>Pack <%= bundle[:rarity].capitalize %>:</strong>
+                  <span class="<%= rarity_css %>"><%= bundle[:rarity].capitalize %></span>
+                </div>
+                <p class="quest-meta mb-1"><strong><%= bundle[:title_item].name %></strong> + <strong><%= bundle[:avatar_item].name %></strong></p>
+                <p class="quest-meta mb-2">Prix normal: <%= bundle[:base_price] %> coins. Prix bundle: <strong><%= bundle[:bundle_price] %> coins</strong> (economie <%= bundle[:savings] %>).</p>
+
+                <% if owned_any %>
+                  <span class="badge text-bg-secondary">Bundle deja partiellement possede</span>
+                <% else %>
+                  <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                    <%= hidden_field_tag :bundle_title_id, bundle[:title_item].id %>
+                    <%= hidden_field_tag :bundle_avatar_id, bundle[:avatar_item].id %>
+                    <%= submit_tag "Acheter le bundle", class: "btn btn-brand" %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
         <% if current_user.active_title.present? %>
           <div class="shop-row mb-3">
             <span class="badge text-bg-dark mb-2">Titre actif</span>

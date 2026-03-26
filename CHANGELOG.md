@@ -13,10 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `profile_completed` flag on users to track onboarding state
 - Add equip flow for owned cosmetic avatars directly from the shop
 - Add active cosmetic avatar support on users (`active_avatar_item_id`)
+- Add rarity-based cosmetic bundles (title + avatar) with discounted coin price
 
 ### Fixed
 - Resolve OmniAuth CSRF/authenticity failures in production request phase
 - Ensure OAuth submit form fully bypasses Turbo at form level
+- Prevent invalid or tampered bundle purchases by server-side bundle validation
 
 ### Changed
 - Remove non-essential authentication flash messages (success/info noise)
@@ -24,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Redesign shop Titles/Avatars section with stronger rarity framing and ownership states
 - Add direct "Equiper" actions for owned titles and avatars to increase cosmetic value
 - Display equipped cosmetic avatars in profile and leaderboard views
+- Highlight bundle savings in the shop to improve purchase intent
 
 ## [1.2.2] - 2026-03-27
 ### Fixed
