@@ -1,47 +1,77 @@
-<h1>Acheter des objets et des pièces</h1>
+<h1 class="page-title">Marche des aventuriers</h1>
+<p class="page-subtitle">Obtenez des ressources premium pour accelerer votre progression.</p>
 
-<h2>💰 Acheter des Coins</h2>
-<ul class="list-group mb-4">
-  <% @coins_prices.each do |option| %>
-    <li class="list-group-item">
-      <%= form_with url: purchases_path, method: :post, local: true do %>
-        <%= hidden_field_tag :amount, option[:amount] %>
-        <%= hidden_field_tag :item_type, option[:label] %>
-        <%= submit_tag "#{option[:label]} - #{option[:amount]}€", class: "btn btn-warning w-100 w-md-auto" %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title">Packs de coins</h2>
+        <div class="shop-list">
+          <% @coins_prices.each do |option| %>
+            <div class="shop-row">
+              <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
+                <%= hidden_field_tag :amount, option[:amount] %>
+                <%= hidden_field_tag :item_type, option[:label] %>
+                <strong><%= option[:label] %></strong>
+                <%= submit_tag "Acheter - #{option[:amount]} EUR", class: "btn btn-brand" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<h2>⚡ Acheter des Boosts XP</h2>
-<ul class="list-group mb-4">
-  <% @boosts.each do |boost| %>
-    <li class="list-group-item">
-      <%= form_with url: purchases_path, method: :post, local: true do %>
-        <%= hidden_field_tag :amount, boost[:amount] %>
-        <%= hidden_field_tag :item_type, boost[:label] %>
-        <%= submit_tag "#{boost[:label]} - #{boost[:amount]}€", class: "btn btn-success w-100 w-md-auto" %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+  <div class="col-lg-4">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title">Boosts XP</h2>
+        <div class="shop-list">
+          <% @boosts.each do |boost| %>
+            <div class="shop-row">
+              <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
+                <%= hidden_field_tag :amount, boost[:amount] %>
+                <%= hidden_field_tag :item_type, boost[:label] %>
+                <strong><%= boost[:label] %></strong>
+                <%= submit_tag "Activer - #{boost[:amount]} EUR", class: "btn btn-success" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<h2>🏆 Acheter des Titres & Avatars</h2>
-<ul class="list-group mb-4">
-  <% @shop_items.each do |item| %>
-    <li class="list-group-item">
-  <strong class="<%= item.rarity_class %>"><%= item.name %></strong> - <%= item.item_type %>
-  <%= image_tag item.image.variant(resize: "50x50"), class: "rounded", if: item.image.attached? %>
-  <br>
-  <% if item.price_coins.present? %>
-    <%= form_with url: purchases_path, method: :post, local: true do %>
-      <%= hidden_field_tag :shop_item_id, item.id %>
-      <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-primary w-100 w-md-auto" %>
-    <% end %>
-  <% end %>
-</li>
+  <div class="col-lg-4">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title">Titres et avatars</h2>
+        <div class="shop-list">
+          <% @shop_items.each do |item| %>
+            <div class="shop-row">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <% if item.image.attached? %>
+                  <%= image_tag item.image.variant(resize: "48x48"), class: "rounded" %>
+                <% end %>
+                <div>
+                  <strong><%= item.name %></strong>
+                  <div class="quest-meta"><%= item.item_type %></div>
+                </div>
+              </div>
+              <% if item.price_coins.present? %>
+                <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                  <%= hidden_field_tag :shop_item_id, item.id %>
+                  <%= submit_tag "Acheter pour #{item.price_coins} coins", class: "btn btn-outline-quest" %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <% end %>
-</ul>
-
-<%= link_to "Retour", root_path, class: "btn btn-secondary" %>
+<div class="mt-4">
+  <%= link_to "Retour au tableau de bord", root_path, class: "btn btn-outline-secondary" %>
+</div>

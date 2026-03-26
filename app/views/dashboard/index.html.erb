@@ -1,82 +1,93 @@
-
-
-<h1>
-  Bienvenue, <%= current_user.pseudo %> !
-  <% if current_user.boost_active? %>
-    <span class="badge bg-warning text-dark">🔥 Boost XP actif</span>
-    <small>(Expire dans <%= distance_of_time_in_words(Time.current, current_user.boost_expires_at) %>)</small>
-  <% end %>
+<h1 class="page-title">
+  Bienvenue, <%= current_user.pseudo %>
 </h1>
-
-<h2 class="mt-4">Progression des catégories</h2>
-
-<% @stats.each do |stat| %>
-  <% xp_needed = xp_needed_for_next_level(stat.level) %>
-
-  <div class="progress-container mb-3">
-    <div class="progress-label">
-      <strong><%= stat.category.name %> (Niveau <%= stat.level %>)</strong>
-      <span class="xp-info"><%= stat.xp %> / <%= xp_needed %> XP</span>
-    </div>
-    <div class="progress" style="height: 20px; background-color: #333;">
-      <div class="progress-bar" role="progressbar"
-           style="width: <%= (stat.xp.to_f / [xp_needed, 1].max * 100).round %>%;
-                  background: linear-gradient(90deg, #ffcc00, #ff6600);"
-           aria-valuenow="<%= stat.xp %>" aria-valuemin="0" aria-valuemax="<%= xp_needed %>">
-      </div>
-    </div>
-  </div>
-<% end %>
-
-
-<h2>🔹 Quêtes Hebdomadaires</h2>
-
-<% if @weekly_quests.any? %>
-  <ul class="list-group">
-    <% @weekly_quests.each do |user_weekly_quest| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <strong><%= user_weekly_quest.weekly_quest.title %></strong>
-          <p><%= user_weekly_quest.weekly_quest.description %></p>
-        </div>
-        <% unless user_weekly_quest.completed? %>
-          <%= button_to "✔ Valider", user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-success btn-sm" %>
-        <% else %>
-          <span class="badge bg-success">✅ Complétée</span>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <div class="alert alert-info text-center">
-    🌟 Les quêtes hebdomadaires arrivent bientôt ! Reviens plus tard pour relever de nouveaux défis. 🚀
-  </div>
-<% end %>
-
-<h2>Quêtes en cours</h2>
-<ul class="list-group">
-  <% @user_quests.where(completed: false, active: true).each do |user_quest| %>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <div>
-        <strong><%= user_quest.quest.title %></strong>
-        <p class="text-muted"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
-        <p class="text-muted">Complétée <%= user_quest.completed_count %> fois</p>
-      </div>
-      <div>
-        <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
-          <%= hidden_field_tag :action_type, "complete" %>
-          <%= submit_tag "✔ Valider", class: "btn btn-success btn-sm" %>
-        <% end %>
-
-        <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
-          <%= hidden_field_tag :action_type, "unfollow" %>
-          <%= submit_tag "✖ Arrêter", class: "btn btn-danger btn-sm" %>
-        <% end %>
-      </div>
-    </li>
+<p class="page-subtitle">
+  Votre quartier general de progression.
+  <% if current_user.boost_active? %>
+    <span class="badge text-bg-warning ms-2">Boost XP actif jusqu'a <%= l(current_user.boost_expires_at, format: :short) %></span>
   <% end %>
-</ul>
-<div class="mt-3 d-flex gap-2 flex-wrap">
-  <%= link_to "Voir toutes les quêtes", quests_path, class: "btn btn-primary" %>
-  <%= link_to "Boutique", new_purchase_path, class: "btn btn-warning" %>
+</p>
+
+<div class="surface-card mb-4">
+  <div class="card-body">
+    <h2 class="section-title mb-3">Progression des categories</h2>
+    <% @stats.each do |stat| %>
+      <% xp_needed = xp_needed_for_next_level(stat.level) %>
+      <% percent = (stat.xp.to_f / [xp_needed, 1].max * 100).round %>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between flex-wrap gap-2 mb-1">
+          <strong><%= stat.category.name %> - Niveau <%= stat.level %></strong>
+          <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
+        </div>
+        <div class="xp-track">
+          <div class="xp-fill" style="width: <%= percent %>%"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title">Quetes hebdomadaires</h2>
+        <% if @weekly_quests.any? %>
+          <div class="quest-list">
+            <% @weekly_quests.each do |user_weekly_quest| %>
+              <div class="quest-row d-flex justify-content-between align-items-start gap-3">
+                <div>
+                  <strong><%= user_weekly_quest.weekly_quest.title %></strong>
+                  <p class="quest-meta mb-0"><%= user_weekly_quest.weekly_quest.description %></p>
+                </div>
+                <% unless user_weekly_quest.completed? %>
+                  <%= button_to "Valider", user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-sm btn-brand" %>
+                <% else %>
+                  <span class="badge text-bg-success">Completee</span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="alert alert-warning mb-0">Nouvelles quetes hebdomadaires bientot.</div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title">Quetes en cours</h2>
+        <div class="quest-list mb-3">
+          <% @user_quests.where(completed: false, active: true).each do |user_quest| %>
+            <div class="quest-row">
+              <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                <div>
+                  <strong><%= user_quest.quest.title %></strong>
+                  <p class="quest-meta mb-1"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
+                  <p class="quest-meta mb-0">Completee <%= user_quest.completed_count %> fois</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap quest-actions">
+                  <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
+                    <%= hidden_field_tag :action_type, "complete" %>
+                    <%= submit_tag "Valider", class: "btn btn-sm btn-brand" %>
+                  <% end %>
+
+                  <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
+                    <%= hidden_field_tag :action_type, "unfollow" %>
+                    <%= submit_tag "Arreter", class: "btn btn-sm btn-outline-danger" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <%= link_to "Voir toutes les quetes", quests_path, class: "btn btn-brand" %>
+          <%= link_to "Boutique", new_purchase_path, class: "btn btn-outline-quest" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
