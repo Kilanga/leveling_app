@@ -2,6 +2,8 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    ensure_weekly_quest_for_current_user!
+
     @weekly_quests = current_user.user_weekly_quests
       .joins(:weekly_quest)
       .where("weekly_quests.valid_until >= ?", Time.current)
@@ -33,5 +35,33 @@ class DashboardController < ApplicationController
       format.html
       format.json { render json: @stats_data }
     end
+  end
+
+  private
+
+  def ensure_weekly_quest_for_current_user!
+    has_active_weekly = current_user.user_weekly_quests
+      .joins(:weekly_quest)
+      .where("weekly_quests.valid_until >= ?", Time.current)
+      .exists?
+
+    return if has_active_weekly
+
+    weekly_quest = WeeklyQuest.where("valid_until >= ?", Time.current).order(:created_at).first
+
+    unless weekly_quest
+      source_quest = Quest.includes(:category).order("RANDOM()").first
+      return unless source_quest
+
+      weekly_quest = WeeklyQuest.create!(
+        title: "Hebdo: #{source_quest.title}",
+        description: source_quest.description.presence || "Complete cette quete hebdomadaire pour un gros bonus.",
+        xp_reward: [source_quest.xp.to_i * 2, 300].max,
+        category: source_quest.category,
+        valid_until: 7.days.from_now
+      )
+    end
+
+    current_user.user_weekly_quests.find_or_create_by!(weekly_quest: weekly_quest)
   end
 end

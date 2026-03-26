@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2026-03-26
+
+### Added
+- Auto-create a weekly quest for users when none is currently active
+
+### Changed
+- Move "Quetes en cours" and "Quetes hebdomadaires" to the top of the dashboard
+- Integrate the Kiviat chart directly in the page flow (without dedicated card container)
+
 ## [1.2.5] - 2026-03-26
 
 ### Added
