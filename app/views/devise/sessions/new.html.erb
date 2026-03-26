@@ -1,64 +1,39 @@
-<div class="min-vh-100 d-flex align-items-center" style="background-color: white;">
+<div class="auth-shell">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-5 col-lg-4">
-        <div class="card border-0 shadow-lg" style="border-radius: 12px;">
-          <div class="card-body p-5">
-            <!-- Header -->
-            <h1 class="h3 fw-bold text-center mb-1 text-dark">Bienvenue !</h1>
-            <p class="text-center text-muted mb-4">Connectez-vous pour continuer</p>
+      <div class="col-md-7 col-lg-5">
+        <div class="surface-card surface-card--shell auth-card">
+          <div class="card-body">
+            <h1 class="page-title auth-title">Connexion</h1>
+            <p class="page-subtitle auth-subtitle">Reprends ta progression la ou tu l'as laissee.</p>
 
-            <!-- Form -->
-            <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, html: { class: "auth-form" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
-              <!-- Email -->
               <div class="mb-3">
-                <%= f.label :email, class: "form-label fw-semibold" %>
-                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", placeholder: "votre@email.com" %>
+                <%= f.label :email, "Email", class: "form-label" %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "votre@email.com" %>
               </div>
 
-              <!-- Password -->
               <div class="mb-3">
-                <%= f.label :password, "Mot de passe", class: "form-label fw-semibold" %>
-                <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-lg", placeholder: "••••••••" %>
+                <%= f.label :password, "Mot de passe", class: "form-label" %>
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "••••••••" %>
               </div>
 
-              <!-- Remember Me -->
               <% if devise_mapping.rememberable? %>
-                <div class="mb-3 form-check">
+                <div class="mb-3 form-check auth-check">
                   <%= f.check_box :remember_me, class: "form-check-input" %>
                   <%= f.label :remember_me, "Se souvenir de moi", class: "form-check-label" %>
                 </div>
               <% end %>
 
-              <!-- Submit Button -->
-              <div class="d-grid gap-2 mb-4">
-                <%= f.submit "Se connecter", class: "btn btn-primary btn-lg fw-semibold" %>
+              <div class="d-grid mb-3">
+                <%= f.submit "Se connecter", class: "btn btn-brand btn-arcade" %>
               </div>
             <% end %>
 
-            <!-- Divider -->
-            <div class="position-relative mb-4">
-              <hr />
-              <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">ou</span>
-            </div>
-
-            <!-- OAuth Links -->
-            <div class="d-grid gap-2">
-              <%= render "devise/shared/links" %>
-            </div>
-
-            <!-- Footer Links -->
-            <div class="text-center mt-4">
-              <p class="mb-2">
-                <%= link_to "Oublié votre mot de passe ?", new_password_path(resource_name), class: "text-decoration-none" %>
-              </p>
-              <p class="mb-0">
-                Pas encore inscrit ?
-                <%= link_to "Créer un compte", new_registration_path(resource_name), class: "fw-semibold text-decoration-none" %>
-              </p>
-            </div>
+            <div class="auth-divider"><span>ou</span></div>
+            <%= render "devise/shared/links" %>
           </div>
         </div>
       </div>

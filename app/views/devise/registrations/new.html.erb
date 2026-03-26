@@ -1,127 +1,68 @@
-<div class="min-vh-100 d-flex align-items-center" style="background-color: white;">
+<div class="auth-shell">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-5">
-        <div class="card border-0 shadow-lg" style="border-radius: 12px;">
-          <div class="card-body p-5">
-            <!-- Header -->
-            <h1 class="h3 fw-bold text-center mb-1 text-dark">Créer votre compte</h1>
-            <p class="text-center text-muted mb-4">Rejoignez notre communauté !</p>
+      <div class="col-md-8 col-lg-6">
+        <div class="surface-card surface-card--shell auth-card">
+          <div class="card-body">
+            <h1 class="page-title auth-title">Inscription</h1>
+            <p class="page-subtitle auth-subtitle">Crée ton profil et choisis ton avatar de départ.</p>
 
-            <!-- Form -->
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), local: true) do |f| %>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), local: true, html: { class: "auth-form" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
-              <!-- Email -->
               <div class="mb-3">
-                <%= f.label :email, class: "form-label fw-semibold" %>
-                <%= f.email_field :email, class: "form-control form-control-lg", autofocus: true, autocomplete: "email", placeholder: "votre@email.com" %>
+                <%= f.label :email, "Email", class: "form-label" %>
+                <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", placeholder: "votre@email.com" %>
               </div>
 
-              <!-- Pseudo -->
               <div class="mb-3">
-                <%= f.label :pseudo, "Pseudo (3-20 caractères)", class: "form-label fw-semibold" %>
-                <%= f.text_field :pseudo, class: "form-control form-control-lg", required: true, placeholder: "votre_pseudo" %>
+                <%= f.label :pseudo, "Pseudo (3-20 caractères)", class: "form-label" %>
+                <%= f.text_field :pseudo, class: "form-control", required: true, placeholder: "votre_pseudo" %>
               </div>
 
-              <!-- Password -->
               <div class="mb-3">
-                <%= f.label :password, "Mot de passe", class: "form-label fw-semibold" %>
+                <%= f.label :password, "Mot de passe", class: "form-label" %>
                 <% if @minimum_password_length %>
-                  <small class="text-muted d-block mb-1">Minimum <%= @minimum_password_length %> caractères</small>
+                  <p class="quest-meta mb-2">Minimum <%= @minimum_password_length %> caractères</p>
                 <% end %>
-                <%= f.password_field :password, class: "form-control form-control-lg", autocomplete: "new-password", placeholder: "••••••••" %>
+                <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
               </div>
 
-              <!-- Password Confirmation -->
               <div class="mb-4">
-                <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label fw-semibold" %>
-                <%= f.password_field :password_confirmation, class: "form-control form-control-lg", autocomplete: "new-password", placeholder: "••••••••" %>
+                <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label" %>
+                <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
               </div>
 
-              <!-- Avatar Selection -->
               <div class="mb-4">
-                <label class="form-label fw-semibold d-block">Choisir votre avatar</label>
+                <label class="form-label d-block">Choisir votre avatar</label>
                 <div class="row g-3">
                   <div class="col-6">
                     <label class="avatar-card">
                       <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
-                      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="w-100" alt="Avatar Warrior">
+                      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="w-100" alt="Avatar Guerrier">
                       <span class="avatar-badge">Guerrier</span>
                     </label>
                   </div>
                   <div class="col-6">
                     <label class="avatar-card">
                       <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
-                      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="w-100" alt="Avatar Warrior">
+                      <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="w-100" alt="Avatar Guerrière">
                       <span class="avatar-badge">Guerrière</span>
                     </label>
                   </div>
                 </div>
               </div>
 
-              <!-- Submit Button -->
-              <div class="d-grid gap-2 mb-4">
-                <%= f.submit "S'inscrire", class: "btn btn-primary btn-lg fw-semibold" %>
+              <div class="d-grid mb-3">
+                <%= f.submit "S'inscrire", class: "btn btn-brand btn-arcade" %>
               </div>
             <% end %>
 
-            <!-- Divider -->
-            <div class="position-relative mb-4">
-              <hr />
-              <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">ou</span>
-            </div>
-
-            <!-- OAuth Links -->
-            <div class="d-grid gap-2">
-              <%= render "devise/shared/links" %>
-            </div>
-
-            <!-- Footer Links -->
-            <div class="text-center mt-4">
-              <p class="mb-0">
-                Déjà inscrit ?
-                <%= link_to "Se connecter", new_session_path(resource_name), class: "fw-semibold text-decoration-none" %>
-              </p>
-            </div>
+            <div class="auth-divider"><span>ou</span></div>
+            <%= render "devise/shared/links" %>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style>
-  .avatar-card {
-    cursor: pointer;
-    border: 3px solid #e9ecef;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    position: relative;
-    display: block;
-  }
-
-  .avatar-card:hover {
-    border-color: #667eea;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 15px rgba(102, 126, 234, 0.2);
-  }
-
-  .avatar-card input:checked + img {
-    box-shadow: 0 0 0 3px #667eea;
-  }
-
-  .avatar-badge {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(102, 126, 234, 0.9);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-</style>

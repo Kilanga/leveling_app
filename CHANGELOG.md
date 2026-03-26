@@ -7,6 +7,10 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+### Modifié
+- Refonte complete des formulaires Devise (connexion, inscription, mot de passe oublie, confirmation, deblocage, edition compte) pour harmonisation avec le design HUD de l'application
+- Uniformisation des boutons OAuth/liaisons Devise et des messages d'erreur avec le style visuel global
+
 ## [1.3.3] - 2026-03-26
 
 ### Modifié
