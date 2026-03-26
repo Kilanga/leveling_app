@@ -7,7 +7,18 @@ et ce projet respecte [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Non publié]
 
+## [1.6.0] - 2026-03-26
+
+### Ajouté
+- Système de badges débloquables par achievements (Voyageur, Persévérant, Combattant, Vétéran, Discipliné, Polymathe, etc.)
+- Attributs rarity (rare/epic/legendary) et is_free sur le modèle Badge pour graduer les badges par prestige
+- Titres libres débloquables gratuitement via completion d'achievements personnels (progression cohérente)
+- Affichage du titre actif au profil utilisateur avec possibilité de changer parmi les titres possédés
+- Gestion des titres multiples: un utilisateur peut changer activement son titre affiché
+
 ### Corrigé
+- Erreur 500 lors de l'accès au profil d'un autre joueur via le leaderboard (missing .includes(:category) sur les stats)
+- Apparence visuelle des noms au leaderboard (suppression de text-decoration: underline via text-decoration-none)
 - Durcissement de la page Boutique pour eviter les erreurs 500 en presence de donnees partielles (rarete/nom) et en cas d'echec du calcul du defi hebdomadaire
 
 ## [1.5.0] - 2026-03-26
