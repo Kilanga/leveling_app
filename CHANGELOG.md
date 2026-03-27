@@ -17,6 +17,17 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.13.0] - 2026-03-27
+
+### Ajouté
+- Landing page publique orientee desirabilite (`/welcome`) avec proposition de valeur claire, CTA inscription/connexion et preuve sociale de base.
+- Dashboard: bloc de partage avec lien d'invitation pre-rempli pour faciliter la promotion organique entre joueurs.
+- Modele utilisateur: generation d'un code d'invitation stable (`referral_code`) utilise dans les liens de partage.
+
+### Modifié
+- Navigation racine: `root` pointe vers la landing publique, avec redirection automatique vers le dashboard pour les utilisateurs connectes.
+- Meta SEO: titre et description dedies a la landing pour mieux soutenir l'acquisition.
+
 ## [1.12.4] - 2026-03-27
 
 ### Modifié

@@ -5,6 +5,8 @@ module ApplicationHelper
 
 		base = "Leveling"
 		page = case "#{controller_path}##{action_name}"
+		when "welcome#index"
+			"Progression gamifiee"
 		when "dashboard#index"
 			"Accueil"
 		when "quests#index"
@@ -43,6 +45,8 @@ module ApplicationHelper
 		return custom_description if custom_description.present?
 
 		case "#{controller_path}##{action_name}"
+		when "welcome#index"
+			"Leveling transforme ta progression personnelle en jeu: quetes, ligues hebdo, streaks et defis entre amis."
 		when "dashboard#index"
 			"Suis ta progression, valide tes quetes et fais monter ton niveau sur Leveling."
 		when "quests#index"

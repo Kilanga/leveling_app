@@ -951,6 +951,45 @@ body::before {
 .league-current-user-row th {
   color: var(--ink);
 }
+
+.welcome-hero {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(122, 227, 255, 0.14) 0%, rgba(122, 227, 255, 0) 42%),
+    linear-gradient(180deg, rgba(11, 28, 42, 0.92), rgba(8, 18, 30, 0.95));
+}
+
+.welcome-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #a9def7;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.welcome-stat {
+  border: 1px solid rgba(86, 202, 248, 0.36);
+  padding: 0.95rem;
+  background: rgba(8, 22, 34, 0.75);
+  min-height: 100%;
+}
+
+.welcome-stat strong {
+  display: block;
+  color: #dff7ff;
+  font-size: 1.45rem;
+  letter-spacing: 0.04em;
+}
+
+.welcome-stat span {
+  color: #8fb7d0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.74rem;
+}
+
+.invite-link-input {
+  min-width: 320px;
+}
 .surface-list {
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -1100,6 +1139,10 @@ body::before {
   .mobile-stack .form-control,
   .mobile-stack .form-select {
     width: 100%;
+  }
+
+  .invite-link-input {
+    min-width: 100%;
   }
 }
 

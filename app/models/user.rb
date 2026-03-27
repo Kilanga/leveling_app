@@ -124,6 +124,12 @@ class User < ApplicationRecord
     WeeklyLeague.tier_name(self[:league_tier])
   end
 
+  def referral_code
+    return nil if id.blank?
+
+    "LVL#{id.to_s(36).upcase.rjust(4, '0')}"
+  end
+
   def claim_daily_login_bonus!
     required_columns = %w[daily_login_streak_count daily_login_last_claimed_on]
     return { claimed: false, streak: 0, reward: 0 } unless required_columns.all? { |name| self.class.column_names.include?(name) }
