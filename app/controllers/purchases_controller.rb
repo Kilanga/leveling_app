@@ -1,6 +1,10 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
   SHOP_CHALLENGE_REWARD_COINS = 200
+  WELCOME_BONUS_BY_VARIANT = {
+    "control" => 0.10,
+    "treatment" => 0.20
+  }.freeze
 
   COIN_PACKS = {
     "100 pièces" => { amount: 5, coins: 100 },
@@ -15,17 +19,22 @@ class PurchasesController < ApplicationController
 
   def new
     @entry_offer_variant = Experimentation.variant_for(user: current_user, experiment_key: "entry_offer_copy")
-    @entry_offer_enabled = current_user.purchases.where(item_type: "coins").none?
+    @entry_offer_enabled = entry_offer_eligible?
+    @entry_offer_bonus_rate = entry_offer_bonus_rate
 
     @active_shop_tab = params[:tab].presence_in(%w[packs boosts cosmetics]) || "packs"
     @focus_category_name = current_user.user_stats.includes(:category).order(total_xp: :desc).first&.category&.name || "tes objectifs"
 
     @coins_prices = COIN_PACKS.map do |label, config|
+      bonus_coins = welcome_bonus_coins_for(config[:coins])
+      total_coins = config[:coins] + bonus_coins
       {
         label: label,
         amount: config[:amount],
         coins: config[:coins],
-        description: coin_pack_description(config[:coins])
+        bonus_coins: bonus_coins,
+        total_coins: total_coins,
+        description: coin_pack_description(total_coins)
       }
     end
 
@@ -37,7 +46,7 @@ class PurchasesController < ApplicationController
         description: boost_description(config[:duration])
       }
     end
-    @best_value_pack_label = @coins_prices.max_by { |option| option[:coins].to_f / [option[:amount], 1].max }[:label]
+    @best_value_pack_label = @coins_prices.max_by { |option| option[:total_coins].to_f / [option[:amount], 1].max }[:label]
 
     @title_items = ShopItem.where(item_type: "title")
                  .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
@@ -160,14 +169,19 @@ class PurchasesController < ApplicationController
     amount = params[:amount].to_i
 
     if (coin_pack = COIN_PACKS[item_type]) && coin_pack[:amount] == amount
-      session[:pending_purchase] = { "kind" => "coins", "coins" => coin_pack[:coins] }
+      bonus_coins = welcome_bonus_coins_for(coin_pack[:coins])
+      total_coins = coin_pack[:coins] + bonus_coins
+      session[:pending_purchase] = { "kind" => "coins", "coins" => total_coins }
       checkout_url = create_checkout_session(
         item_type,
         amount,
         {
           kind: "coins",
           user_id: current_user.id,
-          coins: coin_pack[:coins]
+          coins: total_coins,
+          base_coins: coin_pack[:coins],
+          bonus_coins: bonus_coins,
+          entry_offer_applied: (bonus_coins > 0)
         }
       )
       safe_redirect_to_checkout(checkout_url)
@@ -313,5 +327,24 @@ class PurchasesController < ApplicationController
     else
       { "rare" => 0, "epic" => 1, "legendary" => 2 }
     end
+  end
+
+  def entry_offer_eligible?
+    current_user.purchases.where(item_type: "coins").none?
+  end
+
+  def entry_offer_bonus_rate
+    return 0.0 unless entry_offer_eligible?
+
+    variant = Experimentation.variant_for(user: current_user, experiment_key: "entry_offer_copy")
+    WELCOME_BONUS_BY_VARIANT.fetch(variant, 0.0)
+  rescue StandardError
+    0.0
+  end
+
+  def welcome_bonus_coins_for(base_coins)
+    return 0 unless base_coins.to_i.positive?
+
+    (base_coins.to_i * entry_offer_bonus_rate).round
   end
 end

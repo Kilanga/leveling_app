@@ -12,6 +12,14 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+### Modifié
+- Boutique: l'offre de bienvenue est maintenant integree dans le calcul des packs coins (bonus applique selon variante) et visible directement dans l'affichage des prix/valeur.
+- Ecran Amis: refonte visuelle des sections et des listes de demandes pour harmoniser avec le style HUD de l'application.
+
+### Corrigé
+- Onboarding: prevention des erreurs 500 dans les cas de donnees manquantes ou de contexte partiellement indisponible, avec fallback propre et messages utilisateur.
+- Onboarding: affichage des quetes recommandees rendu tolerant si une categorie est indisponible.
+
 ## [1.11.0] - 2026-03-27
 
 ### Ajouté

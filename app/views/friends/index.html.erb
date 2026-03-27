@@ -1,90 +1,127 @@
-<h1>Liste de mes amis</h1>
+<h1 class="page-title">Liste de mes amis</h1>
+<p class="page-subtitle">Gere ton cercle, tes invitations et tes defis actifs.</p>
 
-<% if @friends.any? %>
-  <ul class="list-group mb-4">
-    <% @friends.each do |friend| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <%= friend.pseudo %>
-        <div class="d-flex gap-2 flex-wrap">
-          <%= button_to "Lancer un defi 48h", friend_challenges_path(friend_id: friend.id), method: :post, class: "btn btn-sm btn-brand" %>
-          <%= button_to "Supprimer", friend_path(friend), method: :delete, class: "btn btn-danger btn-sm" %>
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <h2 class="section-title">Amis actifs</h2>
+    <% if @friends.any? %>
+      <div class="quest-list quest-list--flat">
+        <% @friends.each do |friend| %>
+          <div class="quest-row quest-row--flat friend-row">
+            <strong><%= friend.pseudo %></strong>
+            <div class="friend-row__actions">
+              <%= button_to "Lancer un defi 48h", friend_challenges_path(friend_id: friend.id), method: :post, class: "btn btn-sm btn-brand" %>
+              <%= button_to "Retirer", friend_path(friend), method: :delete, class: "btn btn-sm btn-outline-secondary" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="quest-meta mb-0">Tu n'as pas encore d'amis.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <h2 class="section-title">Defis actifs</h2>
+    <% if @active_friend_challenges.any? %>
+      <div class="quest-list quest-list--flat">
+        <% @active_friend_challenges.each do |challenge| %>
+          <% opponent = challenge.opponent_for(current_user) %>
+          <div class="quest-row quest-row--flat friend-row">
+            <div>
+              <strong>Contre <%= opponent.pseudo %></strong>
+              <p class="quest-meta mb-0">Se termine le <%= l(challenge.ends_at, format: :short) %></p>
+            </div>
+            <span class="shop-state-chip shop-state-chip--best">XP: <%= challenge.xp_gain_for(current_user) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="quest-meta mb-0">Aucun defi actif.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="surface-card surface-card--shell h-100">
+      <div class="card-body">
+        <h2 class="section-title">Demandes recues</h2>
+        <% if @pending_received_requests&.any? %>
+          <div class="quest-list quest-list--flat">
+            <% @pending_received_requests.each do |friend| %>
+              <div class="quest-row quest-row--flat friend-row">
+                <div>
+                  <strong><%= friend.pseudo %></strong>
+                  <p class="quest-meta mb-0">En attente de ta reponse</p>
+                </div>
+                <div class="friend-row__actions">
+                  <%= button_to "Accepter", accept_friend_path(friend), method: :post, class: "btn btn-sm btn-brand" %>
+                  <%= button_to "Refuser", reject_friend_path(friend), method: :delete, class: "btn btn-sm btn-outline-secondary" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="quest-meta mb-0">Aucune demande en attente.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="surface-card surface-card--shell h-100">
+      <div class="card-body">
+        <h2 class="section-title">Demandes envoyees</h2>
+        <% if @pending_sent_requests.any? %>
+          <div class="quest-list quest-list--flat">
+            <% @pending_sent_requests.each do |friend| %>
+              <div class="quest-row quest-row--flat friend-row">
+                <div>
+                  <strong><%= friend.pseudo %></strong>
+                  <p class="quest-meta mb-0">Invitation envoyee</p>
+                </div>
+                <div class="friend-row__actions">
+                  <%= button_to "Annuler", reject_friend_path(friend), method: :delete, class: "btn btn-sm btn-outline-secondary" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="quest-meta mb-0">Aucune demande en attente.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="surface-card surface-card--shell mt-4">
+  <div class="card-body">
+    <h2 class="section-title">Rechercher un ami</h2>
+    <%= form_with url: search_friends_path, method: :get, local: true, class: "friend-search-form" do |form| %>
+      <%= form.label :query, "Rechercher par pseudo", class: "quest-meta mb-1" %>
+      <%= form.text_field :query, class: "form-control", placeholder: "Pseudo du joueur" %>
+      <%= form.submit "Rechercher", class: "btn btn-brand mt-2" %>
+    <% end %>
+
+    <% if @users %>
+      <h3 class="section-title mt-4">Resultats</h3>
+      <% if @users.any? %>
+        <div class="quest-list quest-list--flat">
+          <% @users.each do |user| %>
+            <div class="quest-row quest-row--flat friend-row">
+              <strong><%= user.pseudo %></strong>
+              <% unless current_user.friends.include?(user) %>
+                <%= button_to "Envoyer une demande", friends_path(friend_id: user.id), method: :post, class: "btn btn-sm btn-brand" %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
-      </li>
+      <% else %>
+        <p class="quest-meta mb-0">Aucun joueur trouve.</p>
+      <% end %>
     <% end %>
-  </ul>
-<% else %>
-  <p>Tu n'as pas encore d'amis.</p>
-<% end %>
-
-<h2>Defis actifs</h2>
-<% if @active_friend_challenges.any? %>
-  <ul class="list-group mb-4">
-    <% @active_friend_challenges.each do |challenge| %>
-      <% opponent = challenge.opponent_for(current_user) %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <strong>Contre <%= opponent.pseudo %></strong>
-          <p class="mb-0 text-muted">Se termine le <%= l(challenge.ends_at, format: :short) %></p>
-        </div>
-        <span class="badge text-bg-dark">XP: <%= challenge.xp_gain_for(current_user) %></span>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Aucun defi actif.</p>
-<% end %>
-
-<h2>Demandes d’amis reçues</h2>
-<% if @pending_received_requests&.any? %>
-  <ul class="list-group mb-4">
-    <% @pending_received_requests.each do |friend| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <%= friend.pseudo %>
-        <div class="d-flex gap-2 w-100 w-md-auto">
-          <%= button_to "Accepter", accept_friend_path(friend), method: :post, class: "btn btn-success btn-sm" %>
-          <%= button_to "Refuser", reject_friend_path(friend), method: :delete, class: "btn btn-warning btn-sm" %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Aucune demande en attente.</p>
-<% end %>
-
-
-<h3>Demandes envoyées</h3>
-<% if @pending_sent_requests.any? %>
-  <ul class="list-group mb-4">
-    <% @pending_sent_requests.each do |friend| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <%= friend.pseudo %>
-        <%= button_to "Annuler", reject_friend_path(friend), method: :delete, class: "btn btn-danger btn-sm" %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Aucune demande en attente.</p>
-<% end %>
-
-
-
-
-
-<h2>Rechercher un ami</h2>
-<%= form_with url: search_friends_path, method: :get, local: true do |form| %>
-  <%= form.label :query, "Rechercher par pseudo :" %>
-  <%= form.text_field :query, class: "form-control" %>
-  <%= form.submit "Rechercher", class: "btn btn-primary mt-2" %>
-<% end %>
-
-<% if @users %>
-  <h3>Résultats :</h3>
-  <ul class="list-group">
-    <% @users.each do |user| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <%= user.pseudo %>
-        <%= button_to "Envoyer une demande", friends_path(friend_id: user.id), method: :post, class: "btn btn-success btn-sm" unless current_user.friends.include?(user) %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
+  </div>
+</div>

@@ -38,6 +38,12 @@
 
 - `./bin/bundle exec rspec`
 
+## Release
+
+- Add release notes under `## [Non publié]` in `CHANGELOG.md`
+- Run full release flow (tests + changelog versioning + tag + push + Heroku migrate/restart):
+	- `./release.sh 1.2.1 leveling-app`
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for:

@@ -22,7 +22,7 @@
           <% @recommended_quests.each do |quest| %>
             <div class="quest-row quest-row--flat">
               <strong><%= quest.title %></strong>
-              <p class="quest-meta mb-0"><%= quest.category.name %> - <%= quest.xp %> XP</p>
+              <p class="quest-meta mb-0"><%= quest.category&.name || "Categorie" %> - <%= quest.xp %> XP</p>
             </div>
           <% end %>
         </div>

@@ -16,11 +16,11 @@ git add .
 git commit -m "feat: Add new feature" # or fix:, docs:, etc.
 ```
 
-### 2. Update CHANGELOG.md
-Before creating a release, update `CHANGELOG.md`:
-- Move items from `[Unreleased]` section to a new version section
-- Follow the format: `## [X.Y.Z] - YYYY-MM-DD`
+### 2. Prepare CHANGELOG.md
+Before creating a release, add your release notes under `## [Non publié]`:
 - Use subsections: Added, Changed, Fixed, Removed, Deprecated
+- Keep this section up to date while developing
+- The release script automatically promotes this section to `## [X.Y.Z] - YYYY-MM-DD`
 
 **Example:**
 ```markdown
@@ -32,8 +32,23 @@ Before creating a release, update `CHANGELOG.md`:
 - Redesign login page
 ```
 
-### 3. Create Version Tag
-After updating CHANGELOG.md, create a git tag with release notes:
+### 3. Run Release Script
+Use the release script to run tests, update changelog, commit, tag, push, and run Heroku migrations:
+
+```bash
+./release.sh 1.2.1 leveling-app
+```
+
+The script will:
+- Move content from `## [Non publié]` to `## [1.2.1] - YYYY-MM-DD`
+- Run `rspec` and `rails test`
+- Commit `CHANGELOG.md`
+- Create annotated tag `v1.2.1`
+- Push `master` + tag
+- Run `rails db:migrate` and restart dynos on Heroku
+
+### 4. Manual Alternative (if needed)
+If you need to release manually, you can still run the old flow:
 
 ```bash
 git add CHANGELOG.md
@@ -81,13 +96,9 @@ git commit -m "perf: Optimize N+1 queries in leaderboard"
 
 Before releasing a new version:
 
-- [ ] All tests pass locally: `./bin/bundle exec rspec`
-- [ ] Update `CHANGELOG.md` with new changes
+- [ ] `CHANGELOG.md` has release notes under `## [Non publié]`
+- [ ] Run release script: `./release.sh 1.2.1 leveling-app`
 - [ ] Verify version bumping follows semver rules
-- [ ] Commit changelog changes
-- [ ] Create annotated git tag with descriptive message
-- [ ] Push commits: `git push origin master`
-- [ ] Push tag: `git push origin v1.2.1`
 - [ ] Verify on GitHub: https://github.com/Kilanga/leveling_app/releases
 
 ## GitHub Releases
