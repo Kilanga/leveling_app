@@ -12,6 +12,14 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.9.0] - 2026-03-27
+
+### Modifié
+- Refonte de l'attribution XP vers une progression parallele: bonus de streak, bonus de regularite hebdo, catch-up pour bas niveaux de categorie et bonus "Elite" sur grosses quetes
+- Harmonisation du gain d'XP global utilisateur et XP de categorie pour les quetes normales et hebdomadaires
+- Affichage du gain d'XP reel dans les messages de completion des quetes
+- Ajout d'un marquage visuel "Elite" dans le catalogue des quetes
+
 ## [1.8.0] - 2026-03-27
 
 ### Modifié

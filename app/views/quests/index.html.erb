@@ -73,7 +73,12 @@
             <article class="quest-reco-card">
               <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap">
                 <strong><%= quest.title %></strong>
-                <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <% if quest.xp.to_i >= ProgressionXpEngine::ELITE_QUEST_XP_THRESHOLD %>
+                    <span class="quest-featured-tag">Elite</span>
+                  <% end %>
+                  <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
+                </div>
               </div>
               <p class="quest-meta mb-2"><%= quest.category.name %></p>
               <p class="quest-card__description"><%= quest.description %></p>
@@ -138,7 +143,12 @@
                 <article class="quest-card <%= 'quest-card--featured' if quest.daily_featured? %>">
                   <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap mb-2">
                     <h3 class="quest-card__title mb-0"><%= quest.title %></h3>
-                    <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <% if quest.xp.to_i >= ProgressionXpEngine::ELITE_QUEST_XP_THRESHOLD %>
+                        <span class="quest-featured-tag">Elite</span>
+                      <% end %>
+                      <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
+                    </div>
                   </div>
                   <% difficulty_label, difficulty_class = if quest.xp <= 80
                       ["Easy", "quest-difficulty quest-difficulty--easy"]

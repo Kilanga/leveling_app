@@ -7,17 +7,20 @@ class XpAwarder
 
         user_quest.increment!(:completed_count)
 
+        gained_xp = ProgressionXpEngine.for_user_quest(user_quest)
+        user_quest.user.increment!(:xp, gained_xp)
+
         apply_category_xp!(
           user: user_quest.user,
           category: user_quest.quest.category,
-          xp_amount: user_quest.quest.xp * user_quest.user.xp_multiplier
+          xp_amount: gained_xp
         )
 
         user_quest.update!(active: false, completed: true)
         TitleUnlocker.call(user_quest.user)
-      end
 
-      true
+        gained_xp
+      end
     end
 
     def complete_weekly_quest!(user_weekly_quest)
@@ -27,20 +30,21 @@ class XpAwarder
 
         weekly_quest = user_weekly_quest.weekly_quest
         user = user_weekly_quest.user
+        gained_xp = ProgressionXpEngine.for_weekly_quest(user_weekly_quest)
 
         user_weekly_quest.update!(completed: true)
-        user.increment!(:xp, weekly_quest.xp_reward)
+        user.increment!(:xp, gained_xp)
 
         apply_category_xp!(
           user: user,
           category: weekly_quest.category,
-          xp_amount: weekly_quest.xp_reward * user.xp_multiplier
+          xp_amount: gained_xp
         )
 
         TitleUnlocker.call(user)
-      end
 
-      true
+        gained_xp
+      end
     end
 
     private
