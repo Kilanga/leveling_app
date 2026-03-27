@@ -91,6 +91,29 @@
           <% else %>
             <div class="alert alert-warning mb-0">Aucune quete hebdomadaire visible.</div>
           <% end %>
+
+          <hr class="hud-divider my-3">
+
+          <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
+            <h3 class="section-title mb-0">Quetes en cours</h3>
+            <% extra_active_quests = [@player_active_quests.size - 2, 0].max %>
+            <% if extra_active_quests.positive? %>
+              <span class="shop-state-chip shop-state-chip--available">+<%= extra_active_quests %></span>
+            <% end %>
+          </div>
+
+          <% if @player_active_quests.any? %>
+            <div class="quest-list quest-list--flat">
+              <% @player_active_quests.first(2).each do |user_quest| %>
+                <div class="quest-row quest-row--flat">
+                  <strong><%= user_quest.quest.title %></strong>
+                  <p class="quest-meta mb-0"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="alert alert-warning mb-0">Aucune quete active en ce moment.</div>
+          <% end %>
         </section>
       </div>
 

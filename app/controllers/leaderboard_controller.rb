@@ -31,6 +31,10 @@ class LeaderboardController < ApplicationController
                                  .where("weekly_quests.valid_until >= ?", Time.current)
                                  .includes(:weekly_quest)
                                  .order("weekly_quests.valid_until ASC")
+    @player_active_quests = @player.user_quests
+                   .where(completed: false, active: true)
+                   .includes(:quest)
+                   .order(updated_at: :desc)
 
     @most_completed_quests = @player.user_quests
                       .select("user_quests.quest_id, COUNT(*) AS completed_count")

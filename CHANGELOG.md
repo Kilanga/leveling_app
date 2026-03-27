@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.4] - 2026-03-27
+
+### Modifié
+- Accueil joueur public: ajout du bloc "Quetes en cours" sous "Quetes hebdomadaires".
+- Affichage compact limite aux 2 premieres quetes en cours, avec indicateur `+X` quand d'autres quetes actives existent.
+
 ## [1.15.3] - 2026-03-27
 
 ### Modifié
