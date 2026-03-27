@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post "activate_title", to: "users#activate_title"
   post "deactivate_title", to: "users#deactivate_title"
   post "activate_avatar", to: "users#activate_avatar"
-  resource :onboarding, only: [ :show, :update ]
+  resource :onboarding, only: [ :show, :update ], controller: :onboarding
   resources :notifications, only: [ :index, :update ] do
     collection do
       patch :mark_all_read

@@ -12,6 +12,12 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+### Corrigé
+- Route onboarding: liaison explicite vers `OnboardingController` pour eviter l'erreur 500 `uninitialized constant OnboardingsController`.
+
+### Modifié
+- Boutique packs: clarification visuelle de l'offre de bienvenue avec total de coins recu mis en avant et detail base + bonus sur chaque pack.
+
 ## [1.11.1] - 2026-03-27
 
 

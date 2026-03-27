@@ -349,6 +349,49 @@ body::before {
   box-shadow: 0 0 0 1px rgba(199, 143, 45, 0.18);
 }
 
+.welcome-offer-card {
+  border-color: rgba(199, 143, 45, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(199, 143, 45, 0.22), 0 10px 26px rgba(6, 27, 42, 0.45);
+}
+
+.welcome-offer-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  color: #ffd892;
+}
+
+.welcome-offer-copy .section-title {
+  margin-bottom: 0.55rem;
+}
+
+.welcome-offer-copy .section-title span {
+  color: #ffd892;
+}
+
+.pack-row {
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+
+.pack-total-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pack-total-main {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #e8f8ff;
+}
+
+.pack-total-detail {
+  font-size: 0.9rem;
+  color: #9bc4da;
+}
+
 .shop-preview-card {
   border: 1px solid rgba(86, 202, 248, 0.4);
   background: linear-gradient(180deg, rgba(15, 28, 41, 0.9), rgba(9, 18, 28, 0.9));
