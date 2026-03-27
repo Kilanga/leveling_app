@@ -17,6 +17,19 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.12.4] - 2026-03-27
+
+### Modifié
+- Ligues: ajout de tests de non-regression sur les bornes de mouvement (pas de promotion au-dessus de Diamond, pas de relegation sous Bronze) pour securiser les semaines suivantes.
+
+## [1.12.3] - 2026-03-27
+
+### Modifié
+- Classement ligue: remplacement des libelles UP/DOWN/HOLD par des fleches colorees (▲/▼/•) pour une lecture plus immediate.
+
+### Corrigé
+- Projection de mouvement: application des zones de promotion/relegation des 3 joueurs de cohorte (minimum), avec conservation du taux a 20%.
+
 ## [1.12.2] - 2026-03-27
 
 ### Corrigé
