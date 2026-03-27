@@ -42,7 +42,7 @@
             <%= link_to "Amis", friends_path, class: "nav-link" if user_signed_in? %>
           </li>
           <li class="nav-item">
-            <%= link_to "Tutoriel", onboarding_path, class: "nav-link" if user_signed_in? %>
+            <%= link_to "Tutoriel", onboarding_path, class: "nav-link" if user_signed_in? && !current_user.onboarding_completed? %>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">

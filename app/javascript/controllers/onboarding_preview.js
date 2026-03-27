@@ -4,16 +4,6 @@ function selectedCategoryIds(form) {
     .filter((id) => Number.isInteger(id) && id > 0);
 }
 
-function parseQuestPool(container) {
-  try {
-    const json = container.dataset.questPool || "[]";
-    const parsed = JSON.parse(json);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (_error) {
-    return [];
-  }
-}
-
 function parseSelectedQuestIds(container) {
   const raw = (container.dataset.selectedQuestIds || "").trim();
   if (!raw) {
@@ -28,15 +18,27 @@ function parseSelectedQuestIds(container) {
   return new Set(ids);
 }
 
-function buildRecommendations(questPool, selectedIds) {
-  if (!selectedIds.length) {
+async function fetchRecommendations(endpoint, selectedIds) {
+  if (!endpoint || !selectedIds.length) {
     return [];
   }
 
-  const selected = new Set(selectedIds);
-  return questPool
-    .filter((quest) => selected.has(Number(quest.category_id)))
-    .slice(0, 6);
+  const query = new URLSearchParams();
+  selectedIds.forEach((id) => query.append("category_ids[]", String(id)));
+
+  const response = await fetch(`${endpoint}?${query.toString()}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    return [];
+  }
+
+  const payload = await response.json();
+  return Array.isArray(payload) ? payload : [];
 }
 
 function renderRecommendations(list, recommendations, emptyMessage, selectedQuestIds) {
@@ -102,13 +104,30 @@ function initOnboardingPreview() {
     return;
   }
 
-  const questPool = parseQuestPool(container);
+  const endpoint = container.dataset.recommendationsEndpoint || "";
   const selectedQuestIds = parseSelectedQuestIds(container);
   const emptyMessage = container.dataset.emptyMessage || "Selectionne des categories pour voir tes recommandations.";
 
-  const update = () => {
+  const syncSelectedQuestIdsFromDom = () => {
+    selectedQuestIds.clear();
+    Array.from(form.querySelectorAll("input[name='quest_ids[]']:checked")).forEach((input) => {
+      const questId = Number.parseInt(input.value, 10);
+      if (Number.isInteger(questId) && questId > 0) {
+        selectedQuestIds.add(questId);
+      }
+    });
+  };
+
+  const update = async () => {
+    syncSelectedQuestIdsFromDom();
     const selectedIds = selectedCategoryIds(form);
-    const recommendations = buildRecommendations(questPool, selectedIds);
+    if (!selectedIds.length) {
+      selectedQuestIds.clear();
+      renderRecommendations(list, [], emptyMessage, selectedQuestIds);
+      return;
+    }
+
+    const recommendations = await fetchRecommendations(endpoint, selectedIds);
     const visibleIds = new Set(recommendations.map((quest) => Number(quest.id)));
     Array.from(selectedQuestIds).forEach((questId) => {
       if (!visibleIds.has(questId)) {
@@ -123,7 +142,7 @@ function initOnboardingPreview() {
       return;
     }
     if (event.target.name === "category_ids[]") {
-      update();
+      void update();
       return;
     }
     if (event.target.name === "quest_ids[]") {
@@ -140,7 +159,7 @@ function initOnboardingPreview() {
   });
 
   form.dataset.onboardingPreviewBound = "1";
-  update();
+  void update();
 }
 
 document.addEventListener("turbo:load", initOnboardingPreview);

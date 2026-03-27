@@ -12,15 +12,19 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.11.2] - 2026-03-27
+
 ### Corrigé
 - Route onboarding: liaison explicite vers `OnboardingController` pour eviter l'erreur 500 `uninitialized constant OnboardingsController`.
-- Onboarding: les missions recommandees se mettent maintenant a jour instantanement quand les categories sont cochees/decoches, sans rechargement de page.
+- Tutoriel: les missions recommandees sont maintenant chargees via endpoint backend au changement de categories, avec affichage fiable sans rechargement.
 - Chargement JS tutoriel: pin importmap ajoute pour garantir l'activation du comportement dynamique en production.
 
 ### Modifié
 - Boutique packs: clarification visuelle de l'offre de bienvenue avec total de coins recu mis en avant et detail base + bonus sur chaque pack.
 - Terminologie UX: l'onboarding est renomme en "Tutoriel" dans la navigation et le dashboard pour clarifier son role.
 - Tutoriel: possibilite de selectionner directement les missions a suivre avant validation finale.
+- Tutoriel: validation finale exige au moins une mission selectionnee, avec bouton "Passer" pour ignorer le setup mission.
+- Navigation: onglet Tutoriel masque apres completion et route rendue inaccessible une fois le tutoriel termine.
 
 ## [1.11.1] - 2026-03-27
 

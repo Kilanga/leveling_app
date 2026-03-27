@@ -17,10 +17,10 @@
       </div>
 
       <h2 class="section-title">2. Selectionne tes missions (optionnel)</h2>
-      <p class="quest-meta">Tu peux en choisir jusqu'a 6 pour demarrer tout de suite.</p>
+       <p class="quest-meta">Choisis au moins une mission pour terminer le tutoriel, ou clique sur Passer.</p>
 
       <div id="onboarding-recommendations"
-           data-quest-pool='<%= json_escape(@quest_pool.to_json) %>'
+         data-recommendations-endpoint="<%= recommendations_onboarding_path %>"
            data-empty-message="Selectionne des categories pour voir tes recommandations."
            data-selected-quest-ids='<%= @selected_quest_ids.join(",") %>'>
         <div id="onboarding-recommendations-list" class="mb-3">
@@ -44,7 +44,10 @@
         </div>
       </div>
 
-      <%= submit_tag "Terminer le tutoriel", class: "btn btn-brand" %>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <%= submit_tag "Terminer le tutoriel", class: "btn btn-brand" %>
+        <%= button_to "Passer", skip_onboarding_path, method: :patch, class: "btn btn-outline-secondary", form_class: "d-inline" %>
+      </div>
     <% end %>
   </div>
 </div>
