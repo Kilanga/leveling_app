@@ -72,4 +72,35 @@ RSpec.describe WeeklyLeague do
     expect(standings.first[:projected_movement]).to eq(1)
     expect(standings.last[:projected_movement]).to eq(-1)
   end
+
+  it "never projects impossible moves at tier boundaries" do
+    category = Category.create!(name: "Boundary projections")
+
+    bronze_users = (1..3).map { |i| create_user(index: 3000 + i, tier: 1) }
+    diamond_users = (1..3).map { |i| create_user(index: 4000 + i, tier: 5) }
+
+    bronze_users.each_with_index { |user, idx| add_previous_week_xp(user, 300 - idx, category) }
+    diamond_users.each_with_index { |user, idx| add_previous_week_xp(user, 300 - idx, category) }
+
+    bronze_standings = WeeklyLeague.standings(User.where(id: bronze_users.map(&:id)).to_a, range: Time.current.all_week)
+    diamond_standings = WeeklyLeague.standings(User.where(id: diamond_users.map(&:id)).to_a, range: Time.current.all_week)
+
+    expect(bronze_standings.map { |e| e[:projected_movement] }).not_to include(-1)
+    expect(diamond_standings.map { |e| e[:projected_movement] }).not_to include(1)
+  end
+
+  it "never settles outside league bounds" do
+    category = Category.create!(name: "Boundary settlement")
+
+    bronze_users = (1..3).map { |i| create_user(index: 5000 + i, tier: 1) }
+    diamond_users = (1..3).map { |i| create_user(index: 6000 + i, tier: 5) }
+
+    bronze_users.each_with_index { |user, idx| add_previous_week_xp(user, 500 - idx, category) }
+    diamond_users.each_with_index { |user, idx| add_previous_week_xp(user, 500 - idx, category) }
+
+    WeeklyLeague.settle_leagues_if_needed!(reference_time: Time.zone.now)
+
+    expect(bronze_users.map { |u| u.reload.league_tier }.min).to be >= 1
+    expect(diamond_users.map { |u| u.reload.league_tier }.max).to be <= 5
+  end
 end
