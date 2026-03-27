@@ -55,18 +55,79 @@ admin_user = User.create!(
 # 📌 **Création des titres disponibles à l'achat**
 puts "🔄 Création des titres en boutique..."
 titles = [
-  { name: "Héros Local", item_type: "title", rarity: "rare", price_coins: 150 },
-  { name: "Champion Réputé", item_type: "title", rarity: "epic", price_coins: 600 },
-  { name: "Légende Vivante", item_type: "title", rarity: "legendary", price_coins: 1200 }
+  {
+    name: "Héros Local",
+    item_type: "title",
+    rarity: "rare",
+    price_coins: 150,
+    description: "Connu dans ta zone: tu rends service, tu tiens tes objectifs, et ca se voit."
+  },
+  {
+    name: "Sentinelle d'Aube",
+    item_type: "title",
+    rarity: "rare",
+    price_coins: 220,
+    description: "Tu demarres tot, tu prends de l'avance, et tu lances la journee avec discipline."
+  },
+  {
+    name: "Briseur d'Inertie",
+    item_type: "title",
+    rarity: "rare",
+    price_coins: 280,
+    description: "Tu passes a l'action vite, meme sur les taches que tout le monde repousse."
+  },
+  {
+    name: "Champion Réputé",
+    item_type: "title",
+    rarity: "epic",
+    price_coins: 600,
+    description: "Resultats solides et reguliers: ton niveau est reconnu par les autres joueurs."
+  },
+  {
+    name: "Architecte du Tempo",
+    item_type: "title",
+    rarity: "epic",
+    price_coins: 720,
+    description: "Tu sais doser effort, recuperation et constance pour garder un rythme durable."
+  },
+  {
+    name: "Maitrise Fractale",
+    item_type: "title",
+    rarity: "epic",
+    price_coins: 880,
+    description: "Tu optimises les details: chaque habitude bien tenue renforce ta progression."
+  },
+  {
+    name: "Légende Vivante",
+    item_type: "title",
+    rarity: "legendary",
+    price_coins: 1200,
+    description: "Ton profil est une reference: performance elevee, constance et gros volume accompli."
+  },
+  {
+    name: "Souverain des Paliers",
+    item_type: "title",
+    rarity: "legendary",
+    price_coins: 1450,
+    description: "Tu franchis les caps un par un jusqu'aux paliers que peu de joueurs atteignent."
+  },
+  {
+    name: "Etoile de la Derniere Quete",
+    item_type: "title",
+    rarity: "legendary",
+    price_coins: 1650,
+    description: "Tu restes performant jusqu'au bout et tu termines fort quand la fatigue arrive."
+  }
 ]
 
 titles.each do |title|
-  item = ShopItem.find_or_create_by!(name: title[:name]) do |shop_item|
-    shop_item.item_type = title[:item_type]
-    shop_item.rarity = title[:rarity]
-    shop_item.price_coins = title[:price_coins]
-    shop_item.description = "Un titre prestigieux affiché sur votre profil."
-  end
+  item = ShopItem.find_or_initialize_by(name: title[:name])
+  item.item_type = title[:item_type]
+  item.rarity = title[:rarity]
+  item.price_coins = title[:price_coins]
+  item.price_euros = nil
+  item.description = title[:description]
+  item.save!
 
   # 📌 Attache une image depuis Cloudinary
   unless item.image.attached?

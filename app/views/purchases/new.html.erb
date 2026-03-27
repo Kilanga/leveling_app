@@ -53,32 +53,27 @@
               <% end %>
             </div>
           <% else %>
-            <h2 class="section-title">Titres et avatars</h2>
-            <p class="quest-meta mb-3">Equipe tes cosmetiques pour personnaliser profil et classement.</p>
+            <h2 class="section-title">Titres</h2>
+            <p class="quest-meta mb-3">Choisis un titre marquant pour imposer ton style dans le classement.</p>
 
-            <% if current_user.active_title.present? || current_user.active_avatar_item.present? %>
+            <% if current_user.active_title.present? %>
               <div class="shop-row shop-row--flat mb-3">
                 <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
                   <strong>Equipe maintenant</strong>
                   <div class="d-flex gap-2 flex-wrap">
-                    <% if current_user.active_avatar_item.present? %>
-                      <span class="shop-state-chip shop-state-chip--equipped">Avatar: <%= current_user.active_avatar_item.name %></span>
-                    <% end %>
-                    <% if current_user.active_title.present? %>
-                      <span class="shop-state-chip shop-state-chip--equipped">Titre: <%= current_user.active_title.name %></span>
-                    <% end %>
+                    <span class="shop-state-chip shop-state-chip--equipped">Titre: <%= current_user.active_title.name %></span>
                   </div>
                 </div>
               </div>
             <% end %>
 
             <div class="shop-list shop-list--flat shop-list--titles">
-              <% (@title_items + @cosmetic_items).each do |item| %>
+              <% @title_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
                 <% rarity_label = item.rarity.to_s.capitalize.presence || "Common" %>
                 <% rarity_css = "rarity-chip rarity-chip--#{rarity_key}" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
-                <% equipped = (item.item_type == "title" && current_user.active_title_id == item.id) || (item.item_type == "cosmetic" && current_user.active_avatar_item_id == item.id) %>
+                <% equipped = current_user.active_title_id == item.id %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
                     <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
@@ -97,12 +92,10 @@
                     <% end %>
                   </div>
 
-                  <% if equipped && item.item_type == "title" %>
+                  <% if equipped %>
                     <%= button_to "Retirer", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
-                  <% elsif owned && item.item_type == "title" %>
+                  <% elsif owned %>
                     <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
-                  <% elsif owned && item.item_type == "cosmetic" %>
-                    <%= button_to "Equiper", activate_avatar_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
                   <% elsif item.price_coins.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>

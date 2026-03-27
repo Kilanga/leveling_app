@@ -69,11 +69,6 @@
           </div>
         <% end %>
       </div>
-      <% if @user.active_title.present? %>
-        <div class="mt-2">
-          <%= link_to "Retirer le titre", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
-        </div>
-      <% end %>
     <% else %>
       <p class="text-muted small">Aucun titre disponible pour le moment. Gagnez-les en boutique!</p>
     <% end %>

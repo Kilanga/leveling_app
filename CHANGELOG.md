@@ -12,6 +12,16 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.7.3] - 2026-03-27
+
+### Modifié
+- Boutique cosmetiques recentree sur les titres: bandeau "Titres" et affichage de la liste des titres vendus uniquement
+- Descriptions des titres boutique retravaillees avec un ton plus concret, aligne sur chaque intitule
+- Extension du catalogue de titres en vente avec de nouveaux titres payants (rares/epiques/legendaires, sans commons)
+
+### Corrigé
+- Suppression du bouton "Retirer le titre" sur la page profil
+
 ## [1.7.2] - 2026-03-27
 
 ### Corrigé
