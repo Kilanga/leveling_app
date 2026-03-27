@@ -12,6 +12,9 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.11.1] - 2026-03-27
+
+
 ### Modifié
 - Boutique: l'offre de bienvenue est maintenant integree dans le calcul des packs coins (bonus applique selon variante) et visible directement dans l'affichage des prix/valeur.
 - Ecran Amis: refonte visuelle des sections et des listes de demandes pour harmoniser avec le style HUD de l'application.
