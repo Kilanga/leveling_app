@@ -10,9 +10,9 @@ class TitleUnlocker
     {
       name: "Regulier",
       rarity: "common",
-      objective: "Completer 20 quetes au total et 2 quetes hebdomadaires en 7 jours.",
+      objective: "Completer 20 quetes au total et 2 quetes hebdomadaires au cumul.",
       description: "Ta constance commence a se voir.",
-      condition: ->(stats) { stats[:completed_quests] >= 20 && stats[:weekly_completed_7d] >= 2 }
+      condition: ->(stats) { stats[:completed_quests] >= 20 && stats[:weekly_completed_total] >= 2 }
     },
     {
       name: "Polyvalent",
@@ -24,9 +24,9 @@ class TitleUnlocker
     {
       name: "Cadence Hebdo",
       rarity: "common",
-      objective: "Completer 4 quetes hebdomadaires en 7 jours et 25 quetes au total.",
+      objective: "Completer 4 quetes hebdomadaires au cumul et 25 quetes au total.",
       description: "Ton rythme hebdomadaire est solide.",
-      condition: ->(stats) { stats[:weekly_completed_7d] >= 4 && stats[:completed_quests] >= 25 }
+      condition: ->(stats) { stats[:weekly_completed_total] >= 4 && stats[:completed_quests] >= 25 }
     },
     {
       name: "Stratege Patient",
@@ -102,6 +102,7 @@ class TitleUnlocker
         unique_completed_quests: user.user_quests.where("completed_count > 0").distinct.count(:quest_id),
         total_level: user.user_stats.sum(:level),
         weekly_completed_7d: user.user_weekly_quests.where(completed: true).where("updated_at >= ?", 7.days.ago).count,
+        weekly_completed_total: user.user_weekly_quests.where(completed: true).count,
         categories_with_500_xp: user.user_stats.where("total_xp >= 500").distinct.count(:category_id),
         categories_with_1500_xp: user.user_stats.where("total_xp >= 1500").distinct.count(:category_id),
         categories_with_level_20: user.user_stats.where("level >= 20").distinct.count(:category_id)

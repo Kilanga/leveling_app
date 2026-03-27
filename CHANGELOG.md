@@ -12,6 +12,11 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.9.3] - 2026-03-27
+
+### Corrigé
+- Titres communs: correction des objectifs hebdomadaires pour correspondre au design "1 quete hebdo par semaine" (passage sur un cumul total de quetes hebdo completees)
+
 ## [1.9.2] - 2026-03-27
 
 ### Modifié
