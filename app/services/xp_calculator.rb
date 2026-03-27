@@ -2,28 +2,11 @@ module XpCalculator
   module_function
 
   def xp_needed_for_next_level(level)
-    case level
-    when 1..10
-      level * 100
-    when 11..20
-      (level**1.8 * 100).to_i
-    when 21..30
-      (level**1.7 * 100).to_i
-    when 31..40
-      (level**1.6 * 100).to_i
-    when 41..50
-      (level**1.5 * 100).to_i
-    when 51..60
-      (level**1.4 * 100).to_i
-    when 61..70
-      (level**1.3 * 100).to_i
-    when 71..80
-      (level**1.2 * 100).to_i
-    when 81..90
-      (level**1.1 * 100).to_i
-    else
-      (level**1.1 * 100).to_i
-    end
+    l = [level.to_i, 1].max
+    previous_levels = l - 1
+
+    # Monotonic blended curve: fast onboarding, then steady ramp-up without drop-offs.
+    (120 + (55 * previous_levels) + (12 * (previous_levels**1.45))).round
   end
 
   def calculate_level_and_xp(total_xp)

@@ -18,19 +18,23 @@ class QuestsController < ApplicationController
       @quests = @quests.where(category_id: @selected_category_id)
     end
 
+    @difficulty_bounds = difficulty_bounds_for(@quests)
+    easy_max = @difficulty_bounds[:easy_max]
+    medium_max = @difficulty_bounds[:medium_max]
+
     @difficulty_totals = {
-      easy: @quests.where("xp <= ?", 80).count,
-      medium: @quests.where("xp > ? AND xp <= ?", 80, 150).count,
-      hard: @quests.where("xp > ?", 150).count
+      easy: @quests.where("xp <= ?", easy_max).count,
+      medium: @quests.where("xp > ? AND xp <= ?", easy_max, medium_max).count,
+      hard: @quests.where("xp > ?", medium_max).count
     }
 
     case @selected_difficulty
     when "easy"
-      @quests = @quests.where("xp <= ?", 80)
+      @quests = @quests.where("xp <= ?", easy_max)
     when "medium"
-      @quests = @quests.where("xp > ? AND xp <= ?", 80, 150)
+      @quests = @quests.where("xp > ? AND xp <= ?", easy_max, medium_max)
     when "hard"
-      @quests = @quests.where("xp > ?", 150)
+      @quests = @quests.where("xp > ?", medium_max)
     end
 
     @quests = case @selected_sort
@@ -68,5 +72,20 @@ class QuestsController < ApplicationController
   def show
     @quest = Quest.find(params[:id])
     @user_quest = current_user.user_quests.find_or_initialize_by(quest: @quest)
+  end
+
+  private
+
+  def difficulty_bounds_for(scope)
+    xp_values = scope.where.not(xp: nil).order(:xp).pluck(:xp)
+    return { easy_max: 120, medium_max: 260 } if xp_values.empty?
+
+    easy_index = ((xp_values.length - 1) * 0.33).floor
+    medium_index = ((xp_values.length - 1) * 0.66).floor
+
+    easy_max = xp_values[easy_index]
+    medium_max = [xp_values[medium_index], easy_max + 1].max
+
+    { easy_max: easy_max, medium_max: medium_max }
   end
 end

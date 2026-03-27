@@ -17,6 +17,13 @@ class FriendsController < ApplicationController
 
   def create
     friend = User.find(params[:friend_id])
+
+    daily_sent_requests = current_user.friendships.where(created_at: Time.current.all_day).count
+    if daily_sent_requests >= Friendship::MAX_DAILY_SENT
+      redirect_back fallback_location: friends_path, alert: "Tu as atteint la limite de #{Friendship::MAX_DAILY_SENT} demandes d'amis aujourd'hui."
+      return
+    end
+
     if friend == current_user
       redirect_back fallback_location: friends_path, alert: "Tu ne peux pas t'ajouter en ami."
       return

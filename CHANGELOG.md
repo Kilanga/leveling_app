@@ -12,6 +12,17 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.10.0] - 2026-03-27
+
+### Modifié
+- Courbe XP de niveau remplacee par une formule monotone continue pour supprimer les chutes de difficulte entre paliers
+- Harmonisation des calculs d'XP du dashboard via `XpCalculator` (suppression de la duplication de formule)
+- Difficultes quetes (Easy/Medium/Hard) rendues dynamiques selon la distribution XP des quetes filtrees
+- Quete hebdo globale: reduction de la repetition avec exclusion des themes recents (fenetre glissante)
+
+### Corrigé
+- Anti-spam demandes d'amis: limite a 10 demandes envoyees par joueur et par jour
+
 ## [1.9.3] - 2026-03-27
 
 ### Corrigé

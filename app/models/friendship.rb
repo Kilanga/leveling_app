@@ -1,5 +1,6 @@
 class Friendship < ApplicationRecord
   MAX_PENDING_RECEIVED = 20
+  MAX_DAILY_SENT = 10
 
   belongs_to :user
   belongs_to :friend, class_name: "User"

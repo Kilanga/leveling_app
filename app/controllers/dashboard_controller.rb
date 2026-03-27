@@ -1,6 +1,8 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
 
+  WEEKLY_REUSE_WINDOW = 6.weeks
+
   def index
     active_weekly_quest = ensure_single_active_global_weekly_quest!
     attach_current_user_to_active_weekly_quest!(active_weekly_quest)
@@ -51,7 +53,16 @@ class DashboardController < ApplicationController
     current_active = active_quests.first
 
     unless current_active
-      source_quest = Quest.includes(:category).order("RANDOM()").first
+      recent_titles = WeeklyQuest.where("created_at >= ?", WEEKLY_REUSE_WINDOW.ago)
+                                 .pluck(:title)
+                                 .map { |title| title.to_s.sub(/\AHebdo:\s*/, "") }
+                                 .uniq
+
+      source_scope = Quest.includes(:category)
+      source_scope = source_scope.where.not(title: recent_titles) if recent_titles.any?
+
+      source_quest = source_scope.order(Arel.sql("RANDOM()")).first
+      source_quest ||= Quest.includes(:category).order(Arel.sql("RANDOM()")).first
       return nil unless source_quest
 
       current_active = WeeklyQuest.create!(

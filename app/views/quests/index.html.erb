@@ -150,9 +150,9 @@
                       <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
                     </div>
                   </div>
-                  <% difficulty_label, difficulty_class = if quest.xp <= 80
+                  <% difficulty_label, difficulty_class = if quest.xp <= @difficulty_bounds[:easy_max]
                       ["Easy", "quest-difficulty quest-difficulty--easy"]
-                    elsif quest.xp <= 150
+                    elsif quest.xp <= @difficulty_bounds[:medium_max]
                       ["Medium", "quest-difficulty quest-difficulty--medium"]
                     else
                       ["Hard", "quest-difficulty quest-difficulty--hard"]
