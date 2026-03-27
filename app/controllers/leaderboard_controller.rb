@@ -22,10 +22,16 @@ class LeaderboardController < ApplicationController
                                        .first
     @player_pending_limit_reached = Friendship.pending.where(friend: @player).count >= Friendship::MAX_PENDING_RECEIVED
 
-    # Top 3 catégories du joueur
-    @top_categories = @player.user_stats.includes(:category).order(total_xp: :desc).limit(3)
+    @player_stats = @player.user_stats.includes(:category).order(total_xp: :desc)
+    @top_categories = @player_stats.limit(3)
+    @player_total_level = @player_stats.sum(&:level)
+    @player_completed_quests_total = @player.user_quests.sum(:completed_count)
+    @player_xp_this_week = @player.user_quests.where(completed: true, updated_at: Time.current.all_week).joins(:quest).sum("quests.xp")
+    @player_weekly_quests = @player.user_weekly_quests.joins(:weekly_quest)
+                                 .where("weekly_quests.valid_until >= ?", Time.current)
+                                 .includes(:weekly_quest)
+                                 .order("weekly_quests.valid_until ASC")
 
-    # Quêtes les plus complétées par ce joueur
     @most_completed_quests = @player.user_quests
                       .select("user_quests.quest_id, COUNT(*) AS completed_count")
                       .group("user_quests.quest_id")
@@ -33,7 +39,6 @@ class LeaderboardController < ApplicationController
                       .limit(5)
               .preload(:quest)
 
-    # Ses dernières quêtes
-    @recent_quests = @player.user_quests.includes(:quest).order(updated_at: :desc).limit(5)
+    @recent_quests = @player.user_quests.where(completed: true).includes(:quest).order(updated_at: :desc).limit(8)
   end
 end

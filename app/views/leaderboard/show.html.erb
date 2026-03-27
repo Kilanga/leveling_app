@@ -1,80 +1,137 @@
-<h1 class="page-title">Profil de <%= @player.pseudo %></h1>
+<h1 class="page-title">Accueil de <%= @player.pseudo %></h1>
+<p class="page-subtitle">Vue publique du dashboard joueur (lecture seule).</p>
 
-<div class="surface-card surface-card--shell">
+<div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
-    <section class="hud-section text-center mb-4">
-      <%= user_avatar_image(@player, width: 150, height: 150, css_class: "rounded-circle", alt: "Avatar de #{@player.pseudo}") %>
+    <section class="hud-section mb-4">
+      <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+        <div class="d-flex align-items-center gap-3">
+          <%= user_avatar_image(@player, width: 96, height: 96, css_class: "rounded-circle", alt: "Avatar de #{@player.pseudo}") %>
+          <div>
+            <div class="profile-frame-container <%= frame_wrapper_classes(@player.respond_to?(:active_profile_frame) ? @player.active_profile_frame : nil) %>">
+              <strong><%= @player.pseudo %></strong>
+            </div>
+            <p class="quest-meta mb-1 mt-2">Niveau global: <%= @player_total_level %></p>
+            <p class="quest-meta mb-0">XP cette semaine: <%= @player_xp_this_week %></p>
+          </div>
+        </div>
 
-      <!-- Profile Card (Carte de visite) -->
-      <% if @player.active_profile_card.present? %>
-        <div class="profile-card-container <%= profile_card_classes(@player.active_profile_card) %>">
-          <div class="profile-card-header">Carte de visite</div>
+        <% unless @player == current_user %>
+          <div>
+            <% if @friendship_with_current.nil? %>
+              <% if @player_pending_limit_reached %>
+                <span class="shop-state-chip shop-state-chip--available">Ce joueur a atteint le max de demandes en attente.</span>
+              <% else %>
+                <%= button_to "Demander en ami", friends_path(friend_id: @player.id), method: :post, class: "btn btn-brand" %>
+              <% end %>
+            <% elsif @friendship_with_current.status == "accepted" %>
+              <span class="shop-state-chip shop-state-chip--owned">Deja ami</span>
+            <% else %>
+              <span class="shop-state-chip shop-state-chip--available">Demande deja en attente</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <% active_player_card = @player.respond_to?(:active_profile_card) ? @player.active_profile_card : nil %>
+    <% if active_player_card.present? %>
+      <section class="hud-section mb-4">
+        <h2 class="section-title">Carte de visite</h2>
+        <div class="profile-card-container <%= profile_card_classes(active_player_card) %>">
+          <div class="profile-card-header"><%= @player.pseudo %></div>
           <div class="profile-card-text"><%= profile_card_text(@player) %></div>
         </div>
-      <% end %>
+      </section>
+    <% end %>
 
-      <% unless @player == current_user %>
-        <div class="mt-3">
-          <% if @friendship_with_current.nil? %>
-            <% if @player_pending_limit_reached %>
-              <span class="shop-state-chip shop-state-chip--available">Ce joueur a atteint le nombre max de demandes d'amis en attente.</span>
-            <% else %>
-              <%= button_to "Demander en ami", friends_path(friend_id: @player.id), method: :post, class: "btn btn-brand" %>
-            <% end %>
-          <% elsif @friendship_with_current.status == "accepted" %>
-            <span class="shop-state-chip shop-state-chip--owned">Deja ami</span>
+    <section class="hud-section mb-4">
+      <h2 class="section-title">Progression par categorie</h2>
+      <% if @player_stats.any? %>
+        <% active_theme = @player.respond_to?(:active_xp_theme) ? @player.active_xp_theme : nil %>
+        <% @player_stats.each do |stat| %>
+          <% xp_needed = xp_needed_for_next_level(stat.level) %>
+          <% percent = (stat.xp.to_f / [xp_needed, 1].max * 100).round %>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between flex-wrap gap-2 mb-1">
+              <strong><%= stat.category.name %> - Niveau <%= stat.level %></strong>
+              <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
+            </div>
+            <div class="xp-track <%= xp_theme_classes(active_theme) %>">
+              <div class="xp-fill" style="width: <%= percent %>%"></div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-warning mb-0">Aucune progression disponible.</div>
+      <% end %>
+    </section>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <section class="hud-section h-100">
+          <h2 class="section-title">Quetes hebdomadaires</h2>
+          <% if @player_weekly_quests.any? %>
+            <div class="quest-list quest-list--flat">
+              <% @player_weekly_quests.each do |entry| %>
+                <div class="quest-row quest-row--flat d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                  <div>
+                    <strong><%= entry.weekly_quest.title %></strong>
+                    <p class="quest-meta mb-1"><%= entry.weekly_quest.description %></p>
+                    <p class="quest-meta mb-0">Recompense: <%= entry.weekly_quest.xp_reward %> XP</p>
+                  </div>
+                  <% if entry.completed? %>
+                    <span class="shop-state-chip shop-state-chip--equipped">Completee</span>
+                  <% else %>
+                    <span class="shop-state-chip shop-state-chip--available">En cours</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
           <% else %>
-            <span class="shop-state-chip shop-state-chip--available">Demande deja en attente</span>
+            <div class="alert alert-warning mb-0">Aucune quete hebdomadaire visible.</div>
+          <% end %>
+        </section>
+      </div>
+
+      <div class="col-lg-6">
+        <section class="hud-section h-100">
+          <h2 class="section-title">Dernieres quetes realisees</h2>
+          <% if @recent_quests.any? %>
+            <div class="quest-list quest-list--flat">
+              <% @recent_quests.each do |user_quest| %>
+                <div class="quest-row quest-row--flat">
+                  <strong><%= user_quest.quest.title %></strong>
+                  <p class="quest-meta mb-0">Terminee le <%= user_quest.updated_at.strftime("%d/%m/%Y") %></p>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="alert alert-warning mb-0">Aucune quete recente.</div>
+          <% end %>
+        </section>
+      </div>
+    </div>
+
+    <section class="hud-section mt-4">
+      <h2 class="section-title">Quetes les plus realisees</h2>
+      <% if @most_completed_quests.any? %>
+        <div class="quest-list quest-list--flat">
+          <% @most_completed_quests.each do |user_quest| %>
+            <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-2 flex-wrap">
+              <strong><%= user_quest.quest.title %></strong>
+              <span class="shop-state-chip shop-state-chip--owned"><%= user_quest.completed_count %> fois</span>
+            </div>
           <% end %>
         </div>
-      <% end %>
-    </section>
-
-    <section class="hud-section">
-      <h3 class="section-title">Statistiques</h3>
-      <% if @top_categories.any? %>
-        <ul class="list-group surface-list">
-          <% @top_categories.each do |stat| %>
-            <li class="list-group-item"><strong><%= stat.category.name %></strong> : Niveau <%= stat.level %> | XP : <%= stat.xp %></li>
-          <% end %>
-        </ul>
       <% else %>
-        <p>Aucune statistique disponible.</p>
+        <div class="alert alert-warning mb-0">Aucune quete populaire.</div>
       <% end %>
     </section>
 
-    <section class="hud-section mt-4">
-      <h3 class="section-title">Quêtes les plus réalisées</h3>
-      <% if @most_completed_quests.any? %>
-        <ul class="list-group surface-list">
-          <% @most_completed_quests.each do |user_quest| %>
-            <li class="list-group-item">
-              <strong><%= user_quest.quest.title %></strong> - Complétée <%= user_quest.completed_count %> fois
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>Aucune quête populaire.</p>
-      <% end %>
-    </section>
-
-    <section class="hud-section mt-4">
-      <h3 class="section-title">Dernières quêtes réalisées</h3>
-      <% if @recent_quests.any? %>
-        <ul class="list-group surface-list">
-          <% @recent_quests.each do |user_quest| %>
-            <li class="list-group-item">
-              <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>Aucune quête récente.</p>
-      <% end %>
-    </section>
-
-    <div class="mt-4">
-      <%= link_to "Retour au classement", leaderboard_index_path, class: "btn btn-secondary" %>
+    <div class="mt-4 d-flex align-items-center gap-2 flex-wrap">
+      <span class="shop-state-chip shop-state-chip--owned">Total quetes completees: <%= @player_completed_quests_total %></span>
+      <%= link_to "Retour au classement", leaderboard_index_path, class: "btn btn-outline-quest" %>
     </div>
   </div>
 </div>

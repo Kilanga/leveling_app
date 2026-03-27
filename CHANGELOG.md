@@ -17,6 +17,16 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.3] - 2026-03-27
+
+### Modifié
+- Vue joueur depuis le classement: remplacement du profil public par l'Accueil joueur en lecture seule (dashboard de progression, quetes hebdo, activite recente, stats), sans actions de modification.
+- Positionnement UX clarifie: le profil personnel reste l'espace de personnalisation, la vue publique sert de vitrine de progression.
+- Bloc d'apercu profil boutique enrichi pour visualiser concretement l'impact des cosmetiques (cadre, barre XP thematisee, carte de visite).
+
+### Corrigé
+- Amelioration visuelle des apercus cosmetiques: barres XP et cartes de visite retravaillees pour un rendu plus lisible et plus premium.
+
 ## [1.15.2] - 2026-03-27
 
 ### Corrigé

@@ -308,17 +308,42 @@
       <div class="col-lg-4">
         <section class="hud-section h-100">
           <h2 class="section-title">Apercu profil</h2>
+          <% preview_frame = current_user.respond_to?(:active_profile_frame) ? current_user.active_profile_frame : nil %>
+          <% preview_theme = current_user.respond_to?(:active_xp_theme) ? current_user.active_xp_theme : nil %>
+          <% preview_card = current_user.respond_to?(:active_profile_card) ? current_user.active_profile_card : nil %>
           <div class="shop-preview-card mb-4">
-            <div class="d-flex align-items-center gap-3">
-              <%= user_avatar_image(current_user, width: 74, height: 74, css_class: "rounded-circle shop-preview-avatar", alt: "Avatar de #{current_user.pseudo}") %>
-              <div>
-                <strong><%= current_user.pseudo %></strong>
-                <p class="quest-meta mb-1">Niveau global <%= @total_level %></p>
-                <% if current_user.active_title.present? %>
-                  <p class="quest-meta mb-0">Titre: <%= current_user.active_title.name %></p>
-                <% else %>
-                  <p class="quest-meta mb-0">Aucun titre equipe</p>
-                <% end %>
+            <div class="shop-impact-profile mb-3">
+              <div class="d-flex align-items-center gap-3">
+                <%= user_avatar_image(current_user, width: 74, height: 74, css_class: "rounded-circle shop-preview-avatar", alt: "Avatar de #{current_user.pseudo}") %>
+                <div>
+                  <div class="profile-frame-container <%= frame_wrapper_classes(preview_frame) %>">
+                    <strong><%= current_user.pseudo %></strong>
+                  </div>
+                  <p class="quest-meta mb-1 mt-2">Niveau global <%= @total_level %></p>
+                  <% if current_user.active_title.present? %>
+                    <p class="quest-meta mb-0">Titre: <%= current_user.active_title.name %></p>
+                  <% else %>
+                    <p class="quest-meta mb-0">Aucun titre equipe</p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="shop-impact-xp mb-3">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="preview-label">Barre XP</span>
+                <span class="quest-meta">67%</span>
+              </div>
+              <div class="xp-track shop-impact-xp-track <%= xp_theme_classes(preview_theme) %>">
+                <div class="xp-fill" style="width: 67%"></div>
+              </div>
+            </div>
+
+            <div class="shop-impact-card">
+              <div class="preview-label mb-1">Carte de visite</div>
+              <div class="profile-card-container <%= profile_card_classes(preview_card) %>">
+                <div class="profile-card-header"><%= current_user.pseudo %></div>
+                <div class="profile-card-text"><%= profile_card_text(current_user).presence || "Ton style s'affiche ici quand tu equipes une carte." %></div>
               </div>
             </div>
           </div>
