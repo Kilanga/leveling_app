@@ -54,5 +54,39 @@
         </table>
       </div>
     </section>
+
+    <hr class="hud-divider">
+
+    <section class="hud-section">
+      <h2 class="section-title">Top ligue hebdomadaire (filtre actif)</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Rang</th>
+              <th>Joueur</th>
+              <th>XP semaine</th>
+              <th>Ligue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @league_standings.any? %>
+              <% @league_standings.each do |entry| %>
+                <tr>
+                  <td>#<%= entry[:rank] %></td>
+                  <td><%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-primary text-decoration-none fw-bold" %></td>
+                  <td><%= entry[:weekly_xp] %></td>
+                  <td><%= entry[:tier] %></td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="4" class="text-center">Aucune donnee de ligue disponible.</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </div>
 </div>

@@ -17,6 +17,14 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.11.7] - 2026-03-27
+
+### Corrigé
+- Production: suppression du 500 sur le dashboard quand les colonnes de bonus de connexion quotidienne ne sont pas encore migrees en base.
+
+### Modifié
+- Onglet Classement: ajout d'un bloc dedie "Top ligue hebdomadaire" pour afficher clairement le classement de ligue.
+
 ## [1.11.6] - 2026-03-27
 
 ### Modifié

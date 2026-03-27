@@ -19,7 +19,8 @@ class LeaderboardController < ApplicationController
                      .limit(TOP_PLAYERS_LIMIT)
     end
 
-    @league_by_user_id = WeeklyLeague.standings(@players.to_a).index_by { |entry| entry[:user].id }
+    @league_standings = WeeklyLeague.standings(@players.to_a).first(TOP_PLAYERS_LIMIT)
+    @league_by_user_id = @league_standings.index_by { |entry| entry[:user].id }
   end
 
   def show

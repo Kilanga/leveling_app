@@ -119,13 +119,18 @@ class User < ApplicationRecord
   end
 
   def claim_daily_login_bonus!
+    required_columns = %w[daily_login_streak_count daily_login_last_claimed_on]
+    return { claimed: false, streak: 0, reward: 0 } unless required_columns.all? { |name| self.class.column_names.include?(name) }
+
     today = Time.zone.today
 
     with_lock do
-      return { claimed: false, streak: daily_login_streak_count.to_i, reward: 0 } if daily_login_last_claimed_on == today
+      last_claimed_on = self[:daily_login_last_claimed_on]
+      current_streak = self[:daily_login_streak_count].to_i
+      return { claimed: false, streak: current_streak, reward: 0 } if last_claimed_on == today
 
-      streak = if daily_login_last_claimed_on == today - 1.day
-        daily_login_streak_count.to_i + 1
+      streak = if last_claimed_on == today - 1.day
+        current_streak + 1
       else
         1
       end
