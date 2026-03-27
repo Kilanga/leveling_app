@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.6] - 2026-03-27
+
+### Modifié
+- Accueil joueur public: section "Dernieres quetes realisees" limitee a 3 entrees.
+- Accueil joueur public: ajout du diagramme radar de progression dans la colonne de droite.
+
 ## [1.15.5] - 2026-03-27
 
 ### Modifié

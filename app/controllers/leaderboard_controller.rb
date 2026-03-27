@@ -23,6 +23,14 @@ class LeaderboardController < ApplicationController
     @player_pending_limit_reached = Friendship.pending.where(friend: @player).count >= Friendship::MAX_PENDING_RECEIVED
 
     @player_stats = @player.user_stats.includes(:category).order(total_xp: :desc)
+    @player_stats_data = @player_stats.map do |stat|
+      {
+        name: stat.category.name,
+        level: stat.level,
+        xp: stat.xp,
+        xp_needed: XpCalculator.xp_needed_for_next_level(stat.level)
+      }
+    end
     @top_categories = @player_stats.limit(3)
     @player_total_level = @player_stats.sum(&:level)
     @player_completed_quests_total = @player.user_quests.sum(:completed_count)
@@ -43,6 +51,6 @@ class LeaderboardController < ApplicationController
               .limit(3)
               .preload(:quest)
 
-    @recent_quests = @player.user_quests.where(completed: true).includes(:quest).order(updated_at: :desc).limit(8)
+    @recent_quests = @player.user_quests.where(completed: true).includes(:quest).order(updated_at: :desc).limit(3)
   end
 end

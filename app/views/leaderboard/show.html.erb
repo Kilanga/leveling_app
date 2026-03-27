@@ -127,6 +127,19 @@
 
       <div class="col-lg-6">
         <section class="hud-section h-100 player-home-panel">
+          <h2 class="section-title">Radar progression</h2>
+          <% if @player_stats_data.any? %>
+            <div class="stats-chart-wrap mb-4">
+              <canvas
+                id="statsChart"
+                data-stats='<%= @player_stats_data.to_json %>'
+                data-total-level="<%= @player_total_level %>">
+              </canvas>
+            </div>
+          <% else %>
+            <div class="alert alert-warning mb-4">Aucune donnee de progression a afficher.</div>
+          <% end %>
+
           <h2 class="section-title">Dernieres quetes realisees</h2>
           <% if @recent_quests.any? %>
             <div class="quest-list quest-list--flat">
