@@ -55,7 +55,7 @@ BEGIN {
   captured_rest = 0
 }
 {
-  if ($0 == "## [Non publié]") {
+  if ($0 ~ /^## \[Non publi/) {
     found_unreleased = 1
     print
     print ""
