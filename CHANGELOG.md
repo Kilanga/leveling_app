@@ -17,6 +17,14 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.1] - 2026-03-27
+
+### Modifié
+- Affichage des cadres de profil autour du pseudo au classement avec 3 styles visuels (Standard bleu, Électrique violet luminescent, Légendaire or étincelant).
+- Application des thèmes de barre XP au dashboard: couleurs dynamiques selon le thème actif (Standard bleu, Samouraï rouge, Neon vert, Légendaire or).
+- Affichage des cartes de visite personnalisées au profil public des joueurs (texte custom + style visuel thématisé).
+- Helpers cosmétiques créés pour générer classes CSS optimisées.
+
 ## [1.15.0] - 2026-03-27
 
 ### Ajouté
