@@ -15,6 +15,11 @@ class FriendsController < ApplicationController
                                              .where("challenger_id = :id OR challenged_id = :id", id: current_user.id)
                                              .includes(:challenger, :challenged)
                                              .order(ends_at: :asc)
+    @invite_url = welcome_url(
+      ref: current_user.referral_code,
+      utm_source: "invite",
+      utm_campaign: "player_referral"
+    )
 
     if friend_ids.any?
       @most_completed_quests = UserQuest.joins(:quest, :user)

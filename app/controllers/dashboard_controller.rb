@@ -62,11 +62,6 @@ class DashboardController < ApplicationController
     @daily_chest_claimed_today = daily_chest_claimed_today?
     @daily_chest_reward_coins = DAILY_CHEST_REWARD_COINS
     @friends_activity = recent_friends_activity
-    @invite_url = welcome_url(
-      ref: current_user.referral_code,
-      utm_source: "invite",
-      utm_campaign: "player_referral"
-    )
 
     respond_to do |format|
       format.html

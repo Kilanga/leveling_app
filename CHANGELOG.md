@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.13.1] - 2026-03-27
+
+### Modifié
+- Parrainage: deplacement du module de partage depuis le dashboard vers l'onglet Amis pour centraliser les actions sociales.
+- Dashboard: retrait du bloc de parrainage pour garder une page centree progression.
+
 ## [1.13.0] - 2026-03-27
 
 ### Ajouté
