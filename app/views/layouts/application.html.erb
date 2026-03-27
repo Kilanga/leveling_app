@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leveling App</title>
+  <title><%= page_meta_title %></title>
+  <meta name="description" content="<%= page_meta_description %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= favicon_link_tag "logo-leveling.svg", type: "image/svg+xml" %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -15,7 +17,10 @@
   <div class="app-shell">
   <nav class="navbar navbar-expand-lg navbar-dark topbar-leveling">
     <div class="container py-1">
-      <a class="navbar-brand" href="<%= root_path %>">Le Systeme Leveling</a>
+      <a class="navbar-brand d-inline-flex align-items-center" href="<%= root_path %>">
+        <%= image_tag "logo-leveling.svg", width: 18, height: 18, alt: "Logo Leveling", class: "me-2" %>
+        <span>Leveling</span>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>

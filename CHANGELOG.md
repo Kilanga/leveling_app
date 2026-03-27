@@ -12,6 +12,13 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.7.6] - 2026-03-27
+
+### Modifié
+- Ajout des meta tags `title` et `description` par page avec fallback global pour ameliorer le SEO
+- Remplacement de l'intitule navigateur "Leveling App" par "Leveling"
+- Ajout d'un petit logo SVG utilise comme favicon et dans la barre de navigation
+
 ## [1.7.5] - 2026-03-27
 
 ### Corrigé
