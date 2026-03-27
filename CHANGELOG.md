@@ -17,6 +17,17 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.9] - 2026-03-27
+
+### Modifié
+- Cosmetiques: animations ajoutees sur les cadres de profil (standard, electrique, legendaire) pour renforcer la signature visuelle en boutique et en affichage joueur.
+- Cosmetiques: themes de barre XP animes (flux lumineux + pulsation selon le theme).
+- Cartes de visite: animations ajoutees sur Standard, Bleu Nuit, Incendie et Royale.
+- Carte Royale: ajout d'une couronne animee avec effet d'eclat.
+
+### Sécurité
+- Accessibilite motion: desactivation automatique des animations cosmétiques si la preference systeme `prefers-reduced-motion` est active.
+
 ## [1.15.8] - 2026-03-27
 
 ### Modifié

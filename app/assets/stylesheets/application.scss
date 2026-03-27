@@ -1188,6 +1188,8 @@ body::before {
 .profile-frame-container {
   display: inline-block;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .profile-frame-container a {
@@ -1213,6 +1215,7 @@ body::before {
   color: #87ceeb;
   font-weight: 600;
   letter-spacing: 0.03em;
+  animation: frameStandardPulse 3.2s ease-in-out infinite;
 }
 
 .profile-frame-standard a {
@@ -1230,6 +1233,7 @@ body::before {
   font-weight: 700;
   letter-spacing: 0.03em;
   text-shadow: 0 0 8px rgba(138, 75, 166, 0.3);
+  animation: frameElectricFlicker 2.2s ease-in-out infinite;
 }
 
 .profile-frame-electrique a {
@@ -1248,6 +1252,7 @@ body::before {
   font-weight: 800;
   letter-spacing: 0.04em;
   text-shadow: 0 0 10px rgba(212, 169, 71, 0.4);
+  animation: frameLegendaryGlow 2.8s ease-in-out infinite;
 }
 
 .profile-frame-legendaire a {
@@ -1264,21 +1269,29 @@ body::before {
 
 .xp-theme-standard .xp-fill {
   background: linear-gradient(90deg, #4da6d6, #35b5e6);
+  background-size: 180% 100%;
+  animation: xpFlowSoft 4.2s linear infinite;
 }
 
 .xp-theme-samourai .xp-fill {
   background: linear-gradient(90deg, #d64637, #ff6b47);
   box-shadow: 0 0 8px rgba(214, 70, 55, 0.4);
+  background-size: 180% 100%;
+  animation: xpFlowSoft 3.6s linear infinite, xpSamouraiBreath 1.8s ease-in-out infinite;
 }
 
 .xp-theme-neon .xp-fill {
   background: linear-gradient(90deg, #00d084, #00ff99);
   box-shadow: 0 0 12px rgba(0, 208, 132, 0.5);
+  background-size: 190% 100%;
+  animation: xpFlowSoft 3s linear infinite, xpNeonPulse 1.2s ease-in-out infinite;
 }
 
 .xp-theme-legendaire .xp-fill {
   background: linear-gradient(90deg, #d4a947, #ffd98d);
   box-shadow: 0 0 16px rgba(212, 169, 71, 0.5);
+  background-size: 200% 100%;
+  animation: xpFlowSoft 2.8s linear infinite, xpLegendarySpark 2.1s ease-in-out infinite;
 }
 
 /* ========== COSMETICS: Profile Cards ========== */
@@ -1326,6 +1339,7 @@ body::before {
   background: linear-gradient(145deg, rgba(10, 30, 46, 0.95), rgba(15, 36, 58, 0.95));
   border: 1px solid rgba(64, 137, 197, 0.35);
   border-color: #4089c5;
+  animation: cardLift 4s ease-in-out infinite;
 }
 
 .profile-card-standard::before {
@@ -1336,6 +1350,7 @@ body::before {
   background: linear-gradient(145deg, rgba(8, 25, 53, 0.96), rgba(12, 41, 84, 0.96));
   border: 1px solid rgba(72, 152, 212, 0.5);
   border-color: #4898d4;
+  animation: cardLift 4.3s ease-in-out infinite;
 }
 
 .profile-card-bleu-nuit .profile-card-text {
@@ -1350,6 +1365,7 @@ body::before {
   background: linear-gradient(145deg, rgba(66, 20, 10, 0.96), rgba(96, 28, 11, 0.96));
   border: 1px solid rgba(230, 100, 50, 0.5);
   border-color: #e66432;
+  animation: cardFlameFlicker 1.9s ease-in-out infinite;
 }
 
 .profile-card-incendie .profile-card-text {
@@ -1364,6 +1380,7 @@ body::before {
   background: linear-gradient(145deg, rgba(52, 24, 66, 0.96), rgba(74, 33, 94, 0.96));
   border: 1px solid rgba(200, 120, 200, 0.5);
   border-color: #d080d0;
+  animation: cardRoyalGlow 2.6s ease-in-out infinite;
 }
 
 .profile-card-royale .profile-card-text {
@@ -1372,6 +1389,37 @@ body::before {
 
 .profile-card-royale::before {
   background: rgba(200, 120, 200, 0.3);
+}
+
+.profile-card-royale .profile-card-header {
+  position: relative;
+  padding-right: 1.6rem;
+}
+
+.profile-card-royale .profile-card-header::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: 2px;
+  width: 14px;
+  height: 10px;
+  background: linear-gradient(180deg, #ffe8a3, #d3a94e);
+  clip-path: polygon(0 100%, 10% 45%, 26% 72%, 45% 18%, 64% 72%, 82% 38%, 100% 100%);
+  filter: drop-shadow(0 0 6px rgba(255, 215, 130, 0.6));
+  transform-origin: 50% 80%;
+  animation: crownHover 1.8s ease-in-out infinite;
+}
+
+.profile-card-royale .profile-card-header::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 240, 180, 0.95) 0%, rgba(255, 240, 180, 0) 75%);
+  animation: crownSpark 2.1s ease-in-out infinite;
 }
 
 .profile-card-header {
@@ -1391,6 +1439,150 @@ body::before {
   word-break: break-word;
   font-size: 0.93rem;
   line-height: 1.45;
+}
+
+@keyframes frameStandardPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(64, 137, 197, 0.25), inset 0 0 6px rgba(64, 137, 197, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(64, 137, 197, 0.35), inset 0 0 8px rgba(64, 137, 197, 0.18);
+  }
+}
+
+@keyframes frameElectricFlicker {
+  0%,
+  100% {
+    box-shadow: 0 0 16px rgba(138, 75, 166, 0.35), inset 0 0 8px rgba(138, 75, 166, 0.15), 0 0 20px rgba(138, 75, 166, 0.2);
+  }
+  45% {
+    box-shadow: 0 0 22px rgba(168, 101, 207, 0.46), inset 0 0 10px rgba(168, 101, 207, 0.26), 0 0 26px rgba(168, 101, 207, 0.28);
+  }
+  48% {
+    box-shadow: 0 0 12px rgba(138, 75, 166, 0.28), inset 0 0 6px rgba(138, 75, 166, 0.1), 0 0 14px rgba(138, 75, 166, 0.16);
+  }
+}
+
+@keyframes frameLegendaryGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(212, 169, 71, 0.4), inset 0 0 10px rgba(212, 169, 71, 0.2), 0 0 30px rgba(212, 169, 71, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(241, 198, 101, 0.56), inset 0 0 14px rgba(241, 198, 101, 0.3), 0 0 38px rgba(241, 198, 101, 0.34);
+  }
+}
+
+@keyframes xpFlowSoft {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes xpSamouraiBreath {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(214, 70, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 13px rgba(255, 107, 71, 0.56);
+  }
+}
+
+@keyframes xpNeonPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(0, 208, 132, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(0, 255, 153, 0.68);
+  }
+}
+
+@keyframes xpLegendarySpark {
+  0%,
+  100% {
+    box-shadow: 0 0 16px rgba(212, 169, 71, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 217, 141, 0.7);
+  }
+}
+
+@keyframes cardLift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes cardFlameFlicker {
+  0%,
+  100% {
+    box-shadow: 0 12px 26px rgba(4, 16, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 8px rgba(230, 100, 50, 0.18);
+  }
+  50% {
+    box-shadow: 0 12px 26px rgba(4, 16, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 14px rgba(255, 145, 83, 0.32);
+  }
+}
+
+@keyframes cardRoyalGlow {
+  0%,
+  100% {
+    box-shadow: 0 12px 26px rgba(4, 16, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 10px rgba(208, 128, 208, 0.22);
+  }
+  50% {
+    box-shadow: 0 12px 26px rgba(4, 16, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 18px rgba(238, 186, 246, 0.4);
+  }
+}
+
+@keyframes crownHover {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translateY(-1px) scale(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes crownSpark {
+  0%,
+  100% {
+    transform: scale(0.7);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-frame-standard,
+  .profile-frame-electrique,
+  .profile-frame-legendaire,
+  .xp-theme-standard .xp-fill,
+  .xp-theme-samourai .xp-fill,
+  .xp-theme-neon .xp-fill,
+  .xp-theme-legendaire .xp-fill,
+  .profile-card-standard,
+  .profile-card-bleu-nuit,
+  .profile-card-incendie,
+  .profile-card-royale,
+  .profile-card-royale .profile-card-header::after,
+  .profile-card-royale .profile-card-header::before {
+    animation: none !important;
+  }
 }
 
 /* Shop Cosmetic Preview Styles */
