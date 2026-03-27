@@ -17,6 +17,16 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.14.0] - 2026-03-27
+
+### Ajouté
+- Parrainage: systeme de recompense double actif apres la premiere quete validee du filleul (+50 coins filleul, +100 coins parrain), avec attribution unique et anti auto-parrainage.
+- Inscription: champ de code parrainage (`referral_code_input`) pour rattacher un nouvel utilisateur a un parrain des la creation du compte.
+
+### Modifié
+- Onglet Amis: texte de parrainage enrichi pour afficher clairement les gains de chaque role.
+- Completion de quete: message de succes enrichi quand une recompense parrainage est debloquee.
+
 ## [1.13.1] - 2026-03-27
 
 ### Modifié

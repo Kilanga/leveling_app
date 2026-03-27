@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_124000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_173000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -239,6 +239,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_124000) do
     t.string "provider"
     t.string "pseudo"
     t.datetime "pseudo_last_changed_at"
+    t.datetime "referral_rewarded_at"
+    t.bigint "referred_by_id"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
@@ -255,6 +257,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_124000) do
     t.index ["league_tier", "league_room"], name: "index_users_on_league_tier_and_league_room"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["pseudo"], name: "index_users_on_pseudo", unique: true
+    t.index ["referred_by_id"], name: "index_users_on_referred_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -292,5 +295,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_124000) do
   add_foreign_key "user_weekly_quests", "users"
   add_foreign_key "user_weekly_quests", "weekly_quests"
   add_foreign_key "users", "shop_items", column: "active_avatar_item_id"
+  add_foreign_key "users", "users", column: "referred_by_id"
   add_foreign_key "weekly_quests", "categories"
 end

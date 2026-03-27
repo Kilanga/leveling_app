@@ -31,9 +31,15 @@ class User < ApplicationRecord
   has_many :experiment_assignments, dependent: :destroy
   has_many :friend_challenges_as_challenger, class_name: "FriendChallenge", foreign_key: :challenger_id, dependent: :destroy
   has_many :friend_challenges_as_challenged, class_name: "FriendChallenge", foreign_key: :challenged_id, dependent: :destroy
+  has_many :referred_users, class_name: "User", foreign_key: :referred_by_id, dependent: :nullify
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true
+  belongs_to :referred_by, class_name: "User", optional: true
+
+  attr_accessor :referral_code_input
+
+  before_validation :assign_referred_by_from_code, on: :create
 
   validates :pseudo, presence: true, uniqueness: true, length: { minimum: 3, maximum: 22 }
   validates :email, presence: true, uniqueness: true
@@ -129,6 +135,24 @@ class User < ApplicationRecord
 
     "LVL#{id.to_s(36).upcase.rjust(4, '0')}"
   end
+
+  private
+
+  def assign_referred_by_from_code
+    return if referred_by_id.present?
+
+    code = referral_code_input.to_s.strip.upcase
+    return if code.blank?
+    return unless code.start_with?("LVL")
+
+    referrer_id = code.delete_prefix("LVL").to_i(36)
+    referrer = self.class.find_by(id: referrer_id)
+    return if referrer.blank?
+
+    self.referred_by = referrer
+  end
+
+  public
 
   def claim_daily_login_bonus!
     required_columns = %w[daily_login_streak_count daily_login_last_claimed_on]

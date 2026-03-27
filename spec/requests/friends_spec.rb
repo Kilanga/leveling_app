@@ -55,4 +55,43 @@ RSpec.describe "Friends", type: :request do
       expect(response).to redirect_to(new_user_session_path)
     end
   end
+
+  describe "referral rewards" do
+    let(:category) { Category.create!(name: "Referral") }
+
+    it "assigns referrer from referral code on sign up" do
+      inviter = create_user(20)
+
+      post user_registration_path, params: {
+        user: {
+          email: "new_ref_user@example.com",
+          pseudo: "NewRefUser",
+          password: "password123",
+          password_confirmation: "password123",
+          avatar: avatar_url,
+          referral_code_input: inviter.referral_code
+        }
+      }
+
+      created = User.find_by(email: "new_ref_user@example.com")
+      expect(created).to be_present
+      expect(created.referred_by_id).to eq(inviter.id)
+    end
+
+    it "grants referral rewards on first completed quest" do
+      inviter = create_user(21)
+      invitee = create_user(22)
+      invitee.update!(referred_by: inviter)
+
+      quest = Quest.create!(title: "Referral quest", description: "q", xp: 50, category: category)
+      user_quest = UserQuest.create!(user: invitee, quest: quest, active: true, completed: false, progress: 0, completed_count: 0)
+
+      sign_in invitee
+      patch user_quest_path(user_quest), params: { action_type: "complete" }
+
+      expect(invitee.reload.coins).to eq(ReferralRewarder::INVITEE_REWARD_COINS)
+      expect(inviter.reload.coins).to eq(ReferralRewarder::INVITER_REWARD_COINS)
+      expect(invitee.referral_rewarded_at).to be_present
+    end
+  end
 end

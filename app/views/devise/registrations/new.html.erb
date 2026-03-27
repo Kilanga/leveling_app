@@ -34,6 +34,11 @@
               </div>
 
               <div class="mb-4">
+                <%= f.label :referral_code_input, "Code parrainage (optionnel)", class: "form-label" %>
+                <%= f.text_field :referral_code_input, class: "form-control", value: params[:ref], placeholder: "LVL1234" %>
+              </div>
+
+              <div class="mb-4">
                 <label class="form-label d-block">Choisir votre avatar</label>
                 <div class="row g-3">
                   <div class="col-6">
