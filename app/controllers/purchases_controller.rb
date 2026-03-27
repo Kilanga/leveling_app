@@ -239,17 +239,7 @@ class PurchasesController < ApplicationController
   def personalized_item_description(item)
     base = item.description.to_s.strip
     base = "Objet cosmétique exclusif pour renforcer ton identité en jeu." if base.blank?
-
-    rarity_line = case item.rarity
-    when "legendary"
-      "Piece de prestige pour marquer ton statut de veteran."
-    when "epic"
-      "Look premium pour les joueurs qui accelerent fort."
-    else
-      "Bonus de style ideal pour progresser avec classe."
-    end
-
-    "#{base} #{rarity_line} Oriente vers #{@focus_category_name.downcase}."
+    base
   end
 
   def coin_pack_description(coins)

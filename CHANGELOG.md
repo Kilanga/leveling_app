@@ -12,6 +12,12 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.7.5] - 2026-03-27
+
+### Corrigé
+- Boutique: suppression de la phrase suffixe commune ajoutee automatiquement aux descriptions, pour conserver le texte specifique de chaque titre
+- Titres vendus: descriptions raccourcies en une seule phrase, differente pour chaque titre
+
 ## [1.7.4] - 2026-03-27
 
 ### Corrigé

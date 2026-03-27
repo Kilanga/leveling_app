@@ -59,63 +59,63 @@ titles = [
     item_type: "title",
     rarity: "rare",
     price_coins: 150,
-    description: "Connu dans ta zone: tu rends service, tu tiens tes objectifs, et ca se voit."
+    description: "Connu de tous, tu fais le travail proprement."
   },
   {
     name: "Sentinelle d'Aube",
     item_type: "title",
     rarity: "rare",
     price_coins: 220,
-    description: "Tu demarres tot, tu prends de l'avance, et tu lances la journee avec discipline."
+    description: "Toujours premier connecte, toujours deja en action."
   },
   {
     name: "Briseur d'Inertie",
     item_type: "title",
     rarity: "rare",
     price_coins: 280,
-    description: "Tu passes a l'action vite, meme sur les taches que tout le monde repousse."
+    description: "Tu lances les taches difficiles sans attendre."
   },
   {
     name: "Champion Réputé",
     item_type: "title",
     rarity: "epic",
     price_coins: 600,
-    description: "Resultats solides et reguliers: ton niveau est reconnu par les autres joueurs."
+    description: "Ton niveau est reconnu par tout le serveur."
   },
   {
     name: "Architecte du Tempo",
     item_type: "title",
     rarity: "epic",
     price_coins: 720,
-    description: "Tu sais doser effort, recuperation et constance pour garder un rythme durable."
+    description: "Tu gardes un rythme fort sans t'effondrer."
   },
   {
     name: "Maitrise Fractale",
     item_type: "title",
     rarity: "epic",
     price_coins: 880,
-    description: "Tu optimises les details: chaque habitude bien tenue renforce ta progression."
+    description: "Chaque petit gain chez toi compte double."
   },
   {
     name: "Légende Vivante",
     item_type: "title",
     rarity: "legendary",
     price_coins: 1200,
-    description: "Ton profil est une reference: performance elevee, constance et gros volume accompli."
+    description: "Ton profil est devenu une reference du classement."
   },
   {
     name: "Souverain des Paliers",
     item_type: "title",
     rarity: "legendary",
     price_coins: 1450,
-    description: "Tu franchis les caps un par un jusqu'aux paliers que peu de joueurs atteignent."
+    description: "Tu valides les paliers que les autres visent encore."
   },
   {
     name: "Etoile de la Derniere Quete",
     item_type: "title",
     rarity: "legendary",
     price_coins: 1650,
-    description: "Tu restes performant jusqu'au bout et tu termines fort quand la fatigue arrive."
+    description: "Tu finis fort, meme quand tout le monde ralentit."
   }
 ]
 
