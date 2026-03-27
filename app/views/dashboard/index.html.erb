@@ -188,7 +188,7 @@
             <strong><%= stat.category.name %> - Niveau <%= stat.level %></strong>
             <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
           </div>
-          <div class="xp-track">
+          <div class="xp-track <%= xp_theme_classes(current_user.active_xp_theme) %>">
             <div class="xp-fill" style="width: <%= percent %>%"></div>
           </div>
         </div>

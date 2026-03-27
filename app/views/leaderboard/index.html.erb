@@ -36,7 +36,9 @@
                     <%= user_avatar_image(entry[:user], width: 44, height: 44, css_class: "rounded-circle", alt: "Avatar de #{entry[:user].pseudo}") %>
                   </td>
                   <td>
-                    <%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-primary text-decoration-none fw-bold" %>
+                    <span class="profile-frame-container <%= frame_wrapper_classes(entry[:user].active_profile_frame) %>">
+                      <%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-decoration-none" %>
+                    </span>
                     <% if entry[:user].active_title %>
                       <span class="badge bg-<%= entry[:user].title_rarity_class %>"><%= entry[:user].active_title.name %></span>
                     <% end %>

@@ -1155,4 +1155,201 @@ body::before {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* ========== COSMETICS: Profile Frames ========== */
+.profile-frame-container {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.profile-frame-container a {
+  text-decoration: none;
+  font-weight: 600;
+  color: inherit;
+}
+
+.profile-frame-none {
+  color: #d7f2ff;
+}
+
+.profile-frame-none a {
+  color: #56cafe;
+}
+
+.profile-frame-standard {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #4089c5;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(10, 40, 65, 0.6), rgba(15, 50, 80, 0.6));
+  box-shadow: 0 0 12px rgba(64, 137, 197, 0.25), inset 0 0 6px rgba(64, 137, 197, 0.1);
+  color: #87ceeb;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.profile-frame-standard a {
+  color: #87ceeb;
+}
+
+.profile-frame-electrique {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #8a4ba6;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(50, 20, 70, 0.7), rgba(65, 25, 90, 0.7));
+  box-shadow: 0 0 16px rgba(138, 75, 166, 0.35), inset 0 0 8px rgba(138, 75, 166, 0.15),
+              0 0 20px rgba(138, 75, 166, 0.2);
+  color: #d4a5e8;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 8px rgba(138, 75, 166, 0.3);
+}
+
+.profile-frame-electrique a {
+  color: #d4a5e8;
+  text-shadow: 0 0 8px rgba(138, 75, 166, 0.3);
+}
+
+.profile-frame-legendaire {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #d4a947;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(80, 60, 20, 0.8), rgba(100, 75, 25, 0.8));
+  box-shadow: 0 0 20px rgba(212, 169, 71, 0.4), inset 0 0 10px rgba(212, 169, 71, 0.2),
+              0 0 30px rgba(212, 169, 71, 0.25);
+  color: #ffd98d;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 10px rgba(212, 169, 71, 0.4);
+}
+
+.profile-frame-legendaire a {
+  color: #ffd98d;
+  text-shadow: 0 0 10px rgba(212, 169, 71, 0.4);
+}
+
+/* ========== COSMETICS: XP Bar Themes ========== */
+.xp-fill {
+  background: linear-gradient(90deg, #4da6d6, #35b5e6);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.xp-theme-standard .xp-fill {
+  background: linear-gradient(90deg, #4da6d6, #35b5e6);
+}
+
+.xp-theme-samourai .xp-fill {
+  background: linear-gradient(90deg, #d64637, #ff6b47);
+  box-shadow: 0 0 8px rgba(214, 70, 55, 0.4);
+}
+
+.xp-theme-neon .xp-fill {
+  background: linear-gradient(90deg, #00d084, #00ff99);
+  box-shadow: 0 0 12px rgba(0, 208, 132, 0.5);
+}
+
+.xp-theme-legendaire .xp-fill {
+  background: linear-gradient(90deg, #d4a947, #ffd98d);
+  box-shadow: 0 0 16px rgba(212, 169, 71, 0.5);
+}
+
+/* ========== COSMETICS: Profile Cards ========== */
+.profile-card-container {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid rgba(62, 113, 151, 0.4);
+  color: #d7f2ff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-card-none {
+  background: linear-gradient(135deg, rgba(10, 22, 33, 0.95), rgba(15, 27, 40, 0.95));
+  border-color: rgba(62, 113, 151, 0.3);
+}
+
+.profile-card-standard {
+  background: linear-gradient(135deg, rgba(13, 27, 38, 0.95), rgba(18, 36, 54, 0.95));
+  border: 1px solid rgba(64, 137, 197, 0.35);
+  border-color: #4089c5;
+}
+
+.profile-card-standard::before {
+  background: rgba(64, 137, 197, 0.3);
+}
+
+.profile-card-bleu-nuit {
+  background: linear-gradient(135deg, rgba(10, 30, 55, 0.95), rgba(15, 40, 70, 0.95));
+  border: 1px solid rgba(72, 152, 212, 0.5);
+  border-color: #4898d4;
+}
+
+.profile-card-bleu-nuit .profile-card-text {
+  color: #a8d5f7;
+}
+
+.profile-card-bleu-nuit::before {
+  background: rgba(72, 152, 212, 0.4);
+}
+
+.profile-card-incendie {
+  background: linear-gradient(135deg, rgba(60, 20, 10, 0.95), rgba(75, 25, 12, 0.95));
+  border: 1px solid rgba(230, 100, 50, 0.5);
+  border-color: #e66432;
+}
+
+.profile-card-incendie .profile-card-text {
+  color: #ffb380;
+}
+
+.profile-card-incendie::before {
+  background: rgba(230, 100, 50, 0.35);
+}
+
+.profile-card-royale {
+  background: linear-gradient(135deg, rgba(50, 25, 60, 0.95), rgba(65, 35, 80, 0.95));
+  border: 1px solid rgba(200, 120, 200, 0.5);
+  border-color: #d080d0;
+}
+
+.profile-card-royale .profile-card-text {
+  color: #e8c0e8;
+}
+
+.profile-card-royale::before {
+  background: rgba(200, 120, 200, 0.3);
+}
+
+.profile-card-header {
+  opacity: 0.8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.profile-card-text {
+  color: #b8d9f0;
+  font-style: italic;
+  flex: 1;
+  word-break: break-word;
+}
   

@@ -5,6 +5,14 @@
     <section class="hud-section text-center mb-4">
       <%= user_avatar_image(@player, width: 150, height: 150, css_class: "rounded-circle", alt: "Avatar de #{@player.pseudo}") %>
 
+      <!-- Profile Card (Carte de visite) -->
+      <% if @player.active_profile_card.present? %>
+        <div class="profile-card-container <%= profile_card_classes(@player.active_profile_card) %>">
+          <div class="profile-card-header">Carte de visite</div>
+          <div class="profile-card-text"><%= profile_card_text(@player) %></div>
+        </div>
+      <% end %>
+
       <% unless @player == current_user %>
         <div class="mt-3">
           <% if @friendship_with_current.nil? %>
