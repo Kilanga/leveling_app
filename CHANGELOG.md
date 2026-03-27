@@ -17,6 +17,14 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.8] - 2026-03-27
+
+### Modifié
+- Classement ligue: affichage d'un compteur "Prochain reset ligue" calcule au chargement de la page (sans rafraichissement temps reel).
+
+### Corrigé
+- Reglement ligue: promotions/relegations executees uniquement a partir du dimanche 19h (heure serveur), puis une fois par cycle hebdomadaire.
+
 ## [1.15.7] - 2026-03-27
 
 ### Corrigé

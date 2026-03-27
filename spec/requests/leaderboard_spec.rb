@@ -57,6 +57,7 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).to include(users[11].pseudo)
       expect(response.body).to include(current.pseudo)
       expect(response.body).not_to include("room")
+      expect(response.body).to include("Prochain reset ligue")
     end
 
     it "renders hold-only indicators for partial cohorts and no filter form" do
@@ -82,6 +83,7 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).to include("•")
       expect(response.body).not_to include("▲")
       expect(response.body).not_to include("▼")
+      expect(response.body).to include("Prochain reset ligue")
       expect(response.body).not_to include("Filtrer")
       expect(response.body).not_to include("room")
     end

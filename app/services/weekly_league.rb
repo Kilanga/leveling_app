@@ -2,6 +2,8 @@ class WeeklyLeague
   TIERS = ["Bronze", "Silver", "Gold", "Platinum", "Diamond"].freeze
   PROMOTION_RATE = 0.2
   ROOM_CAPACITY = 50
+  SETTLEMENT_DAY_OFFSET = 6
+  SETTLEMENT_HOUR = 19
 
   class << self
     def standings(users, range: Time.current.all_week)
@@ -24,12 +26,12 @@ class WeeklyLeague
 
       assign_rooms_if_needed!
 
-      current_week_start = reference_time.to_date.beginning_of_week
-      stale_scope = User.where("league_last_settled_week IS NULL OR league_last_settled_week < ?", current_week_start)
+      current_settlement_date = last_settlement_at(reference_time: reference_time).to_date
+      stale_scope = User.where("league_last_settled_week IS NULL OR league_last_settled_week < ?", current_settlement_date)
       return unless stale_scope.exists?
 
-      previous_week_start = current_week_start - 1.week
-      previous_week_range = previous_week_start.beginning_of_day..(current_week_start.beginning_of_day - 1.second)
+      previous_settlement_time = last_settlement_at(reference_time: reference_time) - 1.week
+      previous_week_range = previous_settlement_time..(last_settlement_at(reference_time: reference_time) - 1.second)
 
       promotions = []
       relegations = []
@@ -48,13 +50,13 @@ class WeeklyLeague
       end
 
       ActiveRecord::Base.transaction do
-        User.update_all(league_last_settled_week: current_week_start, league_last_move: 0)
+        User.update_all(league_last_settled_week: current_settlement_date, league_last_move: 0)
 
         promotions.each do |user|
           user.update_columns(
             league_tier: [user[:league_tier].to_i + 1, TIERS.size].min,
             league_last_move: 1,
-            league_last_settled_week: current_week_start
+            league_last_settled_week: current_settlement_date
           )
         end
 
@@ -62,7 +64,7 @@ class WeeklyLeague
           user.update_columns(
             league_tier: [user[:league_tier].to_i - 1, 1].max,
             league_last_move: -1,
-            league_last_settled_week: current_week_start
+            league_last_settled_week: current_settlement_date
           )
         end
 
@@ -95,6 +97,17 @@ class WeeklyLeague
 
     def weekly_xp(user, range: Time.current.all_week)
       user.user_quests.where(completed: true, updated_at: range).joins(:quest).sum("quests.xp")
+    end
+
+    def next_settlement_at(reference_time: Time.current)
+      candidate = settlement_time_for_week(reference_time)
+      return candidate if reference_time < candidate
+
+      candidate + 1.week
+    end
+
+    def last_settlement_at(reference_time: Time.current)
+      next_settlement_at(reference_time: reference_time) - 1.week
     end
 
     private
@@ -130,6 +143,19 @@ class WeeklyLeague
         columns = User.column_names
         columns.include?("league_tier") && columns.include?("league_last_settled_week") && columns.include?("league_last_move") && columns.include?("league_room")
       end
+    end
+
+    def settlement_time_for_week(reference_time)
+      week_start = reference_time.to_date.beginning_of_week(:monday)
+      settlement_date = week_start + SETTLEMENT_DAY_OFFSET.days
+      Time.zone.local(
+        settlement_date.year,
+        settlement_date.month,
+        settlement_date.day,
+        SETTLEMENT_HOUR,
+        0,
+        0
+      )
     end
 
     def rebalance_rooms_for_tier!(tier)

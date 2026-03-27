@@ -4,7 +4,8 @@
   <div class="card-body">
     <section class="hud-section">
       <p class="quest-meta mb-1">Ligue actuelle: <strong><%= @current_league_name %></strong></p>
-      <p class="quest-meta mb-3">Classement complet de ta ligue. Tu peux scroller pour voir toute la liste.</p>
+      <p class="quest-meta mb-1">Prochain reset ligue: <strong><%= l(@next_league_settlement_at, format: :long) %></strong></p>
+      <p class="quest-meta mb-3">Dans <strong><%= @league_settlement_countdown %></strong>. Classement complet de ta ligue, avec mise a jour au chargement de la page.</p>
 
       <h2 class="section-title">Classement ligue hebdomadaire</h2>
       <div class="table-responsive league-table-scroll">

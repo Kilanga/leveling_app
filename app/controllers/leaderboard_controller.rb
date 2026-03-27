@@ -13,6 +13,8 @@ class LeaderboardController < ApplicationController
     @league_standings = full_standings
     @my_league_entry = full_standings.find { |entry| entry[:user].id == current_user.id }
     @current_league_name = current_user.league_tier_name
+    @next_league_settlement_at = WeeklyLeague.next_settlement_at
+    @league_settlement_countdown = format_countdown(@next_league_settlement_at)
   end
 
   def show
@@ -52,5 +54,16 @@ class LeaderboardController < ApplicationController
               .preload(:quest)
 
     @recent_quests = @player.user_quests.where(completed: true).includes(:quest).order(updated_at: :desc).limit(3)
+  end
+
+  private
+
+  def format_countdown(target_time)
+    remaining_seconds = [(target_time - Time.current).to_i, 0].max
+    days = remaining_seconds / 86_400
+    hours = (remaining_seconds % 86_400) / 3_600
+    minutes = (remaining_seconds % 3_600) / 60
+
+    "#{days}j #{hours}h #{minutes}m"
   end
 end
