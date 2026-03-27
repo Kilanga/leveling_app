@@ -3,30 +3,30 @@ class TitleUnlocker
     {
       name: "Eclaireur",
       rarity: "common",
-      objective: "Completer 3 quetes au total.",
+      objective: "Completer 5 quetes au total.",
       description: "Tu as fait tes premiers pas d'aventurier.",
-      condition: ->(stats) { stats[:completed_quests] >= 3 }
+      condition: ->(stats) { stats[:completed_quests] >= 5 }
     },
     {
       name: "Regulier",
       rarity: "common",
-      objective: "Completer 10 quetes au total.",
+      objective: "Completer 20 quetes au total et 2 quetes hebdomadaires en 7 jours.",
       description: "Ta constance commence a se voir.",
-      condition: ->(stats) { stats[:completed_quests] >= 10 }
+      condition: ->(stats) { stats[:completed_quests] >= 20 && stats[:weekly_completed_7d] >= 2 }
     },
     {
       name: "Polyvalent",
       rarity: "common",
-      objective: "Atteindre 500 XP dans 2 categories differentes.",
+      objective: "Atteindre 500 XP dans 3 categories differentes.",
       description: "Tu progresses sur plusieurs fronts.",
-      condition: ->(stats) { stats[:categories_with_500_xp] >= 2 }
+      condition: ->(stats) { stats[:categories_with_500_xp] >= 3 }
     },
     {
       name: "Cadence Hebdo",
       rarity: "common",
-      objective: "Completer 3 quetes hebdomadaires en 7 jours.",
+      objective: "Completer 4 quetes hebdomadaires en 7 jours et 25 quetes au total.",
       description: "Ton rythme hebdomadaire est solide.",
-      condition: ->(stats) { stats[:weekly_completed_7d] >= 3 }
+      condition: ->(stats) { stats[:weekly_completed_7d] >= 4 && stats[:completed_quests] >= 25 }
     },
     {
       name: "Stratege Patient",

@@ -12,6 +12,11 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.9.2] - 2026-03-27
+
+### Modifié
+- Reequilibrage des titres communs debloquables pour mieux coller au nouveau rythme de progression (objectifs plus progressifs et moins immediats)
+
 ## [1.9.1] - 2026-03-27
 
 ### Modifié
