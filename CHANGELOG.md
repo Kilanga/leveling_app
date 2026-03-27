@@ -17,6 +17,23 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.12.0] - 2026-03-27
+
+### Ajouté
+- Systeme de ligues etendu a 5 tiers: Bronze, Silver, Gold, Platinum et Diamond.
+- Mecanique hebdomadaire de promotion/relegation entre ligues selon la performance relative dans chaque tier.
+- Distribution automatique des joueurs en cohortes techniques de 50 par ligue (rooms backend invisibles pour le joueur).
+
+### Modifié
+- Classement ligue: affichage du classement complet de la cohorte de ligue du joueur, avec zone scrollable (environ 20 lignes visibles).
+- UX ligue: le concept de room reste strictement interne et n'apparait pas dans l'interface.
+
+## [1.11.8] - 2026-03-27
+
+### Modifié
+- Onglet Classement: suppression du tableau de ranking XP global pour passer sur une lecture ligue-first.
+- Onglet Classement: conservation du Top 10 avec affichage centre sur la ligue hebdomadaire (rang, joueur, XP semaine, tier).
+
 ## [1.11.7] - 2026-03-27
 
 ### Corrigé

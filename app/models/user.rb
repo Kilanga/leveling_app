@@ -118,6 +118,12 @@ class User < ApplicationRecord
     FriendChallenge.active.where("challenger_id = :id OR challenged_id = :id", id: id)
   end
 
+  def league_tier_name
+    return WeeklyLeague::TIERS.first unless self.class.column_names.include?("league_tier")
+
+    WeeklyLeague.tier_name(self[:league_tier])
+  end
+
   def claim_daily_login_bonus!
     required_columns = %w[daily_login_streak_count daily_login_last_claimed_on]
     return { claimed: false, streak: 0, reward: 0 } unless required_columns.all? { |name| self.class.column_names.include?(name) }

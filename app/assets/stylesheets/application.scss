@@ -907,6 +907,11 @@ body::before {
   -webkit-overflow-scrolling: touch;
 }
 
+.league-table-scroll {
+  max-height: 1140px;
+  overflow-y: auto;
+}
+
 .surface-list {
   border: 1px solid var(--line);
   border-radius: 14px;

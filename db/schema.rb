@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_113000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_124000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -229,6 +229,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_113000) do
     t.integer "daily_login_streak_count", default: 0, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "league_last_move", default: 0, null: false
+    t.date "league_last_settled_week"
+    t.integer "league_room", default: 1, null: false
+    t.integer "league_tier", default: 1, null: false
     t.datetime "onboarding_completed_at"
     t.text "onboarding_focus", default: "", null: false
     t.boolean "profile_completed", default: true, null: false
@@ -248,6 +252,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_113000) do
     t.index ["active_avatar_item_id"], name: "index_users_on_active_avatar_item_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["league_tier", "league_room"], name: "index_users_on_league_tier_and_league_room"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["pseudo"], name: "index_users_on_pseudo", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

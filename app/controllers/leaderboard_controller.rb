@@ -1,26 +1,35 @@
 class LeaderboardController < ApplicationController
   before_action :authenticate_user!
 
-  TOP_PLAYERS_LIMIT = 10
-
   def index
+    WeeklyLeague.ensure_user_league_slot!(current_user)
+    WeeklyLeague.settle_leagues_if_needed!
+
     if params[:category_id].present? && !params[:category_id].empty?
-      @players = User.joins(:user_stats)
-                     .where(user_stats: { category_id: params[:category_id] })
-                     .group("users.id")
-                     .select("users.*, MAX(user_stats.total_xp) AS total_xp_sum")
-                     .order("total_xp_sum DESC")
-                     .limit(TOP_PLAYERS_LIMIT)
+      users_scope = User.joins(:user_stats)
+                        .where(user_stats: { category_id: params[:category_id] })
+                        .group("users.id")
+                        .select("users.*, MAX(user_stats.total_xp) AS total_xp_sum")
+                        .order("total_xp_sum DESC")
     else
-      @players = User.joins(:user_stats)
-                     .group("users.id")
-                     .select("users.*, COALESCE(SUM(user_stats.total_xp), 0) as total_xp_sum")
-                     .order("total_xp_sum DESC")
-                     .limit(TOP_PLAYERS_LIMIT)
+      users_scope = User.joins(:user_stats)
+                        .group("users.id")
+                        .select("users.*, COALESCE(SUM(user_stats.total_xp), 0) as total_xp_sum")
+                        .order("total_xp_sum DESC")
     end
 
-    @league_standings = WeeklyLeague.standings(@players.to_a).first(TOP_PLAYERS_LIMIT)
-    @league_by_user_id = @league_standings.index_by { |entry| entry[:user].id }
+    league_users_scope = users_scope
+    if User.column_names.include?("league_tier")
+      league_users_scope = league_users_scope.where(league_tier: current_user[:league_tier].to_i.nonzero? || 1)
+    end
+    if User.column_names.include?("league_room")
+      league_users_scope = league_users_scope.where(league_room: current_user[:league_room].to_i.nonzero? || 1)
+    end
+
+    full_standings = WeeklyLeague.standings(league_users_scope.to_a)
+    @league_standings = full_standings
+    @my_league_entry = full_standings.find { |entry| entry[:user].id == current_user.id }
+    @current_league_name = current_user.league_tier_name
   end
 
   def show

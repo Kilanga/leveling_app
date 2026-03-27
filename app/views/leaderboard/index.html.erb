@@ -1,4 +1,4 @@
-<h1 class="page-title">Classement des joueurs</h1>
+<h1 class="page-title">Classement ligue hebdomadaire</h1>
 
 <div class="surface-card surface-card--shell">
   <div class="card-body">
@@ -14,56 +14,16 @@
         </div>
       <% end %>
 
-      <p class="quest-meta mb-3">Affichage limite aux 10 premiers joueurs pour le filtre selectionne.</p>
+      <p class="quest-meta mb-1">Ligue actuelle: <strong><%= @current_league_name %></strong></p>
+      <p class="quest-meta mb-3">Classement complet de ta ligue pour le filtre selectionne. Tu peux scroller pour voir toute la liste.</p>
 
-      <div class="table-responsive">
+      <h2 class="section-title">Classement ligue hebdomadaire (filtre actif)</h2>
+      <div class="table-responsive league-table-scroll">
         <table class="table">
           <thead>
             <tr>
               <th>Rang</th>
               <th>Avatar</th>
-              <th>Pseudo</th>
-              <th>XP Total</th>
-              <th>Ligue hebdo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @players.any? %>
-              <% @players.each_with_index do |player, index| %>
-                <tr>
-                  <td>#<%= index + 1 %></td>
-                  <td>
-                    <%= user_avatar_image(player, width: 50, height: 50, css_class: "rounded-circle", alt: "Avatar de #{player.pseudo}") %>
-                  </td>
-                  <td>
-                    <%= link_to player.pseudo, leaderboard_path(player), class: "text-primary text-decoration-none fw-bold" %>
-                    <% if player.active_title %>
-                      <span class="badge bg-<%= player.title_rarity_class %>"><%= player.active_title.name %></span>
-                    <% end %>
-                  </td>
-                  <td><%= player.total_xp_sum.to_i %></td>
-                  <td><%= @league_by_user_id.dig(player.id, :tier) || "Bronze" %></td>
-                </tr>
-              <% end %>
-            <% else %>
-              <tr>
-                <td colspan="5" class="text-center">Aucun joueur trouve.</td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <hr class="hud-divider">
-
-    <section class="hud-section">
-      <h2 class="section-title">Top ligue hebdomadaire (filtre actif)</h2>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Rang</th>
               <th>Joueur</th>
               <th>XP semaine</th>
               <th>Ligue</th>
@@ -72,16 +32,27 @@
           <tbody>
             <% if @league_standings.any? %>
               <% @league_standings.each do |entry| %>
-                <tr>
+                <tr class="<%= 'table-active' if entry[:user].id == current_user.id %>">
                   <td>#<%= entry[:rank] %></td>
-                  <td><%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-primary text-decoration-none fw-bold" %></td>
+                  <td>
+                    <%= user_avatar_image(entry[:user], width: 44, height: 44, css_class: "rounded-circle", alt: "Avatar de #{entry[:user].pseudo}") %>
+                  </td>
+                  <td>
+                    <%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-primary text-decoration-none fw-bold" %>
+                    <% if entry[:user].active_title %>
+                      <span class="badge bg-<%= entry[:user].title_rarity_class %>"><%= entry[:user].active_title.name %></span>
+                    <% end %>
+                    <% if entry[:user].id == current_user.id %>
+                      <span class="badge text-bg-dark ms-1">Toi</span>
+                    <% end %>
+                  </td>
                   <td><%= entry[:weekly_xp] %></td>
                   <td><%= entry[:tier] %></td>
                 </tr>
               <% end %>
             <% else %>
               <tr>
-                <td colspan="4" class="text-center">Aucune donnee de ligue disponible.</td>
+                <td colspan="5" class="text-center">Aucune donnee de ligue disponible.</td>
               </tr>
             <% end %>
           </tbody>
