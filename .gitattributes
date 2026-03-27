@@ -3,6 +3,7 @@
 # Force Unix line endings for shell scripts and executables
 bin/* eol=lf
 *.sh eol=lf
+.rspec eol=lf
 
 # Mark the database schema as having been generated.
 db/schema.rb linguist-generated
