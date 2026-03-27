@@ -153,6 +153,14 @@
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
+                  <!-- Aperçu du cadre -->
+                  <div class="shop-cosmetic-preview mb-2">
+                    <div class="preview-label">Aperçu:</div>
+                    <div class="profile-frame-container <%= frame_wrapper_classes(item) %>">
+                      <%= current_user.pseudo %>
+                    </div>
+                  </div>
+
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
                       <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
@@ -192,6 +200,15 @@
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
+                  <!-- Aperçu du thème XP -->
+                  <div class="shop-cosmetic-preview mb-2">
+                    <div class="preview-label">Aperçu:</div>
+                    <div class="xp-track <%= xp_theme_classes(item) %>">
+                      <div class="xp-fill" style="width: 65%"></div>
+                    </div>
+                    <small class="text-muted">65% XP</small>
+                  </div>
+
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
                       <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
@@ -230,6 +247,19 @@
                     <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= item.rarity.to_s.capitalize %></span>
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
+
+                  <!-- Aperçu de la carte -->
+                  <div class="shop-cosmetic-preview mb-2">
+                    <div class="preview-label">Aperçu:</div>
+                    <div class="profile-card-container <%= profile_card_classes(item) %>">
+                      <div class="profile-card-header">
+                        <%= current_user.pseudo %>
+                      </div>
+                      <div class="profile-card-text">
+                        Aperçu de ta présentation personnalisée
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
