@@ -33,7 +33,6 @@ class DashboardController < ApplicationController
     end
 
     @total_level = @stats.sum(&:level)
-    @onboarding_needed = !current_user.onboarding_completed?
     @weekly_streak_count = current_user.weekly_streak_count.to_i
     @weekly_streak_last_completed_on = current_user.weekly_streak_last_completed_on
 

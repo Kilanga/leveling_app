@@ -12,6 +12,16 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.11.3] - 2026-03-27
+
+### Modifié
+- Dashboard: suppression du bloc d'appel a l'action Tutoriel.
+- Navigation: suppression de l'onglet Tutoriel.
+
+### Supprimé
+- Tutoriel complet retire de l'application (routes, controller, vue et JavaScript associe).
+- Endpoint de recommandations Tutoriel et logique de completion/skip associee.
+
 ## [1.11.2] - 2026-03-27
 
 ### Corrigé

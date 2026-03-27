@@ -8,18 +8,6 @@
   <% end %>
 </p>
 
-<% if @onboarding_needed %>
-  <div class="surface-card mb-4">
-    <div class="card-body d-flex justify-content-between align-items-center gap-3 flex-wrap">
-      <div>
-        <strong>Tutoriel express (2 min)</strong>
-        <p class="quest-meta mb-0">Choisis tes categories et ajoute directement tes premieres missions.</p>
-      </div>
-      <%= link_to "Lancer", onboarding_path, class: "btn btn-brand" %>
-    </div>
-  </div>
-<% end %>
-
 <div class="surface-card mb-4">
   <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
     <div>
