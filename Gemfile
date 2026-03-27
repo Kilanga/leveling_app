@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "~> 3.2.2" # Accepte les patchs 3.2.x (ex: 3.2.10)
+ruby "~> 3.2.2" # Accepte 3.2.x (cf .ruby-version pour version exacte)
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.3"
@@ -31,7 +31,7 @@ group :development do
 end
 
 gem "ruby-openai", "~> 8.1"
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
