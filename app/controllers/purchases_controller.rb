@@ -17,7 +17,100 @@ class PurchasesController < ApplicationController
     "Boost XP x2 (1 semaine)" => { amount: 50, duration: 7.days }
   }.freeze
 
+  DEFAULT_COSMETIC_ITEMS = [
+    {
+      name: "Cadre Standard",
+      item_type: "profile_frame",
+      description: "Bordure bleu luminescent autour de ton pseudo au classement.",
+      rarity: "common",
+      price_coins: nil,
+      price_euros: nil
+    },
+    {
+      name: "Cadre Electrique",
+      item_type: "profile_frame",
+      description: "Bordure violette scintillante avec effet de foudre.",
+      rarity: "rare",
+      price_coins: 300,
+      price_euros: nil
+    },
+    {
+      name: "Cadre Legendaire",
+      item_type: "profile_frame",
+      description: "Bordure doree imposante avec particules de feu.",
+      rarity: "epic",
+      price_coins: 600,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Standard",
+      item_type: "xp_theme",
+      description: "Barre XP bleu classique avec progression lineaire.",
+      rarity: "common",
+      price_coins: nil,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Samourai",
+      item_type: "xp_theme",
+      description: "Barre rouge sang avec degrade orange pour une vibe guerriere.",
+      rarity: "rare",
+      price_coins: 200,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Neon",
+      item_type: "xp_theme",
+      description: "Barre vert luminescent cyberpunk avec glow intense.",
+      rarity: "rare",
+      price_coins: 200,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Legendaire",
+      item_type: "xp_theme",
+      description: "Barre degradee or-violet avec particules de magie.",
+      rarity: "epic",
+      price_coins: 400,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Standard",
+      item_type: "profile_card",
+      description: "Carte simple noire avec bordure grise.",
+      rarity: "common",
+      price_coins: nil,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Bleu Nuit",
+      item_type: "profile_card",
+      description: "Carte elegante bleu marine avec accent or.",
+      rarity: "rare",
+      price_coins: 250,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Incendie",
+      item_type: "profile_card",
+      description: "Carte avec gradient rouge-orange, texture de feu.",
+      rarity: "rare",
+      price_coins: 250,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Royale",
+      item_type: "profile_card",
+      description: "Carte luxe violet-or avec couronne animee.",
+      rarity: "epic",
+      price_coins: 500,
+      price_euros: nil
+    }
+  ].freeze
+
   def new
+    ensure_default_cosmetic_items!
+
     @entry_offer_variant = Experimentation.variant_for(user: current_user, experiment_key: "entry_offer_copy")
     @entry_offer_enabled = entry_offer_eligible?
     @entry_offer_bonus_rate = entry_offer_bonus_rate
@@ -326,6 +419,16 @@ class PurchasesController < ApplicationController
 
   def shop_challenge_claimed?
     Purchase.exists?(transaction_id: weekly_shop_challenge_token)
+  end
+
+  def ensure_default_cosmetic_items!
+    return if ShopItem.where(item_type: %w[profile_frame xp_theme profile_card]).exists?
+
+    DEFAULT_COSMETIC_ITEMS.each do |attributes|
+      item = ShopItem.find_or_initialize_by(name: attributes[:name], item_type: attributes[:item_type])
+      item.assign_attributes(attributes)
+      item.save!
+    end
   end
 
   def preferred_rarity_order

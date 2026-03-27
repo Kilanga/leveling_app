@@ -2,13 +2,15 @@ module CosmeticsHelper
   # Retourne CSS pour envelopper un pseudo avec son cadre de profil
   def frame_wrapper_classes(frame)
     return "profile-frame-none" unless frame
-    
-    case frame.name.downcase
-    when "standard"
+
+    normalized_name = normalize_cosmetic_name(frame.name)
+
+    case normalized_name
+    when /standard/
       "profile-frame-standard"
-    when "électrique"
+    when /electrique/
       "profile-frame-electrique"
-    when "legendaire"
+    when /legendaire/
       "profile-frame-legendaire"
     else
       "profile-frame-none"
@@ -23,15 +25,17 @@ module CosmeticsHelper
   # Retourne CSS pour la barre XP selon le thème
   def xp_theme_classes(xp_theme)
     return "xp-theme-standard" unless xp_theme
-    
-    case xp_theme.name.downcase
-    when "standard"
+
+    normalized_name = normalize_cosmetic_name(xp_theme.name)
+
+    case normalized_name
+    when /standard/
       "xp-theme-standard"
-    when "samourai"
+    when /samourai/
       "xp-theme-samourai"
-    when "neon"
+    when /neon/
       "xp-theme-neon"
-    when "legendaire"
+    when /legendaire/
       "xp-theme-legendaire"
     else
       "xp-theme-standard"
@@ -46,15 +50,17 @@ module CosmeticsHelper
   # Retourne CSS pour la carte de visite
   def profile_card_classes(card)
     return "profile-card-none" unless card
-    
-    case card.name.downcase
-    when "standard"
+
+    normalized_name = normalize_cosmetic_name(card.name)
+
+    case normalized_name
+    when /standard/
       "profile-card-standard"
-    when "bleu nuit"
+    when /bleu nuit/
       "profile-card-bleu-nuit"
-    when "incendie"
+    when /incendie/
       "profile-card-incendie"
-    when "royale"
+    when /royale/
       "profile-card-royale"
     else
       "profile-card-none"
@@ -69,5 +75,11 @@ module CosmeticsHelper
   # Retourne le texte personnalisé de la carte (tronqué à 100 chars.)
   def profile_card_text(user)
     user.profile_card_custom_text.to_s.strip[0..99]
+  end
+
+  private
+
+  def normalize_cosmetic_name(name)
+    I18n.transliterate(name.to_s.downcase)
   end
 end
