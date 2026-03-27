@@ -12,6 +12,15 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.8.0] - 2026-03-27
+
+### Modifié
+- Boutique: affichage du nombre de coins du joueur en haut de page
+- Profil joueur depuis le leaderboard: ajout du bouton "Demander en ami"
+
+### Corrigé
+- Limitation des demandes d'amis en attente a 20 par joueur cible, avec message explicite si la limite est atteinte
+
 ## [1.7.6] - 2026-03-27
 
 ### Modifié

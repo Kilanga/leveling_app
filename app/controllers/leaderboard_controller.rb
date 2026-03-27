@@ -39,6 +39,10 @@ class LeaderboardController < ApplicationController
 
   def show
     @player = User.find(params[:id])
+    @friendship_with_current = Friendship.where(user: current_user, friend: @player)
+                                       .or(Friendship.where(user: @player, friend: current_user))
+                                       .first
+    @player_pending_limit_reached = Friendship.pending.where(friend: @player).count >= Friendship::MAX_PENDING_RECEIVED
 
     # Top 3 catégories du joueur
     @top_categories = @player.user_stats.includes(:category).order(total_xp: :desc).limit(3)

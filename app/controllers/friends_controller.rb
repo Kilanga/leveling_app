@@ -18,7 +18,12 @@ class FriendsController < ApplicationController
   def create
     friend = User.find(params[:friend_id])
     if friend == current_user
-      redirect_to friends_path, alert: "Tu ne peux pas t'ajouter en ami."
+      redirect_back fallback_location: friends_path, alert: "Tu ne peux pas t'ajouter en ami."
+      return
+    end
+
+    if Friendship.pending.where(friend: friend).count >= Friendship::MAX_PENDING_RECEIVED
+      redirect_back fallback_location: friends_path, alert: "Ce joueur a atteint le nombre max de demandes d'amis en attente (#{Friendship::MAX_PENDING_RECEIVED})."
       return
     end
 
@@ -27,14 +32,14 @@ class FriendsController < ApplicationController
                  .exists?
 
     if existing
-      redirect_to friends_path, alert: "Une relation existe déjà avec cet utilisateur."
+      redirect_back fallback_location: friends_path, alert: "Une relation existe déjà avec cet utilisateur."
     else
       friendship = Friendship.new(user: current_user, friend: friend, status: "pending")
 
       if friendship.save
-        redirect_to friends_path, notice: "Demande d'ami envoyée !"
+        redirect_back fallback_location: friends_path, notice: "Demande d'ami envoyee !"
       else
-        redirect_to friends_path, alert: "Erreur : #{friendship.errors.full_messages.join(", ")}"
+        redirect_back fallback_location: friends_path, alert: "Erreur : #{friendship.errors.full_messages.join(", ")}"
       end
     end
   end

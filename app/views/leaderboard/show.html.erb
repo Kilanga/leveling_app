@@ -4,6 +4,22 @@
   <div class="card-body">
     <section class="hud-section text-center mb-4">
       <%= user_avatar_image(@player, width: 150, height: 150, css_class: "rounded-circle", alt: "Avatar de #{@player.pseudo}") %>
+
+      <% unless @player == current_user %>
+        <div class="mt-3">
+          <% if @friendship_with_current.nil? %>
+            <% if @player_pending_limit_reached %>
+              <span class="shop-state-chip shop-state-chip--available">Ce joueur a atteint le nombre max de demandes d'amis en attente.</span>
+            <% else %>
+              <%= button_to "Demander en ami", friends_path(friend_id: @player.id), method: :post, class: "btn btn-brand" %>
+            <% end %>
+          <% elsif @friendship_with_current.status == "accepted" %>
+            <span class="shop-state-chip shop-state-chip--owned">Deja ami</span>
+          <% else %>
+            <span class="shop-state-chip shop-state-chip--available">Demande deja en attente</span>
+          <% end %>
+        </div>
+      <% end %>
     </section>
 
     <section class="hud-section">
