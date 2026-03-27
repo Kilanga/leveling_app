@@ -12,6 +12,11 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.7.4] - 2026-03-27
+
+### Corrigé
+- Seed Heroku: suppression de la dependance `faker` dans `db/seeds.rb` pour permettre `rails db:seed` en production sans gem non installee
+
 ## [1.7.3] - 2026-03-27
 
 ### Modifié
