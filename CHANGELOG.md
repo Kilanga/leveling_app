@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.7] - 2026-03-27
+
+### Corrigé
+- Ligues: promotions/relegations desactivees tant qu'une cohorte de palier n'atteint pas 50 joueurs (capacite complete de room).
+- Projection de mouvement alignee sur la meme regle: aucun UP/DOWN affiche pour les cohortes partielles (< 50 joueurs).
+
 ## [1.15.6] - 2026-03-27
 
 ### Modifié

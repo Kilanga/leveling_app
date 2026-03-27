@@ -32,10 +32,10 @@ RSpec.describe WeeklyLeague do
     )
   end
 
-  it "promotes top performers and relegates bottom performers each week" do
+  it "promotes top performers and relegates bottom performers each week for full rooms" do
     category = Category.create!(name: "League settle")
 
-    tier_two_users = (1..10).map { |i| create_user(index: i, tier: 2) }
+    tier_two_users = (1..50).map { |i| create_user(index: i, tier: 2) }
     tier_two_users.each_with_index do |user, idx|
       add_previous_week_xp(user, 1000 - idx, category)
     end
@@ -46,6 +46,19 @@ RSpec.describe WeeklyLeague do
     expect(tier_two_users[1].reload.league_tier).to eq(3)
     expect(tier_two_users[-1].reload.league_tier).to eq(1)
     expect(tier_two_users[-2].reload.league_tier).to eq(1)
+  end
+
+  it "does not move players between tiers when a room is not full" do
+    category = Category.create!(name: "Under capacity settle")
+
+    tier_two_users = (1..4).map { |i| create_user(index: 7000 + i, tier: 2) }
+    tier_two_users.each_with_index do |user, idx|
+      add_previous_week_xp(user, 500 - idx, category)
+    end
+
+    WeeklyLeague.settle_leagues_if_needed!(reference_time: Time.zone.now)
+
+    expect(tier_two_users.map { |user| user.reload.league_tier }.uniq).to eq([2])
   end
 
   it "rebalances rooms with a capacity of 50 players per league tier" do
@@ -62,15 +75,14 @@ RSpec.describe WeeklyLeague do
     expect(counts[3]).to eq(20)
   end
 
-  it "projects up and down movements even in a small cohort" do
+  it "does not project movement in a small cohort" do
     category = Category.create!(name: "Small cohort")
     users = (1..4).map { |i| create_user(index: 2000 + i, tier: 2) }
     users.each_with_index { |user, idx| add_previous_week_xp(user, 400 - idx, category) }
 
     standings = WeeklyLeague.standings(User.where(id: users.map(&:id)).to_a, range: Time.current.all_week)
 
-    expect(standings.first[:projected_movement]).to eq(1)
-    expect(standings.last[:projected_movement]).to eq(-1)
+    expect(standings.map { |entry| entry[:projected_movement] }.uniq).to eq([0])
   end
 
   it "never projects impossible moves at tier boundaries" do

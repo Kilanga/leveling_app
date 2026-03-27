@@ -100,7 +100,8 @@ class WeeklyLeague
     private
 
     def promotion_relegation_count_for(size)
-      return 0 if size < 3
+      # A tier room must be full before opening movement to another tier.
+      return 0 if size < ROOM_CAPACITY
 
       [(size * PROMOTION_RATE).floor, 1].max
     end

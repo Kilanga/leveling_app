@@ -59,7 +59,7 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).not_to include("room")
     end
 
-    it "renders movement indicators and no filter form" do
+    it "renders hold-only indicators for partial cohorts and no filter form" do
       category = Category.create!(name: "Focus")
       current = create_user_with_stat(index: 100, category: category, xp: 1, league_tier: 2, league_room: 1)
       sign_in current
@@ -79,9 +79,9 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).to include(focused_users[10].pseudo)
       expect(response.body).to include(focused_users[11].pseudo)
       expect(response.body).to include(current.pseudo)
-      expect(response.body).to include("▲")
-      expect(response.body).to include("▼")
       expect(response.body).to include("•")
+      expect(response.body).not_to include("▲")
+      expect(response.body).not_to include("▼")
       expect(response.body).not_to include("Filtrer")
       expect(response.body).not_to include("room")
     end
