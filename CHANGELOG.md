@@ -12,6 +12,12 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.10.2] - 2026-03-27
+
+### Corrigé
+- Corrections des line endings (CRLF → LF) pour compatibilité Docker et tests en conteneur (`.gitattributes` global)
+- Dockerfile: utilisation de `bundle exec rails` au lieu de `./bin/rails` pour éviter problèmes line endings
+
 ## [1.10.1] - 2026-03-27
 
 ### Ajouté
