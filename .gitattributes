@@ -1,6 +1,12 @@
 # See https://git-scm.com/docs/gitattributes for more about git attribute files.
 
-# Force Unix line endings for shell scripts and executables
+# Force Unix line endings for all text files
+* text=auto
+*.rb eol=lf
+*.yml eol=lf
+*.yaml eol=lf
+*.json eol=lf
+*.md eol=lf
 bin/* eol=lf
 *.sh eol=lf
 .rspec eol=lf
