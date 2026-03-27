@@ -12,6 +12,13 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.10.1] - 2026-03-27
+
+### Ajouté
+- Configuration Dev Container (`.devcontainer/devcontainer.json`) pour un environnement de dev standardisé avec Ruby 3.2.2
+- Fichier `.ruby-version` pour gestion automatique des versions avec rbenv/asdf
+- Support des tests dans Dev Container ou en local avec Ruby 3.2.x
+
 ## [1.10.0] - 2026-03-27
 
 ### Modifié
