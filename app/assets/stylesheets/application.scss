@@ -447,6 +447,34 @@ body::before {
   padding-bottom: 0.25rem;
 }
 
+.player-home-panel {
+  padding-top: 0.25rem;
+}
+
+.player-home-panel .section-title {
+  margin-bottom: 1.2rem;
+}
+
+.player-home-item-title {
+  display: block;
+  font-size: 1.06rem;
+  margin-bottom: 0.38rem;
+  letter-spacing: 0.01em;
+}
+
+.player-home-item-meta {
+  padding-left: 0.15rem;
+  font-size: 0.99rem;
+  line-height: 1.52;
+}
+
+.player-home-social {
+  border-top: 1px solid rgba(70, 133, 174, 0.35);
+  border-bottom: 1px solid rgba(70, 133, 174, 0.35);
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+
 .quest-mission-board {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

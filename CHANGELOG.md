@@ -17,6 +17,13 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.5] - 2026-03-27
+
+### Modifié
+- Accueil joueur public: hiérarchie visuelle renforcée (espacement plus net entre titres et textes des blocs de quêtes).
+- Accueil joueur public: action sociale rendue explicite avec un bloc dédié pour `Ajouter en ami`.
+- Bloc "Quêtes les plus réalisées": limité aux 3 quêtes les plus jouées avec affichage de la date de dernière complétion.
+
 ## [1.15.4] - 2026-03-27
 
 ### Modifié

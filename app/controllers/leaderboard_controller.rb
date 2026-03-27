@@ -37,10 +37,10 @@ class LeaderboardController < ApplicationController
                    .order(updated_at: :desc)
 
     @most_completed_quests = @player.user_quests
-                      .select("user_quests.quest_id, COUNT(*) AS completed_count")
+              .select("user_quests.quest_id, COUNT(*) AS completed_count, MAX(user_quests.updated_at) AS last_completed_at")
                       .group("user_quests.quest_id")
               .order(Arel.sql("COUNT(*) DESC"))
-                      .limit(5)
+              .limit(3)
               .preload(:quest)
 
     @recent_quests = @player.user_quests.where(completed: true).includes(:quest).order(updated_at: :desc).limit(8)
