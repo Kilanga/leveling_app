@@ -27,6 +27,7 @@ class PurchaseFulfillmentService
 
       user.user_items.find_or_create_by!(shop_item: item)
       create_purchase_record!(user, transaction_id, checkout_session, item_type: "shop_item")
+      ProductAnalytics.track(user: user, event_name: "purchase_completed", metadata: { kind: "shop_item", shop_item_id: item.id, transaction_id: transaction_id })
       send_purchase_email!(user, "#{item.name} (#{item.item_type})", checkout_session)
     end
 
@@ -36,6 +37,7 @@ class PurchaseFulfillmentService
 
       user.increment!(:coins, coins)
       create_purchase_record!(user, transaction_id, checkout_session, item_type: "coins")
+      ProductAnalytics.track(user: user, event_name: "purchase_completed", metadata: { kind: "coins", coins: coins, transaction_id: transaction_id })
 
       send_purchase_email!(user, "Pack coins: +#{coins}", checkout_session)
     end
@@ -49,6 +51,7 @@ class PurchaseFulfillmentService
       user.update!(boost_expires_at: base_time + duration)
 
       create_purchase_record!(user, transaction_id, checkout_session, item_type: "boost")
+      ProductAnalytics.track(user: user, event_name: "purchase_completed", metadata: { kind: "boost", duration_seconds: duration_seconds, transaction_id: transaction_id })
       duration_days = (duration_seconds / 1.day).to_i
       send_purchase_email!(user, "Boost XP x2 (#{duration_days} jour#{duration_days > 1 ? 's' : ''})", checkout_session)
     end

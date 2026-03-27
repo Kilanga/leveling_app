@@ -43,6 +43,12 @@ class UserQuestsController < ApplicationController
       gained_xp = XpAwarder.complete_user_quest!(@user_quest)
       if gained_xp
         @user_quest.reload
+        streak = WeeklyStreakTracker.register_completion!(current_user)
+        ProductAnalytics.track(
+          user: current_user,
+          event_name: "quest_completed",
+          metadata: { quest_id: @user_quest.quest_id, xp: gained_xp, streak: streak }
+        )
         flash[:streak_up_quest_title] = quest_title
         flash[:streak_up_value] = @user_quest.completed_count.to_i
         redirect_to root_path, notice: "Quete completee ! XP ajoute : #{gained_xp}"

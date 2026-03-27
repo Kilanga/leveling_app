@@ -12,10 +12,28 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.11.0] - 2026-03-27
+
+### Ajouté
+- Onboarding complet en 2 etapes: choix de categories prioritaires + recommandations de quetes personnalisees
+- Notifications in-app avec statut lu/non lu et action de consultation rapide
+- Defis entre amis (duel 48h) avec resolution automatique, gagnant et recompense en coins
+- Ligues hebdomadaires (Bronze/Silver/Gold) affichees sur dashboard et leaderboard
+- Analytics produit admin (activation, volume d'evenements, quetes completees, defis, claims boutique)
+- Tracking produit structure (`ProductEvent`) pour suivre activation, progression, social et monetisation
+- Infrastructure d'A/B test (`ExperimentAssignment` + `Experimentation`) avec premiere experience sur l'offre d'entree boutique
+
+### Modifié
+- Dashboard enrichi: CTA onboarding, synthese streak hebdo, classement ligue hebdomadaire
+- Profil enrichi en vitrine joueur: KPI progression et historique de defis termines
+- Ecran Amis enrichi: lancement de defis et suivi des defis actifs
+- Navbar enrichie: acces onboarding, notifications et analytics admin
+
 ### Corrigé
-- Environnement de dev stabilise: Dev Container unifie sur Ruby 3.2.10 avec dependances natives preinstallees
-- Outils de code Ruby fiabilises: Ruby LSP installe via Bundler pour eviter les erreurs de compilation natives
-- Suite de tests locale fiabilisee: PostgreSQL local demarre automatiquement et RSpec isole de `DATABASE_URL` distant
+- Stabilisation environnement dev/test: Dev Container outille (Ruby 3.2.10 + dependances natives), PostgreSQL local et fiabilisation de la suite
+- Fiabilisation tooling Ruby: Ruby LSP via Bundler
+- Correction logique achat: suppression du callback de credit auto obsolete pour eviter les credits de coins indus
+- Reduction du bruit d'execution (Sass deps) via option `--quiet-deps`
 
 ## [1.10.2] - 2026-03-27
 

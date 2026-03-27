@@ -27,6 +27,10 @@ class User < ApplicationRecord
   has_many :badges, through: :user_badges
   has_many :user_items
   has_many :shop_items, through: :user_items
+  has_many :in_app_notifications, dependent: :destroy
+  has_many :experiment_assignments, dependent: :destroy
+  has_many :friend_challenges_as_challenger, class_name: "FriendChallenge", foreign_key: :challenger_id, dependent: :destroy
+  has_many :friend_challenges_as_challenged, class_name: "FriendChallenge", foreign_key: :challenged_id, dependent: :destroy
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true
@@ -100,6 +104,18 @@ class User < ApplicationRecord
 
   def needs_profile_completion?
     provider == "google_oauth2" && !profile_completed?
+  end
+
+  def onboarding_completed?
+    onboarding_completed_at.present?
+  end
+
+  def onboarding_category_ids
+    onboarding_focus.to_s.split(",").map(&:to_i).reject(&:zero?)
+  end
+
+  def active_friend_challenges
+    FriendChallenge.active.where("challenger_id = :id OR challenged_id = :id", id: id)
   end
 
   def self.unique_pseudo_for(name, email)

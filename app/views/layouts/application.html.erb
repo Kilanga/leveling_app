@@ -41,6 +41,9 @@
           <li class="nav-item">
             <%= link_to "Amis", friends_path, class: "nav-link" if user_signed_in? %>
           </li>
+          <li class="nav-item">
+            <%= link_to "Onboarding", onboarding_path, class: "nav-link" if user_signed_in? %>
+          </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">
           <% if user_signed_in? %>
@@ -48,7 +51,18 @@
               <li class="nav-item">
                 <%= link_to "Admin", admin_quests_path, class: "nav-link" %>
               </li>
+              <li class="nav-item">
+                <%= link_to "Analytics", admin_analytics_path, class: "nav-link" %>
+              </li>
             <% end %>
+            <li class="nav-item">
+              <%= link_to notifications_path, class: "nav-link" do %>
+                Notifications
+                <% if @unread_notifications_count.to_i.positive? %>
+                  <span class="badge text-bg-warning ms-1"><%= @unread_notifications_count %></span>
+                <% end %>
+              <% end %>
+            </li>
             <li class="nav-item">
               <%= link_to "Profil", user_profile_path, class: "nav-link" %>
             </li>

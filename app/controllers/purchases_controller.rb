@@ -14,6 +14,9 @@ class PurchasesController < ApplicationController
   }.freeze
 
   def new
+    @entry_offer_variant = Experimentation.variant_for(user: current_user, experiment_key: "entry_offer_copy")
+    @entry_offer_enabled = current_user.purchases.where(item_type: "coins").none?
+
     @active_shop_tab = params[:tab].presence_in(%w[packs boosts cosmetics]) || "packs"
     @focus_category_name = current_user.user_stats.includes(:category).order(total_xp: :desc).first&.category&.name || "tes objectifs"
 
@@ -72,12 +75,16 @@ class PurchasesController < ApplicationController
       )
     end
 
+    ProductAnalytics.track(user: current_user, event_name: "shop_challenge_claimed", metadata: { reward: SHOP_CHALLENGE_REWARD_COINS })
+
     redirect_to new_purchase_path(tab: "cosmetics"), notice: "+#{SHOP_CHALLENGE_REWARD_COINS} coins recuperees via le defi boutique !"
   rescue ActiveRecord::RecordNotUnique
     redirect_to new_purchase_path(tab: "cosmetics"), alert: "Recompense hebdo deja recuperee."
   end
 
   def create
+    ProductAnalytics.track(user: current_user, event_name: "purchase_started", metadata: { shop_item_id: params[:shop_item_id], item_type: params[:item_type], amount: params[:amount] })
+
     return handle_shop_item_purchase if params[:shop_item_id].present?
     return handle_pack_purchase if params[:item_type].present? && params[:amount].present?
 

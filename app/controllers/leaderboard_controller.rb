@@ -15,6 +15,8 @@ class LeaderboardController < ApplicationController
                      .order("total_xp_sum DESC")
     end
 
+            @league_by_user_id = WeeklyLeague.standings(@players.to_a).index_by { |entry| entry[:user].id }
+
     friend_ids = current_user.friendships.where(status: "accepted").pluck(:friend_id) +
                  Friendship.where(friend: current_user, status: "accepted").pluck(:user_id)
 

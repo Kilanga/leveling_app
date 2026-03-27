@@ -5,12 +5,33 @@
     <% @friends.each do |friend| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <%= friend.pseudo %>
-        <%= button_to "Supprimer", friend_path(friend), method: :delete, class: "btn btn-danger btn-sm" %>
+        <div class="d-flex gap-2 flex-wrap">
+          <%= button_to "Lancer un defi 48h", friend_challenges_path(friend_id: friend.id), method: :post, class: "btn btn-sm btn-brand" %>
+          <%= button_to "Supprimer", friend_path(friend), method: :delete, class: "btn btn-danger btn-sm" %>
+        </div>
       </li>
     <% end %>
   </ul>
 <% else %>
   <p>Tu n'as pas encore d'amis.</p>
+<% end %>
+
+<h2>Defis actifs</h2>
+<% if @active_friend_challenges.any? %>
+  <ul class="list-group mb-4">
+    <% @active_friend_challenges.each do |challenge| %>
+      <% opponent = challenge.opponent_for(current_user) %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Contre <%= opponent.pseudo %></strong>
+          <p class="mb-0 text-muted">Se termine le <%= l(challenge.ends_at, format: :short) %></p>
+        </div>
+        <span class="badge text-bg-dark">XP: <%= challenge.xp_gain_for(current_user) %></span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucun defi actif.</p>
 <% end %>
 
 <h2>Demandes d’amis reçues</h2>

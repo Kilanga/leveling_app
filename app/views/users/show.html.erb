@@ -1,5 +1,11 @@
 <h1 class="page-title">Profil de <%= @user.pseudo %></h1>
 
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong>Quetes completees</strong><p class="mb-0"><%= @completed_quests_total %></p></div></div></div>
+  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong>XP cette semaine</strong><p class="mb-0"><%= @xp_this_week %></p></div></div></div>
+  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong>Streak hebdo</strong><p class="mb-0"><%= @user.weekly_streak_count %></p></div></div></div>
+</div>
+
 <!-- Conteneur responsive -->
 <div class="row align-items-center g-4">
   <!-- Avatar (colonne gauche) -->
@@ -149,5 +155,26 @@
     <li class="list-group-item">
       <strong><%= user_quest.quest.title %></strong> - Complété <%= user_quest.completed_count %> fois
     </li>
+  <% end %>
+</ul>
+
+<h2 class="section-title mt-4">Historique des defis amis</h2>
+<ul class="list-group surface-list">
+  <% if @challenge_history.any? %>
+    <% @challenge_history.each do |challenge| %>
+      <% opponent = challenge.challenger == @user ? challenge.challenged : challenge.challenger %>
+      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <span>Contre <strong><%= opponent.pseudo %></strong></span>
+        <% if challenge.winner_id == @user.id %>
+          <span class="badge text-bg-success">Victoire (+<%= challenge.reward_coins %> coins)</span>
+        <% elsif challenge.winner_id.present? %>
+          <span class="badge text-bg-secondary">Defaite</span>
+        <% else %>
+          <span class="badge text-bg-warning">Egalite</span>
+        <% end %>
+      </li>
+    <% end %>
+  <% else %>
+    <li class="list-group-item">Aucun defi termine pour le moment.</li>
   <% end %>
 </ul>

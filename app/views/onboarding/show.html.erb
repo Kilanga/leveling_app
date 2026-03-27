@@ -1,0 +1,36 @@
+<h1 class="page-title">Onboarding</h1>
+<p class="page-subtitle">Configure ton profil de progression en moins de 2 minutes.</p>
+
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <%= form_with url: onboarding_path, method: :patch, local: true do %>
+      <h2 class="section-title">1. Choisis 3 categories prioritaires</h2>
+      <div class="row g-2 mb-3">
+        <% @categories.each do |category| %>
+          <div class="col-md-4">
+            <label class="shop-row shop-row--flat d-flex align-items-center gap-2">
+              <%= check_box_tag "category_ids[]", category.id, @selected_ids.include?(category.id) %>
+              <strong><%= category.name %></strong>
+            </label>
+          </div>
+        <% end %>
+      </div>
+
+      <h2 class="section-title">2. Missions recommandees</h2>
+      <% if @recommended_quests.any? %>
+        <div class="quest-list quest-list--flat mb-3">
+          <% @recommended_quests.each do |quest| %>
+            <div class="quest-row quest-row--flat">
+              <strong><%= quest.title %></strong>
+              <p class="quest-meta mb-0"><%= quest.category.name %> - <%= quest.xp %> XP</p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="quest-meta">Selectionne des categories pour voir tes recommandations.</p>
+      <% end %>
+
+      <%= submit_tag "Terminer mon onboarding", class: "btn btn-brand" %>
+    <% end %>
+  </div>
+</div>

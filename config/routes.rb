@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   post "activate_title", to: "users#activate_title"
   post "deactivate_title", to: "users#deactivate_title"
   post "activate_avatar", to: "users#activate_avatar"
+  resource :onboarding, only: [ :show, :update ]
+  resources :notifications, only: [ :index, :update ] do
+    collection do
+      patch :mark_all_read
+    end
+  end
 
   # Classement
   resources :leaderboard, only: [ :index, :show ]
@@ -38,6 +44,7 @@ Rails.application.routes.draw do
       delete :reject
     end
   end
+  resources :friend_challenges, only: [ :create ]
   resources :user_weekly_quests, only: [ :update ]
 
   get "profil/completer", to: "users#complete_profile", as: :complete_profile
@@ -50,5 +57,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :quests, except: [ :show ]
     resources :users, only: [ :index, :edit, :update ]
+    resources :analytics, only: [ :index ]
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_100400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "experiment_assignments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "experiment_key", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.string "variant", null: false
+    t.index ["user_id", "experiment_key"], name: "index_experiment_assignments_on_user_id_and_experiment_key", unique: true
+    t.index ["user_id"], name: "index_experiment_assignments_on_user_id"
+  end
+
+  create_table "friend_challenges", force: :cascade do |t|
+    t.bigint "challenged_id", null: false
+    t.integer "challenged_xp_gain", default: 0, null: false
+    t.bigint "challenger_id", null: false
+    t.integer "challenger_xp_gain", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "ends_at", null: false
+    t.integer "reward_coins", default: 50, null: false
+    t.datetime "starts_at", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "winner_id"
+    t.index ["challenged_id"], name: "index_friend_challenges_on_challenged_id"
+    t.index ["challenger_id", "challenged_id", "status"], name: "index_friend_challenges_on_pair_and_status"
+    t.index ["challenger_id"], name: "index_friend_challenges_on_challenger_id"
+    t.index ["winner_id"], name: "index_friend_challenges_on_winner_id"
+  end
+
   create_table "friendships", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "friend_id", null: false
@@ -67,6 +95,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
     t.index ["user_id"], name: "index_friendships_on_user_id"
     t.check_constraint "user_id <> friend_id", name: "friendships_user_not_self"
+  end
+
+  create_table "in_app_notifications", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.string "cta_path"
+    t.string "kind", null: false
+    t.datetime "read_at"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "created_at"], name: "index_in_app_notifications_on_user_id_and_created_at"
+    t.index ["user_id", "read_at"], name: "index_in_app_notifications_on_user_id_and_read_at"
+    t.index ["user_id"], name: "index_in_app_notifications_on_user_id"
+  end
+
+  create_table "product_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "event_name", null: false
+    t.text "metadata_json", default: "{}", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["event_name", "created_at"], name: "index_product_events_on_event_name_and_created_at"
+    t.index ["user_id", "event_name", "created_at"], name: "index_product_events_on_user_id_and_event_name_and_created_at"
+    t.index ["user_id"], name: "index_product_events_on_user_id"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -174,6 +227,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.datetime "onboarding_completed_at"
+    t.text "onboarding_focus", default: "", null: false
     t.boolean "profile_completed", default: true, null: false
     t.string "provider"
     t.string "pseudo"
@@ -184,6 +239,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.string "uid"
     t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
+    t.integer "weekly_streak_count", default: 0, null: false
+    t.date "weekly_streak_freeze_used_for_week"
+    t.date "weekly_streak_last_completed_on"
     t.integer "xp", default: 0
     t.index ["active_avatar_item_id"], name: "index_users_on_active_avatar_item_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
@@ -206,8 +264,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "experiment_assignments", "users"
+  add_foreign_key "friend_challenges", "users", column: "challenged_id"
+  add_foreign_key "friend_challenges", "users", column: "challenger_id"
+  add_foreign_key "friend_challenges", "users", column: "winner_id"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "in_app_notifications", "users"
+  add_foreign_key "product_events", "users"
   add_foreign_key "purchases", "users"
   add_foreign_key "quests", "categories"
   add_foreign_key "user_badges", "badges"

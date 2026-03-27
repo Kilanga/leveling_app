@@ -10,6 +10,10 @@ class FriendsController < ApplicationController
     pending_received_ids = Friendship.pending.where(friend_id: current_user.id).pluck(:user_id)
     @pending_sent_requests = User.where(id: pending_sent_ids)
     @pending_received_requests = User.where(id: pending_received_ids)
+    @active_friend_challenges = FriendChallenge.active
+                                             .where("challenger_id = :id OR challenged_id = :id", id: current_user.id)
+                                             .includes(:challenger, :challenged)
+                                             .order(ends_at: :asc)
   end
 
 
@@ -44,6 +48,14 @@ class FriendsController < ApplicationController
       friendship = Friendship.new(user: current_user, friend: friend, status: "pending")
 
       if friendship.save
+        ProductAnalytics.track(user: current_user, event_name: "friend_request_sent", metadata: { friend_id: friend.id })
+        InAppNotification.create!(
+          user: friend,
+          kind: "friend_request",
+          title: "Nouvelle demande d'ami",
+          body: "#{current_user.pseudo} t'a envoye une demande.",
+          cta_path: "/friends"
+        )
         redirect_back fallback_location: friends_path, notice: "Demande d'ami envoyee !"
       else
         redirect_back fallback_location: friends_path, alert: "Erreur : #{friendship.errors.full_messages.join(", ")}"
@@ -66,6 +78,15 @@ class FriendsController < ApplicationController
 
     if friendship
       friendship.update(status: "accepted")
+      friend = friendship.user == current_user ? friendship.friend : friendship.user
+      ProductAnalytics.track(user: current_user, event_name: "friend_request_accepted", metadata: { friend_id: friend.id })
+      InAppNotification.create!(
+        user: friend,
+        kind: "friend_accept",
+        title: "Demande acceptee",
+        body: "#{current_user.pseudo} a accepte ton invitation.",
+        cta_path: "/friends"
+      )
       flash[:notice] = "Amitié acceptée !"
     else
       flash[:alert] = "Aucune demande trouvée."

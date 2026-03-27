@@ -22,6 +22,7 @@
               <th>Avatar</th>
               <th>Pseudo</th>
               <th>XP Total</th>
+              <th>Ligue hebdo</th>
             </tr>
           </thead>
           <tbody>
@@ -39,11 +40,12 @@
                     <% end %>
                   </td>
                   <td><%= player.total_xp_sum.to_i %></td>
+                  <td><%= @league_by_user_id.dig(player.id, :tier) || "Bronze" %></td>
                 </tr>
               <% end %>
             <% else %>
               <tr>
-                <td colspan="4" class="text-center">Aucun joueur trouvé.</td>
+                <td colspan="5" class="text-center">Aucun joueur trouvé.</td>
               </tr>
             <% end %>
           </tbody>

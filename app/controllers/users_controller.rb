@@ -12,6 +12,13 @@ class UsersController < ApplicationController
     TitleUnlocker.call(@user)
 
     @user_quests = @user.user_quests.where("completed_count > 0").includes(:quest).order(completed_count: :desc)
+    @completed_quests_total = @user.user_quests.sum(:completed_count)
+    @xp_this_week = @user.user_quests.where(completed: true, updated_at: Time.current.all_week).joins(:quest).sum("quests.xp")
+    @challenge_history = FriendChallenge.where("challenger_id = :id OR challenged_id = :id", id: @user.id)
+                      .where(status: "completed")
+                      .includes(:challenger, :challenged, :winner)
+                      .order(updated_at: :desc)
+                      .limit(5)
     @owned_titles = @user.shop_items.where(item_type: "title").order(name: :asc)
     @unlockable_title_progress = TitleUnlocker.progress_for(@user)
     @common_unlockable_titles = @unlockable_title_progress.select { |entry| entry[:rarity] == "common" }

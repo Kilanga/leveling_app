@@ -1,0 +1,25 @@
+<h1 class="page-title">Analytics Produit</h1>
+<p class="page-subtitle">Vue 7/30 jours pour piloter activation, retention et engagement.</p>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="surface-card"><div class="card-body"><strong>Onboarding 30j</strong><p class="mb-0"><%= @activation_users %></p></div></div></div>
+  <div class="col-md-3"><div class="surface-card"><div class="card-body"><strong>Quetes completees 30j</strong><p class="mb-0"><%= @quest_completions %></p></div></div></div>
+  <div class="col-md-3"><div class="surface-card"><div class="card-body"><strong>Defis amis 30j</strong><p class="mb-0"><%= @friend_challenges %></p></div></div></div>
+  <div class="col-md-3"><div class="surface-card"><div class="card-body"><strong>Claims boutique 30j</strong><p class="mb-0"><%= @shop_claims %></p></div></div></div>
+</div>
+
+<div class="surface-card surface-card--shell">
+  <div class="card-body">
+    <h2 class="section-title">Top events (7 jours)</h2>
+    <div class="table-responsive">
+      <table class="table">
+        <thead><tr><th>Event</th><th>Volume</th></tr></thead>
+        <tbody>
+          <% @event_counts.sort_by { |_, count| -count }.each do |event_name, count| %>
+            <tr><td><%= event_name %></td><td><%= count %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

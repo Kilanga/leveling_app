@@ -33,6 +33,14 @@ class DashboardController < ApplicationController
     end
 
     @total_level = @stats.sum(&:level)
+    @onboarding_needed = !current_user.onboarding_completed?
+    @weekly_streak_count = current_user.weekly_streak_count.to_i
+    @weekly_streak_last_completed_on = current_user.weekly_streak_last_completed_on
+
+    league_users = User.includes(:user_quests).limit(100)
+    @league_standings = WeeklyLeague.standings(league_users).first(10)
+    @my_league_entry = @league_standings.find { |entry| entry[:user].id == current_user.id } ||
+               WeeklyLeague.standings([current_user]).first
     @daily_target = 2
     @completed_today_count = current_user.user_quests
       .where(completed: true)
