@@ -938,6 +938,16 @@ body::before {
   color: #475467;
   background: rgba(71, 84, 103, 0.14);
 }
+
+.league-current-user-row {
+  background: rgba(42, 184, 242, 0.14);
+  box-shadow: inset 3px 0 0 rgba(125, 220, 255, 0.95);
+}
+
+.league-current-user-row td,
+.league-current-user-row th {
+  color: var(--ink);
+}
 .surface-list {
   border: 1px solid var(--line);
   border-radius: 14px;

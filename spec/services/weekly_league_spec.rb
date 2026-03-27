@@ -61,4 +61,15 @@ RSpec.describe WeeklyLeague do
     expect(counts[2]).to eq(50)
     expect(counts[3]).to eq(20)
   end
+
+  it "projects up and down movements even in a small cohort" do
+    category = Category.create!(name: "Small cohort")
+    users = (1..4).map { |i| create_user(index: 2000 + i, tier: 2) }
+    users.each_with_index { |user, idx| add_previous_week_xp(user, 400 - idx, category) }
+
+    standings = WeeklyLeague.standings(User.where(id: users.map(&:id)).to_a, range: Time.current.all_week)
+
+    expect(standings.first[:projected_movement]).to eq(1)
+    expect(standings.last[:projected_movement]).to eq(-1)
+  end
 end

@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.12.2] - 2026-03-27
+
+### Corrigé
+- Classement ligue: correction de la mise en avant de la ligne du joueur courant pour conserver un contraste lisible sur le theme sombre.
+- Classement ligue: correction de la projection de mouvement sur petites cohortes (ex: 4 joueurs) pour eviter un affichage integralement en HOLD.
+
 ## [1.12.1] - 2026-03-27
 
 ### Modifié

@@ -100,7 +100,7 @@ class WeeklyLeague
     private
 
     def promotion_relegation_count_for(size)
-      return 0 if size < 5
+      return 0 if size < 2
 
       [(size * PROMOTION_RATE).floor, 1].max
     end

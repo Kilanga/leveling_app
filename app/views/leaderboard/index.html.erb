@@ -21,7 +21,7 @@
           <tbody>
             <% if @league_standings.any? %>
               <% @league_standings.each do |entry| %>
-                <tr class="<%= 'table-active' if entry[:user].id == current_user.id %>">
+                <tr class="<%= 'league-current-user-row' if entry[:user].id == current_user.id %>">
                   <td>
                     #<%= entry[:rank] %>
                     <% if entry[:projected_movement].to_i > 0 %>
