@@ -4,4 +4,8 @@ class Quest < ApplicationRecord
   has_many :users, through: :user_quests
 
   validates :title, :description, :xp, :category, presence: true
+
+  def daily_featured?
+    has_attribute?(:daily_featured) ? self[:daily_featured] : false
+  end
 end

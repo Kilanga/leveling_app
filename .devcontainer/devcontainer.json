@@ -1,13 +1,27 @@
 {
   "name": "Leveling App",
-  "image": "ruby:3.2.2-slim",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {},
     "ghcr.io/devcontainers/features/git:1": {}
   },
   "remoteUser": "root",
   "forwardPorts": [3000, 5432],
-  "postCreateCommand": "apt-get update && apt-get install -y build-essential postgresql-client libpq-dev && bundle install",
+  "containerEnv": {
+    "DATABASE_URL": "postgresql://postgres:password@localhost:5432/leveling_app_development",
+    "DB_USERNAME": "postgres",
+    "DB_PASSWORD": "password",
+    "DB_HOST": "localhost",
+    "DB_PORT": "5432",
+    "DB_NAME": "leveling_app_development",
+    "TEST_DB_NAME": "leveling_app_test",
+    "TEST_DATABASE_URL": "postgresql://postgres:password@localhost:5432/leveling_app_test"
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
   "customizations": {
     "vscode": {
       "extensions": [

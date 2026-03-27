@@ -10,12 +10,12 @@ class PurchasesControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should get new" do
-    get purchases_new_url
+    get new_purchase_url
     assert_response :success
   end
 
-  test "should get create" do
-    get purchases_create_url
-    assert_response :success
+  test "should post create with invalid params" do
+    post purchases_url
+    assert_response :redirect
   end
 end

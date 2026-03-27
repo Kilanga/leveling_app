@@ -21,7 +21,8 @@ class Admin::QuestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create quest" do
-    post admin_quests_path, params: { quest: { title: "New Quest", description: "Quest details" } } # Correction
+    category = create(:category)
+    post admin_quests_path, params: { quest: { title: "New Quest", description: "Quest details", xp: 120, category_id: category.id } } # Correction
     assert_response :redirect # Généralement, create redirige après succès
   end
 
@@ -40,4 +41,3 @@ class Admin::QuestsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 end
-puts Quest.all.inspect

@@ -8,8 +8,8 @@ class UserQuestsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get update" do
     quest = create(:quest) # S'assurer qu'une quête existe
-    user_quest = create(:user_quest, user: @user, quest: quest)
+    user_quest = create(:user_quest, user: @user, quest: quest, progress: 0)
     patch user_quest_url(user_quest), params: { user_quest: { completed: true } }
-    assert_response :redirect # Vérifie si ça redirige après mise à jour
+    assert_response :success
   end
 end

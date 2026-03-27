@@ -43,7 +43,7 @@ class QuestsController < ApplicationController
     when "big_xp"
       @quests.order(xp: :desc, title: :asc)
     else
-      @quests.order(daily_featured: :desc, xp: :asc, title: :asc)
+      @quests.order(xp: :asc, title: :asc)
     end
 
     user_quests = current_user.user_quests.where(quest_id: @quests.select(:id))
@@ -58,13 +58,13 @@ class QuestsController < ApplicationController
     @recommended_quests = Quest.includes(:category)
       .where(category_id: top_category_ids)
       .where.not(id: active_quest_ids)
-      .order(daily_featured: :desc, xp: :desc)
+      .order(xp: :desc, title: :asc)
       .limit(4)
 
     if @recommended_quests.empty?
       @recommended_quests = Quest.includes(:category)
         .where.not(id: active_quest_ids)
-        .order(daily_featured: :desc, xp: :asc)
+        .order(xp: :asc, title: :asc)
         .limit(4)
     end
   end

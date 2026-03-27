@@ -11,17 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
-  create_schema "extensions"
-
   # These are extensions that must be enabled in order to support this database
-  enable_extension "extensions.pg_stat_statements"
-  enable_extension "extensions.pgcrypto"
-  enable_extension "extensions.uuid-ossp"
-  enable_extension "graphql.pg_graphql"
   enable_extension "pg_catalog.plpgsql"
-  enable_extension "vault.supabase_vault"
 
-  create_table "public.active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -31,7 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "public.active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.string "content_type"
@@ -43,13 +36,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "public.active_storage_variant_records", force: :cascade do |t|
+  create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "public.badges", force: :cascade do |t|
+  create_table "badges", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "is_free", default: false, comment: "Free badge unlockable via achievements"
@@ -58,13 +51,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "public.categories", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
   end
 
-  create_table "public.friendships", force: :cascade do |t|
+  create_table "friendships", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "friend_id", null: false
     t.string "status", default: "pending", null: false
@@ -76,7 +69,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.check_constraint "user_id <> friend_id", name: "friendships_user_not_self"
   end
 
-  create_table "public.purchases", force: :cascade do |t|
+  create_table "purchases", force: :cascade do |t|
     t.integer "amount"
     t.datetime "created_at", null: false
     t.string "item_type"
@@ -88,10 +81,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
-  create_table "public.quests", force: :cascade do |t|
+  create_table "quests", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
-    t.boolean "daily_featured", default: false
     t.text "description"
     t.string "title"
     t.datetime "updated_at", null: false
@@ -100,7 +92,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["category_id"], name: "index_quests_on_category_id"
   end
 
-  create_table "public.shop_items", force: :cascade do |t|
+  create_table "shop_items", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.string "item_type"
@@ -111,7 +103,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "public.user_badges", force: :cascade do |t|
+  create_table "user_badges", force: :cascade do |t|
     t.datetime "awarded_at"
     t.bigint "badge_id", null: false
     t.datetime "created_at", null: false
@@ -121,7 +113,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["user_id"], name: "index_user_badges_on_user_id"
   end
 
-  create_table "public.user_items", force: :cascade do |t|
+  create_table "user_items", force: :cascade do |t|
     t.boolean "active"
     t.datetime "created_at", null: false
     t.bigint "shop_item_id", null: false
@@ -132,7 +124,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["user_id"], name: "index_user_items_on_user_id"
   end
 
-  create_table "public.user_quests", force: :cascade do |t|
+  create_table "user_quests", force: :cascade do |t|
     t.boolean "active"
     t.boolean "completed"
     t.integer "completed_count", default: 0
@@ -146,7 +138,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["user_id"], name: "index_user_quests_on_user_id"
   end
 
-  create_table "public.user_stats", force: :cascade do |t|
+  create_table "user_stats", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.integer "level", default: 1, null: false
@@ -159,7 +151,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["user_id"], name: "index_user_stats_on_user_id"
   end
 
-  create_table "public.user_weekly_quests", force: :cascade do |t|
+  create_table "user_weekly_quests", force: :cascade do |t|
     t.boolean "completed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -169,7 +161,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["weekly_quest_id"], name: "index_user_weekly_quests_on_weekly_quest_id"
   end
 
-  create_table "public.users", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.bigint "active_avatar_item_id"
     t.integer "active_title_id"
     t.boolean "admin", default: false
@@ -201,7 +193,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "public.weekly_quests", force: :cascade do |t|
+  create_table "weekly_quests", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.text "description"
@@ -212,23 +204,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_231540) do
     t.index ["category_id"], name: "index_weekly_quests_on_category_id"
   end
 
-  add_foreign_key "public.active_storage_attachments", "public.active_storage_blobs", column: "blob_id"
-  add_foreign_key "public.active_storage_variant_records", "public.active_storage_blobs", column: "blob_id"
-  add_foreign_key "public.friendships", "public.users"
-  add_foreign_key "public.friendships", "public.users", column: "friend_id"
-  add_foreign_key "public.purchases", "public.users"
-  add_foreign_key "public.quests", "public.categories"
-  add_foreign_key "public.user_badges", "public.badges"
-  add_foreign_key "public.user_badges", "public.users"
-  add_foreign_key "public.user_items", "public.shop_items"
-  add_foreign_key "public.user_items", "public.users"
-  add_foreign_key "public.user_quests", "public.quests"
-  add_foreign_key "public.user_quests", "public.users"
-  add_foreign_key "public.user_stats", "public.categories"
-  add_foreign_key "public.user_stats", "public.users"
-  add_foreign_key "public.user_weekly_quests", "public.users"
-  add_foreign_key "public.user_weekly_quests", "public.weekly_quests"
-  add_foreign_key "public.users", "public.shop_items", column: "active_avatar_item_id"
-  add_foreign_key "public.weekly_quests", "public.categories"
-
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "friendships", "users"
+  add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "purchases", "users"
+  add_foreign_key "quests", "categories"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
+  add_foreign_key "user_items", "shop_items"
+  add_foreign_key "user_items", "users"
+  add_foreign_key "user_quests", "quests"
+  add_foreign_key "user_quests", "users"
+  add_foreign_key "user_stats", "categories"
+  add_foreign_key "user_stats", "users"
+  add_foreign_key "user_weekly_quests", "users"
+  add_foreign_key "user_weekly_quests", "weekly_quests"
+  add_foreign_key "users", "shop_items", column: "active_avatar_item_id"
+  add_foreign_key "weekly_quests", "categories"
 end

@@ -12,6 +12,11 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+### Corrigé
+- Environnement de dev stabilise: Dev Container unifie sur Ruby 3.2.10 avec dependances natives preinstallees
+- Outils de code Ruby fiabilises: Ruby LSP installe via Bundler pour eviter les erreurs de compilation natives
+- Suite de tests locale fiabilisee: PostgreSQL local demarre automatiquement et RSpec isole de `DATABASE_URL` distant
+
 ## [1.10.2] - 2026-03-27
 
 ### Corrigé

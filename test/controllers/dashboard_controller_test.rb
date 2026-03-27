@@ -8,7 +8,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
   test "should get index" do
-    get dashboard_index_url
+    get dashboard_url
     assert_response :success
   end
 end

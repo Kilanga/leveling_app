@@ -1,6 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+
+# Ensure test suite never connects to a remote DATABASE_URL inherited from shell/host.
+ENV['DATABASE_URL'] = ENV.fetch(
+  'TEST_DATABASE_URL',
+  "postgresql://#{ENV.fetch('DB_USERNAME', 'postgres')}:#{ENV.fetch('DB_PASSWORD', 'password')}@#{ENV.fetch('DB_HOST', 'localhost')}:#{ENV.fetch('DB_PORT', '5432')}/#{ENV.fetch('TEST_DB_NAME', 'leveling_app_test')}"
+)
+
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
