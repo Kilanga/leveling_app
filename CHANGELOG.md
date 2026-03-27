@@ -17,6 +17,13 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.2] - 2026-03-27
+
+### Corrigé
+- Boutique cosmétiques: correction d'une erreur 500 sur `/purchases/new?tab=cosmetics` quand l'environnement n'a pas encore les colonnes `active_profile_frame_id`, `active_xp_theme_id` et `active_profile_card_id`.
+- Ajout d'un mode de compatibilité temporaire: les apercus et achats restent visibles, et l'activation est masquée avec un message explicite tant que la migration DB n'est pas appliquée.
+- Mapping des classes CSS cosmétiques rendu robuste aux noms complets des items (ex: `Cadre Standard`, `Theme XP Neon`, `Carte de Visite Royale`).
+
 ## [1.15.1] - 2026-03-27
 
 ### Modifié

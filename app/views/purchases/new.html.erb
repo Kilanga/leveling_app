@@ -136,8 +136,18 @@
               <% end %>
             </div>
           <% elsif @active_shop_tab == "cosmetics" %>
+            <% cosmetics_activation_supported = current_user.respond_to?(:active_profile_frame_id) && current_user.respond_to?(:active_xp_theme_id) && current_user.respond_to?(:active_profile_card_id) %>
+            <% active_profile_frame_id = cosmetics_activation_supported ? current_user.active_profile_frame_id : nil %>
+            <% active_xp_theme_id = cosmetics_activation_supported ? current_user.active_xp_theme_id : nil %>
+            <% active_profile_card_id = cosmetics_activation_supported ? current_user.active_profile_card_id : nil %>
+
             <h2 class="section-title">Cosmétiques</h2>
             <p class="quest-meta mb-3">Personnalise ton profil et tes barres de progression.</p>
+            <% unless cosmetics_activation_supported %>
+              <div class="alert alert-warning">
+                Les apercus et achats sont disponibles. L'activation des cosmetiques sera disponible apres migration complete de la base de donnees.
+              </div>
+            <% end %>
 
             <!-- Cadres de Profil -->
             <h3 class="section-title mt-4">Cadres de Profil</h3>
@@ -145,7 +155,7 @@
               <% @frame_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
-                <% active = current_user.active_profile_frame_id == item.id %>
+                <% active = cosmetics_activation_supported && active_profile_frame_id == item.id %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
                     <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
@@ -172,7 +182,9 @@
                     <% end %>
                   </div>
 
-                  <% if active %>
+                  <% if !cosmetics_activation_supported %>
+                    <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
+                  <% elsif active %>
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-brand" %>
@@ -192,7 +204,7 @@
               <% @theme_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
-                <% active = current_user.active_xp_theme_id == item.id %>
+                <% active = cosmetics_activation_supported && active_xp_theme_id == item.id %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
                     <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
@@ -220,7 +232,9 @@
                     <% end %>
                   </div>
 
-                  <% if active %>
+                  <% if !cosmetics_activation_supported %>
+                    <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
+                  <% elsif active %>
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-brand" %>
@@ -240,7 +254,7 @@
               <% @card_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
-                <% active = current_user.active_profile_card_id == item.id %>
+                <% active = cosmetics_activation_supported && active_profile_card_id == item.id %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
                     <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
@@ -272,7 +286,9 @@
                     <% end %>
                   </div>
 
-                  <% if active %>
+                  <% if !cosmetics_activation_supported %>
+                    <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
+                  <% elsif active %>
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-brand" %>
