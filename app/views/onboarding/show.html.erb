@@ -1,5 +1,5 @@
-<h1 class="page-title">Onboarding</h1>
-<p class="page-subtitle">Configure ton profil de progression en moins de 2 minutes.</p>
+<h1 class="page-title">Tutoriel de demarrage</h1>
+<p class="page-subtitle">Configure tes priorites et choisis directement tes premieres missions.</p>
 
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
@@ -16,15 +16,25 @@
         <% end %>
       </div>
 
-      <h2 class="section-title">2. Missions recommandees</h2>
-      <div id="onboarding-recommendations" data-quest-pool='<%= json_escape(@quest_pool.to_json) %>' data-empty-message="Selectionne des categories pour voir tes recommandations.">
+      <h2 class="section-title">2. Selectionne tes missions (optionnel)</h2>
+      <p class="quest-meta">Tu peux en choisir jusqu'a 6 pour demarrer tout de suite.</p>
+
+      <div id="onboarding-recommendations"
+           data-quest-pool='<%= json_escape(@quest_pool.to_json) %>'
+           data-empty-message="Selectionne des categories pour voir tes recommandations."
+           data-selected-quest-ids='<%= @selected_quest_ids.join(",") %>'>
         <div id="onboarding-recommendations-list" class="mb-3">
           <% if @recommended_quests.any? %>
             <div class="quest-list quest-list--flat">
               <% @recommended_quests.each do |quest| %>
                 <div class="quest-row quest-row--flat">
-                  <strong><%= quest.title %></strong>
-                  <p class="quest-meta mb-0"><%= quest.category&.name || "Categorie" %> - <%= quest.xp %> XP</p>
+                  <label class="d-flex align-items-start gap-2 mb-0 tutorial-quest-label">
+                    <%= check_box_tag "quest_ids[]", quest.id, @selected_quest_ids.include?(quest.id), class: "mt-1" %>
+                    <span>
+                      <strong><%= quest.title %></strong>
+                      <span class="quest-meta d-block"><%= quest.category&.name || "Categorie" %> - <%= quest.xp %> XP</span>
+                    </span>
+                  </label>
                 </div>
               <% end %>
             </div>
@@ -34,7 +44,7 @@
         </div>
       </div>
 
-      <%= submit_tag "Terminer mon onboarding", class: "btn btn-brand" %>
+      <%= submit_tag "Terminer le tutoriel", class: "btn btn-brand" %>
     <% end %>
   </div>
 </div>

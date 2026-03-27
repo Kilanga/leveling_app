@@ -14,6 +14,20 @@ function parseQuestPool(container) {
   }
 }
 
+function parseSelectedQuestIds(container) {
+  const raw = (container.dataset.selectedQuestIds || "").trim();
+  if (!raw) {
+    return new Set();
+  }
+
+  const ids = raw
+    .split(",")
+    .map((value) => Number.parseInt(value, 10))
+    .filter((id) => Number.isInteger(id) && id > 0);
+
+  return new Set(ids);
+}
+
 function buildRecommendations(questPool, selectedIds) {
   if (!selectedIds.length) {
     return [];
@@ -25,7 +39,7 @@ function buildRecommendations(questPool, selectedIds) {
     .slice(0, 6);
 }
 
-function renderRecommendations(list, recommendations, emptyMessage) {
+function renderRecommendations(list, recommendations, emptyMessage, selectedQuestIds) {
   list.innerHTML = "";
 
   if (!recommendations.length) {
@@ -43,17 +57,32 @@ function renderRecommendations(list, recommendations, emptyMessage) {
     const row = document.createElement("div");
     row.className = "quest-row quest-row--flat";
 
+    const label = document.createElement("label");
+    label.className = "d-flex align-items-start gap-2 mb-0 tutorial-quest-label";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "quest_ids[]";
+    checkbox.value = String(quest.id || "");
+    checkbox.className = "mt-1";
+    checkbox.checked = selectedQuestIds.has(Number(quest.id));
+
+    const textWrap = document.createElement("span");
+
     const title = document.createElement("strong");
     title.textContent = quest.title || "Mission";
 
-    const meta = document.createElement("p");
-    meta.className = "quest-meta mb-0";
+    const meta = document.createElement("span");
+    meta.className = "quest-meta d-block";
     const category = quest.category_name || "Categorie";
     const xp = Number(quest.xp) || 0;
     meta.textContent = `${category} - ${xp} XP`;
 
-    row.appendChild(title);
-    row.appendChild(meta);
+    textWrap.appendChild(title);
+    textWrap.appendChild(meta);
+    label.appendChild(checkbox);
+    label.appendChild(textWrap);
+    row.appendChild(label);
     wrapper.appendChild(row);
   });
 
@@ -74,22 +103,40 @@ function initOnboardingPreview() {
   }
 
   const questPool = parseQuestPool(container);
+  const selectedQuestIds = parseSelectedQuestIds(container);
   const emptyMessage = container.dataset.emptyMessage || "Selectionne des categories pour voir tes recommandations.";
 
   const update = () => {
     const selectedIds = selectedCategoryIds(form);
     const recommendations = buildRecommendations(questPool, selectedIds);
-    renderRecommendations(list, recommendations, emptyMessage);
+    const visibleIds = new Set(recommendations.map((quest) => Number(quest.id)));
+    Array.from(selectedQuestIds).forEach((questId) => {
+      if (!visibleIds.has(questId)) {
+        selectedQuestIds.delete(questId);
+      }
+    });
+    renderRecommendations(list, recommendations, emptyMessage, selectedQuestIds);
   };
 
   form.addEventListener("change", (event) => {
     if (!(event.target instanceof HTMLInputElement)) {
       return;
     }
-    if (event.target.name !== "category_ids[]") {
+    if (event.target.name === "category_ids[]") {
+      update();
       return;
     }
-    update();
+    if (event.target.name === "quest_ids[]") {
+      const questId = Number.parseInt(event.target.value, 10);
+      if (!Number.isInteger(questId) || questId <= 0) {
+        return;
+      }
+      if (event.target.checked) {
+        selectedQuestIds.add(questId);
+      } else {
+        selectedQuestIds.delete(questId);
+      }
+    }
   });
 
   form.dataset.onboardingPreviewBound = "1";

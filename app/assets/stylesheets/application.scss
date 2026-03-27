@@ -942,6 +942,14 @@ body::before {
   max-width: 680px;
 }
 
+.tutorial-quest-label {
+  cursor: pointer;
+}
+
+.tutorial-quest-label input[type="checkbox"] {
+  accent-color: #38bdf8;
+}
+
 .text-primary {
   color: #7edbff !important;
 }
