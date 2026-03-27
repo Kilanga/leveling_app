@@ -59,22 +59,19 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).not_to include("room")
     end
 
-    it "applies the same complete behavior on category filter" do
+    it "renders movement indicators and no filter form" do
       category = Category.create!(name: "Focus")
-      other_category = Category.create!(name: "Other")
-      current = create_user_with_stat(index: 100, category: other_category, xp: 1, league_tier: 1, league_room: 1)
+      current = create_user_with_stat(index: 100, category: category, xp: 1, league_tier: 2, league_room: 1)
       sign_in current
-
-      UserStat.create!(user: current, category: category, level: 1, xp: 0, total_xp: 1)
       add_weekly_xp_for(current, category: category, xp: 1)
 
       focused_users = (1..12).map do |i|
-        user = create_user_with_stat(index: 100 + i, category: category, xp: 1500 - i, league_tier: 1, league_room: 1)
+        user = create_user_with_stat(index: 100 + i, category: category, xp: 1500 - i, league_tier: 2, league_room: 1)
         add_weekly_xp_for(user, category: category, xp: 1500 - i)
         user
       end
 
-      get leaderboard_index_path, params: { category_id: category.id }
+      get leaderboard_index_path
 
       expect(response).to have_http_status(:success)
       expect(response.body).to include(focused_users.first.pseudo)
@@ -82,6 +79,10 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).to include(focused_users[10].pseudo)
       expect(response.body).to include(focused_users[11].pseudo)
       expect(response.body).to include(current.pseudo)
+      expect(response.body).to include("UP")
+      expect(response.body).to include("DOWN")
+      expect(response.body).to include("HOLD")
+      expect(response.body).not_to include("Filtrer")
       expect(response.body).not_to include("room")
     end
   end

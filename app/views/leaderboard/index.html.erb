@@ -3,21 +3,10 @@
 <div class="surface-card surface-card--shell">
   <div class="card-body">
     <section class="hud-section">
-      <%= form_with url: leaderboard_index_path, method: :get, local: true, class: "mb-3 mobile-stack" do %>
-        <div class="row align-items-end g-2">
-          <div class="col-md-6">
-            <%= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id].presence), include_blank: "Toutes les catégories", class: "form-select" %>
-          </div>
-          <div class="col-md-6">
-            <%= submit_tag "Filtrer", class: "btn btn-brand" %>
-          </div>
-        </div>
-      <% end %>
-
       <p class="quest-meta mb-1">Ligue actuelle: <strong><%= @current_league_name %></strong></p>
-      <p class="quest-meta mb-3">Classement complet de ta ligue pour le filtre selectionne. Tu peux scroller pour voir toute la liste.</p>
+      <p class="quest-meta mb-3">Classement complet de ta ligue. Tu peux scroller pour voir toute la liste.</p>
 
-      <h2 class="section-title">Classement ligue hebdomadaire (filtre actif)</h2>
+      <h2 class="section-title">Classement ligue hebdomadaire</h2>
       <div class="table-responsive league-table-scroll">
         <table class="table">
           <thead>
@@ -33,7 +22,16 @@
             <% if @league_standings.any? %>
               <% @league_standings.each do |entry| %>
                 <tr class="<%= 'table-active' if entry[:user].id == current_user.id %>">
-                  <td>#<%= entry[:rank] %></td>
+                  <td>
+                    #<%= entry[:rank] %>
+                    <% if entry[:projected_movement].to_i > 0 %>
+                      <span class="league-trend league-trend--up">UP</span>
+                    <% elsif entry[:projected_movement].to_i < 0 %>
+                      <span class="league-trend league-trend--down">DOWN</span>
+                    <% else %>
+                      <span class="league-trend league-trend--hold">HOLD</span>
+                    <% end %>
+                  </td>
                   <td>
                     <%= user_avatar_image(entry[:user], width: 44, height: 44, css_class: "rounded-circle", alt: "Avatar de #{entry[:user].pseudo}") %>
                   </td>

@@ -5,26 +5,9 @@ class LeaderboardController < ApplicationController
     WeeklyLeague.ensure_user_league_slot!(current_user)
     WeeklyLeague.settle_leagues_if_needed!
 
-    if params[:category_id].present? && !params[:category_id].empty?
-      users_scope = User.joins(:user_stats)
-                        .where(user_stats: { category_id: params[:category_id] })
-                        .group("users.id")
-                        .select("users.*, MAX(user_stats.total_xp) AS total_xp_sum")
-                        .order("total_xp_sum DESC")
-    else
-      users_scope = User.joins(:user_stats)
-                        .group("users.id")
-                        .select("users.*, COALESCE(SUM(user_stats.total_xp), 0) as total_xp_sum")
-                        .order("total_xp_sum DESC")
-    end
-
-    league_users_scope = users_scope
-    if User.column_names.include?("league_tier")
-      league_users_scope = league_users_scope.where(league_tier: current_user[:league_tier].to_i.nonzero? || 1)
-    end
-    if User.column_names.include?("league_room")
-      league_users_scope = league_users_scope.where(league_room: current_user[:league_room].to_i.nonzero? || 1)
-    end
+    league_users_scope = User.all
+    league_users_scope = league_users_scope.where(league_tier: current_user[:league_tier].to_i.nonzero? || 1) if User.column_names.include?("league_tier")
+    league_users_scope = league_users_scope.where(league_room: current_user[:league_room].to_i.nonzero? || 1) if User.column_names.include?("league_room")
 
     full_standings = WeeklyLeague.standings(league_users_scope.to_a)
     @league_standings = full_standings

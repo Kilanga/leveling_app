@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.12.1] - 2026-03-27
+
+### Modifié
+- Classement ligue: suppression du filtre categorie pour simplifier la lecture et se concentrer sur la cohorte de ligue du joueur.
+- Classement ligue: ajout d'un indicateur de tendance par rang (UP/DOWN/HOLD) avec codes visuels vert/rouge/neutre pour mieux voir la projection de mouvement.
+
 ## [1.12.0] - 2026-03-27
 
 ### Ajouté

@@ -7,12 +7,14 @@ class WeeklyLeague
     def standings(users, range: Time.current.all_week)
       ranked = users.sort_by { |u| -weekly_xp(u, range: range) }
       ranked.map.with_index(1) do |user, rank|
+        tier_level = user[:league_tier].to_i.nonzero? || 1
         {
           user: user,
           rank: rank,
           weekly_xp: weekly_xp(user, range: range),
           tier: tier_for_user(user),
-          movement: league_columns_available? ? user[:league_last_move].to_i : 0
+          movement: league_columns_available? ? user[:league_last_move].to_i : 0,
+          projected_movement: projected_movement_for(rank: rank, size: ranked.size, tier_level: tier_level)
         }
       end
     end
@@ -101,6 +103,19 @@ class WeeklyLeague
       return 0 if size < 5
 
       [(size * PROMOTION_RATE).floor, 1].max
+    end
+
+    def projected_movement_for(rank:, size:, tier_level:)
+      move_count = promotion_relegation_count_for(size)
+      return 0 if move_count.zero?
+
+      if rank <= move_count && tier_level < TIERS.size
+        1
+      elsif rank > size - move_count && tier_level > 1
+        -1
+      else
+        0
+      end
     end
 
     def tier_for_user(user)
