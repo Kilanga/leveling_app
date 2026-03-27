@@ -25,11 +25,11 @@
                   <td>
                     #<%= entry[:rank] %>
                     <% if entry[:projected_movement].to_i > 0 %>
-                      <span class="league-trend league-trend--up">UP</span>
+                      <span class="league-trend league-trend--up" aria-label="Promotion projetee" title="Promotion projetee">▲</span>
                     <% elsif entry[:projected_movement].to_i < 0 %>
-                      <span class="league-trend league-trend--down">DOWN</span>
+                      <span class="league-trend league-trend--down" aria-label="Relegation projetee" title="Relegation projetee">▼</span>
                     <% else %>
-                      <span class="league-trend league-trend--hold">HOLD</span>
+                      <span class="league-trend league-trend--hold" aria-label="Maintien projete" title="Maintien projete">•</span>
                     <% end %>
                   </td>
                   <td>

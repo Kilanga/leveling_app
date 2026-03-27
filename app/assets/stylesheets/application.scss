@@ -915,12 +915,15 @@ body::before {
 .league-trend {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   margin-left: 0.45rem;
-  padding: 0.08rem 0.4rem;
+  min-width: 1.35rem;
+  height: 1.2rem;
+  padding: 0.04rem 0.28rem;
   border-radius: 999px;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   line-height: 1.2;
 }
 

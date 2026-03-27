@@ -79,9 +79,9 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).to include(focused_users[10].pseudo)
       expect(response.body).to include(focused_users[11].pseudo)
       expect(response.body).to include(current.pseudo)
-      expect(response.body).to include("UP")
-      expect(response.body).to include("DOWN")
-      expect(response.body).to include("HOLD")
+      expect(response.body).to include("▲")
+      expect(response.body).to include("▼")
+      expect(response.body).to include("•")
       expect(response.body).not_to include("Filtrer")
       expect(response.body).not_to include("room")
     end
