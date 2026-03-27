@@ -12,6 +12,12 @@ Regle simple de versioning:
 
 ## [Non publié]
 
+## [1.9.1] - 2026-03-27
+
+### Modifié
+- Reequilibrage de la difficulte des titres debloquables (rare/epic/legendary) avec des objectifs plus exigeants
+- Ajustement des criteres de progression utilises par `TitleUnlocker` (niveaux de categorie, XP par categorie et volume de quetes)
+
 ## [1.9.0] - 2026-03-27
 
 ### Modifié

@@ -31,23 +31,23 @@ class TitleUnlocker
     {
       name: "Stratege Patient",
       rarity: "rare",
-      objective: "Atteindre un niveau total de 25.",
+      objective: "Atteindre un niveau total de 60 et completer 30 quetes.",
       description: "Tu construis ta progression avec discipline.",
-      condition: ->(stats) { stats[:total_level] >= 25 }
+      condition: ->(stats) { stats[:total_level] >= 60 && stats[:completed_quests] >= 30 }
     },
     {
       name: "Architecte du Progres",
       rarity: "epic",
-      objective: "Completer 40 quetes uniques.",
+      objective: "Completer 70 quetes uniques et atteindre 1500 XP dans 4 categories.",
       description: "Tu maitrises un large spectre de missions.",
-      condition: ->(stats) { stats[:unique_completed_quests] >= 40 }
+      condition: ->(stats) { stats[:unique_completed_quests] >= 70 && stats[:categories_with_1500_xp] >= 4 }
     },
     {
       name: "Ascension Totale",
       rarity: "legendary",
-      objective: "Atteindre le niveau 10 dans les 5 categories.",
+      objective: "Atteindre le niveau 20 dans les 5 categories et un niveau total de 120.",
       description: "Tu incarnes l'excellence globale du jeu.",
-      condition: ->(stats) { stats[:categories_with_level_10] >= 5 }
+      condition: ->(stats) { stats[:categories_with_level_20] >= 5 && stats[:total_level] >= 120 }
     }
   ].freeze
 
@@ -103,7 +103,8 @@ class TitleUnlocker
         total_level: user.user_stats.sum(:level),
         weekly_completed_7d: user.user_weekly_quests.where(completed: true).where("updated_at >= ?", 7.days.ago).count,
         categories_with_500_xp: user.user_stats.where("total_xp >= 500").distinct.count(:category_id),
-        categories_with_level_10: user.user_stats.where("level >= 10").distinct.count(:category_id)
+        categories_with_1500_xp: user.user_stats.where("total_xp >= 1500").distinct.count(:category_id),
+        categories_with_level_20: user.user_stats.where("level >= 20").distinct.count(:category_id)
       }
     end
   end
