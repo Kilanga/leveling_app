@@ -4,15 +4,30 @@ class OnboardingController < ApplicationController
   def show
     @categories = []
     @selected_ids = current_user.onboarding_category_ids
+    @quest_pool = []
     @recommended_quests = Quest.none
 
     return unless feature_tables_ready?(:categories, :quests)
 
     @categories = Category.order(:name)
-    @recommended_quests = Quest.includes(:category).where(category_id: @selected_ids).order(xp: :asc).limit(6) if @selected_ids.any?
+    @quest_pool = Quest.includes(:category)
+                      .where(category_id: @categories.select(:id))
+                      .order(xp: :asc)
+                      .limit(120)
+                      .map do |quest|
+      {
+        id: quest.id,
+        title: quest.title.to_s,
+        xp: quest.xp.to_i,
+        category_id: quest.category_id,
+        category_name: quest.category&.name.to_s
+      }
+    end
+    @recommended_quests = recommended_from_pool(@selected_ids)
   rescue StandardError => e
     Rails.logger.warn("Onboarding show failed: #{e.class} #{e.message}")
     @categories = []
+    @quest_pool = []
     @recommended_quests = Quest.none
   end
 
@@ -35,5 +50,16 @@ class OnboardingController < ApplicationController
   rescue StandardError => e
     Rails.logger.warn("Onboarding update failed: #{e.class} #{e.message}")
     redirect_to onboarding_path, alert: "Onboarding temporairement indisponible."
+  end
+
+  private
+
+  def recommended_from_pool(category_ids)
+    return Quest.none if category_ids.blank?
+
+    ids = Array(category_ids).map(&:to_i).reject(&:zero?).uniq
+    return Quest.none if ids.empty?
+
+    Quest.includes(:category).where(category_id: ids).order(xp: :asc).limit(6)
   end
 end

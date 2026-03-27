@@ -14,6 +14,7 @@ Regle simple de versioning:
 
 ### Corrigé
 - Route onboarding: liaison explicite vers `OnboardingController` pour eviter l'erreur 500 `uninitialized constant OnboardingsController`.
+- Onboarding: les missions recommandees se mettent maintenant a jour instantanement quand les categories sont cochees/decoches, sans rechargement de page.
 
 ### Modifié
 - Boutique packs: clarification visuelle de l'offre de bienvenue avec total de coins recu mis en avant et detail base + bonus sur chaque pack.

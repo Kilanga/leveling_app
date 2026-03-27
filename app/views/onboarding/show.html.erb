@@ -3,7 +3,7 @@
 
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
-    <%= form_with url: onboarding_path, method: :patch, local: true do %>
+    <%= form_with url: onboarding_path, method: :patch, local: true, html: { id: "onboarding-form" } do %>
       <h2 class="section-title">1. Choisis 3 categories prioritaires</h2>
       <div class="row g-2 mb-3">
         <% @categories.each do |category| %>
@@ -17,18 +17,22 @@
       </div>
 
       <h2 class="section-title">2. Missions recommandees</h2>
-      <% if @recommended_quests.any? %>
-        <div class="quest-list quest-list--flat mb-3">
-          <% @recommended_quests.each do |quest| %>
-            <div class="quest-row quest-row--flat">
-              <strong><%= quest.title %></strong>
-              <p class="quest-meta mb-0"><%= quest.category&.name || "Categorie" %> - <%= quest.xp %> XP</p>
+      <div id="onboarding-recommendations" data-quest-pool='<%= json_escape(@quest_pool.to_json) %>' data-empty-message="Selectionne des categories pour voir tes recommandations.">
+        <div id="onboarding-recommendations-list" class="mb-3">
+          <% if @recommended_quests.any? %>
+            <div class="quest-list quest-list--flat">
+              <% @recommended_quests.each do |quest| %>
+                <div class="quest-row quest-row--flat">
+                  <strong><%= quest.title %></strong>
+                  <p class="quest-meta mb-0"><%= quest.category&.name || "Categorie" %> - <%= quest.xp %> XP</p>
+                </div>
+              <% end %>
             </div>
+          <% else %>
+            <p class="quest-meta mb-0">Selectionne des categories pour voir tes recommandations.</p>
           <% end %>
         </div>
-      <% else %>
-        <p class="quest-meta">Selectionne des categories pour voir tes recommandations.</p>
-      <% end %>
+      </div>
 
       <%= submit_tag "Terminer mon onboarding", class: "btn btn-brand" %>
     <% end %>
