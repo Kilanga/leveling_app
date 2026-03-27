@@ -4,7 +4,8 @@ class FriendsController < ApplicationController
   def index
     sent_friend_ids = current_user.friendships.accepted.pluck(:friend_id)
     received_friend_ids = Friendship.accepted.where(friend_id: current_user.id).pluck(:user_id)
-    @friends = User.where(id: sent_friend_ids + received_friend_ids).distinct
+    friend_ids = (sent_friend_ids + received_friend_ids).uniq
+    @friends = User.where(id: friend_ids).distinct
 
     pending_sent_ids = current_user.friendships.pending.pluck(:friend_id)
     pending_received_ids = Friendship.pending.where(friend_id: current_user.id).pluck(:user_id)
@@ -14,6 +15,24 @@ class FriendsController < ApplicationController
                                              .where("challenger_id = :id OR challenged_id = :id", id: current_user.id)
                                              .includes(:challenger, :challenged)
                                              .order(ends_at: :asc)
+
+    if friend_ids.any?
+      @most_completed_quests = UserQuest.joins(:quest, :user)
+                                        .where(user_id: friend_ids)
+                                        .select("user_id, quest_id, COUNT(*) AS completed_count")
+                                        .group("user_id, quest_id")
+                                        .order(Arel.sql("COUNT(*) DESC"))
+                                        .limit(5)
+                                        .preload(:user, :quest)
+
+      @recent_quests = UserQuest.includes(:user, :quest)
+                                .where(user_id: friend_ids)
+                                .order(updated_at: :desc)
+                                .limit(5)
+    else
+      @most_completed_quests = []
+      @recent_quests = []
+    end
   end
 
 

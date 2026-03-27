@@ -2,8 +2,29 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   WEEKLY_REUSE_WINDOW = 6.weeks
+  DAILY_TARGET = 2
+  DAILY_CHEST_REWARD_COINS = 35
+
+  def claim_daily_chest
+    if completed_today_count < DAILY_TARGET
+      redirect_to dashboard_path, alert: "Tu dois valider #{DAILY_TARGET} quetes aujourd'hui pour ouvrir le coffre quotidien."
+      return
+    end
+
+    if daily_chest_claimed_today?
+      redirect_to dashboard_path, alert: "Coffre quotidien deja reclame aujourd'hui."
+      return
+    end
+
+    claim_daily_chest_reward!
+    ProductAnalytics.track(user: current_user, event_name: "daily_chest_claimed", metadata: { reward: DAILY_CHEST_REWARD_COINS })
+
+    redirect_to dashboard_path, notice: "Coffre quotidien ouvert: +#{DAILY_CHEST_REWARD_COINS} coins."
+  end
 
   def index
+    @daily_login_claim = current_user.claim_daily_login_bonus!
+
     active_weekly_quest = ensure_single_active_global_weekly_quest!
     attach_current_user_to_active_weekly_quest!(active_weekly_quest)
 
@@ -35,17 +56,12 @@ class DashboardController < ApplicationController
     @total_level = @stats.sum(&:level)
     @weekly_streak_count = current_user.weekly_streak_count.to_i
     @weekly_streak_last_completed_on = current_user.weekly_streak_last_completed_on
-
-    league_users = User.includes(:user_quests).limit(100)
-    @league_standings = WeeklyLeague.standings(league_users).first(10)
-    @my_league_entry = @league_standings.find { |entry| entry[:user].id == current_user.id } ||
-               WeeklyLeague.standings([current_user]).first
-    @daily_target = 2
-    @completed_today_count = current_user.user_quests
-      .where(completed: true)
-      .where(updated_at: Time.zone.today.all_day)
-      .count
+    @daily_target = DAILY_TARGET
+    @completed_today_count = completed_today_count
     @daily_progress_percent = [(@completed_today_count.to_f / @daily_target * 100).round, 100].min
+    @daily_chest_claimed_today = daily_chest_claimed_today?
+    @daily_chest_reward_coins = DAILY_CHEST_REWARD_COINS
+    @friends_activity = recent_friends_activity
 
     respond_to do |format|
       format.html
@@ -54,6 +70,46 @@ class DashboardController < ApplicationController
   end
 
   private
+
+  def completed_today_count
+    current_user.user_quests
+      .where(completed: true)
+      .where(updated_at: Time.zone.today.all_day)
+      .count
+  end
+
+  def daily_chest_claimed_today?
+    current_user.purchases.exists?(transaction_id: daily_chest_transaction_id)
+  end
+
+  def daily_chest_transaction_id
+    "daily-chest-#{current_user.id}-#{Time.zone.today.iso8601}"
+  end
+
+  def claim_daily_chest_reward!
+    ActiveRecord::Base.transaction do
+      current_user.increment!(:coins, DAILY_CHEST_REWARD_COINS)
+      current_user.purchases.create!(
+        amount: DAILY_CHEST_REWARD_COINS,
+        item_type: "daily_chest",
+        status: "completed",
+        transaction_id: daily_chest_transaction_id
+      )
+    end
+  end
+
+  def recent_friends_activity
+    sent_friend_ids = current_user.friendships.accepted.pluck(:friend_id)
+    received_friend_ids = Friendship.accepted.where(friend_id: current_user.id).pluck(:user_id)
+    friend_ids = (sent_friend_ids + received_friend_ids).uniq
+    return [] if friend_ids.empty?
+
+    ProductEvent.where(user_id: friend_ids)
+      .where(event_name: %w[quest_completed weekly_quest_completed daily_chest_claimed friend_request_accepted])
+      .includes(:user)
+      .order(created_at: :desc)
+      .limit(8)
+  end
 
   def ensure_single_active_global_weekly_quest!
     active_quests = WeeklyQuest.where("valid_until >= ?", Time.current).order(valid_until: :desc, created_at: :desc)

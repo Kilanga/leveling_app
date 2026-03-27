@@ -1,6 +1,8 @@
 class LeaderboardController < ApplicationController
   before_action :authenticate_user!
 
+  TOP_PLAYERS_LIMIT = 10
+
   def index
     if params[:category_id].present? && !params[:category_id].empty?
       @players = User.joins(:user_stats)
@@ -8,35 +10,16 @@ class LeaderboardController < ApplicationController
                      .group("users.id")
                      .select("users.*, MAX(user_stats.total_xp) AS total_xp_sum")
                      .order("total_xp_sum DESC")
+                     .limit(TOP_PLAYERS_LIMIT)
     else
       @players = User.joins(:user_stats)
                      .group("users.id")
                      .select("users.*, COALESCE(SUM(user_stats.total_xp), 0) as total_xp_sum")
                      .order("total_xp_sum DESC")
+                     .limit(TOP_PLAYERS_LIMIT)
     end
 
-            @league_by_user_id = WeeklyLeague.standings(@players.to_a).index_by { |entry| entry[:user].id }
-
-    friend_ids = current_user.friendships.where(status: "accepted").pluck(:friend_id) +
-                 Friendship.where(friend: current_user, status: "accepted").pluck(:user_id)
-
-    if friend_ids.any?
-      @most_completed_quests = UserQuest.joins(:quest, :user)
-                                        .where(user_id: friend_ids)
-                                        .select("user_id, quest_id, COUNT(*) AS completed_count")
-                                        .group("user_id, quest_id")
-                                        .order(Arel.sql("COUNT(*) DESC"))
-                                        .limit(5)
-                                        .preload(:user, :quest)
-
-      @recent_quests = UserQuest.includes(:user, :quest)
-                                .where(user_id: friend_ids)
-                                .order(updated_at: :desc)
-                                .limit(5)
-    else
-      @most_completed_quests = []
-      @recent_quests = []
-    end
+    @league_by_user_id = WeeklyLeague.standings(@players.to_a).index_by { |entry| entry[:user].id }
   end
 
   def show

@@ -125,3 +125,39 @@
     <% end %>
   </div>
 </div>
+
+<div class="surface-card surface-card--shell mt-4">
+  <div class="card-body">
+    <section class="hud-section">
+      <h2 class="section-title mt-1">Quetes les plus realisees par mes amis</h2>
+      <% if @most_completed_quests.any? %>
+        <ul class="list-group surface-list">
+          <% @most_completed_quests.each do |quest| %>
+            <li class="list-group-item">
+              <strong><%= quest.quest.title %></strong> - Completee <%= quest.completed_count %> fois par
+              <%= link_to quest.user.pseudo, leaderboard_path(quest.user), class: "text-primary fw-bold" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="quest-meta mb-0">Aucune quete populaire chez tes amis.</p>
+      <% end %>
+    </section>
+
+    <section class="hud-section mt-4">
+      <h2 class="section-title">Dernieres quetes realisees par mes amis</h2>
+      <% if @recent_quests.any? %>
+        <ul class="list-group surface-list">
+          <% @recent_quests.each do |user_quest| %>
+            <li class="list-group-item">
+              <strong><%= user_quest.quest.title %></strong> - Termine le <%= user_quest.updated_at.strftime("%d/%m/%Y") %> par
+              <%= link_to user_quest.user.pseudo, leaderboard_path(user_quest.user), class: "text-primary fw-bold" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="quest-meta mb-0">Aucune quete recente.</p>
+      <% end %>
+    </section>
+  </div>
+</div>

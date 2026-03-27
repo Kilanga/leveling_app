@@ -14,6 +14,8 @@
         </div>
       <% end %>
 
+      <p class="quest-meta mb-3">Affichage limite aux 10 premiers joueurs pour le filtre selectionne.</p>
+
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -45,46 +47,12 @@
               <% end %>
             <% else %>
               <tr>
-                <td colspan="5" class="text-center">Aucun joueur trouvé.</td>
+                <td colspan="5" class="text-center">Aucun joueur trouve.</td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
-    </section>
-
-    <hr class="hud-divider">
-
-    <section class="hud-section">
-      <h2 class="section-title mt-1">Quêtes les plus réalisées par mes amis</h2>
-      <% if @most_completed_quests.any? %>
-        <ul class="list-group surface-list">
-          <% @most_completed_quests.each do |quest| %>
-            <li class="list-group-item">
-              <strong><%= quest.quest.title %></strong> - Complétée <%= quest.completed_count %> fois par 
-              <%= link_to quest.user.pseudo, leaderboard_path(quest.user), class: "text-primary fw-bold" %>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>Aucune quête populaire chez tes amis.</p>
-      <% end %>
-    </section>
-
-    <section class="hud-section mt-4">
-      <h2 class="section-title">Dernières quêtes réalisées par mes amis</h2>
-      <% if @recent_quests.any? %>
-        <ul class="list-group surface-list">
-          <% @recent_quests.each do |user_quest| %>
-            <li class="list-group-item">
-              <strong><%= user_quest.quest.title %></strong> - Terminé le <%= user_quest.updated_at.strftime("%d/%m/%Y") %> par 
-              <%= link_to user_quest.user.pseudo, leaderboard_path(user_quest.user), class: "text-primary fw-bold" %>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>Aucune quête récente.</p>
-      <% end %>
     </section>
   </div>
 </div>

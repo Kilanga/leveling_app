@@ -10,7 +10,35 @@ Regle simple de versioning:
 - MINOR (x.Y.0): nouvelles fonctionnalites ou changements structurants compatibles
 - MAJOR (X.0.0): rupture de compatibilite
 
+Regle de normalisation Keep a Changelog:
+- Sous-sections autorisees: `Ajouté`, `Modifié`, `Corrigé`, `Supprimé`, `Déprécié`, `Sécurité`
+- Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
+- Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
+
 ## [Non publié]
+
+## [1.11.6] - 2026-03-27
+
+### Modifié
+- Onglet Amis: ajout des sections "Quetes les plus realisees par mes amis" et "Dernieres quetes realisees par mes amis".
+- Onglet Classement: retrait de ces deux sections pour recentrer la page sur le ranking et la ligue.
+
+## [1.11.5] - 2026-03-27
+
+### Modifié
+- Ligue: retrait de l'affichage ligue du dashboard pour centraliser la fonctionnalite dans l'onglet Classement.
+- Classement: limite stricte a 10 joueurs affiches, y compris en mode global et avec filtre categorie.
+- Classement: ajout d'une indication explicite en interface sur la limite Top 10 pour le filtre actif.
+
+## [1.11.4] - 2026-03-27
+
+### Ajouté
+- Dashboard: bonus de connexion quotidienne avec progression de serie (streak) et recompense en coins.
+- Dashboard: coffre quotidien reclamable apres l'objectif journalier de quetes, avec protection anti double-claim.
+- Dashboard: feed d'activite recente des amis (quetes completees, quete hebdo, coffre quotidien, amitie acceptee).
+
+### Modifié
+- Engagement loop: objectif quotidien relie a une recompense tangible (coffre) pour renforcer la retention sans dupliquer les mecaniques de ligue/leaderboard.
 
 ## [1.11.3] - 2026-03-27
 
@@ -247,7 +275,7 @@ Regle simple de versioning:
 - Mise à jour de `faraday` vers `2.14.1` et `rexml` vers `3.4.4` suite à l'audit des vulnérabilités
 - Audit `bundler-audit` relancé: plus aucune vulnérabilité gem détectée
 
-### Tests
+### Modifié
 - Remplacement de tous les specs `pending` (helpers/models/views) par des tests exécutables
 - Exécution de la suite RSpec: `27 examples, 0 failures`
 
@@ -266,7 +294,7 @@ Regle simple de versioning:
 - Durcissement des redirections checkout Stripe avec validation explicite de l'URL et de l'hôte Stripe avant redirection externe
 - Réduction de la surface de mass assignment admin (retrait de `admin` des paramètres autorisés de mise à jour utilisateur)
 
-### Tests
+### Modifié
 - Correction des specs request `user_weekly_quests` et `users` pour utiliser les routes réelles et l'authentification Devise
 - Exécution de la suite RSpec: plus d'échec, uniquement des tests en attente
 
@@ -485,7 +513,7 @@ Regle simple de versioning:
 - Affinage du style des pages d'authentification tout en conservant un design moderne par cartes et responsive
 - Mise à jour du bouton Google OAuth avec `button_to`, méthode POST correcte et data-turbo: false
 
-### Améliorations UI
+### Modifié
 - Ajout du logo Google SVG sur le bouton d'authentification OAuth
 - Amélioration de l'accessibilité des boutons avec une sémantique HTML correcte (button au lieu de anchor)
 - Conservation des améliorations de mise en page par cartes, espacements et typographie de la v1.2.1
@@ -503,7 +531,7 @@ Regle simple de versioning:
 - Harmonisation du style des boutons OAuth sur toutes les pages d'authentification
 - Ajout d'améliorations responsive pour mobile et desktop
 
-### Améliorations UI
+### Modifié
 - Ajout d'un séparateur avec "or" entre le formulaire et les options OAuth
 - Implémentation d'un style Bootstrap 5 moderne avec fond dégradé (667eea → 764ba2)
 - Ajout d'effets hover et de retours visuels sur les éléments interactifs

@@ -8,6 +8,18 @@
   <% end %>
 </p>
 
+<% if @daily_login_claim[:claimed] %>
+  <div class="surface-card mb-4" role="status" aria-live="polite">
+    <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
+      <div>
+        <strong>Bonus connexion reclame: +<%= @daily_login_claim[:reward] %> coins</strong>
+        <p class="quest-meta mb-0">Serie actuelle: <%= @daily_login_claim[:streak] %> jour(s).</p>
+      </div>
+      <span class="shop-state-chip shop-state-chip--equipped">Connexion du jour</span>
+    </div>
+  </div>
+<% end %>
+
 <div class="surface-card mb-4">
   <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
     <div>
@@ -20,7 +32,7 @@
         <% end %>
       </p>
     </div>
-    <span class="shop-state-chip shop-state-chip--equipped">Ligue: <%= @my_league_entry[:tier] %></span>
+    <%= link_to "Voir la ligue dans Classement", leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
   </div>
 </div>
 
@@ -47,6 +59,49 @@
     <div class="xp-track mt-3">
       <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
     </div>
+    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
+      <p class="quest-meta mb-0">Coffre quotidien: +<%= @daily_chest_reward_coins %> coins.</p>
+      <% if @daily_chest_claimed_today %>
+        <span class="badge text-bg-success">Coffre deja ouvert</span>
+      <% else %>
+        <%= button_to "Ouvrir le coffre", claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="surface-card mb-4">
+  <div class="card-body">
+    <h2 class="section-title mb-3">Activite recente des amis</h2>
+    <% if @friends_activity.any? %>
+      <div class="quest-list quest-list--flat">
+        <% @friends_activity.each do |event| %>
+          <% metadata = event.metadata %>
+          <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
+            <div>
+              <strong><%= event.user&.pseudo || "Un ami" %></strong>
+              <p class="quest-meta mb-0">
+                <% case event.event_name %>
+                <% when "quest_completed" %>
+                  a complete une quete (+<%= metadata["xp"].to_i %> XP)
+                <% when "weekly_quest_completed" %>
+                  a valide sa quete hebdomadaire.
+                <% when "daily_chest_claimed" %>
+                  a ouvert le coffre quotidien (+<%= metadata["reward"].to_i %> coins)
+                <% when "friend_request_accepted" %>
+                  vient d'accepter une demande d'ami.
+                <% else %>
+                  vient de progresser.
+                <% end %>
+              </p>
+            </div>
+            <span class="muted-label"><%= l(event.created_at, format: :short) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-warning mb-0">Aucune activite amie recente. Ajoute des amis pour remplir ce feed.</div>
+    <% end %>
   </div>
 </div>
 
@@ -143,30 +198,6 @@
     <section class="hud-section">
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <span class="badge text-bg-dark">Niveau global: <%= @total_level %></span>
-      </div>
-
-      <h2 class="section-title mt-2">Top ligue hebdomadaire</h2>
-      <div class="table-responsive mb-4">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Rang</th>
-              <th>Joueur</th>
-              <th>XP semaine</th>
-              <th>Ligue</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @league_standings.each do |entry| %>
-              <tr>
-                <td>#<%= entry[:rank] %></td>
-                <td><%= entry[:user].pseudo %></td>
-                <td><%= entry[:weekly_xp] %></td>
-                <td><%= entry[:tier] %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
       </div>
 
       <% if @stats_data.any? %>

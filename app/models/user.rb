@@ -118,6 +118,32 @@ class User < ApplicationRecord
     FriendChallenge.active.where("challenger_id = :id OR challenged_id = :id", id: id)
   end
 
+  def claim_daily_login_bonus!
+    today = Time.zone.today
+
+    with_lock do
+      return { claimed: false, streak: daily_login_streak_count.to_i, reward: 0 } if daily_login_last_claimed_on == today
+
+      streak = if daily_login_last_claimed_on == today - 1.day
+        daily_login_streak_count.to_i + 1
+      else
+        1
+      end
+
+      # Every 7th day grants a bigger bonus while keeping daily progression rewarding.
+      reward = 20 + ([streak, 7].min - 1) * 5
+      reward += 40 if (streak % 7).zero?
+
+      update!(
+        daily_login_streak_count: streak,
+        daily_login_last_claimed_on: today,
+        coins: coins.to_i + reward
+      )
+
+      { claimed: true, streak: streak, reward: reward }
+    end
+  end
+
   def self.unique_pseudo_for(name, email)
     base = name.to_s.parameterize(separator: "_")
     base = email.to_s.split("@").first.to_s.parameterize(separator: "_") if base.blank?
