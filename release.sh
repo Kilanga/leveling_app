@@ -85,12 +85,12 @@ BEGIN {
 }
 END {
   if (found_unreleased != 1) {
-    print "ERROR: missing '## [Non publié]' section" > "/dev/stderr"
+    print "ERROR: missing section ## [Non publie]" > "/dev/stderr"
     exit 2
   }
 
   if (unreleased_has_content != 1) {
-    print "ERROR: section '## [Non publié]' is empty" > "/dev/stderr"
+    print "ERROR: section ## [Non publie] is empty" > "/dev/stderr"
     exit 3
   }
 }
