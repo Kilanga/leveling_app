@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post "activate_title", to: "users#activate_title"
   post "deactivate_title", to: "users#deactivate_title"
   post "activate_avatar", to: "users#activate_avatar"
+  post "activate_cosmetic", to: "users#activate_cosmetic"
+  patch "update_profile_card_text", to: "users#update_profile_card_text"
   resources :notifications, only: [ :index, :update ] do
     collection do
       patch :mark_all_read

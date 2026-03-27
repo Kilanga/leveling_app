@@ -22,7 +22,7 @@ class PurchasesController < ApplicationController
     @entry_offer_enabled = entry_offer_eligible?
     @entry_offer_bonus_rate = entry_offer_bonus_rate
 
-    @active_shop_tab = params[:tab].presence_in(%w[packs boosts cosmetics]) || "packs"
+    @active_shop_tab = params[:tab].presence_in(%w[packs boosts titles cosmetics]) || "packs"
     @focus_category_name = current_user.user_stats.includes(:category).order(total_xp: :desc).first&.category&.name || "tes objectifs"
 
     @coins_prices = COIN_PACKS.map do |label, config|
@@ -53,10 +53,19 @@ class PurchasesController < ApplicationController
                  .where.not(rarity: "common")
                  .order(rarity: :asc, name: :asc)
     @cosmetic_items = ShopItem.where(item_type: "cosmetic").order(rarity: :asc, name: :asc)
+    @frame_items = ShopItem.where(item_type: "profile_frame")
+                 .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
+                 .order(rarity: :asc, name: :asc)
+    @theme_items = ShopItem.where(item_type: "xp_theme")
+                 .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
+                 .order(rarity: :asc, name: :asc)
+    @card_items = ShopItem.where(item_type: "profile_card")
+                 .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
+                 .order(rarity: :asc, name: :asc)
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
     @total_level = current_user.user_stats.sum(:level)
     @recommended_shop_items = recommended_shop_items
-    @item_personalized_descriptions = personalized_descriptions_by_item_id(@title_items + @cosmetic_items + @recommended_shop_items)
+    @item_personalized_descriptions = personalized_descriptions_by_item_id(@title_items + @cosmetic_items + @frame_items + @theme_items + @card_items + @recommended_shop_items)
 
     @shop_challenge = build_shop_challenge
     @shop_challenge_claimed = shop_challenge_claimed?

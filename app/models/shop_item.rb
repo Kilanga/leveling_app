@@ -7,7 +7,7 @@ class ShopItem < ApplicationRecord
   validates :name, :description, presence: true
   validates :price_coins, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :price_euros, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :item_type, presence: true, inclusion: { in: ["title", "boost", "cosmetic", "currency"] }
+  validates :item_type, presence: true, inclusion: { in: ["title", "boost", "cosmetic", "currency", "profile_frame", "xp_theme", "profile_card"] }
   validates :rarity, presence: true, inclusion: { in: ["common", "rare", "epic", "legendary"] }
 
   def rarity_class

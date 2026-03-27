@@ -80,7 +80,8 @@
                   <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
                 </div>
               </div>
-              <p class="quest-meta mb-2"><%= quest.category.name %></p>
+              <p class="quest-meta mb-1"><%= quest.category.name %></p>
+              <p class="quest-meta mb-2"><%= @recommendation_reason_by_quest_id[quest.id] %></p>
               <p class="quest-card__description"><%= quest.description %></p>
               <div class="mt-2">
                 <% if user_quest && user_quest.active? %>

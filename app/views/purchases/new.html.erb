@@ -21,7 +21,8 @@
       <div class="shop-tab-nav">
         <%= link_to "Packs", new_purchase_path(tab: "packs"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'packs'}" %>
         <%= link_to "Boosts", new_purchase_path(tab: "boosts"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
-        <%= link_to "Cosmetiques", new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
+        <%= link_to "Titres", new_purchase_path(tab: "titles"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
+        <%= link_to "Cosmétiques", new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
       </div>
     </section>
 
@@ -79,7 +80,7 @@
                 </div>
               <% end %>
             </div>
-          <% else %>
+          <% elsif @active_shop_tab == "titles" %>
             <h2 class="section-title">Titres</h2>
             <p class="quest-meta mb-3">Choisis un titre marquant pour imposer ton style dans le classement.</p>
 
@@ -130,6 +131,126 @@
                     <% end %>
                   <% else %>
                     <span class="badge text-bg-secondary">Indisponible</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% elsif @active_shop_tab == "cosmetics" %>
+            <h2 class="section-title">Cosmétiques</h2>
+            <p class="quest-meta mb-3">Personnalise ton profil et tes barres de progression.</p>
+
+            <!-- Cadres de Profil -->
+            <h3 class="section-title mt-4">Cadres de Profil</h3>
+            <div class="shop-list shop-list--flat">
+              <% @frame_items.each do |item| %>
+                <% rarity_key = item.rarity.to_s.presence || "common" %>
+                <% owned = @owned_item_ids.include?(item.id) %>
+                <% active = current_user.active_profile_frame_id == item.id %>
+                <div class="shop-row shop-row--flat">
+                  <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
+                    <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= item.rarity.to_s.capitalize %></span>
+                  </div>
+                  <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
+
+                  <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
+                    <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
+                      <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
+                    </span>
+                    <% if item.price_coins.present? %>
+                      <span class="quest-meta"><%= item.price_coins %> coins</span>
+                    <% elsif item.price_euros.present? %>
+                      <span class="quest-meta"><%= item.price_euros %> EUR</span>
+                    <% end %>
+                  </div>
+
+                  <% if active %>
+                    <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-outline-secondary" %>
+                  <% elsif owned %>
+                    <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-brand" %>
+                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                      <%= hidden_field_tag :shop_item_id, item.id %>
+                      <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+            <!-- Themes XP -->
+            <h3 class="section-title mt-4">Thèmes de Barre XP</h3>
+            <div class="shop-list shop-list--flat">
+              <% @theme_items.each do |item| %>
+                <% rarity_key = item.rarity.to_s.presence || "common" %>
+                <% owned = @owned_item_ids.include?(item.id) %>
+                <% active = current_user.active_xp_theme_id == item.id %>
+                <div class="shop-row shop-row--flat">
+                  <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
+                    <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= item.rarity.to_s.capitalize %></span>
+                  </div>
+                  <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
+
+                  <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
+                    <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
+                      <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
+                    </span>
+                    <% if item.price_coins.present? %>
+                      <span class="quest-meta"><%= item.price_coins %> coins</span>
+                    <% elsif item.price_euros.present? %>
+                      <span class="quest-meta"><%= item.price_euros %> EUR</span>
+                    <% end %>
+                  </div>
+
+                  <% if active %>
+                    <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-outline-secondary" %>
+                  <% elsif owned %>
+                    <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-brand" %>
+                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                      <%= hidden_field_tag :shop_item_id, item.id %>
+                      <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+            <!-- Cartes de Visite -->
+            <h3 class="section-title mt-4">Cartes de Visite</h3>
+            <div class="shop-list shop-list--flat">
+              <% @card_items.each do |item| %>
+                <% rarity_key = item.rarity.to_s.presence || "common" %>
+                <% owned = @owned_item_ids.include?(item.id) %>
+                <% active = current_user.active_profile_card_id == item.id %>
+                <div class="shop-row shop-row--flat">
+                  <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
+                    <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= item.rarity.to_s.capitalize %></span>
+                  </div>
+                  <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
+
+                  <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
+                    <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
+                      <%= active ? "Active" : owned ? "Possede" : "Disponible" %>
+                    </span>
+                    <% if item.price_coins.present? %>
+                      <span class="quest-meta"><%= item.price_coins %> coins</span>
+                    <% elsif item.price_euros.present? %>
+                      <span class="quest-meta"><%= item.price_euros %> EUR</span>
+                    <% end %>
+                  </div>
+
+                  <% if active %>
+                    <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-outline-secondary" %>
+                  <% elsif owned %>
+                    <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-brand" %>
+                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                      <%= hidden_field_tag :shop_item_id, item.id %>
+                      <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
+                    <% end %>
                   <% end %>
                 </div>
               <% end %>

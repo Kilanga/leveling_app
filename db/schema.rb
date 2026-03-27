@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_173000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_180100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -216,7 +216,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_173000) do
 
   create_table "users", force: :cascade do |t|
     t.bigint "active_avatar_item_id"
+    t.bigint "active_profile_card_id"
+    t.bigint "active_profile_frame_id"
     t.integer "active_title_id"
+    t.bigint "active_xp_theme_id"
     t.boolean "admin", default: false
     t.string "avatar"
     t.datetime "boost_expires_at"
@@ -235,6 +238,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_173000) do
     t.integer "league_tier", default: 1, null: false
     t.datetime "onboarding_completed_at"
     t.text "onboarding_focus", default: "", null: false
+    t.string "profile_card_custom_text", limit: 100
     t.boolean "profile_completed", default: true, null: false
     t.string "provider"
     t.string "pseudo"
@@ -252,6 +256,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_173000) do
     t.date "weekly_streak_last_completed_on"
     t.integer "xp", default: 0
     t.index ["active_avatar_item_id"], name: "index_users_on_active_avatar_item_id"
+    t.index ["active_profile_card_id"], name: "index_users_on_active_profile_card_id"
+    t.index ["active_profile_frame_id"], name: "index_users_on_active_profile_frame_id"
+    t.index ["active_xp_theme_id"], name: "index_users_on_active_xp_theme_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["league_tier", "league_room"], name: "index_users_on_league_tier_and_league_room"
@@ -295,6 +302,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_173000) do
   add_foreign_key "user_weekly_quests", "users"
   add_foreign_key "user_weekly_quests", "weekly_quests"
   add_foreign_key "users", "shop_items", column: "active_avatar_item_id"
+  add_foreign_key "users", "shop_items", column: "active_profile_card_id"
+  add_foreign_key "users", "shop_items", column: "active_profile_frame_id"
+  add_foreign_key "users", "shop_items", column: "active_xp_theme_id"
   add_foreign_key "users", "users", column: "referred_by_id"
   add_foreign_key "weekly_quests", "categories"
 end

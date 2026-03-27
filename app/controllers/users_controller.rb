@@ -20,6 +20,9 @@ class UsersController < ApplicationController
                       .order(updated_at: :desc)
                       .limit(5)
     @owned_titles = @user.shop_items.where(item_type: "title").order(name: :asc)
+    @owned_frames = @user.shop_items.where(item_type: "profile_frame").order(name: :asc)
+    @owned_themes = @user.shop_items.where(item_type: "xp_theme").order(name: :asc)
+    @owned_cards = @user.shop_items.where(item_type: "profile_card").order(name: :asc)
     @unlockable_title_progress = TitleUnlocker.progress_for(@user)
     @common_unlockable_titles = @unlockable_title_progress.select { |entry| entry[:rarity] == "common" }
     @prestige_unlockable_titles = @unlockable_title_progress.reject { |entry| entry[:rarity] == "common" }
@@ -71,6 +74,30 @@ class UsersController < ApplicationController
       redirect_to new_purchase_path, notice: "Avatar equipe avec succes."
     else
       redirect_to new_purchase_path, alert: "Impossible d'equiper cet avatar."
+    end
+  end
+
+  def activate_cosmetic
+    cosmetic_type = params[:cosmetic_type].to_s.presence
+    return redirect_to user_profile_path, alert: "Type de cosmetic invalide." unless cosmetic_type.in?(%w[profile_frame xp_theme profile_card])
+
+    item = current_user.shop_items.find_by(id: params[:shop_item_id], item_type: cosmetic_type)
+    return redirect_to user_profile_path, alert: "Cosmetic introuvable." unless item
+
+    if current_user.activate_cosmetic(item)
+      redirect_to user_profile_path, notice: "Cosmetic active avec succes."
+    else
+      redirect_to user_profile_path, alert: "Impossible d'attiver ce cosmetic."
+    end
+  end
+
+  def update_profile_card_text
+    new_text = params[:profile_card_text].to_s.strip.slice(0, 100)
+
+    if current_user.update(profile_card_custom_text: new_text)
+      redirect_to user_profile_path, notice: "Texte de carte mise a jour."
+    else
+      redirect_to user_profile_path, alert: "Impossible de mettre a jour le texte."
     end
   end
 

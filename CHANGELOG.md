@@ -17,6 +17,26 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.0] - 2026-03-27
+
+### Ajouté
+- Cadres de profil: cosmétiques pour encadrer le pseudo au classement avec 3 styles (Standard bleu, Électrique violet, Légendaire or).
+- Thèmes de barre XP: personnalisation de l'apparence des barres de progression avec 4 thèmes (Standard, Samouraï rouge, Neon vert, Légendaire or-violet).
+- Cartes de visite: cosmétiques personnalisables affichées au profil joueur visible par les autres (texte custom + thème) avec 4 styles de cartes.
+- Onglet "Titres" séparé en boutique pour meilleure visualisation.
+- Gestion des cosmétiques au profil personnel: activation/désactivation des cadres, thèmes et cartes de visite.
+
+### Modifié
+- Boutique: réorganisation avec 4 onglets (Packs, Boosts, Titres, Cosmétiques).
+- Profil personnel: ajout d'une section "Cosmétiques" pour piloter les préférences visuelles.
+- Panier cosmétiques: intégration avec le système d'achat existant (coins et EUR).
+
+## [1.14.1] - 2026-03-27
+
+### Modifié
+- Recommandations de quetes personnalisees: ciblage selon categories prioritaires d'onboarding, historique recent, categories fortes/faibles et niveau de difficulte adapte au rythme XP joueur.
+- Onglet Quetes: affichage d'un motif de recommandation pour chaque mission proposee dans le bloc "Recommandees pour toi".
+
 ## [1.14.0] - 2026-03-27
 
 ### Ajouté

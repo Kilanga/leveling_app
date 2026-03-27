@@ -35,6 +35,9 @@ class User < ApplicationRecord
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true
+  belongs_to :active_profile_frame, class_name: "ShopItem", optional: true
+  belongs_to :active_xp_theme, class_name: "ShopItem", optional: true
+  belongs_to :active_profile_card, class_name: "ShopItem", optional: true
   belongs_to :referred_by, class_name: "User", optional: true
 
   attr_accessor :referral_code_input
@@ -74,6 +77,22 @@ class User < ApplicationRecord
     return false unless user_items.exists?(shop_item_id: item.id)
 
     update(active_avatar_item: item)
+  end
+
+  def activate_cosmetic(item)
+    return false unless item.present?
+    return false unless user_items.exists?(shop_item_id: item.id)
+
+    case item.item_type
+    when "profile_frame"
+      update(active_profile_frame: item)
+    when "xp_theme"
+      update(active_xp_theme: item)
+    when "profile_card"
+      update(active_profile_card: item)
+    else
+      false
+    end
   end
 
   # Retourne la classe de couleur pour le titre du joueur

@@ -52,21 +52,9 @@ class QuestsController < ApplicationController
     @active_user_quests_count = current_user.user_quests.where(active: true, completed: false).count
     @category_totals = Quest.group(:category_id).count
 
-    active_quest_ids = current_user.user_quests.where(active: true).select(:quest_id)
-    top_category_ids = current_user.user_stats.order(total_xp: :desc).limit(2).pluck(:category_id)
-
-    @recommended_quests = Quest.includes(:category)
-      .where(category_id: top_category_ids)
-      .where.not(id: active_quest_ids)
-      .order(xp: :desc, title: :asc)
-      .limit(4)
-
-    if @recommended_quests.empty?
-      @recommended_quests = Quest.includes(:category)
-        .where.not(id: active_quest_ids)
-        .order(xp: :asc, title: :asc)
-        .limit(4)
-    end
+    recommendation_entries = QuestRecommender.call(user: current_user, limit: 4)
+    @recommended_quests = recommendation_entries.map { |entry| entry[:quest] }
+    @recommendation_reason_by_quest_id = recommendation_entries.to_h { |entry| [ entry[:quest].id, entry[:reason] ] }
   end
 
   def show

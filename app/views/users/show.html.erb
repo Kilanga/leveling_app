@@ -40,6 +40,93 @@
 </div>
 
 <!-- Gestion des titres -->
+<h2 class="section-title mt-4">Cosmétiques</h2>
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <div class="row g-3">
+      <!-- Profile Frame -->
+      <div class="col-lg-6">
+        <h3 class="section-title">Cadre de Profil</h3>
+        <p class="quest-meta mb-2">Encadrement autour de ton pseudo au classement.</p>
+        <% frame = @user.active_profile_frame %>
+        <% if frame.present? %>
+          <div class="shop-state-chip shop-state-chip--equipped mb-2"><%= frame.name %></div>
+        <% else %>
+          <div class="shop-state-chip shop-state-chip--available mb-2">Aucun cadre actif</div>
+        <% end %>
+        <div class="shop-list shop-list--flat">
+          <% @owned_frames.each do |item| %>
+            <div class="shop-row shop-row--flat">
+              <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
+              <% if frame&.id == item.id %>
+                <span class="shop-state-chip shop-state-chip--equipped">Actif</span>
+              <% else %>
+                <%= button_to item.name, { action: "activate_cosmetic" }, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-brand" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- XP Theme -->
+      <div class="col-lg-6">
+        <h3 class="section-title">Thème de Barre XP</h3>
+        <p class="quest-meta mb-2">Couleurs et style de ta barre de progression.</p>
+        <% theme = @user.active_xp_theme %>
+        <% if theme.present? %>
+          <div class="shop-state-chip shop-state-chip--equipped mb-2"><%= theme.name %></div>
+        <% else %>
+          <div class="shop-state-chip shop-state-chip--available mb-2">Thème par défaut</div>
+        <% end %>
+        <div class="shop-list shop-list--flat">
+          <% @owned_themes.each do |item| %>
+            <div class="shop-row shop-row--flat">
+              <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
+              <% if theme&.id == item.id %>
+                <span class="shop-state-chip shop-state-chip--equipped">Actif</span>
+              <% else %>
+                <%= button_to item.name, { action: "activate_cosmetic" }, method: :post, params: { shop_item_id: item.id, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-brand" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="mt-4">
+      <h3 class="section-title">Carte de Visite</h3>
+      <p class="quest-meta mb-2">Affichée dans ton profil et visible par les autres joueurs.</p>
+      <% card = @user.active_profile_card %>
+      <% if card.present? %>
+        <div class="shop-state-chip shop-state-chip--equipped mb-2"><%= card.name %></div>
+      <% else %>
+        <div class="shop-state-chip shop-state-chip--available mb-2">Aucune carte active</div>
+      <% end %>
+
+      <% if card.present? %>
+        <%= form_with url: { action: "update_profile_card_text" }, method: :patch, local: true, class: "mb-3" do %>
+          <%= text_field_tag "profile_card_text", @user.profile_card_custom_text, class: "form-control", placeholder: "Ton message perso (max 100 caracteres)", maxlength: 100 %>
+          <%= submit_tag "Mettre a jour", class: "btn btn-sm btn-brand mt-2" %>
+        <% end %>
+      <% end %>
+
+      <div class="shop-list shop-list--flat">
+        <% @owned_cards.each do |item| %>
+          <div class="shop-row shop-row--flat">
+            <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
+            <% if card&.id == item.id %>
+              <span class="shop-state-chip shop-state-chip--equipped">Active</span>
+            <% else %>
+              <%= button_to item.name, { action: "activate_cosmetic" }, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-brand" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h2 class="section-title mt-4">Mes Titres</h2>
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
