@@ -92,9 +92,12 @@ GEM
     bootstrap (5.3.3)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.8, < 3)
-    brakeman (7.0.0)
+    brakeman (8.0.4)
       racc
     builder (3.3.0)
+    bundler-audit (0.9.3)
+      bundler (>= 1.2.0)
+      thor (~> 1.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -501,6 +504,7 @@ DEPENDENCIES
   bootsnap
   bootstrap
   brakeman
+  bundler-audit
   capybara
   cloudinary
   dartsass-rails
@@ -534,7 +538,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-   ruby 3.2.2p53
+  ruby 3.3.0p0
 
 BUNDLED WITH
    2.6.3

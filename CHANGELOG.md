@@ -18,8 +18,25 @@ Regle de normalisation Keep a Changelog:
 ## [1.18.0] - 2026-03-28
 
 ### Ajouté
-- Internationalisation: support FR/EN avec détection automatique basée sur la langue du navigateur (Accept-Language header).
-- Interface principale: traductions de la navigation et des métadonnées SEO (FR + EN) intégrées au système i18n.
+- Internationalisation exhaustive FR/EN: traduction complète de plus de 500 chaînes de caractères (locales/en.yml, locales/fr.yml) couvrant tous les domaines de l'application.
+- Catalogue de traductions hiérarchisé: devise (login, registration, passwords), dashboard (objectifs, factions, coffres, contrats), quêtes (catalogue, recommandations, difficultés), boutique (packs, boosts, titres, cosmétiques), leaderboard (ligues, mouvements), amis (demandes, partages), profil utilisateur (pseudo, titres, cosmétiques).
+- Traduction de tous les messages de flash (succès, alertes, notices) depuis 7 contrôleurs principaux (ApplicationController, PurchasesController, DashboardController, DailyContractsController, FriendsController, FactionsController, UsersController).
+- Traduction exhaustive des messages d'erreur (accès refusé, opérations invalides, objets non trouvés, limites dépassées).
+- Détection automatique de la langue via Accept-Language header du navigateur, avec fallback sur EN.
+
+### Modifié
+- Infrastructure i18n: refactorisation de tous les messages en dur du code vers appels I18n.t() avec clés hiérarchisées pour maintenance simplifiée.
+- Dashboard: affichage de la guilde gagnante du cycle précédent avec nom et liste des participants (view dashboard/index.html.erb ligne 90).
+- Nomenclature des monnaies: "coins" → "Orbes" (premium), "credits gratuits" → "Fragments" (progression) en interface, avec traductions cohérentes FR/EN.
+- Messages d'erreur: harmonisation des formulations entre FR et EN pour un ton cohérent et une UX unifiée sur les deux langues.
+
+### Corrigé
+- Test factions#weekly: correction de l'assertion "Guilde gagnante (semaine precedente)" en affichage dynamique via I18n.t('dashboard.factions.previous_winner', name:...), avec passage de tous les 81 tests RSpec.
+
+### Sécurité
+- CI: ajout d'un scan automatique des secrets avec Gitleaks pour éviter l'introduction accidentelle de clés sensibles dans le dépôt.
+- CI: ajout d'un audit des dépendances Ruby avec `bundler-audit` (base CVE mise à jour à chaque run).
+- Runtime Ruby: alignement de la cible projet vers Ruby 3.3.x pour sortir de la fenêtre EOL de Ruby 3.2.
 
 ## [1.17.0] - 2026-03-28
 

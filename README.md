@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Ruby 3.2.x
+- Ruby 3.3.x
 - PostgreSQL (local or remote)
 
 ## Setup
@@ -43,6 +43,30 @@
 - Add release notes under `## [Non publié]` in `CHANGELOG.md`
 - Run full release flow (tests + changelog versioning + tag + push + Heroku migrate/restart):
 	- `./release.sh 1.2.1 leveling-app`
+
+## Ruby 3.3 Migration Checklist
+
+Local machine:
+- Install Ruby 3.3.0 via your version manager (`rbenv`, `asdf`, `mise`).
+- Select the project Ruby version from `.ruby-version`.
+- Reinstall gems with `bundle install`.
+- Run full checks: `bundle exec rspec`, `bin/brakeman`, `bundle exec bundle-audit check --update`.
+
+GitHub Actions:
+- Workflows use `ruby-version: .ruby-version`, so CI follows 3.3 automatically.
+- Validate on first PR after migration that lint/tests/security jobs pass.
+
+Heroku:
+- Ruby buildpack resolves version from `Gemfile` and lockfile.
+- Deploy after local re-lock on Ruby 3.3, then verify runtime with `heroku run ruby -v -a leveling-app`.
+- Verify app boot + release migration logs after deploy.
+
+Supabase/PostgreSQL:
+- Ruby upgrade does not require PostgreSQL server upgrade by itself.
+- Validate connectivity post-deploy with `heroku run "bundle exec rails db:migrate:status" -a leveling-app`.
+
+End-to-end check:
+- Run `./script/check_ruby33_readiness.sh leveling-app` to validate local Ruby, bundle health, Heroku Ruby runtime, and migration status.
 
 ## Contributing
 
