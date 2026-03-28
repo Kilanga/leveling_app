@@ -406,41 +406,6 @@
             </div>
           </div>
 
-          <h2 class="section-title">Recommande pour toi</h2>
-          <% if @recommended_shop_items.any? %>
-            <div class="shop-reco-list">
-              <% @recommended_shop_items.each do |item| %>
-                <% rarity_key = item.rarity.to_s.presence || "common" %>
-                <% rarity_label = item.rarity.to_s.capitalize.presence || "Common" %>
-                <div class="shop-row shop-row--flat">
-                  <div class="d-flex align-items-start justify-content-between gap-2 flex-wrap mb-2">
-                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
-                    <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= rarity_label %></span>
-                  </div>
-                  <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
-                  <% if item.price_coins.present? %>
-                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
-                      <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Acheter #{item.price_coins} Orbes", class: "btn btn-sm btn-outline-quest" %>
-                    <% end %>
-                  <% elsif item.price_free_credits.present? %>
-                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
-                      <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Debloquer #{item.price_free_credits} Fragments", class: "btn btn-sm btn-outline-quest" %>
-                    <% end %>
-                  <% elsif item.price_euros.present? %>
-                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
-                      <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Acheter #{item.price_euros} EUR", class: "btn btn-sm btn-outline-quest" %>
-                    <% end %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="alert alert-warning mb-0">Tu possedes deja les meilleurs objets disponibles.</div>
-          <% end %>
-
           <hr class="hud-divider">
 
           <h2 class="section-title">Defi boutique hebdo</h2>

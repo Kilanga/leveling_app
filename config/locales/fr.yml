@@ -17,6 +17,7 @@ fr:
       friends: "Amis"
       notifications: "Notifications"
       profile: "Profil"
+      report_bug: "Signaler un bug"
       sign_out: "Deconnexion"
       sign_in: "Connexion"
 
@@ -277,7 +278,7 @@ fr:
       first_purchase_badge: "1er achat"
       
       tabs:
-        packs: "Packs"
+        packs: "Orbes"
         boosts: "Boosts"
         titles: "Titres"
         cosmetics: "Cosmetiques"
