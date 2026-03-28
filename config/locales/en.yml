@@ -28,4 +28,64 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  currency:
+    paid:
+      one: "Orb"
+      other: "Orbs"
+    free:
+      one: "Fragment"
+      other: "Fragments"
+
+  layout:
+    brand_logo_alt: "Leveling logo"
+    nav:
+      home: "Home"
+      quests: "Quests"
+      shop: "Shop"
+      leaderboard: "Leaderboard"
+      friends: "Friends"
+      notifications: "Notifications"
+      profile: "Profile"
+      sign_out: "Sign out"
+      sign_in: "Sign in"
+
+  meta:
+    base_title: "Leveling"
+    default_description: "Leveling: a personal progression app with quests, titles, and leaderboards."
+    pages:
+      welcome_index:
+        title: "Gamified Progress"
+        description: "Leveling turns personal growth into a game: quests, weekly leagues, streaks, and friend challenges."
+      dashboard_index:
+        title: "Dashboard"
+        description: "Track your progress, complete quests, and level up on Leveling."
+      quests_index:
+        title: "Quests"
+        description: "Browse available quests and pick the ones that move your progression forward."
+      quests_show:
+        title: "Quest Details"
+      purchases_new:
+        title: "Shop"
+        description: "Explore the Leveling shop: packs, boosts, and titles to personalize your profile."
+      leaderboard_index:
+        title: "Leaderboard"
+        description: "Compare your progress with other players on the Leveling leaderboard."
+      users_show:
+        title: "Profile"
+        description: "View your profile, equip titles, and track your evolution on Leveling."
+      friends_index:
+        title: "Friends"
+        description: "Add friends, follow their progress, and move forward together on Leveling."
+      onboarding_show:
+        description: "Set your progression priorities and get started quickly on Leveling."
+      notifications_index:
+        title: "Notifications"
+        description: "Check reminders, social activity, and progression alerts on Leveling."
+      devise_sessions_new:
+        title: "Sign in"
+        description: "Sign in to Leveling to resume your quests and continue progressing."
+      devise_registrations_new:
+        title: "Sign up"
+        description: "Create your Leveling account and start your progression today."
+      devise_passwords_new:
+        title: "Forgot password"

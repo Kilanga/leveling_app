@@ -1,0 +1,62 @@
+fr:
+  currency:
+    paid:
+      one: "Orbe"
+      other: "Orbes"
+    free:
+      one: "Fragment"
+      other: "Fragments"
+
+  layout:
+    brand_logo_alt: "Logo Leveling"
+    nav:
+      home: "Accueil"
+      quests: "Quetes"
+      shop: "Boutique"
+      leaderboard: "Classement"
+      friends: "Amis"
+      notifications: "Notifications"
+      profile: "Profil"
+      sign_out: "Deconnexion"
+      sign_in: "Connexion"
+
+  meta:
+    base_title: "Leveling"
+    default_description: "Leveling: l'application de progression personnelle avec quetes, titres et classement."
+    pages:
+      welcome_index:
+        title: "Progression gamifiee"
+        description: "Leveling transforme ta progression personnelle en jeu: quetes, ligues hebdo, streaks et defis entre amis."
+      dashboard_index:
+        title: "Accueil"
+        description: "Suis ta progression, valide tes quetes et fais monter ton niveau sur Leveling."
+      quests_index:
+        title: "Quetes"
+        description: "Explore les quetes disponibles et choisis celles qui font avancer ta progression."
+      quests_show:
+        title: "Detail quete"
+      purchases_new:
+        title: "Boutique"
+        description: "Decouvre la boutique Leveling: packs, boosts et titres pour personnaliser ton profil."
+      leaderboard_index:
+        title: "Classement"
+        description: "Compare ta progression avec les autres joueurs sur le classement Leveling."
+      users_show:
+        title: "Profil"
+        description: "Consulte ton profil, equipe tes titres et suis ton evolution sur Leveling."
+      friends_index:
+        title: "Amis"
+        description: "Ajoute des amis, suis leur progression et avance ensemble sur Leveling."
+      onboarding_show:
+        description: "Configure tes priorites de progression et demarre rapidement sur Leveling."
+      notifications_index:
+        title: "Notifications"
+        description: "Consulte tes rappels, activites sociales et alertes de progression sur Leveling."
+      devise_sessions_new:
+        title: "Connexion"
+        description: "Connecte-toi a Leveling pour reprendre tes quetes et continuer ta progression."
+      devise_registrations_new:
+        title: "Inscription"
+        description: "Cree ton compte Leveling et lance ta progression des aujourd'hui."
+      devise_passwords_new:
+        title: "Mot de passe oublie"

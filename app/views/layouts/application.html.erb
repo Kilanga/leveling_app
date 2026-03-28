@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
 <head>
   <title><%= page_meta_title %></title>
   <meta name="description" content="<%= page_meta_description %>">
@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark topbar-leveling">
     <div class="container py-1">
       <a class="navbar-brand d-inline-flex align-items-center" href="<%= root_path %>">
-        <%= image_tag "logo-leveling.svg", width: 18, height: 18, alt: "Logo Leveling", class: "me-2" %>
+        <%= image_tag "logo-leveling.svg", width: 18, height: 18, alt: t("layout.brand_logo_alt"), class: "me-2" %>
         <span>Leveling</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -27,22 +27,27 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav gap-1">
           <li class="nav-item">
-            <%= link_to "Accueil", root_path, class: "nav-link" %>
+            <%= link_to t("layout.nav.home"), root_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Quêtes", quests_path, class: "nav-link" %>
+            <%= link_to t("layout.nav.quests"), quests_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Boutique", new_purchase_path, class: "nav-link" %>
+            <%= link_to t("layout.nav.shop"), new_purchase_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Classement", leaderboard_index_path, class: "nav-link" if user_signed_in? %>
+            <%= link_to t("layout.nav.leaderboard"), leaderboard_index_path, class: "nav-link" if user_signed_in? %>
           </li>
           <li class="nav-item">
-            <%= link_to "Amis", friends_path, class: "nav-link" if user_signed_in? %>
+            <%= link_to t("layout.nav.friends"), friends_path, class: "nav-link" if user_signed_in? %>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">
+          <li class="nav-item d-flex align-items-center">
+            <%= link_to "FR", locale_switch_url(:fr), class: "nav-link px-2 #{I18n.locale == :fr ? 'fw-bold text-white' : ''}" %>
+            <span class="text-muted">/</span>
+            <%= link_to "EN", locale_switch_url(:en), class: "nav-link px-2 #{I18n.locale == :en ? 'fw-bold text-white' : ''}" %>
+          </li>
           <% if user_signed_in? %>
             <% if current_user.admin? %>
               <li class="nav-item">
@@ -54,23 +59,23 @@
             <% end %>
             <li class="nav-item">
               <%= link_to notifications_path, class: "nav-link" do %>
-                Notifications
+                <%= t("layout.nav.notifications") %>
                 <% if @unread_notifications_count.to_i.positive? %>
                   <span class="badge text-bg-warning ms-1"><%= @unread_notifications_count %></span>
                 <% end %>
               <% end %>
             </li>
             <li class="nav-item">
-              <%= link_to "Profil", user_profile_path, class: "nav-link" %>
+              <%= link_to t("layout.nav.profile"), user_profile_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
               <%= form_with url: destroy_user_session_path, method: :delete, local: true do %>
-                <%= submit_tag "Déconnexion", class: "btn btn-link nav-link p-0" %>
+                <%= submit_tag t("layout.nav.sign_out"), class: "btn btn-link nav-link p-0" %>
               <% end %>
             </li>
           <% else %>
             <li class="nav-item">
-              <%= link_to "Connexion", new_user_session_path, class: "nav-link" %>
+              <%= link_to t("layout.nav.sign_in"), new_user_session_path, class: "nav-link" %>
             </li>
           <% end %>
         </ul>
