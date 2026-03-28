@@ -17,6 +17,11 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+### Modifié
+- Boutique economy: un objet tarifé en `Orbes` ne peut plus être acheté avec des `Fragments`.
+- Catalogue `Recompenses`: ajout d'une seconde option d'achat en `Orbes` (50% du prix en fragments, arrondi au supérieur), sélectionnée explicitement par le joueur.
+- Onglet `Recompenses`: affichage de deux actions d'achat distinctes (`Fragments` et `Orbes`) sans fallback automatique.
+
 ## [1.17.0] - 2026-03-28
 
 ### Ajouté

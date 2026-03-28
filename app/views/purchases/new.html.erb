@@ -318,6 +318,7 @@
               <% @free_reward_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
+                <% fallback_orbes_price = (item.price_free_credits.to_i / 2.0).ceil %>
                 <div class="shop-row shop-row--flat">
                   <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
                     <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
@@ -329,7 +330,7 @@
                     <span class="shop-state-chip <%= owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
                       <%= owned ? "Possede" : "Disponible" %>
                     </span>
-                    <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
+                    <span class="quest-meta"><%= item.price_free_credits %> Fragments ou <%= fallback_orbes_price %> Orbes</span>
                   </div>
 
                   <% if owned %>
@@ -340,13 +341,23 @@
                     <% else %>
                       <span class="badge text-bg-success">Debloque</span>
                     <% end %>
-                  <% elsif current_user.free_credits_balance >= item.price_free_credits.to_i %>
-                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
-                      <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Debloquer", class: "btn btn-outline-quest" %>
-                    <% end %>
                   <% else %>
-                    <span class="shop-state-chip shop-state-chip--available">Il te manque <%= item.price_free_credits.to_i - current_user.free_credits_balance %> Fragments</span>
+                    <div class="d-grid gap-2">
+                      <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                        <%= hidden_field_tag :shop_item_id, item.id %>
+                        <%= hidden_field_tag :currency, "fragments" %>
+                        <%= submit_tag "Debloquer avec #{item.price_free_credits} Fragments",
+                                       class: "btn btn-outline-quest",
+                                       disabled: current_user.free_credits_balance < item.price_free_credits.to_i %>
+                      <% end %>
+                      <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                        <%= hidden_field_tag :shop_item_id, item.id %>
+                        <%= hidden_field_tag :currency, "orbes" %>
+                        <%= submit_tag "Debloquer avec #{fallback_orbes_price} Orbes",
+                                       class: "btn btn-outline-secondary",
+                                       disabled: current_user.coins < fallback_orbes_price %>
+                      <% end %>
+                    </div>
                   <% end %>
                 </div>
               <% end %>

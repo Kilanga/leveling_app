@@ -242,39 +242,75 @@ class PurchasesController < ApplicationController
 
   private
 
-  def handle_shop_item_purchase
-    item = ShopItem.find(params[:shop_item_id])
+def handle_shop_item_purchase
+  item = ShopItem.find(params[:shop_item_id])
 
-    if item.item_type == "title" && (item.rarity == "common" || (item.price_coins.blank? && item.price_euros.blank?))
-      return redirect_to new_purchase_path, alert: "Ce titre se débloque via des objectifs, pas en boutique."
-    end
-
-    if current_user.user_items.exists?(shop_item: item)
-      return redirect_to new_purchase_path, alert: "Vous possedez deja cet objet."
-    end
-
-    if item.price_coins.present? && current_user.coins >= item.price_coins
-      current_user.decrement!(:coins, item.price_coins)
-      current_user.user_items.find_or_create_by!(shop_item: item)
-      redirect_to new_purchase_path, notice: "Objet acheté avec succès !"
-    elsif item.price_euros.present?
-      session[:shop_item_id] = item.id
-      checkout_url = create_checkout_session(
-        item.name,
-        item.price_euros,
-        {
-          kind: "shop_item",
-          user_id: current_user.id,
-          shop_item_id: item.id
-        }
-      )
-      safe_redirect_to_checkout(checkout_url)
-    else
-      redirect_to new_purchase_path, alert: "Achat impossible."
-    end
+  if item.item_type == "title" && (item.rarity == "common" || (item.price_coins.blank? && item.price_euros.blank? && item.price_free_credits.blank?))
+    return redirect_to new_purchase_path, alert: "Ce titre se débloque via des objectifs, pas en boutique."
   end
 
-  def handle_pack_purchase
+  if current_user.user_items.exists?(shop_item: item)
+    return redirect_to new_purchase_path, alert: "Vous possedez deja cet objet."
+  end
+
+  if item.price_coins.present?
+    return purchase_with_orbes!(item, item.price_coins, new_purchase_path)
+  end
+
+  if item.price_free_credits.present?
+    return purchase_free_reward_with_explicit_currency!(item)
+  end
+
+  if item.price_euros.present?
+    session[:shop_item_id] = item.id
+    checkout_url = create_checkout_session(
+      item.name,
+      item.price_euros,
+      {
+        kind: "shop_item",
+        user_id: current_user.id,
+        shop_item_id: item.id
+      }
+    )
+    return safe_redirect_to_checkout(checkout_url)
+  end
+
+  redirect_to new_purchase_path, alert: "Achat impossible."
+end
+
+def purchase_free_reward_with_explicit_currency!(item)
+  selected_currency = params[:currency].to_s
+  fallback_orbes_price = (item.price_free_credits / 2.0).ceil
+
+  if selected_currency == "fragments"
+    if current_user.free_credits_balance >= item.price_free_credits
+      current_user.update!(free_credits: current_user.free_credits_balance - item.price_free_credits)
+      current_user.user_items.find_or_create_by!(shop_item: item)
+      return redirect_to new_purchase_path(tab: "rewards"), notice: "Objet debloque avec tes Fragments !"
+    end
+
+    return redirect_to new_purchase_path(tab: "rewards"), alert: "Tu n'as pas assez de Fragments pour cet achat."
+  end
+
+  if selected_currency == "orbes"
+    return purchase_with_orbes!(item, fallback_orbes_price, new_purchase_path(tab: "rewards"), "Objet debloque avec tes Orbes (tarif de secours) !")
+  end
+
+  redirect_to new_purchase_path(tab: "rewards"), alert: "Choisis une monnaie valide pour cet achat (Fragments ou Orbes)."
+end
+
+def purchase_with_orbes!(item, orbes_price, redirect_path, success_notice = "Objet acheté avec succès!")
+  if current_user.coins >= orbes_price
+    current_user.decrement!(:coins, orbes_price)
+    current_user.user_items.find_or_create_by!(shop_item: item)
+    return redirect_to redirect_path, notice: success_notice
+  end
+
+  redirect_to redirect_path, alert: "Tu n'as pas assez d'Orbes pour acheter cet objet."
+end
+
+def handle_pack_purchase
+
     item_type = params[:item_type].to_s
     amount = params[:amount].to_i
 
