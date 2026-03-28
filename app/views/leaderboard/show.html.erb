@@ -1,15 +1,33 @@
 <h1 class="page-title">Accueil de <%= @player.pseudo %></h1>
 <p class="page-subtitle">Vue publique du dashboard joueur (lecture seule).</p>
 
-<div class="surface-card surface-card--shell mb-4">
+<% active_player_card = @player.respond_to?(:active_profile_card) ? @player.active_profile_card : nil %>
+<% player_home_theme_class = if active_player_card.present?
+                              profile_card_classes(active_player_card).to_s.gsub("profile-card-", "player-home-theme--")
+                            else
+                              "player-home-theme--none"
+                            end %>
+<% player_card_text = active_player_card.present? ? profile_card_text(@player) : nil %>
+
+<div class="surface-card surface-card--shell player-home-shell <%= player_home_theme_class %> mb-4">
   <div class="card-body">
-    <section class="hud-section mb-4 player-home-panel">
+    <section class="hud-section mb-4 player-home-panel player-home-identity">
       <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
         <div class="d-flex align-items-center gap-3">
           <%= user_avatar_image(@player, width: 96, height: 96, css_class: "rounded-circle", alt: "Avatar de #{@player.pseudo}") %>
           <div>
             <div class="profile-frame-container <%= frame_wrapper_classes(@player.respond_to?(:active_profile_frame) ? @player.active_profile_frame : nil) %>">
               <strong><%= @player.pseudo %></strong>
+            </div>
+            <% if player_card_text.present? %>
+              <p class="quest-meta mb-2 mt-2 player-home-identity-text"><%= player_card_text %></p>
+            <% end %>
+            <div class="player-home-identity-meta">
+              <span class="profile-card-meta-item">Niveau global: <strong><%= @player_total_level %></strong></span>
+              <span class="profile-card-meta-item">XP cette semaine: <strong><%= @player_xp_this_week %></strong></span>
+              <% if active_player_card.present? %>
+                <span class="profile-card-meta-item">Carte active: <strong><%= active_player_card.name %></strong></span>
+              <% end %>
             </div>
           </div>
         </div>
@@ -39,21 +57,6 @@
         </div>
       <% end %>
     </section>
-
-    <% active_player_card = @player.respond_to?(:active_profile_card) ? @player.active_profile_card : nil %>
-    <% if active_player_card.present? %>
-      <section class="hud-section mb-4 player-home-panel">
-        <h2 class="section-title">Carte de visite</h2>
-        <div class="profile-card-container <%= profile_card_classes(active_player_card) %>">
-          <div class="profile-card-header"><%= @player.pseudo %></div>
-          <div class="profile-card-meta">
-            <span class="profile-card-meta-item">Niveau global: <strong><%= @player_total_level %></strong></span>
-            <span class="profile-card-meta-item">XP cette semaine: <strong><%= @player_xp_this_week %></strong></span>
-          </div>
-          <div class="profile-card-text"><%= profile_card_text(@player) %></div>
-        </div>
-      </section>
-    <% end %>
 
     <section class="hud-section mb-4 player-home-panel">
       <h2 class="section-title">Progression par categorie</h2>

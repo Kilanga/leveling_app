@@ -17,6 +17,15 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.6] - 2026-03-28
+
+### Modifié
+- Profil public joueur: la carte de visite applique desormais son theme visuel au fond de toute la card principale (et non plus dans un bloc interne dedie).
+- Identite joueur: pseudo, niveau global, XP semaine et texte de carte sont regroupes dans le bandeau haut de la card principale.
+
+### Corrigé
+- Compatibilite couleurs: ajout de variantes de contraste par theme (Standard, Bleu Nuit, Incendie, Royale) pour conserver une lisibilite stable des textes, sections et meta-informations.
+
 ## [1.16.5] - 2026-03-28
 
 ### Corrigé
