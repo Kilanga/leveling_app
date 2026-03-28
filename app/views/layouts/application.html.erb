@@ -43,11 +43,6 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">
-          <li class="nav-item d-flex align-items-center">
-            <%= link_to "FR", locale_switch_url(:fr), class: "nav-link px-2 #{I18n.locale == :fr ? 'fw-bold text-white' : ''}" %>
-            <span class="text-muted">/</span>
-            <%= link_to "EN", locale_switch_url(:en), class: "nav-link px-2 #{I18n.locale == :en ? 'fw-bold text-white' : ''}" %>
-          </li>
           <% if user_signed_in? %>
             <% if current_user.admin? %>
               <li class="nav-item">
