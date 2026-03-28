@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_28_103000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "daily_contracts", force: :cascade do |t|
+    t.date "active_on", null: false
+    t.datetime "created_at", null: false
+    t.text "description", null: false
+    t.integer "reward_coins", null: false
+    t.string "risk_tier", null: false
+    t.integer "target_count", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active_on"], name: "index_daily_contracts_on_active_on"
+  end
+
   create_table "experiment_assignments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "experiment_key", null: false
@@ -65,6 +77,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
     t.string "variant", null: false
     t.index ["user_id", "experiment_key"], name: "index_experiment_assignments_on_user_id_and_experiment_key", unique: true
     t.index ["user_id"], name: "index_experiment_assignments_on_user_id"
+  end
+
+  create_table "faction_influences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "faction_id", null: false
+    t.date "on_date", null: false
+    t.integer "points", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["faction_id", "on_date"], name: "index_faction_influences_on_faction_id_and_on_date", unique: true
+    t.index ["faction_id"], name: "index_faction_influences_on_faction_id"
+  end
+
+  create_table "factions", force: :cascade do |t|
+    t.string "color_hex", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_factions_on_slug", unique: true
   end
 
   create_table "friend_challenges", force: :cascade do |t|
@@ -166,6 +197,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
     t.index ["user_id"], name: "index_user_badges_on_user_id"
   end
 
+  create_table "user_daily_contracts", force: :cascade do |t|
+    t.datetime "accepted_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.bigint "daily_contract_id", null: false
+    t.integer "progress_count", default: 0, null: false
+    t.datetime "reward_claimed_at"
+    t.string "status", default: "offered", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["daily_contract_id"], name: "index_user_daily_contracts_on_daily_contract_id"
+    t.index ["user_id", "daily_contract_id"], name: "index_user_daily_contracts_on_user_id_and_daily_contract_id", unique: true
+    t.index ["user_id"], name: "index_user_daily_contracts_on_user_id"
+  end
+
   create_table "user_items", force: :cascade do |t|
     t.boolean "active"
     t.datetime "created_at", null: false
@@ -232,6 +278,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
     t.integer "daily_login_streak_count", default: 0, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.bigint "faction_id"
     t.integer "league_last_move", default: 0, null: false
     t.date "league_last_settled_week"
     t.integer "league_room", default: 1, null: false
@@ -261,6 +308,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
     t.index ["active_xp_theme_id"], name: "index_users_on_active_xp_theme_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["faction_id"], name: "index_users_on_faction_id"
     t.index ["league_tier", "league_room"], name: "index_users_on_league_tier_and_league_room"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["pseudo"], name: "index_users_on_pseudo", unique: true
@@ -282,6 +330,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "experiment_assignments", "users"
+  add_foreign_key "faction_influences", "factions"
   add_foreign_key "friend_challenges", "users", column: "challenged_id"
   add_foreign_key "friend_challenges", "users", column: "challenger_id"
   add_foreign_key "friend_challenges", "users", column: "winner_id"
@@ -293,6 +342,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
   add_foreign_key "quests", "categories"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
+  add_foreign_key "user_daily_contracts", "daily_contracts"
+  add_foreign_key "user_daily_contracts", "users"
   add_foreign_key "user_items", "shop_items"
   add_foreign_key "user_items", "users"
   add_foreign_key "user_quests", "quests"
@@ -301,6 +352,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_001500) do
   add_foreign_key "user_stats", "users"
   add_foreign_key "user_weekly_quests", "users"
   add_foreign_key "user_weekly_quests", "weekly_quests"
+  add_foreign_key "users", "factions"
   add_foreign_key "users", "shop_items", column: "active_avatar_item_id"
   add_foreign_key "users", "shop_items", column: "active_profile_card_id"
   add_foreign_key "users", "shop_items", column: "active_profile_frame_id"

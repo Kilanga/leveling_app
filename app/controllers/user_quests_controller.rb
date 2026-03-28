@@ -47,6 +47,10 @@ class UserQuestsController < ApplicationController
       gained_xp = XpAwarder.complete_user_quest!(@user_quest)
       if gained_xp
         @user_quest.reload
+        if current_user.faction.present?
+          FactionInfluence.add_points!(faction: current_user.faction, on_date: Time.zone.today, points: 1)
+        end
+        UserDailyContract.progress_for_user!(current_user)
         referral_result = ReferralRewarder.claim_if_eligible!(current_user)
         streak = WeeklyStreakTracker.register_completion!(current_user)
         ProductAnalytics.track(

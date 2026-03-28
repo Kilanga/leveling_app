@@ -23,6 +23,9 @@ class DashboardController < ApplicationController
   end
 
   def index
+    Faction.bootstrap_defaults!
+    DailyContractBoard.ensure_for_today!
+
     @daily_login_claim = current_user.claim_daily_login_bonus!
 
     active_weekly_quest = ensure_single_active_global_weekly_quest!
@@ -62,6 +65,23 @@ class DashboardController < ApplicationController
     @daily_chest_claimed_today = daily_chest_claimed_today?
     @daily_chest_reward_coins = DAILY_CHEST_REWARD_COINS
     @friends_activity = recent_friends_activity
+
+    @factions = Faction.order(:name)
+    @faction_scores_today = Faction.left_outer_joins(:faction_influences)
+      .select("factions.*, COALESCE(SUM(CASE WHEN faction_influences.on_date = '#{Time.zone.today}' THEN faction_influences.points ELSE 0 END), 0) AS today_points")
+      .group("factions.id")
+      .order(Arel.sql("today_points DESC, factions.name ASC"))
+    @leading_faction = @faction_scores_today.first
+
+    today_contracts = DailyContract.for_today
+    today_contracts.each do |contract|
+      current_user.user_daily_contracts.find_or_create_by!(daily_contract: contract)
+    end
+    @daily_contract_offers = current_user.user_daily_contracts.includes(:daily_contract)
+      .joins(:daily_contract)
+      .where(daily_contracts: { active_on: Time.zone.today })
+      .order("daily_contracts.reward_coins DESC")
+    @active_daily_contract = @daily_contract_offers.find { |entry| entry.accepted? }
 
     respond_to do |format|
       format.html

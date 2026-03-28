@@ -70,6 +70,79 @@
   </div>
 </div>
 
+<div class="row g-4 mb-4">
+  <div class="col-lg-6">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title mb-3">Territoires de guildes</h2>
+        <% if current_user.faction.present? %>
+          <p class="quest-meta mb-2">Ta faction actuelle: <strong><%= current_user.faction.name %></strong>.</p>
+        <% else %>
+          <p class="quest-meta mb-2">Choisis une faction pour commencer a capturer des territoires.</p>
+        <% end %>
+
+        <% if @leading_faction.present? %>
+          <div class="quest-row quest-row--flat mb-3">
+            <strong>Faction dominante aujourd'hui: <%= @leading_faction.name %></strong>
+            <p class="quest-meta mb-0"><%= @leading_faction.try(:today_points).to_i %> points d'influence</p>
+          </div>
+        <% end %>
+
+        <div class="quest-list quest-list--flat">
+          <% @faction_scores_today.each do |faction| %>
+            <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
+              <div>
+                <strong><%= faction.name %></strong>
+                <p class="quest-meta mb-0"><%= faction.try(:today_points).to_i %> influence</p>
+              </div>
+              <% if current_user.faction_id == faction.id %>
+                <span class="badge text-bg-success">Equipee</span>
+              <% else %>
+                <%= button_to "Rejoindre", join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="surface-card h-100">
+      <div class="card-body">
+        <h2 class="section-title mb-3">Marche noir: contrats du jour</h2>
+        <div class="quest-list quest-list--flat">
+          <% @daily_contract_offers.each do |entry| %>
+            <% contract = entry.daily_contract %>
+            <div class="quest-row quest-row--flat">
+              <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                <div>
+                  <strong><%= contract.title %></strong>
+                  <p class="quest-meta mb-1"><%= contract.description %></p>
+                  <p class="quest-meta mb-0">Objectif: <%= entry.progress_count %>/<%= contract.target_count %> | Prime: +<%= contract.reward_coins %> coins</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                  <% if entry.claimable? %>
+                    <%= button_to "Reclamer", claim_user_daily_contract_path(entry), method: :post, class: "btn btn-sm btn-brand" %>
+                  <% elsif entry.completed? %>
+                    <span class="badge text-bg-success">Termine</span>
+                  <% elsif entry.accepted? %>
+                    <span class="badge text-bg-warning">En cours</span>
+                  <% elsif @active_daily_contract.present? %>
+                    <span class="badge text-bg-secondary">Verrouille</span>
+                  <% else %>
+                    <%= button_to "Accepter", accept_daily_contract_path(contract), method: :post, class: "btn btn-sm btn-outline-quest" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="surface-card mb-4">
   <div class="card-body">
     <h2 class="section-title mb-3">Activite recente des amis</h2>

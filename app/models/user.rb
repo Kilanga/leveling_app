@@ -32,6 +32,8 @@ class User < ApplicationRecord
   has_many :friend_challenges_as_challenger, class_name: "FriendChallenge", foreign_key: :challenger_id, dependent: :destroy
   has_many :friend_challenges_as_challenged, class_name: "FriendChallenge", foreign_key: :challenged_id, dependent: :destroy
   has_many :referred_users, class_name: "User", foreign_key: :referred_by_id, dependent: :nullify
+  has_many :user_daily_contracts, dependent: :destroy
+  has_many :daily_contracts, through: :user_daily_contracts
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true
@@ -39,6 +41,7 @@ class User < ApplicationRecord
   belongs_to :active_xp_theme, class_name: "ShopItem", optional: true
   belongs_to :active_profile_card, class_name: "ShopItem", optional: true
   belongs_to :referred_by, class_name: "User", optional: true
+  belongs_to :faction, optional: true
 
   attr_accessor :referral_code_input
 

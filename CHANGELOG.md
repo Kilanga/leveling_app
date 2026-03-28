@@ -17,6 +17,15 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.0] - 2026-03-28
+
+### Ajouté
+- Territoires de guildes: choix de faction et suivi d'influence quotidienne alimentee par les quetes validees.
+- Marche noir: 3 contrats journaliers avec acceptation, progression automatique sur completion de quetes et prime en coins a reclamer.
+
+### Modifié
+- Dashboard: nouveau bloc de metagame avec classement d'influence des factions et panneau des contrats du jour.
+
 ## [1.15.13] - 2026-03-28
 
 ### Corrigé

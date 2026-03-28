@@ -49,6 +49,21 @@ Rails.application.routes.draw do
   end
   resources :friend_challenges, only: [ :create ]
   resources :user_weekly_quests, only: [ :update ]
+  resources :factions, only: [] do
+    member do
+      post :join
+    end
+  end
+  resources :daily_contracts, only: [] do
+    member do
+      post :accept
+    end
+  end
+  resources :user_daily_contracts, only: [] do
+    member do
+      post :claim
+    end
+  end
 
   get "profil/completer", to: "users#complete_profile", as: :complete_profile
   patch "profil/completer", to: "users#update_profile"
