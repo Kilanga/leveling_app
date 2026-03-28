@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+EXPECTED_RUBY_PREFIX="3.3.11"
+CURRENT_RUBY="$(ruby -e 'print RUBY_VERSION')"
+if [[ "${CURRENT_RUBY}" != ${EXPECTED_RUBY_PREFIX}* ]]; then
+	echo "ERROR: expected Ruby ${EXPECTED_RUBY_PREFIX}.x in devcontainer, got ${CURRENT_RUBY}."
+	echo "Rebuild the devcontainer to pick up the updated base image."
+	exit 1
+fi
+
 service postgresql start
 
 su postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'password';\""

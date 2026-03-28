@@ -15,6 +15,14 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.1] - 2026-03-28
+
+### Modifié
+- Documentation Ruby normalisée sur la version cible exacte `3.3.11` (prérequis + checklist migration) pour éviter toute ambiguïté `3.3.x`.
+
+### Corrigé
+- Dev Container: ajout d'un garde-fou dans `.devcontainer/post-create.sh` qui stoppe le setup si Ruby ne commence pas par `3.3.11` et indique de reconstruire le conteneur.
+
 ## [1.20.0] - 2026-03-28
 
 ### Ajouté

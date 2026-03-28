@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Ruby 3.3.x
+- Ruby 3.3.11
 - PostgreSQL (local or remote)
 
 ## Setup
@@ -47,7 +47,7 @@
 ## Ruby 3.3 Migration Checklist
 
 Local machine:
-- Install Ruby 3.3.0 via your version manager (`rbenv`, `asdf`, `mise`).
+- Install Ruby 3.3.11 via your version manager (`rbenv`, `asdf`, `mise`).
 - Select the project Ruby version from `.ruby-version`.
 - Reinstall gems with `bundle install`.
 - Run full checks: `bundle exec rspec`, `bin/brakeman`, `bundle exec bundle-audit check --update`.
@@ -67,6 +67,10 @@ Supabase/PostgreSQL:
 
 End-to-end check:
 - Run `./script/check_ruby33_readiness.sh leveling-app` to validate local Ruby, bundle health, Heroku Ruby runtime, and migration status.
+
+Dev Container troubleshooting:
+- If VS Code terminal still reports Ruby 3.2.x, rebuild the container (`Dev Containers: Rebuild Container`) to refresh the base image.
+- Verify with `ruby -v` and ensure it starts with `3.3.11`.
 
 ## Contributing
 
