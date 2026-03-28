@@ -20,10 +20,9 @@
   <div class="card-body">
     <section class="hud-section mb-3">
       <div class="shop-tab-nav">
-        <%= link_to t('purchases.new.tabs.packs'), new_purchase_path(tab: "packs"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'packs'}" %>
+        <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
         <%= link_to t('purchases.new.tabs.boosts'), new_purchase_path(tab: "boosts"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
         <%= link_to t('purchases.new.tabs.titles'), new_purchase_path(tab: "titles"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
-        <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
         <%= link_to t('purchases.new.tabs.rewards'), new_purchase_path(tab: "rewards"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
       </div>
     </section>
@@ -31,42 +30,7 @@
     <div class="row g-4">
       <div class="col-lg-8">
         <section class="hud-section h-100">
-          <% if @active_shop_tab == "packs" %>
-            <h2 class="section-title"><%= t('purchases.new.packs.heading') %></h2>
-            <div class="shop-list shop-list--flat shop-list--boosts">
-              <% @coins_prices.each do |option| %>
-                <% value_per_euro = (option[:total_coins].to_f / option[:amount]).round(1) %>
-                <div class="shop-row shop-row--flat pack-row">
-                  <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
-                    <%= hidden_field_tag :amount, option[:amount] %>
-                    <%= hidden_field_tag :item_type, option[:label] %>
-                    <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
-                      <strong><%= option[:label] %></strong>
-                      <div class="d-flex align-items-center gap-2 flex-wrap">
-                        <% if option[:bonus_coins].positive? %>
-                          <span class="shop-state-chip shop-state-chip--equipped"><%= t('purchases.new.packs.bonus_badge', percentage: (option[:bonus_coins].to_f / option[:coins] * 100).round) %></span>
-                        <% end %>
-                        <% if option[:label] == @best_value_pack_label %>
-                          <span class="shop-state-chip shop-state-chip--best"><%= t('purchases.new.packs.best_value_badge') %></span>
-                        <% end %>
-                      </div>
-                    </div>
-
-                    <div class="pack-total-line mb-1">
-                      <span class="pack-total-main"><%= t('purchases.new.packs.orbs_received', count: option[:total_coins]) %></span>
-                      <% if option[:bonus_coins].positive? %>
-                        <span class="pack-total-detail"><%= t('purchases.new.packs.base_bonus', base: option[:coins], bonus: option[:bonus_coins]) %></span>
-                      <% end %>
-                    </div>
-
-                    <p class="quest-meta mb-1"><%= option[:description] %></p>
-                    <p class="quest-meta mb-1"><%= t('purchases.new.packs.rate', orbs: value_per_euro) %></p>
-                    <%= submit_tag t('purchases.new.packs.buy_button', price: option[:amount]), class: "btn btn-brand" %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          <% elsif @active_shop_tab == "boosts" %>
+          <% if @active_shop_tab == "boosts" %>
             <h2 class="section-title"><%= t('purchases.new.boosts.heading') %></h2>
             <div class="shop-list shop-list--flat">
               <% @boosts.each do |boost| %>
@@ -405,6 +369,41 @@
               <p class="profile-card-text mb-0"><%= profile_card_text(current_user).presence || "Ton style s'affiche ici quand tu equipes une carte." %></p>
             </div>
           </div>
+
+            <h2 class="section-title">Orbes</h2>
+            <div class="shop-list shop-list--flat shop-list--boosts mb-4">
+              <% @coins_prices.each do |option| %>
+                <% value_per_euro = (option[:total_coins].to_f / option[:amount]).round(1) %>
+                <div class="shop-row shop-row--flat pack-row">
+                  <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid gap-2" do %>
+                    <%= hidden_field_tag :amount, option[:amount] %>
+                    <%= hidden_field_tag :item_type, option[:label] %>
+                    <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                      <strong><%= option[:label] %></strong>
+                      <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <% if option[:bonus_coins].positive? %>
+                          <span class="shop-state-chip shop-state-chip--equipped"><%= t('purchases.new.packs.bonus_badge', percentage: (option[:bonus_coins].to_f / option[:coins] * 100).round) %></span>
+                        <% end %>
+                        <% if option[:label] == @best_value_pack_label %>
+                          <span class="shop-state-chip shop-state-chip--best"><%= t('purchases.new.packs.best_value_badge') %></span>
+                        <% end %>
+                      </div>
+                    </div>
+
+                    <div class="pack-total-line mb-1">
+                      <span class="pack-total-main"><%= t('purchases.new.packs.orbs_received', count: option[:total_coins]) %></span>
+                      <% if option[:bonus_coins].positive? %>
+                        <span class="pack-total-detail"><%= t('purchases.new.packs.base_bonus', base: option[:coins], bonus: option[:bonus_coins]) %></span>
+                      <% end %>
+                    </div>
+
+                    <p class="quest-meta mb-1"><%= option[:description] %></p>
+                    <p class="quest-meta mb-1"><%= t('purchases.new.packs.rate', orbs: value_per_euro) %></p>
+                    <%= submit_tag t('purchases.new.packs.buy_button', price: option[:amount]), class: "btn btn-brand" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
 
           <hr class="hud-divider">
 

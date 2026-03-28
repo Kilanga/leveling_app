@@ -46,6 +46,7 @@ en:
       friends: "Friends"
       notifications: "Notifications"
       profile: "Profile"
+      report_bug: "Report a bug"
       sign_out: "Sign out"
       sign_in: "Sign in"
 
