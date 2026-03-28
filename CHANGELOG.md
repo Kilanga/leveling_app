@@ -15,6 +15,11 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.6] - 2026-03-28
+
+### Modifié
+- Quetes recommandees: limitation de 4 a 3 cards dans `Recommandees pour toi` pour préserver la lisibilité (notamment le badge XP) sur desktop.
+
 ## [1.20.5] - 2026-03-28
 
 ### Modifié
