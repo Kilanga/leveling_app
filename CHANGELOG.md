@@ -15,6 +15,14 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.2] - 2026-03-28
+
+### Modifié
+- Dashboard: retrait de la section `Marche noir: contrats du jour` de l'interface principale pour simplifier l'expérience et éviter la redondance avec les quêtes.
+
+### Corrigé
+- Locales FR/EN: formats `date.short` et `time.short` passés en format numérique pour éviter les erreurs de traduction liées aux noms de mois abrégés (`abbr_month_names`) sur le dashboard.
+
 ## [1.20.1] - 2026-03-28
 
 ### Modifié

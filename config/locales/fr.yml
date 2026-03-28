@@ -622,10 +622,10 @@ fr:
 
   time:
     formats:
-      short: "%d %b, %H:%M"
+      short: "%d/%m, %H:%M"
       long: "%d %B %Y, %H:%M:%S"
 
   date:
     formats:
-      short: "%d %b %Y"
+      short: "%d/%m/%Y"
       long: "%d %B %Y"
