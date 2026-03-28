@@ -1,4 +1,4 @@
-FROM ruby:3.3.0-slim
+FROM ruby:3.3.6-slim
 
 # Toolchain required by native gems (e.g., prism via ruby-lsp) and Postgres client libs.
 RUN apt-get update && \
