@@ -1397,15 +1397,14 @@ body::before {
 }
 
 .profile-card-royale .profile-card-header::after {
-  content: "";
+  content: "♛";
   position: absolute;
-  top: -2px;
-  right: 2px;
-  width: 14px;
-  height: 10px;
-  background: linear-gradient(180deg, #ffe8a3, #d3a94e);
-  clip-path: polygon(0 100%, 10% 45%, 26% 72%, 45% 18%, 64% 72%, 82% 38%, 100% 100%);
-  filter: drop-shadow(0 0 6px rgba(255, 215, 130, 0.6));
+  top: -4px;
+  right: 0;
+  color: #ffd98d;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-shadow: 0 0 6px rgba(255, 215, 130, 0.7);
   transform-origin: 50% 80%;
   animation: crownHover 1.8s ease-in-out infinite;
 }
@@ -1581,7 +1580,8 @@ body::before {
   .profile-card-royale,
   .profile-card-royale .profile-card-header::after,
   .profile-card-royale .profile-card-header::before {
-    animation: none !important;
+    animation-duration: 12s !important;
+    animation-timing-function: linear !important;
   }
 }
 

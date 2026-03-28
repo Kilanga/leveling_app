@@ -17,6 +17,12 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.10] - 2026-03-27
+
+### Corrigé
+- Animations cosmétiques: visibilité renforcée de la couronne sur la carte Royale.
+- Compatibilité navigateur: en mode `prefers-reduced-motion`, les animations cosmétiques passent en version ralentie (au lieu d'etre totalement coupees) pour rester visibles.
+
 ## [1.15.9] - 2026-03-27
 
 ### Modifié
