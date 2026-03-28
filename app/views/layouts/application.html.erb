@@ -19,7 +19,7 @@
   <meta property="og:description" content="<%= page_meta_description %>">
   <meta property="og:locale" content="<%= page_og_locale %>">
   <% page_alternate_locale_urls.each_key do |locale_code| %>
-    <% next if locale_code == html_locale_tag %>
+    <% next if locale_code == I18n.locale.to_s %>
     <meta property="og:locale:alternate" content="<%= locale_code == 'fr' ? 'fr_FR' : locale_code %>">
   <% end %>
   <% if page_canonical_url.present? %>

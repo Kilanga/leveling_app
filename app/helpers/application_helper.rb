@@ -112,7 +112,7 @@ def page_og_image_url
 end
 
 def page_og_locale
-  locale = html_locale_tag
+  locale = I18n.locale.to_s
   locale == "fr" ? "fr_FR" : locale
 end
 
