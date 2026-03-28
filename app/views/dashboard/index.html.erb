@@ -75,48 +75,9 @@
 <% end %>
 
 <div class="row g-4 mb-4">
-  <div class="col-lg-12">
+  <div class="col-lg-8">
     <div class="surface-card h-100">
       <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
-          <div>
-            <strong>Streak hebdo: <%= @weekly_streak_count %> semaine(s)</strong>
-            <p class="quest-meta mb-0">
-              <% if @weekly_streak_last_completed_on.present? %>
-                <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
-              <% else %>
-                <%= t('dashboard.no_completion_week') %>
-              <% end %>
-            </p>
-          </div>
-          <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
-        </div>
-
-        <div class="daily-objective-card mb-4">
-          <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-            <div>
-              <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
-              <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
-            </div>
-            <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-              <%= @completed_today_count %> / <%= @daily_target %>
-            </span>
-          </div>
-          <div class="xp-track mt-3">
-            <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
-            <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
-            <% if @daily_chest_claimed_today %>
-              <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
-            <% else %>
-              <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
-            <% end %>
-          </div>
-        </div>
-
-        <hr class="hud-divider">
-
         <h2 class="section-title mb-3"><%= t('dashboard.factions.title') %></h2>
         <% if @next_faction_reset_at.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.reset_in', time: @faction_reset_countdown) %></p>
@@ -178,6 +139,49 @@
                 <%= button_to t('dashboard.factions.join_button'), join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
               <% end %>
             </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="surface-card mb-4">
+      <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
+        <div>
+          <strong>Streak hebdo: <%= @weekly_streak_count %> semaine(s)</strong>
+          <p class="quest-meta mb-0">
+            <% if @weekly_streak_last_completed_on.present? %>
+              <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
+            <% else %>
+              <%= t('dashboard.no_completion_week') %>
+            <% end %>
+          </p>
+        </div>
+        <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
+      </div>
+    </div>
+
+    <div class="surface-card daily-objective-card h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+          <div>
+            <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
+            <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
+          </div>
+          <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+            <%= @completed_today_count %> / <%= @daily_target %>
+          </span>
+        </div>
+        <div class="xp-track mt-3">
+          <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
+          <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
+          <% if @daily_chest_claimed_today %>
+            <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
+          <% else %>
+            <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
           <% end %>
         </div>
       </div>

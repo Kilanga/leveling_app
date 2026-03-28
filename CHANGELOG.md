@@ -15,6 +15,12 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.5] - 2026-03-28
+
+### Modifié
+- Dashboard accueil: réorganisation en deux colonnes sur desktop, avec `Territoires de guildes` à gauche et deux cards distinctes `Streak hebdo` + `Objectif du jour` à droite.
+- `Activite recente des amis` conservée en dernière card de la page.
+
 ## [1.20.4] - 2026-03-28
 
 ### Modifié
