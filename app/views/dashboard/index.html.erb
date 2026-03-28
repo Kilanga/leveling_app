@@ -75,20 +75,13 @@
     <div class="surface-card h-100">
       <div class="card-body">
         <h2 class="section-title mb-3">Territoires de guildes</h2>
-        <p class="quest-meta mb-2">Reset de saison: mercredi a 12h (heure serveur).</p>
         <% if @next_faction_reset_at.present? %>
-          <p class="quest-meta mb-1">Prochain reset: <%= l(@next_faction_reset_at, format: :short) %>.</p>
-          <p class="quest-meta mb-2">Dans <strong><%= @faction_reset_countdown %></strong>.</p>
+          <p class="quest-meta mb-2">Reset dans <strong><%= @faction_reset_countdown %></strong>.</p>
         <% end %>
         <% if current_user.faction.present? %>
           <p class="quest-meta mb-2">Ta faction actuelle: <strong><%= current_user.faction.name %></strong>.</p>
           <% unless @can_change_faction %>
-            <p class="quest-meta mb-2">
-              Changement verrouille jusqu'au prochain reset
-              <% if @faction_switch_available_at.present? %>
-                (<%= l(@faction_switch_available_at, format: :short) %>)
-              <% end %>.
-            </p>
+            <p class="quest-meta mb-2">Changement verrouille jusqu'au prochain reset.</p>
           <% end %>
         <% else %>
           <p class="quest-meta mb-2">Choisis une faction pour commencer a capturer des territoires.</p>

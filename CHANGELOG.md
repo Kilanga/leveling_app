@@ -17,6 +17,11 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.3] - 2026-03-28
+
+### Modifié
+- Dashboard guildes: simplification de l'information de reset avec un affichage unique "Reset dans X" (suppression de l'horodatage detaille en doublon).
+
 ## [1.16.2] - 2026-03-28
 
 ### Sécurité

@@ -113,7 +113,7 @@ RSpec.describe "Factions and contracts", type: :request do
     get dashboard_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Dans")
+    expect(response.body).to include("Reset dans")
     expect(response.body).to include("Guilde gagnante (semaine precedente): #{winner.name}")
     expect(response.body).to include("WinnerGuild")
   end
