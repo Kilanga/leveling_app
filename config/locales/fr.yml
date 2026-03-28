@@ -585,6 +585,41 @@ fr:
       generic_error: "Une erreur s'est produite. Veuillez reessayer."
       action_not_recognized: "Cette action n'est pas reconnue."
 
+  # LEGAL PAGES
+  pages:
+    terms:
+      page_title: "Conditions d'utilisation"
+      page_description: "Lisez nos conditions d'utilisation pour Leveling."
+      section_use: "Utilisation de l'application"
+      content_use: "Leveling est une application de progression gamifiée. Vous acceptez d'utiliser ce service conformément aux lois applicables et à ces conditions. Vous ne pouvez pas utiliser l'application pour activités frauduleuses, diffamatoires ou illégales."
+      section_accounts: "Comptes utilisateur"
+      content_accounts: "Vous êtes responsable de la confidentialité de vos identifiants. Leveling n'est pas responsable des accès non autorisés si vous partagez vos credentials. Vous acceptez de fournir des informations exactes lors de l'enregistrement."
+      section_intellectual: "Propriété intellectuelle"
+      content_intellectual: "Tout contenu fourni par Leveling (design, mécanique, textes) est protégé par copyright. Vous pouvez utiliser le service pour votre usage personnel, mais vous ne pouvez pas reproduire ou revendre le contenu sans permission."
+      section_limitation: "Limitation de responsabilité"
+      content_limitation: "Leveling est fourni 'tel quel'. Nous ne garantissons pas que le service sera ininterrompu ou exempt d'erreurs. Leveling ne sera pas responsable pour pertes de données, interruptions, ou dommages indirects."
+      section_changes: "Modifications des conditions"
+      content_changes: "Leveling se réserve le droit de modifier ces conditions à tout moment. Les modifications entrent en vigueur immédiatement. Votre utilisation continue implique acceptation des modifications."
+      section_contact: "Contact"
+      content_contact: "Pour toute question sur ces conditions, contactez-nous via le formulaire de support dans l'application."
+    privacy:
+      page_title: "Politique de confidentialité"
+      page_description: "Lisez notre politique de confidentialité pour Leveling."
+      section_collection: "Collecte de données"
+      content_collection: "Leveling collecte les informations que vous soumettez (email, pseudo, avatar). Nous collectons également des données d'usage anonymes pour améliorer le service (événements de progression, temps de session)."
+      section_use: "Utilisation des données"
+      content_use: "Vos données personnelles sont utilisées pour authentifier votre compte, envoyer confirmations et newsletters, améliorer le service et détecter les abus. Nous ne vendons jamais vos données à des tiers."
+      section_sharing: "Partage de données"
+      content_sharing: "Vos données publiques (pseudo, avatar, classement) sont visibles par les autres joueurs. Nous ne partageons jamais avec tiers-partis sans votre consentement, sauf si légalement requis."
+      section_security: "Sécurité"
+      content_security: "Vos données sont hébergées sur Heroku/Supabase avec chiffrage. Hors de votre responsabilité, nous mettons en œuvre les meilleures pratiques de sécurité. Vous êtes responsable de la sécurité de vos identifiants."
+      section_rights: "Vos droits"
+      content_rights: "Vous pouvez demander l'accès, la rectification ou la suppression de vos données personnelles via le support. Les demandes de suppression de compte sont traitées sous 30 jours."
+      section_changes: "Modifications de la politique"
+      content_changes: "Leveling peut modifier cette politique à tout moment. Les modifications entrent en vigueur immédiatement. Votre utilisation continue implique acceptation."
+      section_contact: "Contact"
+      content_contact: "Pour toute question sur vos données ou cette politique, contactez-nous via le formulaire de support."
+
   time:
     formats:
       short: "%d %b, %H:%M"

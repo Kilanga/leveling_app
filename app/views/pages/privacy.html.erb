@@ -1,0 +1,49 @@
+<% content_for :title, "#{t('pages.privacy.page_title')} | Leveling" %>
+<% content_for :meta_description, t('pages.privacy.page_description') %>
+
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <h1 class="page-title mb-4"><%= t('pages.privacy.page_title') %></h1>
+
+    <div class="legal-content">
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_collection') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.privacy.content_collection') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_use') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.privacy.content_use') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_sharing') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.privacy.content_sharing') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_security') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.privacy.content_security') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_rights') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.privacy.content_rights') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_changes') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.privacy.content_changes') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.privacy.section_contact') %></h2>
+      <p class="quest-meta">
+        <%= t('pages.privacy.content_contact') %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="text-center">
+  <%= link_to t('layout.nav.home'), root_path, class: "btn btn-outline-quest btn-arcade" %>
+</div>

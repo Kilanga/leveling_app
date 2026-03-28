@@ -1,0 +1,44 @@
+<% content_for :title, "#{t('pages.terms.page_title')} | Leveling" %>
+<% content_for :meta_description, t('pages.terms.page_description') %>
+
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <h1 class="page-title mb-4"><%= t('pages.terms.page_title') %></h1>
+
+    <div class="legal-content">
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.terms.section_use') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.terms.content_use') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.terms.section_accounts') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.terms.content_accounts') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.terms.section_intellectual') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.terms.content_intellectual') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.terms.section_limitation') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.terms.content_limitation') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.terms.section_changes') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.terms.content_changes') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.terms.section_contact') %></h2>
+      <p class="quest-meta">
+        <%= t('pages.terms.content_contact') %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="text-center">
+  <%= link_to t('layout.nav.home'), root_path, class: "btn btn-outline-quest btn-arcade" %>
+</div>

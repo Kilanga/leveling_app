@@ -15,6 +15,25 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.19.0] - 2026-03-28
+
+### Ajouté
+- PWA manifest enrichi: application progressive web avec nom "Leveling", description gamification, 3 variantes d'icônes (192/512 + maskable), 3 raccourcis app (Dashboard/Quêtes/Boutique), thèmes coulors (#1a1a1a charbon / #0d0d0d noir), catégories [games, productivity] pour App Store discovery.
+- Pages légales statiques (non-authentifiées): routes GET /terms et GET /privacy, sans filtre d'authentification pour accessibilité publique.
+- Page Conditions d'Utilisation (6 sections): Usage, Comptes, Propriété Intellectuelle, Limitation, Modifications, Contact, avec traduction complète FR/EN via i18n (clés pages.terms.*).
+- Page Politique de Confidentialité (7 sections): Collecte, Utilisation, Partage, Sécurité, Droits Utilisateur (RGPD: droit d'accès, suppression 30j, portabilité), Modifications, Contact, avec traduction complète FR/EN (clés pages.privacy.*).
+- Footer landing page: liens sociaux (Discord, Twitter, Instagram) + liens légaux (Termes, Confidentialité) + copyright © 2026 Leveling, pour conversion marketing complète.
+- Séquence d'onboarding par email déclenchée automatiquement à la création de compte: jour +3 (conseils progression sur quêtes/objectifs/ligues) et jour +7 (découverte stats + prochaines étapes: amis/ligues/cosmétiques).
+- Mailer methods: welcome_day3_email et welcome_day7_email (UserMailer) avec sujets localisés (FR/EN mixed), prêtes à intégration Solid Queue ou ActiveJob.
+- Email drip job (EmailDripJob): background job pour envoi planifié, accepte paramètres step='day3'|'day7', usage: EmailDripJob.set(wait: 3.days).perform_later(user.id, 'day3').
+- Callback after_create dans User model: déclenche automatiquement EmailDripJob avec wait: 3.days et wait: 7.days pour les deux emails drip.
+
+### Modifié
+- Controller pages nouvellement créé: skip_before_action sur [authenticate_user!, ensure_profile_completed, resolve_due_friend_challenges, set_unread_notifications_count] pour accès public des pages légales.
+
+### Sécurité
+- Pages légales incluses: RGPD-compliant avec datation des droits (accès 30j, suppression 30j, portabilité immédiate), transparence sur partages tiers (analytics, CDN, mailer), notification des modifications politiques.
+
 ## [1.18.0] - 2026-03-28
 
 ### Ajouté

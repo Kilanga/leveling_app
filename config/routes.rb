@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   post "stripe/webhook", to: "stripe_webhooks#create"
   root "welcome#index"
   get "welcome", to: "welcome#index"
+  get "terms", to: "pages#terms", as: :terms
+  get "privacy", to: "pages#privacy", as: :privacy
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
   post "dashboard/claim_daily_chest", to: "dashboard#claim_daily_chest", as: :claim_daily_chest
   devise_for :users, controllers: {

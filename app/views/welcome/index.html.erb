@@ -72,3 +72,35 @@
     </div>
   </div>
 </section>
+
+<footer class="mt-5 border-top border-secondary">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <h6 class="text-light mb-3">Community</h6>
+        <div class="d-flex gap-3">
+          <a href="https://discord.gg/leveling" target="_blank" rel="noopener" class="btn-link text-decoration-none" aria-label="Discord">
+            <i class="bi bi-discord"></i> Discord
+          </a>
+          <a href="https://twitter.com/levelingapp" target="_blank" rel="noopener" class="btn-link text-decoration-none" aria-label="Twitter">
+            <i class="bi bi-twitter"></i> Twitter
+          </a>
+          <a href="https://instagram.com/levelingapp" target="_blank" rel="noopener" class="btn-link text-decoration-none" aria-label="Instagram">
+            <i class="bi bi-instagram"></i> Instagram
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <h6 class="text-light mb-3">Legal</h6>
+        <div class="d-flex gap-3">
+          <%= link_to t('pages.terms.page_title'), terms_path, class: "btn-link text-decoration-none" %>
+          <%= link_to t('pages.privacy.page_title'), privacy_path, class: "btn-link text-decoration-none" %>
+        </div>
+      </div>
+    </div>
+    <div class="border-top border-secondary mt-3 pt-3 text-center text-muted">
+      <p class="mb-0">&copy; 2026 Leveling. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
