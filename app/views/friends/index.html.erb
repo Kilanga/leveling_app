@@ -48,7 +48,7 @@
   <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
     <div>
       <h2 class="section-title mb-1">Parrainage</h2>
-      <p class="quest-meta mb-2">Invite un ami: il gagne <%= @referral_invitee_reward %> credits gratuits a sa premiere quete validee et toi <%= @referral_inviter_reward %> credits gratuits.</p>
+      <p class="quest-meta mb-2">Invite un ami: il gagne <%= @referral_invitee_reward %> Fragments a sa premiere quete validee et toi <%= @referral_inviter_reward %> Fragments.</p>
       <input type="text" class="form-control invite-link-input" value="<%= @invite_url %>" readonly>
     </div>
     <a href="https://twitter.com/intent/tweet?text=<%= ERB::Util.url_encode("Je progresse sur Leveling. Viens me challenger:") %>&url=<%= ERB::Util.url_encode(@invite_url) %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline-quest">

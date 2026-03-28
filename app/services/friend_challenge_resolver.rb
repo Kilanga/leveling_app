@@ -30,7 +30,7 @@ class FriendChallengeResolver
             user: winner,
             kind: "challenge_won",
             title: "Defi gagne !",
-            body: "Tu remportes #{challenge.reward_coins} credits gratuits.",
+            body: "Tu remportes #{challenge.reward_coins} Fragments.",
             cta_path: "/friends"
           )
         end

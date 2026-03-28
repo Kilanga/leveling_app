@@ -7,7 +7,7 @@ class UserMailerPreview < ActionMailer::Preview
 	def purchase_confirmation
 		UserMailer.purchase_confirmation(
 			user: example_user,
-			summary: "Pack coins: +500",
+			summary: "Pack Orbes: +500",
 			amount_eur: 20
 		)
 	end

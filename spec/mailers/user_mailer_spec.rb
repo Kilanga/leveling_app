@@ -23,10 +23,10 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   it "builds purchase confirmation email" do
-    mail = described_class.purchase_confirmation(user: user, summary: "Pack coins: +100", amount_eur: 5)
+    mail = described_class.purchase_confirmation(user: user, summary: "Pack Orbes: +100", amount_eur: 5)
 
     expect(mail.to).to include(user.email)
     expect(mail.subject).to eq("Confirmation d'achat - Leveling")
-    expect(mail.body.encoded).to include("Pack coins: +100")
+    expect(mail.body.encoded).to include("Pack Orbes: +100")
   end
 end

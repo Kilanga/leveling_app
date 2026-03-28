@@ -1,14 +1,14 @@
 <h1 class="page-title">Marche des aventuriers</h1>
 <p class="page-subtitle">Obtenez des ressources premium pour accelerer votre progression.</p>
-<p class="quest-meta mb-1">Tes coins payants: <strong><%= current_user.coins %></strong></p>
-<p class="quest-meta mb-3">Tes credits gratuits: <strong><%= current_user.free_credits_balance %></strong></p>
+<p class="quest-meta mb-1">Tes <strong>Orbes</strong> premium: <strong><%= current_user.coins %></strong></p>
+<p class="quest-meta mb-3">Tes <strong>Fragments</strong> de progression: <strong><%= current_user.free_credits_balance %></strong></p>
 
 <% if @entry_offer_enabled %>
   <div class="surface-card mb-4 welcome-offer-card">
     <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
       <div class="welcome-offer-copy">
         <p class="welcome-offer-kicker mb-1">Offre de bienvenue active</p>
-        <h2 class="section-title mb-2">Ton premier pack coins inclut <span>+<%= (@entry_offer_bonus_rate * 100).to_i %>%</span> de bonus</h2>
+        <h2 class="section-title mb-2">Ton premier pack d'Orbes inclut <span>+<%= (@entry_offer_bonus_rate * 100).to_i %>%</span> de bonus</h2>
         <p class="quest-meta mb-0">Le bonus est deja calcule dans chaque carte pack: tu vois directement le total recu.</p>
       </div>
       <span class="shop-state-chip shop-state-chip--best">1er achat</span>
@@ -24,6 +24,7 @@
         <%= link_to "Boosts", new_purchase_path(tab: "boosts"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
         <%= link_to "Titres", new_purchase_path(tab: "titles"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
         <%= link_to "Cosmétiques", new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
+        <%= link_to "Recompenses", new_purchase_path(tab: "rewards"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
       </div>
     </section>
 
@@ -31,7 +32,7 @@
       <div class="col-lg-8">
         <section class="hud-section h-100">
           <% if @active_shop_tab == "packs" %>
-            <h2 class="section-title">Packs de coins</h2>
+            <h2 class="section-title">Packs d'Orbes</h2>
             <div class="shop-list shop-list--flat shop-list--boosts">
               <% @coins_prices.each do |option| %>
                 <% value_per_euro = (option[:total_coins].to_f / option[:amount]).round(1) %>
@@ -52,14 +53,14 @@
                     </div>
 
                     <div class="pack-total-line mb-1">
-                      <span class="pack-total-main"><%= option[:total_coins] %> coins recues</span>
+                      <span class="pack-total-main"><%= option[:total_coins] %> Orbes recus</span>
                       <% if option[:bonus_coins].positive? %>
-                        <span class="pack-total-detail">(<%= option[:coins] %> + <%= option[:bonus_coins] %> bonus)</span>
+                        <span class="pack-total-detail">(<%= option[:coins] %> + <%= option[:bonus_coins] %> bonus Orbes)</span>
                       <% end %>
                     </div>
 
                     <p class="quest-meta mb-1"><%= option[:description] %></p>
-                    <p class="quest-meta mb-1"><%= value_per_euro %> coins / EUR</p>
+                    <p class="quest-meta mb-1"><%= value_per_euro %> Orbes / EUR</p>
                     <%= submit_tag "Acheter #{option[:amount]} EUR", class: "btn btn-brand" %>
                   <% end %>
                 </div>
@@ -115,7 +116,9 @@
                       <%= equipped ? "Equipe" : owned ? "Possede" : "Disponible" %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_coins %> coins</span>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_coins %> Orbes</span>
+                    <% elsif item.price_free_credits.present? %>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_free_credits %> Fragments</span>
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_euros %> EUR</span>
                     <% end %>
@@ -125,7 +128,7 @@
                     <%= button_to "Retirer", deactivate_title_path, method: :post, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
-                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                  <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
                       <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
@@ -177,7 +180,9 @@
                       <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta"><%= item.price_coins %> coins</span>
+                      <span class="quest-meta"><%= item.price_coins %> Orbes</span>
+                    <% elsif item.price_free_credits.present? %>
+                      <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= item.price_euros %> EUR</span>
                     <% end %>
@@ -189,7 +194,7 @@
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-brand" %>
-                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                  <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
                       <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
@@ -227,7 +232,9 @@
                       <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta"><%= item.price_coins %> coins</span>
+                      <span class="quest-meta"><%= item.price_coins %> Orbes</span>
+                    <% elsif item.price_free_credits.present? %>
+                      <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= item.price_euros %> EUR</span>
                     <% end %>
@@ -239,7 +246,7 @@
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-brand" %>
-                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                  <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
                       <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
@@ -281,7 +288,9 @@
                       <%= active ? "Active" : owned ? "Possede" : "Disponible" %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta"><%= item.price_coins %> coins</span>
+                      <span class="quest-meta"><%= item.price_coins %> Orbes</span>
+                    <% elsif item.price_free_credits.present? %>
+                      <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= item.price_euros %> EUR</span>
                     <% end %>
@@ -293,11 +302,51 @@
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
                     <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-brand" %>
-                  <% elsif item.price_coins.present? || item.price_euros.present? %>
+                  <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
                       <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
                     <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% elsif @active_shop_tab == "rewards" %>
+            <h2 class="section-title">Recompenses contre Fragments</h2>
+            <p class="quest-meta mb-3">Ces objets se debloquent uniquement via ta progression gratuite.</p>
+            <div class="shop-list shop-list--flat">
+              <% @free_reward_items.each do |item| %>
+                <% rarity_key = item.rarity.to_s.presence || "common" %>
+                <% owned = @owned_item_ids.include?(item.id) %>
+                <div class="shop-row shop-row--flat">
+                  <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                    <strong class="shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.name %></strong>
+                    <span class="rarity-chip rarity-chip--<%= rarity_key %>"><%= item.rarity.to_s.capitalize %></span>
+                  </div>
+                  <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
+
+                  <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
+                    <span class="shop-state-chip <%= owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
+                      <%= owned ? "Possede" : "Disponible" %>
+                    </span>
+                    <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
+                  </div>
+
+                  <% if owned %>
+                    <% if item.item_type == "title" %>
+                      <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
+                    <% elsif %w[profile_frame xp_theme profile_card].include?(item.item_type) %>
+                      <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: item.item_type }, class: "btn btn-sm btn-brand" %>
+                    <% else %>
+                      <span class="badge text-bg-success">Debloque</span>
+                    <% end %>
+                  <% elsif current_user.free_credits_balance >= item.price_free_credits.to_i %>
+                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                      <%= hidden_field_tag :shop_item_id, item.id %>
+                      <%= submit_tag "Debloquer", class: "btn btn-outline-quest" %>
+                    <% end %>
+                  <% else %>
+                    <span class="shop-state-chip shop-state-chip--available">Il te manque <%= item.price_free_credits.to_i - current_user.free_credits_balance %> Fragments</span>
                   <% end %>
                 </div>
               <% end %>
@@ -364,7 +413,12 @@
                   <% if item.price_coins.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Acheter #{item.price_coins} coins", class: "btn btn-sm btn-outline-quest" %>
+                      <%= submit_tag "Acheter #{item.price_coins} Orbes", class: "btn btn-sm btn-outline-quest" %>
+                    <% end %>
+                  <% elsif item.price_free_credits.present? %>
+                    <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                      <%= hidden_field_tag :shop_item_id, item.id %>
+                      <%= submit_tag "Debloquer #{item.price_free_credits} Fragments", class: "btn btn-sm btn-outline-quest" %>
                     <% end %>
                   <% elsif item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
@@ -382,7 +436,7 @@
           <hr class="hud-divider">
 
           <h2 class="section-title">Defi boutique hebdo</h2>
-          <p class="quest-meta mb-2">Complete les 3 objectifs et recupere <%= PurchasesController::SHOP_CHALLENGE_REWARD_FREE_CREDITS %> credits gratuits.</p>
+          <p class="quest-meta mb-2">Complete les 3 objectifs et recupere <%= PurchasesController::SHOP_CHALLENGE_REWARD_FREE_CREDITS %> Fragments.</p>
           <div class="shop-challenge-card mb-3">
             <% @shop_challenge.fetch(:steps, []).each do |step| %>
               <div class="shop-challenge-step">

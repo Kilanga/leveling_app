@@ -17,6 +17,20 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.17.0] - 2026-03-28
+
+### Ajouté
+- Economie V2: nouveau catalogue `Recompenses` dans la boutique, avec objets debloquables directement via la monnaie gratuite de progression.
+- Pricing boutique: prise en charge d'un nouveau prix `price_free_credits` sur les objets pour distinguer clairement les achats premium des debloquages gameplay.
+
+### Modifié
+- Nommage immersif des monnaies dans l'interface: `coins` devient `Orbes` (premium), `credits gratuits` devient `Fragments` (progression).
+- Flux d'achat boutique: les objets du catalogue gratuit debitent uniquement les `Fragments` et redirigent vers l'onglet `Recompenses`.
+- Presentation boutique: harmonisation des libelles de prix et des CTA pour afficher explicitement la monnaie utilisee (`Orbes` vs `Fragments`).
+
+### Corrigé
+- Separation economique renforcee: les objets de recompense gratuite ne peuvent plus consommer la monnaie premium.
+
 ## [1.16.7] - 2026-03-28
 
 ### Ajouté

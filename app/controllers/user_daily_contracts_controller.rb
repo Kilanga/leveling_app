@@ -10,7 +10,7 @@ class UserDailyContractsController < ApplicationController
         event_name: "daily_contract_claimed",
         metadata: { daily_contract_id: contract.daily_contract_id, reward_free_credits: contract.daily_contract.reward_coins }
       )
-      redirect_to dashboard_path, notice: "Prime recuperee: +#{contract.daily_contract.reward_coins} credits gratuits."
+      redirect_to dashboard_path, notice: "Prime recuperee: +#{contract.daily_contract.reward_coins} Fragments."
     else
       redirect_to dashboard_path, alert: "Prime non disponible."
     end
