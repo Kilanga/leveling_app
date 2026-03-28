@@ -15,6 +15,11 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.7] - 2026-03-28
+
+### Modifié
+- Boutique (`Apercu profil`): le theme de la `Carte de visite` est desormais applique a l'ensemble du bloc profil (avatar, XP, texte) pour un rendu cohérent de la personnalisation.
+
 ## [1.20.6] - 2026-03-28
 
 ### Modifié
