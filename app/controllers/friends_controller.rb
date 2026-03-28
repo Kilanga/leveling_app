@@ -50,17 +50,17 @@ class FriendsController < ApplicationController
 
     daily_sent_requests = current_user.friendships.where(created_at: Time.current.all_day).count
     if daily_sent_requests >= Friendship::MAX_DAILY_SENT
-      redirect_back fallback_location: friends_path, alert: "Tu as atteint la limite de #{Friendship::MAX_DAILY_SENT} demandes d'amis aujourd'hui."
+      redirect_back fallback_location: friends_path, alert: I18n.t('flash.friend_challenges.challenge_daily_limit', count: Friendship::MAX_DAILY_SENT)
       return
     end
 
     if friend == current_user
-      redirect_back fallback_location: friends_path, alert: "Tu ne peux pas t'ajouter en ami."
+      redirect_back fallback_location: friends_path, alert: I18n.t('flash.friend_challenges.cannot_add_self')
       return
     end
 
     if Friendship.pending.where(friend: friend).count >= Friendship::MAX_PENDING_RECEIVED
-      redirect_back fallback_location: friends_path, alert: "Ce joueur a atteint le nombre max de demandes d'amis en attente (#{Friendship::MAX_PENDING_RECEIVED})."
+      redirect_back fallback_location: friends_path, alert: I18n.t('flash.friend_challenges.target_max_pending', count: Friendship::MAX_PENDING_RECEIVED)
       return
     end
 
@@ -69,7 +69,7 @@ class FriendsController < ApplicationController
                  .exists?
 
     if existing
-      redirect_back fallback_location: friends_path, alert: "Une relation existe déjà avec cet utilisateur."
+      redirect_back fallback_location: friends_path, alert: I18n.t('flash.friend_challenges.relationship_exists')
     else
       friendship = Friendship.new(user: current_user, friend: friend, status: "pending")
 
@@ -82,9 +82,9 @@ class FriendsController < ApplicationController
           body: "#{current_user.pseudo} t'a envoye une demande.",
           cta_path: "/friends"
         )
-        redirect_back fallback_location: friends_path, notice: "Demande d'ami envoyee !"
+        redirect_back fallback_location: friends_path, notice: I18n.t('flash.friend_challenges.request_sent')
       else
-        redirect_back fallback_location: friends_path, alert: "Erreur : #{friendship.errors.full_messages.join(", ")}"
+        redirect_back fallback_location: friends_path, alert: I18n.t('flash.friend_challenges.error_sending_request', error: friendship.errors.full_messages.join(", "))
       end
     end
   end

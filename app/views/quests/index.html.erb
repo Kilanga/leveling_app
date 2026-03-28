@@ -1,19 +1,19 @@
-<h1 class="page-title">Chasse aux quetes</h1>
-<p class="page-subtitle">Transforme ta to-do list en missions: choisis vite, suis l'avancement et grind ton XP.</p>
+<h1 class="page-title"><%= t('quests.index.page_title') %></h1>
+<p class="page-subtitle"><%= t('quests.index.page_subtitle') %></p>
 
 <div class="surface-card surface-card--shell">
   <div class="card-body">
     <section class="hud-section quest-mission-board mb-3">
       <div class="quest-stat-tile">
-        <span class="quest-stat-tile__label">Missions visibles</span>
+        <span class="quest-stat-tile__label"><%= t('quests.index.visible_missions') %></span>
         <strong class="quest-stat-tile__value"><%= @quests.size %></strong>
       </div>
       <div class="quest-stat-tile">
-        <span class="quest-stat-tile__label">Missions suivies</span>
+        <span class="quest-stat-tile__label"><%= t('quests.index.tracked_missions') %></span>
         <strong class="quest-stat-tile__value"><%= @active_user_quests_count %></strong>
       </div>
       <div class="quest-stat-tile">
-        <span class="quest-stat-tile__label">Categories</span>
+        <span class="quest-stat-tile__label"><%= t('quests.index.categories') %></span>
         <strong class="quest-stat-tile__value"><%= @categories.size %></strong>
       </div>
     </section>
@@ -22,31 +22,31 @@
       <%= form_with url: quests_path, method: :get, local: true, class: "row g-2 mobile-stack" do %>
         <%= hidden_field_tag :difficulty, @selected_difficulty %>
         <div class="col-md-4">
-          <%= text_field_tag :query, @query, class: "form-control", placeholder: "Rechercher une quete ou un objectif..." %>
+          <%= text_field_tag :query, @query, class: "form-control", placeholder: t('quests.index.search_placeholder') %>
         </div>
         <div class="col-md-3">
-          <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, @selected_category_id), include_blank: "Toutes les categories", class: "form-select" %>
+          <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, @selected_category_id), include_blank: t('quests.index.all_categories'), class: "form-select" %>
         </div>
         <div class="col-md-3">
-          <%= select_tag :sort, options_for_select([["Tri: mission du jour", "featured"], ["Tri: rapide a faire", "quick"], ["Tri: gros gain XP", "big_xp"]], @selected_sort), class: "form-select" %>
+          <%= select_tag :sort, options_for_select([[t('quests.index.sort.daily_mission'), "featured"], [t('quests.index.sort.quick'), "quick"], [t('quests.index.sort.big_xp'), "big_xp"]], @selected_sort), class: "form-select" %>
         </div>
         <div class="col-md-2 d-grid">
-          <button type="submit" class="btn btn-brand">Lancer la recherche</button>
+          <button type="submit" class="btn btn-brand"><%= t('common.confirm') %></button>
         </div>
       <% end %>
 
       <div class="quest-difficulty-tabs mt-3">
         <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: nil), class: "quest-tab #{'quest-tab--active' if @selected_difficulty.blank?}" do %>
-          Toutes difficultees <span><%= @difficulty_totals.values.sum %></span>
+          <%= t('quests.index.difficulty_all') %> <span><%= @difficulty_totals.values.sum %></span>
         <% end %>
         <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: "easy"), class: "quest-tab #{'quest-tab--active' if @selected_difficulty == 'easy'}" do %>
-          Easy <span><%= @difficulty_totals[:easy] %></span>
+          <%= t('quests.index.difficulty_easy') %> <span><%= @difficulty_totals[:easy] %></span>
         <% end %>
         <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: "medium"), class: "quest-tab #{'quest-tab--active' if @selected_difficulty == 'medium'}" do %>
-          Medium <span><%= @difficulty_totals[:medium] %></span>
+          <%= t('quests.index.difficulty_medium') %> <span><%= @difficulty_totals[:medium] %></span>
         <% end %>
         <%= link_to quests_path(query: @query.presence, category_id: @selected_category_id.presence, sort: @selected_sort, difficulty: "hard"), class: "quest-tab #{'quest-tab--active' if @selected_difficulty == 'hard'}" do %>
-          Hard <span><%= @difficulty_totals[:hard] %></span>
+          <%= t('quests.index.difficulty_hard') %> <span><%= @difficulty_totals[:hard] %></span>
         <% end %>
       </div>
 
@@ -65,7 +65,7 @@
     <hr class="hud-divider">
 
     <section class="hud-section mb-3">
-      <h2 class="section-title">Recommandees pour toi</h2>
+      <h2 class="section-title"><%= t('quests.index.recommended_heading') %></h2>
       <% if @recommended_quests.any? %>
         <div class="quest-reco-grid">
           <% @recommended_quests.each do |quest| %>
@@ -75,7 +75,7 @@
                 <strong><%= quest.title %></strong>
                 <div class="d-flex align-items-center gap-2 flex-wrap">
                   <% if quest.xp.to_i >= ProgressionXpEngine::ELITE_QUEST_XP_THRESHOLD %>
-                    <span class="quest-featured-tag">Elite</span>
+                    <span class="quest-featured-tag"><%= t('quests.index.elite_badge') %></span>
                   <% end %>
                   <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
                 </div>
@@ -85,11 +85,11 @@
               <p class="quest-card__description"><%= quest.description %></p>
               <div class="mt-2">
                 <% if user_quest && user_quest.active? %>
-                  <span class="quest-featured-tag">Deja suivie</span>
+                  <span class="quest-featured-tag"><%= t('quests.index.already_tracked') %></span>
                 <% else %>
                   <%= form_with url: user_quests_path, method: :post, class: "d-inline", local: true do %>
                     <%= hidden_field_tag :quest_id, quest.id %>
-                    <%= submit_tag "Ajouter", class: "btn btn-sm btn-brand" %>
+                    <%= submit_tag t('quests.index.add_button'), class: "btn btn-sm btn-brand" %>
                   <% end %>
                 <% end %>
               </div>
@@ -97,14 +97,14 @@
           <% end %>
         </div>
       <% else %>
-        <div class="alert alert-warning mb-0">Pas encore de recommandations disponibles. Termine quelques missions pour personnaliser la suite.</div>
+        <div class="alert alert-warning mb-0"><%= t('quests.index.no_recommendations') %></div>
       <% end %>
     </section>
 
     <section class="hud-section">
       <div class="row g-4">
         <div class="col-lg-4">
-          <h2 class="section-title">Tes quetes actives</h2>
+          <h2 class="section-title"><%= t('quests.index.active_quests_heading') %></h2>
           <div class="quest-list quest-list--flat">
             <% if @active_user_quests.any? %>
               <% @active_user_quests.limit(6).each do |user_quest| %>
@@ -113,13 +113,13 @@
                     <strong><%= user_quest.quest.title %></strong>
                     <% streak = user_quest.completed_count.to_i %>
                     <% streak_label, streak_class = if streak >= 15
-                        ["Legend", "quest-streak quest-streak--legend"]
+                        [t('quests.index.streak_legend'), "quest-streak quest-streak--legend"]
                       elsif streak >= 7
-                        ["En feu", "quest-streak quest-streak--fire"]
+                        [t('quests.index.streak_fire'), "quest-streak quest-streak--fire"]
                       elsif streak >= 3
-                        ["Regulier", "quest-streak quest-streak--steady"]
+                        [t('quests.index.streak_regular'), "quest-streak quest-streak--steady"]
                       else
-                        ["Debut", "quest-streak quest-streak--start"]
+                        [t('quests.index.streak_start'), "quest-streak quest-streak--start"]
                       end %>
                     <span class="<%= streak_class %>"><%= streak_label %> x<%= streak %></span>
                   </div>
@@ -127,16 +127,16 @@
                 </div>
               <% end %>
               <% if @active_user_quests.size > 6 %>
-                <p class="quest-meta mt-2 mb-0">+<%= @active_user_quests.size - 6 %> autres missions actives</p>
+                <p class="quest-meta mt-2 mb-0"><%= t('quests.index.more_active_quests', count: @active_user_quests.size - 6) %></p>
               <% end %>
             <% else %>
-              <div class="alert alert-warning mb-0">Aucune mission suivie. Lance-en une dans le catalogue.</div>
+              <div class="alert alert-warning mb-0"><%= t('quests.index.no_active_quests') %></div>
             <% end %>
           </div>
         </div>
 
         <div class="col-lg-8">
-          <h2 class="section-title">Catalogue des missions</h2>
+          <h2 class="section-title"><%= t('quests.index.catalog_heading') %></h2>
           <div class="quest-grid">
             <% if @quests.any? %>
               <% @quests.each do |quest| %>
@@ -146,17 +146,17 @@
                     <h3 class="quest-card__title mb-0"><%= quest.title %></h3>
                     <div class="d-flex align-items-center gap-2 flex-wrap">
                       <% if quest.xp.to_i >= ProgressionXpEngine::ELITE_QUEST_XP_THRESHOLD %>
-                        <span class="quest-featured-tag">Elite</span>
+                        <span class="quest-featured-tag"><%= t('quests.index.elite_badge') %></span>
                       <% end %>
                       <span class="badge text-bg-dark"><%= quest.xp %> XP</span>
                     </div>
                   </div>
                   <% difficulty_label, difficulty_class = if quest.xp <= @difficulty_bounds[:easy_max]
-                      ["Easy", "quest-difficulty quest-difficulty--easy"]
+                      [t('quests.index.difficulty_easy'), "quest-difficulty quest-difficulty--easy"]
                     elsif quest.xp <= @difficulty_bounds[:medium_max]
-                      ["Medium", "quest-difficulty quest-difficulty--medium"]
+                      [t('quests.index.difficulty_medium'), "quest-difficulty quest-difficulty--medium"]
                     else
-                      ["Hard", "quest-difficulty quest-difficulty--hard"]
+                      [t('quests.index.difficulty_hard'), "quest-difficulty quest-difficulty--hard"]
                     end %>
                   <p class="quest-meta mb-2 d-flex align-items-center gap-2 flex-wrap"><%= quest.category.name %> <span class="<%= difficulty_class %>"><%= difficulty_label %></span></p>
                   <p class="quest-card__description"><%= quest.description %></p>
@@ -165,7 +165,7 @@
                     <% if user_quest && user_quest.active? %>
                       <%= form_with url: user_quest_path(user_quest), method: :patch, class: "d-inline", local: true do %>
                         <%= hidden_field_tag :action_type, "unfollow" %>
-                        <%= submit_tag "Ne plus suivre", class: "btn btn-sm btn-outline-danger" %>
+                        <%= submit_tag t('quests.index.untrack_button'), class: "btn btn-sm btn-outline-danger" %>
                       <% end %>
                     <% else %>
                       <%= form_with url: user_quests_path, method: :post, class: "d-inline", local: true do %>
@@ -173,18 +173,18 @@
                         <% if user_quest %>
                           <%= hidden_field_tag :reactivate, true %>
                         <% end %>
-                        <%= submit_tag "Suivre", class: "btn btn-sm btn-brand" %>
+                        <%= submit_tag t('quests.index.track_button'), class: "btn btn-sm btn-brand" %>
                       <% end %>
                     <% end %>
 
                     <% if quest.daily_featured? %>
-                      <span class="quest-featured-tag">Mission du jour</span>
+                      <span class="quest-featured-tag"><%= t('quests.index.daily_mission_badge') %></span>
                     <% end %>
                   </div>
                 </article>
               <% end %>
             <% else %>
-              <div class="alert alert-warning mb-0">Aucune mission ne correspond a ta recherche. Essaie un autre mot-cle.</div>
+              <div class="alert alert-warning mb-0"><%= t('quests.index.no_results') %></div>
             <% end %>
           </div>
         </div>

@@ -4,35 +4,35 @@
       <div class="col-md-7 col-lg-5">
         <div class="surface-card surface-card--shell auth-card">
           <div class="card-body">
-            <h1 class="page-title auth-title">Connexion</h1>
-            <p class="page-subtitle auth-subtitle">Reprends ta progression la ou tu l'as laissee.</p>
+            <h1 class="page-title auth-title"><%= t('devise.sessions.new.title') %></h1>
+            <p class="page-subtitle auth-subtitle"><%= t('devise.sessions.new.subtitle') %></p>
 
             <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, html: { class: "auth-form" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
               <div class="mb-3">
-                <%= f.label :email, "Email", class: "form-label" %>
+                <%= f.label :email, t('common.email'), class: "form-label" %>
                 <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "votre@email.com" %>
               </div>
 
               <div class="mb-3">
-                <%= f.label :password, "Mot de passe", class: "form-label" %>
+                <%= f.label :password, t('common.password'), class: "form-label" %>
                 <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "••••••••" %>
               </div>
 
               <% if devise_mapping.rememberable? %>
                 <div class="mb-3 form-check auth-check">
                   <%= f.check_box :remember_me, class: "form-check-input" %>
-                  <%= f.label :remember_me, "Se souvenir de moi", class: "form-check-label" %>
+                  <%= f.label :remember_me, t('devise.shared.remember_me', default: 'Remember me'), class: "form-check-label" %>
                 </div>
               <% end %>
 
               <div class="d-grid mb-3">
-                <%= f.submit "Se connecter", class: "btn btn-brand btn-arcade" %>
+                <%= f.submit t('devise.sessions.new.sign_in_button'), class: "btn btn-brand btn-arcade" %>
               </div>
             <% end %>
 
-            <div class="auth-divider"><span>ou</span></div>
+            <div class="auth-divider"><span><%= t('devise.shared_links.divider_text') %></span></div>
             <%= render "devise/shared/links" %>
           </div>
         </div>

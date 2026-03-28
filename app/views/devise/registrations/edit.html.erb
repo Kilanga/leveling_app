@@ -4,56 +4,56 @@
       <div class="col-md-8 col-lg-6">
         <div class="surface-card surface-card--shell auth-card">
           <div class="card-body">
-            <h1 class="page-title auth-title">Mon compte</h1>
-            <p class="page-subtitle auth-subtitle">Mets a jour tes informations de connexion.</p>
+            <h1 class="page-title auth-title"><%= t('devise.registrations.edit.title') %></h1>
+            <p class="page-subtitle auth-subtitle"><%= t('devise.registrations.edit.subtitle') %></p>
 
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "auth-form" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
               <div class="mb-3">
-                <%= f.label :email, "Email", class: "form-label" %>
+                <%= f.label :email, t('common.email'), class: "form-label" %>
                 <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
               </div>
 
               <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                <div class="alert alert-warning">En attente de confirmation pour: <%= resource.unconfirmed_email %></div>
+                <div class="alert alert-warning"><%= t('devise.registrations.edit.pending_confirmation_alert', email: resource.unconfirmed_email) %></div>
               <% end %>
 
               <div class="mb-3">
-                <%= f.label :password, "Nouveau mot de passe", class: "form-label" %>
-                <p class="quest-meta mb-2">Laisse vide si tu ne veux pas le changer.</p>
+                <%= f.label :password, t('devise.registrations.edit.new_password_label'), class: "form-label" %>
+                <p class="quest-meta mb-2"><%= t('devise.registrations.edit.new_password_help') %></p>
                 <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "••••••••" %>
                 <% if @minimum_password_length %>
-                  <p class="quest-meta mt-2 mb-0">Minimum <%= @minimum_password_length %> caractères</p>
+                  <p class="quest-meta mt-2 mb-0"><%= t('devise.registrations.new.min_password_notice', count: @minimum_password_length) %></p>
                 <% end %>
               </div>
 
               <div class="mb-3">
-                <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label" %>
+                <%= f.label :password_confirmation, t('devise.registrations.edit.password_confirmation_label'), class: "form-label" %>
                 <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "••••••••" %>
               </div>
 
               <div class="mb-3">
-                <%= f.label :current_password, "Mot de passe actuel", class: "form-label" %>
-                <p class="quest-meta mb-2">Obligatoire pour valider les changements.</p>
+                <%= f.label :current_password, t('devise.registrations.edit.current_password_label'), class: "form-label" %>
+                <p class="quest-meta mb-2"><%= t('devise.registrations.edit.current_password_help') %></p>
                 <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", placeholder: "••••••••" %>
               </div>
 
               <div class="d-grid mb-4">
-                <%= f.submit "Mettre a jour", class: "btn btn-brand btn-arcade" %>
+                <%= f.submit t('devise.registrations.edit.update_button'), class: "btn btn-brand btn-arcade" %>
               </div>
             <% end %>
 
             <hr class="hud-divider">
 
             <section class="hud-section">
-              <h2 class="section-title">Suppression du compte</h2>
-              <p class="quest-meta">Cette action est definitive.</p>
-              <%= button_to "Supprimer mon compte", registration_path(resource_name), data: { confirm: "Confirmer la suppression ?", turbo_confirm: "Confirmer la suppression ?" }, method: :delete, class: "btn btn-outline-danger" %>
+              <h2 class="section-title"><%= t('devise.registrations.edit.delete_account_heading') %></h2>
+              <p class="quest-meta"><%= t('devise.registrations.edit.delete_account_help') %></p>
+              <%= button_to t('devise.registrations.edit.delete_account_button'), registration_path(resource_name), data: { confirm: t('devise.registrations.edit.delete_account_confirmation'), turbo_confirm: t('devise.registrations.edit.delete_account_confirmation') }, method: :delete, class: "btn btn-outline-danger" %>
             </section>
 
             <div class="mt-4">
-              <%= link_to "Retour", root_path, class: "btn btn-outline-quest btn-arcade" %>
+              <%= link_to t('common.back'), root_path, class: "btn btn-outline-quest btn-arcade" %>
             </div>
           </div>
         </div>

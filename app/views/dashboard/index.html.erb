@@ -1,10 +1,10 @@
 <h1 class="page-title">
-  Bienvenue, <%= current_user.pseudo %>
+  <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
 </h1>
 <p class="page-subtitle">
-  Votre quartier general de progression.
+  <%= t('dashboard.subtitle') %>
   <% if current_user.boost_active? %>
-    <span class="badge text-bg-warning ms-2">Boost XP actif jusqu'a <%= l(current_user.boost_expires_at, format: :short) %></span>
+    <span class="badge text-bg-warning ms-2"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
   <% end %>
 </p>
 
@@ -12,8 +12,8 @@
   <div class="surface-card mb-4" role="status" aria-live="polite">
     <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
       <div>
-        <strong>Bonus connexion reclame: +<%= @daily_login_claim[:reward] %> Fragments</strong>
-        <p class="quest-meta mb-0">Serie actuelle: <%= @daily_login_claim[:streak] %> jour(s).</p>
+        <strong><%= t('dashboard.daily_bonus_claimed', amount: @daily_login_claim[:reward]) %></strong>
+        <p class="quest-meta mb-0"><%= t('dashboard.streak_days', days: @daily_login_claim[:streak]) %></p>
       </div>
       <span class="shop-state-chip shop-state-chip--equipped">Connexion du jour</span>
     </div>
@@ -26,13 +26,13 @@
       <strong>Streak hebdo: <%= @weekly_streak_count %> semaine(s)</strong>
       <p class="quest-meta mb-0">
         <% if @weekly_streak_last_completed_on.present? %>
-          Derniere validation: <%= l(@weekly_streak_last_completed_on, format: :short) %>
+          <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
         <% else %>
-          Aucune validation cette semaine.
+          <%= t('dashboard.no_completion_week') %>
         <% end %>
       </p>
     </div>
-    <%= link_to "Voir la ligue dans Classement", leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
+    <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
   </div>
 </div>
 
@@ -49,8 +49,8 @@
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
       <div>
-        <h2 class="section-title mb-1">Objectif du jour</h2>
-        <p class="quest-meta mb-0">Valider <%= @daily_target %> quetes pour maintenir ton rythme.</p>
+        <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
+        <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
       </div>
       <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
         <%= @completed_today_count %> / <%= @daily_target %>
@@ -60,11 +60,11 @@
       <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
     </div>
     <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
-      <p class="quest-meta mb-0">Coffre quotidien: +<%= @daily_chest_reward_free_credits %> Fragments.</p>
+      <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
       <% if @daily_chest_claimed_today %>
-        <span class="badge text-bg-success">Coffre deja ouvert</span>
+        <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
       <% else %>
-        <%= button_to "Ouvrir le coffre", claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
+        <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
       <% end %>
     </div>
   </div>
@@ -74,27 +74,27 @@
   <div class="col-lg-6">
     <div class="surface-card h-100">
       <div class="card-body">
-        <h2 class="section-title mb-3">Territoires de guildes</h2>
+        <h2 class="section-title mb-3"><%= t('dashboard.factions.title') %></h2>
         <% if @next_faction_reset_at.present? %>
-          <p class="quest-meta mb-2">Reset dans <strong><%= @faction_reset_countdown %></strong>.</p>
+          <p class="quest-meta mb-2"><%= t('dashboard.factions.reset_in', time: @faction_reset_countdown) %></p>
         <% end %>
         <% if current_user.faction.present? %>
-          <p class="quest-meta mb-2">Ta faction actuelle: <strong><%= current_user.faction.name %></strong>.</p>
+          <p class="quest-meta mb-2"><%= t('dashboard.factions.current_faction', name: current_user.faction.name) %></p>
           <% unless @can_change_faction %>
-            <p class="quest-meta mb-2">Changement verrouille jusqu'au prochain reset.</p>
+            <p class="quest-meta mb-2"><%= t('dashboard.factions.change_locked') %></p>
           <% end %>
         <% else %>
-          <p class="quest-meta mb-2">Choisis une faction pour commencer a capturer des territoires.</p>
+          <p class="quest-meta mb-2"><%= t('dashboard.factions.choose_faction') %></p>
         <% end %>
 
         <% if @previous_winning_faction.present? && @previous_winning_faction.try(:previous_points).to_i > 0 %>
+          <div class="quest-row quest-row--flat mb-3">
+            <strong><%= t('dashboard.factions.previous_winner', name: @previous_winning_faction.name) %></strong>
+          </div>
           <details class="quest-row quest-row--flat mb-3">
             <summary class="d-flex justify-content-between align-items-center gap-2 flex-wrap" style="cursor: pointer;">
-              <span>
-                <strong>Guilde gagnante (semaine precedente): <%= @previous_winning_faction.name %></strong>
-                <span class="quest-meta d-block"><%= @previous_winning_faction.try(:previous_points).to_i %> points</span>
-              </span>
-              <span class="badge text-bg-dark">Voir participants</span>
+              <span><%= t('dashboard.factions.view_participants') %></span>
+              <span class="badge text-bg-dark"><%= t('dashboard.factions.view_participants') %></span>
             </summary>
             <div class="mt-2">
               <% if @previous_winning_participants.any? %>
@@ -107,7 +107,7 @@
                   <% end %>
                 </div>
               <% else %>
-                <p class="quest-meta mb-0">Aucun participant enregistre.</p>
+                <p class="quest-meta mb-0"><%= t('dashboard.factions.no_participants') %></p>
               <% end %>
             </div>
           </details>
@@ -115,8 +115,8 @@
 
         <% if @leading_faction.present? %>
           <div class="quest-row quest-row--flat mb-3">
-            <strong>Faction dominante sur le cycle en cours: <%= @leading_faction.name %></strong>
-            <p class="quest-meta mb-0"><%= @leading_faction.try(:today_points).to_i %> points d'influence</p>
+            <strong><%= t('dashboard.factions.dominant_faction', name: @leading_faction.name) %></strong>
+            <p class="quest-meta mb-0"><%= @leading_faction.try(:today_points).to_i %> <%= t('currency.paid', count: @leading_faction.try(:today_points).to_i) %></p>
           </div>
         <% end %>
 
@@ -128,11 +128,11 @@
                 <p class="quest-meta mb-0"><%= faction.try(:today_points).to_i %> influence</p>
               </div>
               <% if current_user.faction_id == faction.id %>
-                <span class="badge text-bg-success">Equipee</span>
+                <span class="badge text-bg-success"><%= t('dashboard.factions.equipped_badge') %></span>
               <% elsif current_user.faction.present? && !@can_change_faction %>
-                <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Verrouille jusqu'au reset</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" disabled><%= t('dashboard.factions.locked_badge') %></button>
               <% else %>
-                <%= button_to "Rejoindre", join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
+                <%= button_to t('dashboard.factions.join_button'), join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
               <% end %>
             </div>
           <% end %>
@@ -144,7 +144,7 @@
   <div class="col-lg-6">
     <div class="surface-card h-100">
       <div class="card-body">
-        <h2 class="section-title mb-3">Marche noir: contrats du jour</h2>
+        <h2 class="section-title mb-3"><%= t('dashboard.daily_contracts.title') %></h2>
         <div class="quest-list quest-list--flat">
           <% @daily_contract_offers.each do |entry| %>
             <% contract = entry.daily_contract %>
@@ -153,19 +153,19 @@
                 <div>
                   <strong><%= contract.title %></strong>
                   <p class="quest-meta mb-1"><%= contract.description %></p>
-                  <p class="quest-meta mb-0">Objectif: <%= entry.progress_count %>/<%= contract.target_count %> | Prime: +<%= contract.reward_coins %> Fragments</p>
+                  <p class="quest-meta mb-0"><%= t('dashboard.daily_contracts.objective', current: entry.progress_count, total: contract.target_count) %> | <%= t('dashboard.daily_contracts.reward', amount: contract.reward_coins) %></p>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
                   <% if entry.claimable? %>
-                    <%= button_to "Reclamer", claim_user_daily_contract_path(entry), method: :post, class: "btn btn-sm btn-brand" %>
+                    <%= button_to t('dashboard.daily_contracts.claim_button'), claim_user_daily_contract_path(entry), method: :post, class: "btn btn-sm btn-brand" %>
                   <% elsif entry.completed? %>
-                    <span class="badge text-bg-success">Termine</span>
+                    <span class="badge text-bg-success"><%= t('dashboard.daily_contracts.completed_badge') %></span>
                   <% elsif entry.accepted? %>
-                    <span class="badge text-bg-warning">En cours</span>
+                    <span class="badge text-bg-warning"><%= t('dashboard.daily_contracts.in_progress_badge') %></span>
                   <% elsif @active_daily_contract.present? %>
-                    <span class="badge text-bg-secondary">Verrouille</span>
+                    <span class="badge text-bg-secondary"><%= t('dashboard.daily_contracts.locked_badge') %></span>
                   <% else %>
-                    <%= button_to "Accepter", accept_daily_contract_path(contract), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
+                    <%= button_to t('dashboard.daily_contracts.accept_button'), accept_daily_contract_path(contract), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
                   <% end %>
                 </div>
               </div>
@@ -179,7 +179,7 @@
 
 <div class="surface-card mb-4">
   <div class="card-body">
-    <h2 class="section-title mb-3">Activite recente des amis</h2>
+    <h2 class="section-title mb-3"><%= t('dashboard.recent_activity.title') %></h2>
     <% if @friends_activity.any? %>
       <div class="quest-list quest-list--flat">
         <% @friends_activity.each do |event| %>
@@ -190,13 +190,13 @@
               <p class="quest-meta mb-0">
                 <% case event.event_name %>
                 <% when "quest_completed" %>
-                  a complete une quete (+<%= metadata["xp"].to_i %> XP)
+                  <%= t('dashboard.recent_activity.completed_quest', xp: metadata["xp"].to_i) %>
                 <% when "weekly_quest_completed" %>
-                  a valide sa quete hebdomadaire.
+                  <%= t('dashboard.recent_activity.completed_weekly_quest') %>
                 <% when "daily_chest_claimed" %>
-                  a ouvert le coffre quotidien (+<%= metadata["reward_free_credits"].to_i %> Fragments)
+                  <%= t('dashboard.recent_activity.opened_chest', amount: metadata["reward_free_credits"].to_i) %>
                 <% when "friend_request_accepted" %>
-                  vient d'accepter une demande d'ami.
+                  <%= t('dashboard.recent_activity.friend_accepted') %>
                 <% else %>
                   vient de progresser.
                 <% end %>
@@ -207,7 +207,7 @@
         <% end %>
       </div>
     <% else %>
-      <div class="alert alert-warning mb-0">Aucune activite amie recente. Ajoute des amis pour remplir ce feed.</div>
+      <div class="alert alert-warning mb-0"><%= t('dashboard.recent_activity.no_activity') %></div>
     <% end %>
   </div>
 </div>
@@ -217,7 +217,7 @@
     <div class="row g-4">
       <div class="col-lg-6">
         <section class="hud-section h-100">
-          <h2 class="section-title">Quetes en cours</h2>
+          <h2 class="section-title"><%= t('dashboard.active_quests.title') %></h2>
           <div class="quest-list quest-list--flat mb-3">
             <% active_quests = @user_quests.where(completed: false, active: true) %>
             <% if active_quests.any? %>
@@ -232,12 +232,12 @@
                     <div class="d-flex gap-2 flex-wrap quest-actions">
                       <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
                         <%= hidden_field_tag :action_type, "complete" %>
-                        <%= submit_tag "Valider", class: "btn btn-sm btn-brand" %>
+                        <%= submit_tag t('dashboard.active_quests.validate_button'), class: "btn btn-sm btn-brand" %>
                       <% end %>
 
                       <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
                         <%= hidden_field_tag :action_type, "unfollow" %>
-                        <%= submit_tag "Arreter", class: "btn btn-sm btn-outline-danger" %>
+                        <%= submit_tag t('dashboard.active_quests.stop_button'), class: "btn btn-sm btn-outline-danger" %>
                       <% end %>
                     </div>
                   </div>
@@ -252,7 +252,7 @@
 
       <div class="col-lg-6">
         <section class="hud-section h-100">
-          <h2 class="section-title">Quetes hebdomadaires</h2>
+          <h2 class="section-title"><%= t('dashboard.weekly_quests.title') %></h2>
           <% if @weekly_quests.any? %>
             <div class="quest-list quest-list--flat">
               <% @weekly_quests.each do |user_weekly_quest| %>
@@ -263,7 +263,7 @@
                     <p class="quest-meta mb-0">Recompense: <%= user_weekly_quest.weekly_quest.xp_reward %> XP</p>
                   </div>
                   <% unless user_weekly_quest.completed? %>
-                    <%= button_to "Valider", user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-sm btn-brand" %>
+                    <%= button_to t('dashboard.active_quests.validate_button'), user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-sm btn-brand" %>
                   <% else %>
                     <span class="badge text-bg-success">Completee</span>
                   <% end %>
@@ -280,13 +280,12 @@
     <hr class="hud-divider">
 
     <div class="d-flex gap-2 flex-wrap mb-4">
-      <%= link_to "Voir toutes les quetes", quests_path, class: "btn btn-brand btn-arcade" %>
-      <%= link_to "Boutique", new_purchase_path, class: "btn btn-outline-quest btn-arcade" %>
-      <%= link_to "Signaler un bug", "https://github.com/Kilanga/leveling_app/issues/new", class: "btn btn-outline-secondary btn-arcade", target: "_blank", rel: "noopener" %>
+      <%= link_to t('dashboard.shop_link'), new_purchase_path, class: "btn btn-outline-quest btn-arcade" %>
+      <%= link_to t('dashboard.report_bug_link'), "https://github.com/Kilanga/leveling_app/issues/new", class: "btn btn-outline-secondary btn-arcade", target: "_blank", rel: "noopener" %>
     </div>
 
     <section class="hud-section mb-4">
-      <h2 class="section-title mb-3">Progression des categories</h2>
+      <h2 class="section-title mb-3"><%= t('dashboard.progression_heading') %></h2>
       <% @stats.each do |stat| %>
         <% xp_needed = xp_needed_for_next_level(stat.level) %>
         <% percent = (stat.xp.to_f / [xp_needed, 1].max * 100).round %>

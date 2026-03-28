@@ -1,23 +1,22 @@
-<% content_for :title, "Leveling | Progression gamifiee" %>
-<% content_for :meta_description, "Leveling transforme ta progression personnelle en jeu: quetes, ligues hebdo, streaks et defis entre amis." %>
+<% content_for :title, "Leveling | #{t('welcome.index.page_title')}" %>
+<% content_for :meta_description, t('welcome.index.page_subtitle') %>
 
 <section class="welcome-hero surface-card surface-card--shell mb-4">
   <div class="card-body">
-    <p class="welcome-kicker mb-2">Progression gamifiee</p>
-    <h1 class="page-title mb-3">Transforme ta progression en jeu competitif</h1>
+    <p class="welcome-kicker mb-2"><%= t('welcome.index.page_title') %></p>
+    <h1 class="page-title mb-3"><%= t('welcome.index.main_heading') %></h1>
     <p class="page-subtitle mb-4">
-      Construis ta discipline avec des quetes courtes, grimpe dans les ligues hebdomadaires,
-      et garde ton elan avec des rewards quotidiennes.
+      <%= t('welcome.index.sub_heading') %>
     </p>
 
     <div class="welcome-cta d-flex gap-2 flex-wrap">
-      <%= link_to "Commencer maintenant", new_user_registration_path(@signup_params), class: "btn btn-brand btn-arcade" %>
-      <%= link_to "J'ai deja un compte", new_user_session_path(@signup_params), class: "btn btn-outline-quest btn-arcade" %>
+      <%= link_to t('welcome.index.start_button'), new_user_registration_path(@signup_params), class: "btn btn-brand btn-arcade" %>
+      <%= link_to t('welcome.index.existing_account_button'), new_user_session_path(@signup_params), class: "btn btn-outline-quest btn-arcade" %>
     </div>
 
     <% if @invite_ref.present? %>
       <div class="alert alert-warning mt-4 mb-0">
-        Invitation detectee: code <strong><%= @invite_ref %></strong>. Cree ton compte pour rejoindre la meme dynamique de progression.
+        <%= t('welcome.index.detected_referral', code: @invite_ref) %>
       </div>
     <% end %>
   </div>
@@ -29,19 +28,19 @@
       <div class="col-md-4">
         <div class="welcome-stat">
           <strong><%= @players_count %>+</strong>
-          <span>joueurs motives</span>
+          <span><%= t('welcome.index.stats.motivated_players') %></span>
         </div>
       </div>
       <div class="col-md-4">
         <div class="welcome-stat">
           <strong><%= @quests_count %>+</strong>
-          <span>quetes disponibles</span>
+          <span><%= t('welcome.index.stats.available_quests') %></span>
         </div>
       </div>
       <div class="col-md-4">
         <div class="welcome-stat">
           <strong><%= @categories_count %></strong>
-          <span>axes de progression</span>
+          <span><%= t('welcome.index.stats.progression_axes') %></span>
         </div>
       </div>
     </div>
@@ -50,24 +49,24 @@
 
 <section class="surface-card">
   <div class="card-body">
-    <h2 class="section-title mb-3">Pourquoi les joueurs restent</h2>
+    <h2 class="section-title mb-3"><%= t('welcome.index.benefits_heading') %></h2>
     <div class="row g-3">
       <div class="col-md-4">
         <div class="quest-row quest-row--flat h-100">
-          <strong>1. Action immediate</strong>
-          <p class="quest-meta mb-0">Tu choisis une quete, tu valides, tu progresses en quelques minutes.</p>
+          <strong><%= t('welcome.index.benefit_1_title') %></strong>
+          <p class="quest-meta mb-0"><%= t('welcome.index.benefit_1_desc') %></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="quest-row quest-row--flat h-100">
-          <strong>2. Competition saine</strong>
-          <p class="quest-meta mb-0">Tu compares ta semaine a ta cohorte de ligue, avec projections claires.</p>
+          <strong><%= t('welcome.index.benefit_2_title') %></strong>
+          <p class="quest-meta mb-0"><%= t('welcome.index.benefit_2_desc') %></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="quest-row quest-row--flat h-100">
-          <strong>3. Regularite recompensee</strong>
-          <p class="quest-meta mb-0">Streaks, coffre quotidien et progression visible pour garder le rythme.</p>
+          <strong><%= t('welcome.index.benefit_3_title') %></strong>
+          <p class="quest-meta mb-0"><%= t('welcome.index.benefit_3_desc') %></p>
         </div>
       </div>
     </div>

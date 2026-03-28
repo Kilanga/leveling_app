@@ -90,6 +90,530 @@ en:
       devise_passwords_new:
         title: "Forgot password"
 
+  # DEVISE AUTHENTICATION
+  devise:
+    sessions:
+      new:
+        title: "Sign in"
+        subtitle: "Resume your progression where you left off."
+        sign_in_button: "Sign in"
+    registrations:
+      new:
+        title: "Sign up"
+        subtitle: "Create your profile and choose your starting avatar."
+        email_label: "Email"
+        pseudo_label: "Username (3-22 characters)"
+        pseudo_placeholder: "your_username"
+        password_label: "Password"
+        password_confirmation_label: "Confirm password"
+        referral_code_label: "Referral code (optional)"
+        referral_code_placeholder: "LVL1234"
+        avatar_label: "Choose your avatar"
+        avatar_warrior: "Warrior"
+        avatar_warrior_female: "Warrior (F)"
+        sign_up_button: "Sign up"
+        min_password_notice: "Minimum %{count} characters"
+      edit:
+        title: "My Account"
+        subtitle: "Update your login information."
+        new_password_label: "New password"
+        new_password_help: "Leave blank if you don't want to change it."
+        password_confirmation_label: "Confirm password"
+        current_password_label: "Current password"
+        current_password_help: "Required to validate changes."
+        pending_confirmation_alert: "Pending confirmation for: %{email}"
+        update_button: "Update"
+        delete_account_heading: "Delete Account"
+        delete_account_help: "This action is permanent."
+        delete_account_button: "Delete my account"
+        delete_account_confirmation: "Confirm deletion?"
+    passwords:
+      new:
+        title: "Forgot password"
+        subtitle: "We'll send you reset instructions immediately."
+        email_label: "Email"
+        email_placeholder: "your@email.com"
+        send_button: "Send instructions"
+      edit:
+        title: "New password"
+        subtitle: "Secure your account with an updated password."
+        new_password_label: "New password"
+        password_confirmation_label: "Confirm password"
+        min_password_notice: "Minimum %{count} characters"
+        update_button: "Update"
+    confirmations:
+      new:
+        title: "Confirm email"
+        subtitle: "Resend confirmation instructions."
+        email_label: "Email"
+        email_placeholder: "your@email.com"
+        send_button: "Resend instructions"
+    unlocks:
+      new:
+        title: "Unlock account"
+        subtitle: "Resend unlock instructions."
+        email_label: "Email"
+        email_placeholder: "your@email.com"
+        send_button: "Resend instructions"
+    shared_links:
+      sign_in: "Sign in"
+      sign_up: "Create an account"
+      forgot_password: "Forgot password?"
+      resend_confirmation: "Resend confirmation instructions"
+      resend_unlock: "Resend unlock instructions"
+      continue_with: "Continue with %{provider}"
+      divider_text: "or"
+
+  # WELCOME PAGE
+  welcome:
+    index:
+      page_title: "Gamified Progress"
+      page_subtitle: "Turn your progression into a competitive game"
+      main_heading: "Transform your progression into a competitive game"
+      sub_heading: "Build discipline with short quests, climb weekly leagues, and maintain momentum with daily rewards."
+      start_button: "Get started"
+      existing_account_button: "I already have an account"
+      detected_referral: "Referral code detected: %{code}"
+      stats:
+        motivated_players: "motivated players"
+        available_quests: "available quests"
+        progression_axes: "progression axes"
+      benefits_heading: "Why players stay"
+      benefit_1_title: "1. Immediate action"
+      benefit_1_desc: "You pick a quest, validate it today, earn XP immediately."
+      benefit_2_title: "2. Fair competition"
+      benefit_2_desc: "You compare your week against your league tier, not the entire game."
+      benefit_3_title: "3. Consistency rewarded"
+      benefit_3_desc: "Daily streaks, daily chest, weekly tasks—all designed to build habit."
+
+  # COMPLETE PROFILE
+  complete_profile:
+    title: "Complete your profile"
+    subtitle: "Choose your username and avatar to start the adventure."
+    username_label: "Username (3-22 characters)"
+    username_placeholder: "your_username"
+    avatar_label: "Choose your avatar"
+    avatar_warrior: "Warrior"
+    avatar_warrior_female: "Warrior (F)"
+    start_button: "Start adventure"
+
+  # DASHBOARD
+  dashboard:
+    welcome: "Welcome, %{pseudo}"
+    subtitle: "Your headquarters for progression."
+    daily_bonus_title: "Daily login bonus"
+    daily_bonus_claimed: "Daily bonus claimed: +%{amount} Fragments"
+    streak_days: "Current streak: %{days} day(s)."
+    last_completion: "Last completion: %{date}"
+    no_completion_week: "No completion this week."
+    view_league: "View league in Leaderboard"
+    xp_boost_active: "Active XP Boost until %{date}"
+    daily_objective:
+      title: "Daily objective"
+      instruction: "Complete %{count} quests to maintain your rhythm."
+      chest_reward: "Daily chest: +%{amount} Fragments."
+      chest_opened: "Chest already opened"
+      open_chest_button: "Open chest"
+    factions:
+      title: "Guild Territories"
+      reset_in: "Reset in %{time}."
+      current_faction: "Your current faction: %{name}."
+      change_locked: "Change locked until next reset."
+      choose_faction: "Choose a faction to start capturing territories."
+      equipped_badge: "Equipped"
+      locked_badge: "Locked until reset"
+      join_button: "Join"
+      dominant_faction: "Dominant faction this cycle: %{name}"
+      previous_winner: "Previous week winner: %{name}"
+      view_participants: "View participants"
+      no_participants: "No participants recorded."
+      faction_won: "Faction won: %{name}"
+    daily_contracts:
+      title: "Black market: daily contracts"
+      objective: "Objective: %{current}/%{total}"
+      reward: "Reward: +%{amount} Fragments"
+      claim_button: "Claim"
+      completed_badge: "Completed"
+      in_progress_badge: "In progress"
+      locked_badge: "Locked"
+      accept_button: "Accept"
+    recent_activity:
+      title: "Recent friend activity"
+      completed_quest: "completed a quest (+%{xp} XP)"
+      completed_weekly_quest: "completed their weekly quest."
+      opened_chest: "opened the daily chest (+%{amount} Fragments)"
+      friend_accepted: "just accepted a friend request."
+      friend_default_name: "A friend"
+      no_activity: "No recent friend activity. Add friends to fill this feed."
+    active_quests:
+      title: "Active quests"
+      validate_button: "Validate"
+      stop_button: "Stop"
+    weekly_quests:
+      title: "Weekly quests"
+      see_all_link: "See all quests"
+    shop_link: "Shop"
+    report_bug_link: "Report a bug"
+    progression_heading: "Category progression"
+
+  # QUESTS
+  quests:
+    index:
+      page_title: "Quest hunt"
+      page_subtitle: "Turn your to-do list into missions: pick quickly, track progress, and grind your XP."
+      visible_missions: "Visible missions"
+      tracked_missions: "Tracked missions"
+      categories: "Categories"
+      search_placeholder: "Search a quest or objective..."
+      all_categories: "All categories"
+      sort:
+        daily_mission: "Sort: quest of the day"
+        quick: "Sort: quick to complete"
+        big_xp: "Sort: big XP gains"
+      difficulty_all: "All difficulties"
+      difficulty_easy: "Easy"
+      difficulty_medium: "Medium"
+      difficulty_hard: "Hard"
+      recommended_heading: "Recommended for you"
+      elite_badge: "Elite"
+      already_tracked: "Already tracked"
+      add_button: "Add"
+      no_recommendations: "No recommendations available yet. Complete a few missions to personalize suggestions."
+      active_quests_heading: "Your active quests"
+      streak_legend: "Legend"
+      streak_fire: "On fire"
+      streak_regular: "Regular"
+      streak_start: "Starting"
+      more_active_quests: "+%{count} other active missions"
+      no_active_quests: "No tracked missions. Start one from the catalog."
+      catalog_heading: "Mission catalog"
+      daily_mission_badge: "Quest of the day"
+      untrack_button: "Stop tracking"
+      track_button: "Track"
+      no_results: "No missions match your search. Try another keyword."
+
+  # SHOP / PURCHASES
+  purchases:
+    new:
+      page_title: "Adventurer's Market"
+      page_subtitle: "Get premium resources to speed up your progression."
+      premium_orbs_label: "Your premium Orbs:"
+      free_fragments_label: "Your progression Fragments:"
+      welcome_offer_kicker: "Welcome offer active"
+      welcome_bonus_heading: "Your first Orb pack includes +%{percentage}% bonus"
+      welcome_bonus_help: "The bonus is already calculated in each pack card: you see directly the total received."
+      first_purchase_badge: "1st purchase"
+      
+      tabs:
+        packs: "Packs"
+        boosts: "Boosts"
+        titles: "Titles"
+        cosmetics: "Cosmetics"
+        rewards: "Rewards"
+      
+      packs:
+        heading: "Orb Packs"
+        bonus_badge: "Bonus +%{percentage}"
+        best_value_badge: "Best value"
+        orbs_received: "%{count} Orbs received"
+        base_bonus: "(%{base} + %{bonus} bonus Orbs)"
+        rate: "%{orbs} Orbs / €"
+        buy_button: "Buy %{price}€"
+      
+      boosts:
+        heading: "XP Boosts"
+        description: "Accelerated progression for %{duration}."
+        activate_button: "Activate - %{price}€"
+      
+      titles:
+        heading: "Titles"
+        instruction: "Choose a striking title to impose your style on the leaderboard."
+        equipped_text: "Currently equipped"
+        equipped_badge: "Equipped"
+        owned_badge: "Owned"
+        available_badge: "Available"
+        unavailable_badge: "Unavailable"
+        remove_button: "Remove"
+        equip_button: "Equip"
+        buy_button: "Buy"
+        rarity:
+          common: "Common"
+          rare: "Rare"
+          epic: "Epic"
+          legendary: "Legendary"
+      
+      cosmetics:
+        heading: "Cosmetics"
+        instruction: "Customize your profile and progression bars."
+
+  # LEADERBOARD
+  leaderboard:
+    index:
+      page_title: "Weekly league leaderboard"
+      current_league: "Current league: %{name}"
+      next_reset: "Next league reset: %{date}"
+      next_reset_help: "In %{time}. Complete league ranking of your league, with updates on page load."
+      frozen_warning: "League movement frozen for now: %{current}/%{total} cohort."
+      promotion_help: "Promotions/relegations activate from %{count} players."
+      
+      table:
+        heading: "Weekly league leaderboard"
+        rank: "Rank"
+        avatar: "Avatar"
+        player: "Player"
+        weekly_xp: "Weekly XP"
+        league: "League"
+        you_badge: "You"
+        no_data: "No league data available."
+      
+      movement:
+        promoted: "Promotion projected"
+        promoted_label: "Up"
+        demoted: "Demotion projected"
+        demoted_label: "Down"
+        held: "Holding projected"
+        held_label: "Hold"
+      
+      profile_view:
+        category_progression: "Category progression"
+        no_progression_data: "No progression data available."
+        no_weekly_quests: "No weekly quests visible."
+        no_active_quests: "No active quests right now."
+        no_recent_quests: "No recent quests."
+        no_popular_quests: "No popular quests."
+
+  # FRIENDS
+  friends:
+    index:
+      page_title: "My friends list"
+      active_friends_heading: "Active friends"
+      launch_challenge: "Launch 48h challenge"
+      remove_button: "Remove"
+      
+      active_challenges:
+        heading: "Active challenges"
+        no_challenges: "No active challenge."
+      
+      referral:
+        heading: "Referral"
+      
+      received_requests:
+        heading: "Received requests"
+        accept_button: "Accept"
+        refuse_button: "Refuse"
+      
+      sent_requests:
+        heading: "Sent requests"
+        cancel_button: "Cancel"
+      
+      search:
+        heading: "Search for a friend"
+        label: "Search by username"
+        placeholder: "Player username"
+        search_button: "Search"
+        results_heading: "Results"
+        send_request: "Send request"
+      
+      most_played:
+        heading: "Most completed quests by my friends"
+      
+      recent:
+        heading: "Recent quests by my friends"
+
+  # USER PROFILE
+  user:
+    show:
+      page_title: "Profile"
+      completed_quests: "Completed quests"
+      weekly_xp: "Weekly XP"
+      weekly_streak: "Weekly streak"
+      change_password_button: "Change my password"
+      new_pseudo_placeholder: "New username"
+      change_pseudo_button: "Change my username"
+      pseudo_cooldown: "Can change username again on %{date}."
+      pseudo_cooldown_help: "Username can be changed once per week."
+      
+      cosmetics:
+        heading: "Cosmetics"
+        profile_frames:
+          heading: "Profile Frame"
+          description: "Frame around your username on the leaderboard."
+          none_active: "No frame equipped"
+          active_badge: "Active"
+        xp_themes:
+          heading: "XP Bar Theme"
+          description: "Colors and style of your progression bar."
+          none_active: "Default theme"
+        profile_cards:
+          heading: "Profile Card"
+          description: "Displayed in your profile and visible to other players."
+          none_active: "No card equipped"
+          message_placeholder: "Your personal message (max 100 characters)"
+          update_button: "Update"
+      
+      titles:
+        heading: "My Titles"
+        current: "Current title:"
+        none_active: "No active title"
+        no_titles: "No titles available yet. Buy them in the shop!"
+        common_free: "Free common titles"
+        prestige_free: "Free prestige titles"
+        objective: "Objective: %{text}"
+        unlocked_badge: "Unlocked"
+        locked_badge: "Locked"
+        objective_not_reached: "Objective not reached"
+
+  # NOTIFICATIONS
+  notifications:
+    index:
+      page_title: "Notifications"
+      page_subtitle: "Find useful reminders, challenges, and social activities."
+      mark_all_read: "Mark all as read"
+      read_badge: "Read"
+      open_button: "Open"
+      no_notifications: "No notifications at the moment."
+
+  # ADMIN
+  admin:
+    users:
+      index:
+        page_title: "User management"
+        edit_link: "Edit"
+      edit:
+        page_title: "Edit user"
+        xp_label: "XP"
+        orbs_label: "Orbs"
+        fragments_label: "Fragments"
+        admin_label: "Admin?"
+        update_button: "Update"
+    quests:
+      index:
+        page_title: "Quest management"
+        edit_link: "Edit"
+        delete_confirmation: "Delete this quest?"
+    analytics:
+      index:
+        page_title: "Product Analytics"
+        top_events: "Top events (7 days)"
+
+  # FLASH MESSAGES
+  flash:
+    friend_challenge:
+      challenge_launched: "Challenge launched for 48h."
+    purchases:
+      shop_challenge_completed: "+%{amount} Fragments retrieved via shop challenge!"
+      purchase_confirmed: "Purchase confirmed!"
+      unlocked_with_fragments: "Item unlocked with your Fragments!"
+      purchase_success: "Item purchased successfully!"
+      impossible_purchase: "Purchase impossible."
+      title_unlocked_by_objectives: "This title unlocks via objectives, not the shop."
+      item_already_owned: "You already own this item."
+      purchase_insufficient_fragments: "You don't have enough Fragments for this purchase."
+      purchase_insufficient_orbs: "You don't have enough Orbs for this purchase."
+      invalid_currency: "Choose a valid currency for this purchase (Fragments or Orbs)."
+    dashboard:
+      daily_chest_opened: "Daily chest opened: +%{amount} Fragments."
+    daily_contracts:
+      reward_claimed: "Reward claimed: +%{amount} Fragments."
+      contract_unavailable: "Contract not available."
+      contract_already_active: "You already have an active contract today."
+      contract_accepted: "Contract accepted."
+    friend_challenges:
+      challenge_daily_limit: "You've reached the limit of %{count} friend requests today."
+      cannot_add_self: "You can't add yourself as a friend."
+      target_max_pending: "This player has reached the max pending friend requests (%{count})."
+      relationship_exists: "You already have a relationship with this player."
+      request_sent: "Friend request sent!"
+      error_sending_request: "Error: %{error}"
+    factions:
+      already_member: "You already are a member of %{name}."
+      change_locked: "Faction change locked until weekly reset (%{time})."
+      faction_joined: "Faction joined: %{name}."
+    weekly_quests:
+      quest_completed: "Quest completed! XP added: %{xp}"
+      already_completed: "This weekly quest is already completed."
+    notifications:
+      marked_as_read: "Notifications marked as read."
+    quests:
+      added_success: "Quest added successfully!"
+      not_available: "This quest is not yet available."
+      reactivated_success: "Quest reactivated successfully!"
+      already_tracking: "You're already tracking this quest."
+      removed_success: "Quest removed successfully."
+    admin:
+      user_updated: "User updated."
+    users:
+      invalid_pseudo: "Invalid username."
+      pseudo_change_cooldown: "You can change your username again on %{date}."
+      pseudo_reserved: "This username is not allowed."
+      pseudo_unchanged: "This is already your username."
+      pseudo_updated: "Username updated."
+      pseudo_update_error: "%{error}"
+      title_not_found: "Title not found."
+      title_activated: "Title activated."
+      title_removed: "Title removed."
+      avatar_not_found: "Avatar not found."
+      avatar_equipped: "Avatar equipped successfully."
+      avatar_equip_error: "Unable to equip this avatar."
+      cosmetic_type_invalid: "Invalid cosmetic type."
+      cosmetic_not_found: "Cosmetic not found."
+      cosmetic_activated: "Cosmetic activated successfully."
+      cosmetic_activation_error: "Unable to activate this cosmetic."
+      card_text_updated: "Profile card text updated."
+      card_text_error: "Unable to update card text."
+
+  # ERROR MESSAGES
+  errors:
+    messages:
+      access_denied: "Access denied."
+      challenge_requires_friend: "You must select a friend first."
+      reward_already_claimed: "Reward already claimed."
+      reward_not_available: "Reward not available."
+      shop_challenge_incomplete: "Shop challenge not completed."
+      invalid_stripe_session: "Invalid payment session."
+      payment_not_validated: "Payment not validated."
+      invalid_payment_session: "Invalid payment session."
+      purchase_impossible: "Purchase impossible."
+      payment_cancelled: "Payment cancelled."
+      quest_not_active: "Quest is not active."
+      action_not_recognized: "Action not recognized."
+      daily_target_not_met: "You must complete at least %{target} quests to open the daily chest."
+      daily_chest_already_claimed: "Daily chest already claimed."
+
+  # COMMON LABELS & BUTTONS
+  common:
+    email: "Email"
+    password: "Password"
+    or: "or"
+    next_reset: "next reset"
+    loading: "Loading..."
+    error: "Error"
+    success: "Success"
+    confirm: "Confirm"
+    cancel: "Cancel"
+    save: "Save"
+    delete: "Delete"
+    close: "Close"
+    back: "Back"
+
+  # ERROR MESSAGES
+  errors:
+    messages:
+      challenge_requires_friend: "You can only launch a challenge with an accepted friend."
+      daily_target_not_met: "You need to complete %{count} quests to open the daily chest."
+      daily_chest_already_claimed: "You have already claimed today's chest."
+      purchase_impossible: "This purchase is not possible."
+      invalid_stripe_session: "Payment gateway error. Please try again."
+      payment_not_validated: "Payment validation failed."
+      invalid_payment_session: "Invalid payment session."
+      payment_cancelled: "Payment was cancelled."
+      reward_already_claimed: "This reward has already been claimed."
+      shop_challenge_incomplete: "Shop challenge not yet completed."
+      reward_not_available: "This reward is not available."
+      quest_not_active: "This quest is not active."
+      generic_error: "An error occurred. Please try again."
+      action_not_recognized: "This action is not recognized."
+
   time:
     formats:
       short: "%b %d, %H:%M"

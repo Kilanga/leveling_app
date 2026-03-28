@@ -4,39 +4,39 @@
       <div class="col-md-7 col-lg-6">
         <div class="card border-0 shadow-lg" style="border-radius: 12px;">
           <div class="card-body p-5">
-            <h1 class="h3 fw-bold text-center mb-1 text-dark">Finaliser votre profil</h1>
-            <p class="text-center text-muted mb-4">Choisissez votre pseudo et votre avatar pour commencer l'aventure.</p>
+            <h1 class="h3 fw-bold text-center mb-1 text-dark"><%= t('complete_profile.title') %></h1>
+            <p class="text-center text-muted mb-4"><%= t('complete_profile.subtitle') %></p>
 
             <%= render "devise/shared/error_messages", resource: @user %>
 
             <%= form_with model: @user, url: complete_profile_path, method: :patch, local: true do |f| %>
               <div class="mb-3">
-                <%= f.label :pseudo, "Pseudo (3-22 caractères)", class: "form-label fw-semibold" %>
-                <%= f.text_field :pseudo, class: "form-control form-control-lg", required: true, minlength: 3, maxlength: 22, placeholder: "votre_pseudo" %>
+                <%= f.label :pseudo, t('complete_profile.username_label'), class: "form-label fw-semibold" %>
+                <%= f.text_field :pseudo, class: "form-control form-control-lg", required: true, minlength: 3, maxlength: 22, placeholder: t('complete_profile.username_placeholder') %>
               </div>
 
               <div class="mb-4">
-                <label class="form-label fw-semibold d-block">Choisir votre avatar</label>
+                <label class="form-label fw-semibold d-block"><%= t('complete_profile.avatar_label') %></label>
                 <div class="row g-3">
                   <div class="col-6">
                     <label class="avatar-card">
                       <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
                       <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="w-100" alt="Avatar Guerrier">
-                      <span class="avatar-badge">Guerrier</span>
+                      <span class="avatar-badge"><%= t('complete_profile.avatar_warrior') %></span>
                     </label>
                   </div>
                   <div class="col-6">
                     <label class="avatar-card">
                       <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
                       <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="w-100" alt="Avatar Guerrière">
-                      <span class="avatar-badge">Guerrière</span>
+                      <span class="avatar-badge"><%= t('complete_profile.avatar_warrior_female') %></span>
                     </label>
                   </div>
                 </div>
               </div>
 
               <div class="d-grid">
-                <%= f.submit "Commencer l'aventure", class: "btn btn-primary btn-lg fw-semibold" %>
+                <%= f.submit t('complete_profile.start_button'), class: "btn btn-primary btn-lg fw-semibold" %>
               </div>
             <% end %>
           </div>

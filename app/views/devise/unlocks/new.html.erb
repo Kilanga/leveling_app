@@ -4,19 +4,19 @@
       <div class="col-md-7 col-lg-5">
         <div class="surface-card surface-card--shell auth-card">
           <div class="card-body">
-            <h1 class="page-title auth-title">Déverrouiller le compte</h1>
-            <p class="page-subtitle auth-subtitle">Renvoyer les instructions de déverrouillage.</p>
+            <h1 class="page-title auth-title"><%= t('devise.unlocks.new.title') %></h1>
+            <p class="page-subtitle auth-subtitle"><%= t('devise.unlocks.new.subtitle') %></p>
 
             <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, class: "auth-form" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
               <div class="mb-3">
-                <%= f.label :email, "Email", class: "form-label" %>
-                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "votre@email.com" %>
+                <%= f.label :email, t('common.email'), class: "form-label" %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: t('devise.unlocks.new.email_placeholder') %>
               </div>
 
               <div class="d-grid mb-3">
-                <%= f.submit "Renvoyer les instructions", class: "btn btn-brand btn-arcade" %>
+                <%= f.submit t('devise.unlocks.new.send_button'), class: "btn btn-brand btn-arcade" %>
               </div>
             <% end %>
 

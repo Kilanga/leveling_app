@@ -61,6 +61,530 @@ fr:
       devise_passwords_new:
         title: "Mot de passe oublie"
 
+  # DEVISE AUTHENTICATION
+  devise:
+    sessions:
+      new:
+        title: "Connexion"
+        subtitle: "Reprends ta progression la ou tu l'as laissee."
+        sign_in_button: "Se connecter"
+    registrations:
+      new:
+        title: "Inscription"
+        subtitle: "Cree ton profil et choisis ton avatar de depart."
+        email_label: "Email"
+        pseudo_label: "Pseudo (3-22 caracteres)"
+        pseudo_placeholder: "votre_pseudo"
+        password_label: "Mot de passe"
+        password_confirmation_label: "Confirmer le mot de passe"
+        referral_code_label: "Code parrainage (optionnel)"
+        referral_code_placeholder: "LVL1234"
+        avatar_label: "Choisir votre avatar"
+        avatar_warrior: "Guerrier"
+        avatar_warrior_female: "Guerriere"
+        sign_up_button: "S'inscrire"
+        min_password_notice: "Minimum %{count} caracteres"
+      edit:
+        title: "Mon compte"
+        subtitle: "Mets a jour tes informations de connexion."
+        new_password_label: "Nouveau mot de passe"
+        new_password_help: "Laisse vide si tu ne veux pas le changer."
+        password_confirmation_label: "Confirmer le mot de passe"
+        current_password_label: "Mot de passe actuel"
+        current_password_help: "Obligatoire pour valider les changements."
+        pending_confirmation_alert: "En attente de confirmation pour: %{email}"
+        update_button: "Mettre a jour"
+        delete_account_heading: "Suppression du compte"
+        delete_account_help: "Cette action est definitive."
+        delete_account_button: "Supprimer mon compte"
+        delete_account_confirmation: "Confirmer la suppression ?"
+    passwords:
+      new:
+        title: "Mot de passe oublie"
+        subtitle: "On t'envoie un lien de reinitialisation immediatement."
+        email_label: "Email"
+        email_placeholder: "votre@email.com"
+        send_button: "Envoyer les instructions"
+      edit:
+        title: "Nouveau mot de passe"
+        subtitle: "Securise ton compte avec un mot de passe mis a jour."
+        new_password_label: "Nouveau mot de passe"
+        password_confirmation_label: "Confirmer le mot de passe"
+        min_password_notice: "Minimum %{count} caracteres"
+        update_button: "Mettre a jour"
+    confirmations:
+      new:
+        title: "Confirmation email"
+        subtitle: "Renvoyer les instructions de confirmation."
+        email_label: "Email"
+        email_placeholder: "votre@email.com"
+        send_button: "Renvoyer les instructions"
+    unlocks:
+      new:
+        title: "Deverrouiller le compte"
+        subtitle: "Renvoyer les instructions de deverrouillage."
+        email_label: "Email"
+        email_placeholder: "votre@email.com"
+        send_button: "Renvoyer les instructions"
+    shared_links:
+      sign_in: "Se connecter"
+      sign_up: "Creer un compte"
+      forgot_password: "Mot de passe oublie ?"
+      resend_confirmation: "Renvoyer les instructions de confirmation"
+      resend_unlock: "Renvoyer les instructions de deverrouillage"
+      continue_with: "Continuer avec %{provider}"
+      divider_text: "ou"
+
+  # WELCOME PAGE
+  welcome:
+    index:
+      page_title: "Progression gamifiee"
+      page_subtitle: "Transforme ta progression en jeu competitif"
+      main_heading: "Transforme ta progression en jeu competitif"
+      sub_heading: "Construis ta discipline avec des quetes courtes, grimpe dans les ligues hebdomadaires, et garde ton elan avec des rewards quotidiennes."
+      start_button: "Commencer maintenant"
+      existing_account_button: "J'ai deja un compte"
+      detected_referral: "Code parrainage detecte: %{code}"
+      stats:
+        motivated_players: "joueurs motives"
+        available_quests: "quetes disponibles"
+        progression_axes: "axes de progression"
+      benefits_heading: "Pourquoi les joueurs restent"
+      benefit_1_title: "1. Action immediate"
+      benefit_1_desc: "Tu choisis une quete, la valides aujourd'hui, gagnes l'XP immediatement."
+      benefit_2_title: "2. Competition saine"
+      benefit_2_desc: "Tu compares ta semaine contre ta ligue, pas le jeu entier."
+      benefit_3_title: "3. Regularite recompensee"
+      benefit_3_desc: "Streaks quotidiens, coffre quotidien, taches hebdo—tout pour construire l'habitude."
+
+  # COMPLETE PROFILE
+  complete_profile:
+    title: "Finaliser votre profil"
+    subtitle: "Choisissez votre pseudo et votre avatar pour commencer l'aventure."
+    username_label: "Pseudo (3-22 caracteres)"
+    username_placeholder: "votre_pseudo"
+    avatar_label: "Choisir votre avatar"
+    avatar_warrior: "Guerrier"
+    avatar_warrior_female: "Guerriere"
+    start_button: "Commencer l'aventure"
+
+  # DASHBOARD
+  dashboard:
+    welcome: "Bienvenue, %{pseudo}"
+    subtitle: "Votre quartier general de progression."
+    daily_bonus_title: "Bonus connexion"
+    daily_bonus_claimed: "Bonus connexion reclame: +%{amount} Fragments"
+    streak_days: "Serie actuelle: %{days} jour(s)."
+    last_completion: "Derniere validation: %{date}"
+    no_completion_week: "Aucune validation cette semaine."
+    view_league: "Voir la ligue dans Classement"
+    xp_boost_active: "Boost XP actif jusqu'a %{date}"
+    daily_objective:
+      title: "Objectif du jour"
+      instruction: "Valide %{count} quetes pour maintenir ton rythme."
+      chest_reward: "Coffre quotidien: +%{amount} Fragments."
+      chest_opened: "Coffre deja ouvert"
+      open_chest_button: "Ouvrir le coffre"
+    factions:
+      title: "Territoires de guildes"
+      reset_in: "Reset dans %{time}."
+      current_faction: "Ta faction actuelle: %{name}."
+      change_locked: "Changement verrouille jusqu'au prochain reset."
+      choose_faction: "Choisis une faction pour commencer a capturer des territoires."
+      equipped_badge: "Equipee"
+      locked_badge: "Verrouille jusqu'au reset"
+      join_button: "Rejoindre"
+      dominant_faction: "Faction dominante sur le cycle en cours: %{name}"
+      previous_winner: "Guilde gagnante (semaine precedente): %{name}"
+      view_participants: "Voir participants"
+      no_participants: "Aucun participant enregistre."
+      faction_won: "Guilde gagnante: %{name}"
+    daily_contracts:
+      title: "Marche noir: contrats du jour"
+      objective: "Objectif: %{current}/%{total}"
+      reward: "Prime: +%{amount} Fragments"
+      claim_button: "Reclamer"
+      completed_badge: "Termine"
+      in_progress_badge: "En cours"
+      locked_badge: "Verrouille"
+      accept_button: "Accepter"
+    recent_activity:
+      title: "Activite recente des amis"
+      completed_quest: "a complete une quete (+%{xp} XP)"
+      completed_weekly_quest: "a valide sa quete hebdomadaire."
+      opened_chest: "a ouvert le coffre quotidien (+%{amount} Fragments)"
+      friend_accepted: "vient d'accepter une demande d'ami."
+      friend_default_name: "Un ami"
+      no_activity: "Aucune activite amie recente. Ajoute des amis pour remplir ce feed."
+    active_quests:
+      title: "Quetes en cours"
+      validate_button: "Valider"
+      stop_button: "Arreter"
+    weekly_quests:
+      title: "Quetes hebdomadaires"
+      see_all_link: "Voir toutes les quetes"
+    shop_link: "Boutique"
+    report_bug_link: "Signaler un bug"
+    progression_heading: "Progression des categories"
+
+  # QUESTS
+  quests:
+    index:
+      page_title: "Chasse aux quetes"
+      page_subtitle: "Transforme ta to-do list en missions: choisis vite, suis l'avancement et grind ton XP."
+      visible_missions: "Missions visibles"
+      tracked_missions: "Missions suivies"
+      categories: "Categories"
+      search_placeholder: "Rechercher une quete ou un objectif..."
+      all_categories: "Toutes les categories"
+      sort:
+        daily_mission: "Tri: mission du jour"
+        quick: "Tri: rapide a faire"
+        big_xp: "Tri: gros gain XP"
+      difficulty_all: "Toutes difficultees"
+      difficulty_easy: "Easy"
+      difficulty_medium: "Medium"
+      difficulty_hard: "Hard"
+      recommended_heading: "Recommandees pour toi"
+      elite_badge: "Elite"
+      already_tracked: "Deja suivie"
+      add_button: "Ajouter"
+      no_recommendations: "Pas encore de recommandations disponibles. Termine quelques missions pour personnaliser la suite."
+      active_quests_heading: "Tes quetes actives"
+      streak_legend: "Legend"
+      streak_fire: "En feu"
+      streak_regular: "Regulier"
+      streak_start: "Debut"
+      more_active_quests: "+%{count} autres missions actives"
+      no_active_quests: "Aucune mission suivie. Lance-en une dans le catalogue."
+      catalog_heading: "Catalogue des missions"
+      daily_mission_badge: "Mission du jour"
+      untrack_button: "Ne plus suivre"
+      track_button: "Suivre"
+      no_results: "Aucune mission ne correspond a ta recherche. Essaie un autre mot-cle."
+
+  # SHOP / PURCHASES
+  purchases:
+    new:
+      page_title: "Marche des aventuriers"
+      page_subtitle: "Obtenez des ressources premium pour accelerer votre progression."
+      premium_orbs_label: "Tes Orbes premium:"
+      free_fragments_label: "Tes Fragments de progression:"
+      welcome_offer_kicker: "Offre de bienvenue active"
+      welcome_bonus_heading: "Ton premier pack d'Orbes inclut +%{percentage}% de bonus"
+      welcome_bonus_help: "Le bonus est deja calcule dans chaque carte pack: tu vois directement le total recu."
+      first_purchase_badge: "1er achat"
+      
+      tabs:
+        packs: "Packs"
+        boosts: "Boosts"
+        titles: "Titres"
+        cosmetics: "Cosmetiques"
+        rewards: "Recompenses"
+      
+      packs:
+        heading: "Packs d'Orbes"
+        bonus_badge: "Bonus +%{percentage}"
+        best_value_badge: "Best value"
+        orbs_received: "%{count} Orbes recus"
+        base_bonus: "(%{base} + %{bonus} bonus Orbes)"
+        rate: "%{orbs} Orbes / EUR"
+        buy_button: "Acheter %{price}EUR"
+      
+      boosts:
+        heading: "Boosts XP"
+        description: "Progression acceleree pendant %{duration}."
+        activate_button: "Activer - %{price}EUR"
+      
+      titles:
+        heading: "Titres"
+        instruction: "Choisis un titre marquant pour imposer ton style dans le classement."
+        equipped_text: "Equipee"
+        equipped_badge: "Equipee"
+        owned_badge: "Possedee"
+        available_badge: "Disponible"
+        unavailable_badge: "Indisponible"
+        remove_button: "Retirer"
+        equip_button: "Equiper"
+        buy_button: "Acheter"
+        rarity:
+          common: "Common"
+          rare: "Rare"
+          epic: "Epic"
+          legendary: "Legendary"
+      
+      cosmetics:
+        heading: "Cosmetiques"
+        instruction: "Personnalise ton profil et tes barres de progression."
+
+  # LEADERBOARD
+  leaderboard:
+    index:
+      page_title: "Classement ligue hebdomadaire"
+      current_league: "Ligue actuelle: %{name}"
+      next_reset: "Prochain reset ligue: %{date}"
+      next_reset_help: "Dans %{time}. Classement complet de ta ligue, avec mise a jour au chargement de la page."
+      frozen_warning: "Mouvement de ligue fige pour le moment: cohorte %{current}/%{total}."
+      promotion_help: "Les promotions/relegations s'activent a partir de %{count} joueurs."
+      
+      table:
+        heading: "Classement ligue hebdomadaire"
+        rank: "Rang"
+        avatar: "Avatar"
+        player: "Joueur"
+        weekly_xp: "XP semaine"
+        league: "Ligue"
+        you_badge: "Toi"
+        no_data: "Aucune donnee de ligue disponible."
+      
+      movement:
+        promoted: "Montee projetee"
+        promoted_label: "Montee"
+        demoted: "Descente projetee"
+        demoted_label: "Descente"
+        held: "Maintien projete"
+        held_label: "Maintien"
+      
+      profile_view:
+        category_progression: "Progression des categories"
+        no_progression_data: "Aucune progression disponible."
+        no_weekly_quests: "Aucune quete hebdomadaire visible."
+        no_active_quests: "Aucune quete active en ce moment."
+        no_recent_quests: "Aucune quete recente."
+        no_popular_quests: "Aucune quete populaire."
+
+  # FRIENDS
+  friends:
+    index:
+      page_title: "Liste de mes amis"
+      active_friends_heading: "Amis actifs"
+      launch_challenge: "Lancer un defi 48h"
+      remove_button: "Retirer"
+      
+      active_challenges:
+        heading: "Defis actifs"
+        no_challenges: "Aucun defi actif."
+      
+      referral:
+        heading: "Parrainage"
+      
+      received_requests:
+        heading: "Demandes recues"
+        accept_button: "Accepter"
+        refuse_button: "Refuser"
+      
+      sent_requests:
+        heading: "Demandes envoyees"
+        cancel_button: "Annuler"
+      
+      search:
+        heading: "Rechercher un ami"
+        label: "Rechercher par pseudo"
+        placeholder: "Pseudo du joueur"
+        search_button: "Rechercher"
+        results_heading: "Resultats"
+        send_request: "Envoyer une demande"
+      
+      most_played:
+        heading: "Quetes les plus realisees par mes amis"
+      
+      recent:
+        heading: "Dernieres quetes realisees par mes amis"
+
+  # USER PROFILE
+  user:
+    show:
+      page_title: "Profil"
+      completed_quests: "Quetes completees"
+      weekly_xp: "XP cette semaine"
+      weekly_streak: "Streak hebdo"
+      change_password_button: "Modifier mon mot de passe"
+      new_pseudo_placeholder: "Nouveau pseudo"
+      change_pseudo_button: "Changer mon pseudo"
+      pseudo_cooldown: "Prochain changement de pseudo possible le %{date}."
+      pseudo_cooldown_help: "Le pseudo peut etre modifie une fois par semaine."
+      
+      cosmetics:
+        heading: "Cosmetiques"
+        profile_frames:
+          heading: "Cadre de Profil"
+          description: "Encadrement autour de ton pseudo au classement."
+          none_active: "Aucun cadre actif"
+          active_badge: "Actif"
+        xp_themes:
+          heading: "Theme de Barre XP"
+          description: "Couleurs et style de ta barre de progression."
+          none_active: "Theme par defaut"
+        profile_cards:
+          heading: "Carte de Visite"
+          description: "Affichee dans ton profil et visible par les autres joueurs."
+          none_active: "Aucune carte active"
+          message_placeholder: "Ton message perso (max 100 caracteres)"
+          update_button: "Mettre a jour"
+      
+      titles:
+        heading: "Mes Titres"
+        current: "Titre actuel:"
+        none_active: "Aucun titre actif"
+        no_titles: "Aucun titre disponible pour le moment. Gagnez-les en boutique!"
+        common_free: "Titres Communs Gratuits"
+        prestige_free: "Titres Prestige Gratuits"
+        objective: "Objectif: %{text}"
+        unlocked_badge: "Debloque"
+        locked_badge: "Bloque"
+        objective_not_reached: "Objectif non atteint"
+
+  # NOTIFICATIONS
+  notifications:
+    index:
+      page_title: "Notifications"
+      page_subtitle: "Retrouve les rappels utiles, defis et activites sociales."
+      mark_all_read: "Tout marquer lu"
+      read_badge: "Lue"
+      open_button: "Ouvrir"
+      no_notifications: "Aucune notification pour le moment."
+
+  # ADMIN
+  admin:
+    users:
+      index:
+        page_title: "Gestion des utilisateurs"
+        edit_link: "Modifier"
+      edit:
+        page_title: "Modifier l'utilisateur"
+        xp_label: "XP"
+        orbs_label: "Orbes"
+        fragments_label: "Fragments"
+        admin_label: "Admin ?"
+        update_button: "Mettre a jour"
+    quests:
+      index:
+        page_title: "Gestion des quetes"
+        edit_link: "Modifier"
+        delete_confirmation: "Supprimer cette quete ?"
+    analytics:
+      index:
+        page_title: "Analytics Produit"
+        top_events: "Top events (7 jours)"
+
+  # FLASH MESSAGES
+  flash:
+    friend_challenge:
+      challenge_launched: "Defi lance pour 48h."
+    purchases:
+      shop_challenge_completed: "+%{amount} Fragments recuperes via le defi boutique !"
+      purchase_confirmed: "Achat confirme !"
+      unlocked_with_fragments: "Objet deverrouille avec tes Fragments !"
+      purchase_success: "Objet achete avec succes !"
+      impossible_purchase: "Achat impossible."
+      title_unlocked_by_objectives: "Ce titre se deverrouille via des objectifs, pas en boutique."
+      item_already_owned: "Tu possedes deja cet objet."
+      purchase_insufficient_fragments: "Tu n'as pas assez de Fragments pour cet achat."
+      purchase_insufficient_orbs: "Tu n'as pas assez d'Orbes pour acheter cet objet."
+      invalid_currency: "Choisis une monnaie valide pour cet achat (Fragments ou Orbes)."
+    dashboard:
+      daily_chest_opened: "Coffre quotidien ouvert: +%{amount} Fragments."
+    daily_contracts:
+      reward_claimed: "Prime recuperee: +%{amount} Fragments."
+      contract_unavailable: "Contrat indisponible."
+      contract_already_active: "Tu as deja un contrat actif aujourd'hui."
+      contract_accepted: "Contrat accepte."
+    friend_challenges:
+      challenge_daily_limit: "Tu as atteint la limite de %{count} demandes d'amis aujourd'hui."
+      cannot_add_self: "Tu ne peux pas t'ajouter en ami."
+      target_max_pending: "Ce joueur a atteint le nombre max de demandes d'amis en attente (%{count})."
+      relationship_exists: "Une relation existe deja avec cet utilisateur."
+      request_sent: "Demande d'ami envoyee !"
+      error_sending_request: "Erreur: %{error}"
+    factions:
+      already_member: "Tu fais deja partie de %{name}."
+      change_locked: "Changement de faction verrouille jusqu'au reset hebdomadaire (%{time})."
+      faction_joined: "Faction rejointe: %{name}."
+    weekly_quests:
+      quest_completed: "Quete completee ! XP ajoute : %{xp}"
+      already_completed: "Cette quete hebdomadaire est deja validee."
+    notifications:
+      marked_as_read: "Notifications marquees comme lues."
+    quests:
+      added_success: "Quete ajoutee avec succes !"
+      not_available: "Cette quete n'est pas encore disponible."
+      reactivated_success: "Quete reactivee avec succes !"
+      already_tracking: "Tu suis deja cette quete."
+      removed_success: "Quete retiree avec succes."
+    admin:
+      user_updated: "Utilisateur mis a jour."
+    users:
+      invalid_pseudo: "Pseudo invalide."
+      pseudo_change_cooldown: "Tu pourras rechanger ton pseudo le %{date}."
+      pseudo_reserved: "Ce pseudo n'est pas autorise."
+      pseudo_unchanged: "Ce pseudo est deja le tien."
+      pseudo_updated: "Pseudo mis a jour."
+      pseudo_update_error: "%{error}"
+      title_not_found: "Titre introuvable."
+      title_activated: "Titre active."
+      title_removed: "Titre retire."
+      avatar_not_found: "Avatar introuvable."
+      avatar_equipped: "Avatar equipe avec succes."
+      avatar_equip_error: "Impossible d'equiper cet avatar."
+      cosmetic_type_invalid: "Type de cosmetic invalide."
+      cosmetic_not_found: "Cosmetic introuvable."
+      cosmetic_activated: "Cosmetic active avec succes."
+      cosmetic_activation_error: "Impossible d'activer ce cosmetic."
+      card_text_updated: "Texte de carte mise a jour."
+      card_text_error: "Impossible de mettre a jour le texte."
+
+  # ERROR MESSAGES
+  errors:
+    messages:
+      access_denied: "Acces interdit."
+      challenge_requires_friend: "Tu dois d'abord selectionner un ami."
+      reward_already_claimed: "Prime deja reclamee."
+      reward_not_available: "Prime indisponible."
+      shop_challenge_incomplete: "Defi boutique non complete."
+      invalid_stripe_session: "Session de paiement invalide."
+      payment_not_validated: "Paiement non valide."
+      invalid_payment_session: "Session de paiement invalide."
+      purchase_impossible: "Achat impossible."
+      payment_cancelled: "Paiement annule."
+      quest_not_active: "Quete non active."
+      action_not_recognized: "Action non reconnue."
+      daily_target_not_met: "Tu dois completer au moins %{target} quetes pour ouvrir le coffre quotidien."
+      daily_chest_already_claimed: "Coffre quotidien deja reclame."
+
+  # COMMON LABELS & BUTTONS
+  common:
+    email: "Email"
+    password: "Mot de passe"
+    or: "ou"
+    next_reset: "le prochain reset"
+    loading: "Chargement..."
+    error: "Erreur"
+    success: "Succes"
+    confirm: "Confirmer"
+    cancel: "Annuler"
+    save: "Enregistrer"
+    delete: "Supprimer"
+    close: "Fermer"
+    back: "Retour"
+
+  # ERROR MESSAGES
+  errors:
+    messages:
+      challenge_requires_friend: "Tu ne peux lancer un defi qu'avec un ami accepte."
+      daily_target_not_met: "Tu dois completer %{count} quetes pour ouvrir le coffre quotidien."
+      daily_chest_already_claimed: "Tu as deja reclame le coffre d'aujourd'hui."
+      purchase_impossible: "Cet achat n'est pas possible."
+      invalid_stripe_session: "Erreur avec la passerelle de paiement. Veuillez reessayer."
+      payment_not_validated: "La validation du paiement a echoue."
+      invalid_payment_session: "Session de paiement invalide."
+      payment_cancelled: "Le paiement a ete annule."
+      reward_already_claimed: "Cette recompense a deja ete reclamee."
+      shop_challenge_incomplete: "Le defi boutique n'est pas encore termine."
+      reward_not_available: "Cette recompense n'est pas disponible."
+      quest_not_active: "Cette quete n'est pas active."
+      generic_error: "Une erreur s'est produite. Veuillez reessayer."
+      action_not_recognized: "Cette action n'est pas reconnue."
+
   time:
     formats:
       short: "%d %b, %H:%M"

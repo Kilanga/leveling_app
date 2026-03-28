@@ -4,66 +4,66 @@
       <div class="col-md-8 col-lg-6">
         <div class="surface-card surface-card--shell auth-card">
           <div class="card-body">
-            <h1 class="page-title auth-title">Inscription</h1>
-            <p class="page-subtitle auth-subtitle">Crée ton profil et choisis ton avatar de départ.</p>
+            <h1 class="page-title auth-title"><%= t('devise.registrations.new.title') %></h1>
+            <p class="page-subtitle auth-subtitle"><%= t('devise.registrations.new.subtitle') %></p>
 
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name), local: true, html: { class: "auth-form" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
               <div class="mb-3">
-                <%= f.label :email, "Email", class: "form-label" %>
+                <%= f.label :email, t('common.email'), class: "form-label" %>
                 <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", placeholder: "votre@email.com" %>
               </div>
 
               <div class="mb-3">
-                <%= f.label :pseudo, "Pseudo (3-22 caractères)", class: "form-label" %>
-                <%= f.text_field :pseudo, class: "form-control", required: true, minlength: 3, maxlength: 22, placeholder: "votre_pseudo" %>
+                <%= f.label :pseudo, t('devise.registrations.new.pseudo_label'), class: "form-label" %>
+                <%= f.text_field :pseudo, class: "form-control", required: true, minlength: 3, maxlength: 22, placeholder: t('devise.registrations.new.pseudo_placeholder') %>
               </div>
 
               <div class="mb-3">
-                <%= f.label :password, "Mot de passe", class: "form-label" %>
+                <%= f.label :password, t('common.password'), class: "form-label" %>
                 <% if @minimum_password_length %>
-                  <p class="quest-meta mb-2">Minimum <%= @minimum_password_length %> caractères</p>
+                  <p class="quest-meta mb-2"><%= t('devise.registrations.new.min_password_notice', count: @minimum_password_length) %></p>
                 <% end %>
                 <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
               </div>
 
               <div class="mb-4">
-                <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label" %>
+                <%= f.label :password_confirmation, t('devise.registrations.new.password_confirmation_label'), class: "form-label" %>
                 <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "••••••••" %>
               </div>
 
               <div class="mb-4">
-                <%= f.label :referral_code_input, "Code parrainage (optionnel)", class: "form-label" %>
-                <%= f.text_field :referral_code_input, class: "form-control", value: params[:ref], placeholder: "LVL1234" %>
+                <%= f.label :referral_code_input, t('devise.registrations.new.referral_code_label'), class: "form-label" %>
+                <%= f.text_field :referral_code_input, class: "form-control", value: params[:ref], placeholder: t('devise.registrations.new.referral_code_placeholder') %>
               </div>
 
               <div class="mb-4">
-                <label class="form-label d-block">Choisir votre avatar</label>
+                <label class="form-label d-block"><%= t('devise.registrations.new.avatar_label') %></label>
                 <div class="row g-3">
                   <div class="col-6">
                     <label class="avatar-card">
                       <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp", class: "d-none", required: true %>
                       <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp" class="w-100" alt="Avatar Guerrier">
-                      <span class="avatar-badge">Guerrier</span>
+                      <span class="avatar-badge"><%= t('devise.registrations.new.avatar_warrior') %></span>
                     </label>
                   </div>
                   <div class="col-6">
                     <label class="avatar-card">
                       <%= f.radio_button :avatar, "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp", class: "d-none", required: true %>
                       <img src="https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.50_-_A_digital_painting_of_a_female_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._She_wears_a_simple_slightly_x4zdiw.webp" class="w-100" alt="Avatar Guerrière">
-                      <span class="avatar-badge">Guerrière</span>
+                      <span class="avatar-badge"><%= t('devise.registrations.new.avatar_warrior_female') %></span>
                     </label>
                   </div>
                 </div>
               </div>
 
               <div class="d-grid mb-3">
-                <%= f.submit "S'inscrire", class: "btn btn-brand btn-arcade" %>
+                <%= f.submit t('devise.registrations.new.sign_up_button'), class: "btn btn-brand btn-arcade" %>
               </div>
             <% end %>
 
-            <div class="auth-divider"><span>ou</span></div>
+            <div class="auth-divider"><span><%= t('devise.shared_links.divider_text') %></span></div>
             <%= render "devise/shared/links" %>
           </div>
         </div>
