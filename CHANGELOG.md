@@ -15,6 +15,13 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.9] - 2026-03-28
+
+### Ajouté
+- SEO technique global: ajout des meta Open Graph et Twitter Card dans le layout principal.
+- SEO technique global: ajout du canonical URL et de la directive `robots` dynamique par type de page.
+- Robots policy: mise a jour de `public/robots.txt` avec autorisations générales, exclusions des zones internes, et lien vers `/sitemap.xml`.
+
 ## [1.20.8] - 2026-03-28
 
 ### Corrigé

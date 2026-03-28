@@ -3,6 +3,23 @@
 <head>
   <title><%= page_meta_title %></title>
   <meta name="description" content="<%= page_meta_description %>">
+  <meta name="robots" content="<%= page_robots_content %>">
+  <% if page_canonical_url.present? %>
+    <link rel="canonical" href="<%= page_canonical_url %>">
+  <% end %>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Leveling">
+  <meta property="og:title" content="<%= page_meta_title %>">
+  <meta property="og:description" content="<%= page_meta_description %>">
+  <meta property="og:locale" content="<%= page_og_locale %>">
+  <% if page_canonical_url.present? %>
+    <meta property="og:url" content="<%= page_canonical_url %>">
+  <% end %>
+  <meta property="og:image" content="<%= page_og_image_url %>">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= page_meta_title %>">
+  <meta name="twitter:description" content="<%= page_meta_description %>">
+  <meta name="twitter:image" content="<%= page_og_image_url %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= favicon_link_tag "logo-leveling.svg", type: "image/svg+xml" %>
   <%= csrf_meta_tags %>
