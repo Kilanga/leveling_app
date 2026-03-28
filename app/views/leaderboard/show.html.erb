@@ -11,8 +11,6 @@
             <div class="profile-frame-container <%= frame_wrapper_classes(@player.respond_to?(:active_profile_frame) ? @player.active_profile_frame : nil) %>">
               <strong><%= @player.pseudo %></strong>
             </div>
-            <p class="quest-meta mb-1 mt-2">Niveau global: <%= @player_total_level %></p>
-            <p class="quest-meta mb-0">XP cette semaine: <%= @player_xp_this_week %></p>
           </div>
         </div>
       </div>
@@ -48,6 +46,10 @@
         <h2 class="section-title">Carte de visite</h2>
         <div class="profile-card-container <%= profile_card_classes(active_player_card) %>">
           <div class="profile-card-header"><%= @player.pseudo %></div>
+          <div class="profile-card-meta">
+            <span class="profile-card-meta-item">Niveau global: <strong><%= @player_total_level %></strong></span>
+            <span class="profile-card-meta-item">XP cette semaine: <strong><%= @player_xp_this_week %></strong></span>
+          </div>
           <div class="profile-card-text"><%= profile_card_text(@player) %></div>
         </div>
       </section>

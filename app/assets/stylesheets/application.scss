@@ -1603,6 +1603,31 @@ body::before {
   color: rgba(230, 245, 255, 0.9);
 }
 
+.profile-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.7rem;
+}
+
+.profile-card-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  line-height: 1.2;
+  color: #d8ecfb;
+  background: rgba(10, 26, 42, 0.58);
+  border: 1px solid rgba(98, 160, 204, 0.35);
+}
+
+.profile-card-meta-item strong {
+  color: #f2fbff;
+  font-weight: 700;
+}
+
 .profile-card-text {
   color: #b8d9f0;
   font-style: normal;

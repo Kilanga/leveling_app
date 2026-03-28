@@ -17,6 +17,15 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.5] - 2026-03-28
+
+### Corrigé
+- Classement ligue: clarification du message de cohorte en format `X/50`, avec regle explicite de declenchement des promotions/relegations a partir de 3 joueurs.
+
+### Modifié
+- Profil public joueur: les infos `Niveau global` et `XP cette semaine` sont deplacees dans la section `Carte de visite`.
+- Carte de visite: ajout d'un bloc meta integre pour afficher ces statistiques de maniere compacte dans la carte.
+
 ## [1.16.4] - 2026-03-28
 
 ### Corrigé
