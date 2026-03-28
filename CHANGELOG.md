@@ -15,6 +15,21 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.21.1] - 2026-03-28
+
+### Modifié
+- Boutique: l'onglet `Cosmetiques` devient l'onglet principal affiche en premier.
+- Boutique: le module d'achat `Orbes` est deplace dans la colonne de droite pour rester visible en permanence.
+- Boutique: l'ancien onglet dedie `Orbes` (`Packs`) est retire de la barre d'onglets pour simplifier la navigation.
+- Navbar: ajout du lien `Signaler un bug` a cote des actions de session.
+
+### Corrigé
+- Boutique: en cas de tentative d'achat cosmetique sans Orbes suffisants, redirection vers la vue boutique ciblee sur les cosmetiques avec bloc Orbes visible.
+
+### Supprimé
+- Dashboard: suppression des boutons d'action bas de page `Boutique` et `Signaler un bug` (actions deplacees dans la navbar/flux boutique).
+- Boutique: suppression du bloc `Recommande pour toi` dans la colonne droite.
+
 ## [1.21.0] - 2026-03-28
 
 ### Ajouté
