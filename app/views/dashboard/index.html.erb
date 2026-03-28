@@ -75,15 +75,46 @@
     <div class="surface-card h-100">
       <div class="card-body">
         <h2 class="section-title mb-3">Territoires de guildes</h2>
+        <p class="quest-meta mb-2">Reset de saison: mercredi a 12h (heure serveur).</p>
+        <% if @next_faction_reset_at.present? %>
+          <p class="quest-meta mb-1">Prochain reset: <%= l(@next_faction_reset_at, format: :short) %>.</p>
+          <p class="quest-meta mb-2">Dans <strong><%= @faction_reset_countdown %></strong>.</p>
+        <% end %>
         <% if current_user.faction.present? %>
           <p class="quest-meta mb-2">Ta faction actuelle: <strong><%= current_user.faction.name %></strong>.</p>
         <% else %>
           <p class="quest-meta mb-2">Choisis une faction pour commencer a capturer des territoires.</p>
         <% end %>
 
+        <% if @previous_winning_faction.present? && @previous_winning_faction.try(:previous_points).to_i > 0 %>
+          <details class="quest-row quest-row--flat mb-3">
+            <summary class="d-flex justify-content-between align-items-center gap-2 flex-wrap" style="cursor: pointer;">
+              <span>
+                <strong>Guilde gagnante (semaine precedente): <%= @previous_winning_faction.name %></strong>
+                <span class="quest-meta d-block"><%= @previous_winning_faction.try(:previous_points).to_i %> points</span>
+              </span>
+              <span class="badge text-bg-dark">Voir participants</span>
+            </summary>
+            <div class="mt-2">
+              <% if @previous_winning_participants.any? %>
+                <div class="quest-list quest-list--flat">
+                  <% @previous_winning_participants.each do |entry| %>
+                    <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                      <span><strong><%= entry.user&.pseudo || "Joueur inconnu" %></strong></span>
+                      <span class="quest-meta"><%= entry.points %> pts</span>
+                    </div>
+                  <% end %>
+                </div>
+              <% else %>
+                <p class="quest-meta mb-0">Aucun participant enregistre.</p>
+              <% end %>
+            </div>
+          </details>
+        <% end %>
+
         <% if @leading_faction.present? %>
           <div class="quest-row quest-row--flat mb-3">
-            <strong>Faction dominante aujourd'hui: <%= @leading_faction.name %></strong>
+            <strong>Faction dominante sur le cycle en cours: <%= @leading_faction.name %></strong>
             <p class="quest-meta mb-0"><%= @leading_faction.try(:today_points).to_i %> points d'influence</p>
           </div>
         <% end %>
@@ -98,7 +129,7 @@
               <% if current_user.faction_id == faction.id %>
                 <span class="badge text-bg-success">Equipee</span>
               <% else %>
-                <%= button_to "Rejoindre", join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest" %>
+                <%= button_to "Rejoindre", join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
               <% end %>
             </div>
           <% end %>
@@ -131,7 +162,7 @@
                   <% elsif @active_daily_contract.present? %>
                     <span class="badge text-bg-secondary">Verrouille</span>
                   <% else %>
-                    <%= button_to "Accepter", accept_daily_contract_path(contract), method: :post, class: "btn btn-sm btn-outline-quest" %>
+                    <%= button_to "Accepter", accept_daily_contract_path(contract), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
                   <% end %>
                 </div>
               </div>

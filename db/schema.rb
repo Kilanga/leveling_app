@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_28_103000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_28_111500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -77,6 +77,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_103000) do
     t.string "variant", null: false
     t.index ["user_id", "experiment_key"], name: "index_experiment_assignments_on_user_id_and_experiment_key", unique: true
     t.index ["user_id"], name: "index_experiment_assignments_on_user_id"
+  end
+
+  create_table "faction_contributions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "faction_id", null: false
+    t.date "on_date", null: false
+    t.integer "points", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["faction_id", "user_id", "on_date"], name: "index_faction_contrib_on_faction_user_cycle", unique: true
+    t.index ["faction_id"], name: "index_faction_contributions_on_faction_id"
+    t.index ["user_id"], name: "index_faction_contributions_on_user_id"
   end
 
   create_table "faction_influences", force: :cascade do |t|
@@ -330,6 +342,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_103000) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "experiment_assignments", "users"
+  add_foreign_key "faction_contributions", "factions"
+  add_foreign_key "faction_contributions", "users"
   add_foreign_key "faction_influences", "factions"
   add_foreign_key "friend_challenges", "users", column: "challenged_id"
   add_foreign_key "friend_challenges", "users", column: "challenger_id"

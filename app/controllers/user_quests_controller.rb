@@ -48,7 +48,8 @@ class UserQuestsController < ApplicationController
       if gained_xp
         @user_quest.reload
         if current_user.faction.present?
-          FactionInfluence.add_points!(faction: current_user.faction, on_date: Time.zone.today, points: 1)
+          FactionInfluence.add_points!(faction: current_user.faction, points: 1)
+          FactionContribution.add_points!(faction: current_user.faction, user: current_user, points: 1)
         end
         UserDailyContract.progress_for_user!(current_user)
         referral_result = ReferralRewarder.claim_if_eligible!(current_user)

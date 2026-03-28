@@ -25,6 +25,9 @@ Regle de normalisation Keep a Changelog:
 
 ### Modifié
 - Dashboard: nouveau bloc de metagame avec classement d'influence des factions et panneau des contrats du jour.
+- Guildes: cycle d'influence ajuste avec reset chaque mercredi a 12h (heure serveur).
+- Actions Dashboard: boutons "Rejoindre" et "Accepter" forces en soumission classique pour fiabiliser le clic.
+- Guildes: ajout d'un compte a rebours jusqu'au prochain reset et d'un encart cliquable pour la guilde gagnante du cycle precedent avec la liste des participants.
 
 ## [1.15.13] - 2026-03-28
 

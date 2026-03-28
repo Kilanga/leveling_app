@@ -66,12 +66,30 @@ class DashboardController < ApplicationController
     @daily_chest_reward_coins = DAILY_CHEST_REWARD_COINS
     @friends_activity = recent_friends_activity
 
+    cycle_anchor = FactionInfluence.current_cycle_anchor_date
+    previous_cycle_anchor = cycle_anchor - 7.days
+    @next_faction_reset_at = FactionInfluence.next_reset_at
+    @faction_reset_countdown = format_countdown(@next_faction_reset_at)
     @factions = Faction.order(:name)
     @faction_scores_today = Faction.left_outer_joins(:faction_influences)
-      .select("factions.*, COALESCE(SUM(CASE WHEN faction_influences.on_date = '#{Time.zone.today}' THEN faction_influences.points ELSE 0 END), 0) AS today_points")
+      .select("factions.*, COALESCE(SUM(CASE WHEN faction_influences.on_date = '#{cycle_anchor}' THEN faction_influences.points ELSE 0 END), 0) AS today_points")
       .group("factions.id")
       .order(Arel.sql("today_points DESC, factions.name ASC"))
     @leading_faction = @faction_scores_today.first
+
+    previous_scores = Faction.left_outer_joins(:faction_influences)
+      .select("factions.*, COALESCE(SUM(CASE WHEN faction_influences.on_date = '#{previous_cycle_anchor}' THEN faction_influences.points ELSE 0 END), 0) AS previous_points")
+      .group("factions.id")
+      .order(Arel.sql("previous_points DESC, factions.name ASC"))
+    @previous_winning_faction = previous_scores.first
+    @previous_winning_participants =
+      if @previous_winning_faction.present? && @previous_winning_faction.try(:previous_points).to_i > 0
+        FactionContribution.includes(:user)
+          .where(faction: @previous_winning_faction, on_date: previous_cycle_anchor)
+          .order(points: :desc, created_at: :asc)
+      else
+        []
+      end
 
     today_contracts = DailyContract.for_today
     today_contracts.each do |contract|
@@ -169,5 +187,16 @@ class DashboardController < ApplicationController
     return unless weekly_quest
 
     current_user.user_weekly_quests.find_or_create_by!(weekly_quest: weekly_quest)
+  end
+
+  def format_countdown(target_time)
+    remaining = (target_time - Time.current).to_i
+    return "maintenant" if remaining <= 0
+
+    days = remaining / 86_400
+    hours = (remaining % 86_400) / 3_600
+    minutes = (remaining % 3_600) / 60
+
+    "#{days}j #{hours}h #{minutes}m"
   end
 end

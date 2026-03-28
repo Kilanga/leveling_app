@@ -30,11 +30,57 @@ RSpec.describe "Factions and contracts", type: :request do
 
     sign_in user
 
+    anchor_date = FactionInfluence.current_cycle_anchor_date
+
     expect {
       patch user_quest_path(user_quest), params: { action_type: "complete" }
     }.to change {
-      FactionInfluence.find_by(faction: faction, on_date: Time.zone.today)&.points.to_i
+      FactionInfluence.find_by(faction: faction, on_date: anchor_date)&.points.to_i
     }.by(1)
+  end
+
+  it "joins a faction via join endpoint" do
+    Faction.bootstrap_defaults!
+    faction = Faction.first
+
+    sign_in user
+
+    post join_faction_path(faction)
+
+    expect(response).to redirect_to(dashboard_path)
+    expect(user.reload.faction_id).to eq(faction.id)
+  end
+
+  it "shows guild reset countdown and previous winner participants on dashboard" do
+    Faction.bootstrap_defaults!
+    winner = Faction.find_by!(slug: "aegis")
+    other = Faction.find_by!(slug: "ember")
+
+    cycle_anchor = FactionInfluence.current_cycle_anchor_date
+    previous_anchor = cycle_anchor - 7.days
+
+    winner_user = User.create!(
+      email: "winner_guild@example.com",
+      password: "password123",
+      password_confirmation: "password123",
+      confirmed_at: Time.current,
+      pseudo: "WinnerGuild",
+      avatar: avatar_url,
+      profile_completed: true
+    )
+
+    FactionInfluence.create!(faction: winner, on_date: previous_anchor, points: 12)
+    FactionInfluence.create!(faction: other, on_date: previous_anchor, points: 4)
+    FactionContribution.create!(faction: winner, user: winner_user, on_date: previous_anchor, points: 7)
+
+    sign_in user
+
+    get dashboard_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Dans")
+    expect(response.body).to include("Guilde gagnante (semaine precedente): #{winner.name}")
+    expect(response.body).to include("WinnerGuild")
   end
 
   it "accepts and claims a daily contract reward after progress" do
