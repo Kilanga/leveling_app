@@ -87,4 +87,48 @@ module ApplicationHelper
 			image_tag(user.avatar, class: css_class, width: width, height: height, alt: alt_text)
 		end
 	end
+
+def page_canonical_url
+  return nil unless request.get?
+
+  "#{request.base_url}#{request.path}"
+end
+
+def page_robots_content
+  public_pages = %w[
+    welcome#index
+    pages#terms
+    pages#privacy
+    devise/sessions#new
+    devise/registrations#new
+    devise/passwords#new
+  ]
+
+  public_pages.include?("#{controller_path}##{action_name}") ? "index, follow" : "noindex, nofollow"
+end
+
+def page_og_image_url
+  image_url("logo-leveling.svg")
+end
+
+def page_og_locale
+  locale = html_locale_tag
+  locale == "fr" ? "fr_FR" : locale
+end
+
+def page_alternate_locale_urls
+  return {} unless request.get?
+
+  I18n.available_locales.each_with_object({}) do |locale, acc|
+    query = request.query_parameters.merge(locale: locale.to_s)
+    query_string = query.to_query
+    acc[locale.to_s] = "#{request.base_url}#{request.path}#{query_string.present? ? "?#{query_string}" : ""}"
+  end
+end
+
+def page_x_default_url
+  return nil unless request.get?
+
+  "#{request.base_url}#{request.path}"
+end
 end
