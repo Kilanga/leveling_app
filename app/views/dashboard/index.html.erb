@@ -53,22 +53,6 @@
   </div>
 <% end %>
 
-<div class="surface-card mb-4">
-  <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
-    <div>
-      <strong>Streak hebdo: <%= @weekly_streak_count %> semaine(s)</strong>
-      <p class="quest-meta mb-0">
-        <% if @weekly_streak_last_completed_on.present? %>
-          <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
-        <% else %>
-          <%= t('dashboard.no_completion_week') %>
-        <% end %>
-      </p>
-    </div>
-    <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
-  </div>
-</div>
-
 <% if flash[:streak_up_quest_title].present? && flash[:streak_up_value].present? %>
   <div class="surface-card streak-up-banner mb-4" role="status" aria-live="polite">
     <div class="card-body d-flex justify-content-between align-items-center gap-2 flex-wrap">
@@ -77,31 +61,6 @@
     </div>
   </div>
 <% end %>
-
-<div class="surface-card daily-objective-card mb-4">
-  <div class="card-body">
-    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-      <div>
-        <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
-        <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
-      </div>
-      <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-        <%= @completed_today_count %> / <%= @daily_target %>
-      </span>
-    </div>
-    <div class="xp-track mt-3">
-      <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
-    </div>
-    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
-      <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
-      <% if @daily_chest_claimed_today %>
-        <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
-      <% else %>
-        <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
-      <% end %>
-    </div>
-  </div>
-</div>
 
 <% if @shop_upgrade_prompt.present? %>
   <div class="surface-card mb-4" role="complementary" aria-label="Suggestion boutique">
@@ -119,6 +78,45 @@
   <div class="col-lg-12">
     <div class="surface-card h-100">
       <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
+          <div>
+            <strong>Streak hebdo: <%= @weekly_streak_count %> semaine(s)</strong>
+            <p class="quest-meta mb-0">
+              <% if @weekly_streak_last_completed_on.present? %>
+                <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
+              <% else %>
+                <%= t('dashboard.no_completion_week') %>
+              <% end %>
+            </p>
+          </div>
+          <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
+        </div>
+
+        <div class="daily-objective-card mb-4">
+          <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+            <div>
+              <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
+              <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
+            </div>
+            <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+              <%= @completed_today_count %> / <%= @daily_target %>
+            </span>
+          </div>
+          <div class="xp-track mt-3">
+            <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
+            <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
+            <% if @daily_chest_claimed_today %>
+              <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
+            <% else %>
+              <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
+            <% end %>
+          </div>
+        </div>
+
+        <hr class="hud-divider">
+
         <h2 class="section-title mb-3"><%= t('dashboard.factions.title') %></h2>
         <% if @next_faction_reset_at.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.reset_in', time: @faction_reset_countdown) %></p>
@@ -184,41 +182,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="surface-card mb-4">
-  <div class="card-body">
-    <h2 class="section-title mb-3"><%= t('dashboard.recent_activity.title') %></h2>
-    <% if @friends_activity.any? %>
-      <div class="quest-list quest-list--flat">
-        <% @friends_activity.each do |event| %>
-          <% metadata = event.metadata %>
-          <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
-            <div>
-              <strong><%= event.user&.pseudo || "Un ami" %></strong>
-              <p class="quest-meta mb-0">
-                <% case event.event_name %>
-                <% when "quest_completed" %>
-                  <%= t('dashboard.recent_activity.completed_quest', xp: metadata["xp"].to_i) %>
-                <% when "weekly_quest_completed" %>
-                  <%= t('dashboard.recent_activity.completed_weekly_quest') %>
-                <% when "daily_chest_claimed" %>
-                  <%= t('dashboard.recent_activity.opened_chest', amount: metadata["reward_free_credits"].to_i) %>
-                <% when "friend_request_accepted" %>
-                  <%= t('dashboard.recent_activity.friend_accepted') %>
-                <% else %>
-                  vient de progresser.
-                <% end %>
-              </p>
-            </div>
-            <span class="muted-label"><%= l(event.created_at, format: :short) %></span>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="alert alert-warning mb-0"><%= t('dashboard.recent_activity.no_activity') %></div>
-    <% end %>
   </div>
 </div>
 
@@ -330,5 +293,40 @@
         </div>
       <% end %>
     </section>
+  </div>
+</div>
+
+<div class="surface-card mb-4">
+  <div class="card-body">
+    <h2 class="section-title mb-3"><%= t('dashboard.recent_activity.title') %></h2>
+    <% if @friends_activity.any? %>
+      <div class="quest-list quest-list--flat">
+        <% @friends_activity.each do |event| %>
+          <% metadata = event.metadata %>
+          <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
+            <div>
+              <strong><%= event.user&.pseudo || "Un ami" %></strong>
+              <p class="quest-meta mb-0">
+                <% case event.event_name %>
+                <% when "quest_completed" %>
+                  <%= t('dashboard.recent_activity.completed_quest', xp: metadata["xp"].to_i) %>
+                <% when "weekly_quest_completed" %>
+                  <%= t('dashboard.recent_activity.completed_weekly_quest') %>
+                <% when "daily_chest_claimed" %>
+                  <%= t('dashboard.recent_activity.opened_chest', amount: metadata["reward_free_credits"].to_i) %>
+                <% when "friend_request_accepted" %>
+                  <%= t('dashboard.recent_activity.friend_accepted') %>
+                <% else %>
+                  vient de progresser.
+                <% end %>
+              </p>
+            </div>
+            <span class="muted-label"><%= l(event.created_at, format: :short) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-warning mb-0"><%= t('dashboard.recent_activity.no_activity') %></div>
+    <% end %>
   </div>
 </div>
