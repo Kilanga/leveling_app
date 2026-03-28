@@ -17,6 +17,15 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.2] - 2026-03-28
+
+### Sécurité
+- Runtime Ruby: alignement de l'environnement projet sur Ruby 3.2.11 pour rester sur un patch supporte et reduire le risque de fin de support immediate.
+
+### Modifié
+- Infra web Heroku: mise a jour de Puma vers la branche 7.x (compatibilite Router 2.0 recommandee).
+- Deploiement Heroku: ajout d'un `Procfile` explicite pour declarer le process web.
+
 ## [1.16.1] - 2026-03-28
 
 ### Corrigé
