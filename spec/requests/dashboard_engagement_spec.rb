@@ -14,7 +14,8 @@ RSpec.describe "Dashboard engagement", type: :request do
       pseudo: "DashEngage",
       avatar: avatar_url,
       profile_completed: true,
-      coins: 10
+      coins: 10,
+      free_credits: 0
     )
   end
 
@@ -24,14 +25,14 @@ RSpec.describe "Dashboard engagement", type: :request do
 
       expect {
         get dashboard_path
-      }.to change { user.reload.coins }.by(20)
+      }.to change { user.reload.free_credits }.by(20)
 
       expect(user.daily_login_streak_count).to eq(1)
       expect(user.daily_login_last_claimed_on).to eq(Time.zone.today)
 
       expect {
         get dashboard_path
-      }.not_to change { user.reload.coins }
+      }.not_to change { user.reload.free_credits }
     end
   end
 
@@ -47,14 +48,14 @@ RSpec.describe "Dashboard engagement", type: :request do
 
       expect {
         post claim_daily_chest_path
-      }.to change { user.reload.coins }.by(35)
+      }.to change { user.reload.free_credits }.by(35)
 
       expect(response).to redirect_to(dashboard_path)
       expect(user.purchases.where(item_type: "daily_chest").count).to eq(1)
 
       expect {
         post claim_daily_chest_path
-      }.not_to change { user.reload.coins }
+      }.not_to change { user.reload.free_credits }
     end
 
     it "does not claim chest when daily target is not met" do
@@ -66,7 +67,7 @@ RSpec.describe "Dashboard engagement", type: :request do
 
       expect {
         post claim_daily_chest_path
-      }.not_to change { user.reload.coins }
+      }.not_to change { user.reload.free_credits }
 
       expect(response).to redirect_to(dashboard_path)
       expect(user.purchases.where(item_type: "daily_chest")).to be_empty

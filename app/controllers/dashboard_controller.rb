@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 
   WEEKLY_REUSE_WINDOW = 6.weeks
   DAILY_TARGET = 2
-  DAILY_CHEST_REWARD_COINS = 35
+  DAILY_CHEST_REWARD_FREE_CREDITS = 35
 
   def claim_daily_chest
     if completed_today_count < DAILY_TARGET
@@ -17,9 +17,9 @@ class DashboardController < ApplicationController
     end
 
     claim_daily_chest_reward!
-    ProductAnalytics.track(user: current_user, event_name: "daily_chest_claimed", metadata: { reward: DAILY_CHEST_REWARD_COINS })
+    ProductAnalytics.track(user: current_user, event_name: "daily_chest_claimed", metadata: { reward_free_credits: DAILY_CHEST_REWARD_FREE_CREDITS })
 
-    redirect_to dashboard_path, notice: "Coffre quotidien ouvert: +#{DAILY_CHEST_REWARD_COINS} coins."
+    redirect_to dashboard_path, notice: "Coffre quotidien ouvert: +#{DAILY_CHEST_REWARD_FREE_CREDITS} credits gratuits."
   end
 
   def index
@@ -63,7 +63,7 @@ class DashboardController < ApplicationController
     @completed_today_count = completed_today_count
     @daily_progress_percent = [(@completed_today_count.to_f / @daily_target * 100).round, 100].min
     @daily_chest_claimed_today = daily_chest_claimed_today?
-    @daily_chest_reward_coins = DAILY_CHEST_REWARD_COINS
+    @daily_chest_reward_free_credits = DAILY_CHEST_REWARD_FREE_CREDITS
     @friends_activity = recent_friends_activity
 
     cycle_anchor = FactionInfluence.current_cycle_anchor_date
@@ -137,9 +137,9 @@ class DashboardController < ApplicationController
 
   def claim_daily_chest_reward!
     ActiveRecord::Base.transaction do
-      current_user.increment!(:coins, DAILY_CHEST_REWARD_COINS)
+      current_user.add_free_credits!(DAILY_CHEST_REWARD_FREE_CREDITS)
       current_user.purchases.create!(
-        amount: DAILY_CHEST_REWARD_COINS,
+        amount: DAILY_CHEST_REWARD_FREE_CREDITS,
         item_type: "daily_chest",
         status: "completed",
         transaction_id: daily_chest_transaction_id

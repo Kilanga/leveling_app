@@ -89,8 +89,8 @@ RSpec.describe "Friends", type: :request do
       sign_in invitee
       patch user_quest_path(user_quest), params: { action_type: "complete" }
 
-      expect(invitee.reload.coins).to eq(ReferralRewarder::INVITEE_REWARD_COINS)
-      expect(inviter.reload.coins).to eq(ReferralRewarder::INVITER_REWARD_COINS)
+      expect(invitee.reload.free_credits).to eq(ReferralRewarder::INVITEE_REWARD_FREE_CREDITS)
+      expect(inviter.reload.free_credits).to eq(ReferralRewarder::INVITER_REWARD_FREE_CREDITS)
       expect(invitee.referral_rewarded_at).to be_present
     end
   end

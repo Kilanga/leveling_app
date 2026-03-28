@@ -1,6 +1,7 @@
 <h1 class="page-title">Marche des aventuriers</h1>
 <p class="page-subtitle">Obtenez des ressources premium pour accelerer votre progression.</p>
-<p class="quest-meta mb-3">Tes coins: <strong><%= current_user.coins %></strong></p>
+<p class="quest-meta mb-1">Tes coins payants: <strong><%= current_user.coins %></strong></p>
+<p class="quest-meta mb-3">Tes credits gratuits: <strong><%= current_user.free_credits_balance %></strong></p>
 
 <% if @entry_offer_enabled %>
   <div class="surface-card mb-4 welcome-offer-card">
@@ -381,7 +382,7 @@
           <hr class="hud-divider">
 
           <h2 class="section-title">Defi boutique hebdo</h2>
-          <p class="quest-meta mb-2">Complete les 3 objectifs et recupere <%= PurchasesController::SHOP_CHALLENGE_REWARD_COINS %> coins.</p>
+          <p class="quest-meta mb-2">Complete les 3 objectifs et recupere <%= PurchasesController::SHOP_CHALLENGE_REWARD_FREE_CREDITS %> credits gratuits.</p>
           <div class="shop-challenge-card mb-3">
             <% @shop_challenge.fetch(:steps, []).each do |step| %>
               <div class="shop-challenge-step">

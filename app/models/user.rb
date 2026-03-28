@@ -214,11 +214,34 @@ class User < ApplicationRecord
       update!(
         daily_login_streak_count: streak,
         daily_login_last_claimed_on: today,
-        coins: coins.to_i + reward
+        free_credits: free_credits_balance + reward
       )
 
       { claimed: true, streak: streak, reward: reward }
     end
+  end
+
+  def free_credits_supported?
+    self.class.column_names.include?("free_credits")
+  end
+
+  def free_credits_balance
+    return 0 unless free_credits_supported?
+
+    self[:free_credits].to_i
+  end
+
+  def add_free_credits!(amount)
+    return false unless free_credits_supported?
+
+    value = amount.to_i
+    return false unless value.positive?
+
+    with_lock do
+      update!(free_credits: free_credits_balance + value)
+    end
+
+    true
   end
 
   def self.unique_pseudo_for(name, email)

@@ -17,6 +17,19 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.7] - 2026-03-28
+
+### Ajouté
+- Nouveau portefeuille `credits gratuits` pour les recompenses de gameplay gratuites, separe des `coins` payants.
+
+### Modifié
+- Recompenses gratuites (connexion journaliere, coffre quotidien, parrainage, contrats journaliers, defi boutique hebdo, victoire de defi ami): attribution en `credits gratuits`.
+- Boutique: affichage explicite des deux soldes (`coins payants` et `credits gratuits`) pour clarifier la separation des monnaies.
+- Administration utilisateurs: ajout du champ `credits gratuits` dans la gestion admin.
+
+### Corrigé
+- Economie premium: les `coins` ne sont plus distribues par les boucles de progression gratuite et restent reserves aux achats/paiements.
+
 ## [1.16.6] - 2026-03-28
 
 ### Modifié

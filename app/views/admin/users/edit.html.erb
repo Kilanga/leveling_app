@@ -12,6 +12,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :free_credits, "Credits gratuits" %>
+    <%= f.number_field :free_credits, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :admin, "Admin ?" %>
     <%= f.check_box :admin %>
   </div>

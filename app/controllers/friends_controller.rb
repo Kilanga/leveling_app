@@ -20,8 +20,8 @@ class FriendsController < ApplicationController
       utm_source: "invite",
       utm_campaign: "player_referral"
     )
-    @referral_invitee_reward = ReferralRewarder::INVITEE_REWARD_COINS
-    @referral_inviter_reward = ReferralRewarder::INVITER_REWARD_COINS
+    @referral_invitee_reward = ReferralRewarder::INVITEE_REWARD_FREE_CREDITS
+    @referral_inviter_reward = ReferralRewarder::INVITER_REWARD_FREE_CREDITS
 
     if friend_ids.any?
       @most_completed_quests = UserQuest.joins(:quest, :user)

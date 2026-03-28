@@ -21,6 +21,6 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:xp, :coins)
+    params.require(:user).permit(:xp, :coins, :free_credits)
   end
 end

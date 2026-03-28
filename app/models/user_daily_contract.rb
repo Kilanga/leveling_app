@@ -59,7 +59,7 @@ class UserDailyContract < ApplicationRecord
 
       transaction do
         user.with_lock do
-          user.update!(coins: user.coins.to_i + daily_contract.reward_coins)
+          user.update!(free_credits: user.free_credits_balance + daily_contract.reward_coins)
         end
         update!(reward_claimed_at: Time.current)
       end

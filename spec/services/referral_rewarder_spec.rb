@@ -28,8 +28,8 @@ RSpec.describe ReferralRewarder do
     expect(first[:awarded]).to be(true)
     expect(second[:awarded]).to be(false)
 
-    expect(invitee.reload.coins).to eq(ReferralRewarder::INVITEE_REWARD_COINS)
-    expect(inviter.reload.coins).to eq(ReferralRewarder::INVITER_REWARD_COINS)
+    expect(invitee.reload.free_credits).to eq(ReferralRewarder::INVITEE_REWARD_FREE_CREDITS)
+    expect(inviter.reload.free_credits).to eq(ReferralRewarder::INVITER_REWARD_FREE_CREDITS)
     expect(invitee.referral_rewarded_at).to be_present
   end
 
@@ -39,6 +39,6 @@ RSpec.describe ReferralRewarder do
     result = described_class.claim_if_eligible!(user)
 
     expect(result[:awarded]).to be(false)
-    expect(user.reload.coins).to eq(0)
+    expect(user.reload.free_credits).to eq(0)
   end
 end

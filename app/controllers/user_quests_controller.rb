@@ -61,7 +61,7 @@ class UserQuestsController < ApplicationController
         )
         flash[:streak_up_quest_title] = quest_title
         flash[:streak_up_value] = @user_quest.completed_count.to_i
-        referral_note = referral_result[:awarded] ? " Bonus parrainage: +#{referral_result[:invitee_reward]} coins." : ""
+        referral_note = referral_result[:awarded] ? " Bonus parrainage: +#{referral_result[:invitee_reward]} credits gratuits." : ""
         redirect_to root_path, notice: "Quete completee ! XP ajoute : #{gained_xp}.#{referral_note}"
       else
         redirect_to root_path, alert: "Cette quête n'est plus active."

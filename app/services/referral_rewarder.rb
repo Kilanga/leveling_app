@@ -1,6 +1,6 @@
 class ReferralRewarder
-  INVITEE_REWARD_COINS = 50
-  INVITER_REWARD_COINS = 100
+  INVITEE_REWARD_FREE_CREDITS = 50
+  INVITER_REWARD_FREE_CREDITS = 100
 
   class << self
     def claim_if_eligible!(user)
@@ -15,18 +15,18 @@ class ReferralRewarder
         return result(:self_referral_blocked) if referrer.id == user.id
 
         ActiveRecord::Base.transaction do
-          user.increment!(:coins, INVITEE_REWARD_COINS)
-          referrer.increment!(:coins, INVITER_REWARD_COINS)
+          user.add_free_credits!(INVITEE_REWARD_FREE_CREDITS)
+          referrer.add_free_credits!(INVITER_REWARD_FREE_CREDITS)
 
           base_tx = "referral-#{user.id}-#{referrer.id}"
           user.purchases.create!(
-            amount: INVITEE_REWARD_COINS,
+            amount: INVITEE_REWARD_FREE_CREDITS,
             item_type: "referral_invitee_bonus",
             status: "completed",
             transaction_id: "#{base_tx}-invitee"
           )
           referrer.purchases.create!(
-            amount: INVITER_REWARD_COINS,
+            amount: INVITER_REWARD_FREE_CREDITS,
             item_type: "referral_inviter_bonus",
             status: "completed",
             transaction_id: "#{base_tx}-inviter"
@@ -37,17 +37,17 @@ class ReferralRewarder
           ProductAnalytics.track(
             user: user,
             event_name: "referral_reward_claimed",
-            metadata: { role: "invitee", referrer_id: referrer.id, reward_coins: INVITEE_REWARD_COINS }
+            metadata: { role: "invitee", referrer_id: referrer.id, reward_free_credits: INVITEE_REWARD_FREE_CREDITS }
           )
           ProductAnalytics.track(
             user: referrer,
             event_name: "referral_reward_claimed",
-            metadata: { role: "inviter", referred_user_id: user.id, reward_coins: INVITER_REWARD_COINS }
+            metadata: { role: "inviter", referred_user_id: user.id, reward_free_credits: INVITER_REWARD_FREE_CREDITS }
           )
         end
       end
 
-      result(:awarded, awarded: true, invitee_reward: INVITEE_REWARD_COINS, inviter_reward: INVITER_REWARD_COINS)
+      result(:awarded, awarded: true, invitee_reward: INVITEE_REWARD_FREE_CREDITS, inviter_reward: INVITER_REWARD_FREE_CREDITS)
     rescue StandardError => e
       Rails.logger.warn("ReferralRewarder failed: #{e.class} #{e.message}")
       result(:failed)

@@ -1,6 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
-  SHOP_CHALLENGE_REWARD_COINS = 200
+  SHOP_CHALLENGE_REWARD_FREE_CREDITS = 200
   WELCOME_BONUS_BY_VARIANT = {
     "control" => 0.10,
     "treatment" => 0.20
@@ -184,19 +184,19 @@ class PurchasesController < ApplicationController
     end
 
     ActiveRecord::Base.transaction do
-      current_user.increment!(:coins, SHOP_CHALLENGE_REWARD_COINS)
+      current_user.add_free_credits!(SHOP_CHALLENGE_REWARD_FREE_CREDITS)
       Purchase.create!(
         user: current_user,
-        amount: SHOP_CHALLENGE_REWARD_COINS,
+        amount: SHOP_CHALLENGE_REWARD_FREE_CREDITS,
         item_type: "shop_challenge_reward",
         status: "completed",
         transaction_id: weekly_shop_challenge_token
       )
     end
 
-    ProductAnalytics.track(user: current_user, event_name: "shop_challenge_claimed", metadata: { reward: SHOP_CHALLENGE_REWARD_COINS })
+    ProductAnalytics.track(user: current_user, event_name: "shop_challenge_claimed", metadata: { reward_free_credits: SHOP_CHALLENGE_REWARD_FREE_CREDITS })
 
-    redirect_to new_purchase_path(tab: "cosmetics"), notice: "+#{SHOP_CHALLENGE_REWARD_COINS} coins recuperees via le defi boutique !"
+    redirect_to new_purchase_path(tab: "cosmetics"), notice: "+#{SHOP_CHALLENGE_REWARD_FREE_CREDITS} credits gratuits recuperes via le defi boutique !"
   rescue ActiveRecord::RecordNotUnique
     redirect_to new_purchase_path(tab: "cosmetics"), alert: "Recompense hebdo deja recuperee."
   end

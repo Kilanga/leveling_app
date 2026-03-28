@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_28_111500) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_28_170000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -293,6 +293,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_111500) do
     t.string "encrypted_password", default: "", null: false
     t.bigint "faction_id"
     t.datetime "faction_joined_at"
+    t.integer "free_credits", default: 0, null: false
     t.integer "league_last_move", default: 0, null: false
     t.date "league_last_settled_week"
     t.integer "league_room", default: 1, null: false

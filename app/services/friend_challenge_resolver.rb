@@ -25,12 +25,12 @@ class FriendChallengeResolver
         )
 
         if winner
-          winner.increment!(:coins, challenge.reward_coins)
+          winner.add_free_credits!(challenge.reward_coins)
           InAppNotification.create!(
             user: winner,
             kind: "challenge_won",
             title: "Defi gagne !",
-            body: "Tu remportes #{challenge.reward_coins} coins.",
+            body: "Tu remportes #{challenge.reward_coins} credits gratuits.",
             cta_path: "/friends"
           )
         end

@@ -16,7 +16,8 @@ RSpec.describe "Factions and contracts", type: :request do
       pseudo: "FactionPlayer",
       avatar: avatar_url,
       profile_completed: true,
-      coins: 0
+      coins: 0,
+      free_credits: 0
     )
   end
 
@@ -142,7 +143,7 @@ RSpec.describe "Factions and contracts", type: :request do
 
     expect {
       post claim_user_daily_contract_path(offer)
-    }.to change { user.reload.coins }.by(55)
+    }.to change { user.reload.free_credits }.by(55)
 
     expect(offer.reload.reward_claimed_at).to be_present
   end
@@ -169,10 +170,10 @@ RSpec.describe "Factions and contracts", type: :request do
 
     expect {
       post claim_user_daily_contract_path(offer)
-    }.to change { user.reload.coins }.by(55)
+    }.to change { user.reload.free_credits }.by(55)
 
     expect {
       post claim_user_daily_contract_path(offer)
-    }.not_to change { user.reload.coins }
+    }.not_to change { user.reload.free_credits }
   end
 end
