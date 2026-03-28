@@ -8,6 +8,50 @@
   <div class="col-md-3"><div class="surface-card"><div class="card-body"><strong>Claims boutique 30j</strong><p class="mb-0"><%= @shop_claims %></p></div></div></div>
 </div>
 
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <h2 class="section-title">Funnel conversion (30 jours)</h2>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Etape</th>
+            <th>Utilisateurs</th>
+            <th>Taux vs Sign-up</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sign-up</td>
+            <td><%= @funnel_signups_30d %></td>
+            <td>100%</td>
+          </tr>
+          <tr>
+            <td>Onboarding complete</td>
+            <td><%= @funnel_onboarding_30d %></td>
+            <td><%= @funnel_onboarding_rate %>%</td>
+          </tr>
+          <tr>
+            <td>Premiere quete completee</td>
+            <td><%= @funnel_first_quest_30d %></td>
+            <td><%= @funnel_first_quest_rate %>%</td>
+          </tr>
+          <tr>
+            <td>Boutique ouverte</td>
+            <td><%= @funnel_shop_view_30d %></td>
+            <td><%= @funnel_shop_view_rate %>%</td>
+          </tr>
+          <tr>
+            <td>Premier achat</td>
+            <td><%= @funnel_first_purchase_30d %></td>
+            <td><%= @funnel_first_purchase_rate %>%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <div class="surface-card surface-card--shell">
   <div class="card-body">
     <h2 class="section-title">Top events (7 jours)</h2>

@@ -8,6 +8,39 @@
   <% end %>
 </p>
 
+<% if @show_quickstart_guide %>
+  <div class="surface-card mb-4" role="status" aria-live="polite">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-2">
+        <div>
+          <h2 class="section-title mb-1">Guide rapide de depart</h2>
+          <p class="quest-meta mb-0"><%= @quickstart_guide[:completed_count] %>/<%= @quickstart_guide[:total_count] %> etapes completees pour finir ton onboarding.</p>
+        </div>
+        <span class="shop-state-chip <%= @quickstart_guide[:completed_count] == @quickstart_guide[:total_count] ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+          <%= @quickstart_guide[:completed_count] %> / <%= @quickstart_guide[:total_count] %>
+        </span>
+      </div>
+
+      <div class="quest-list quest-list--flat mb-0">
+        <% @quickstart_guide[:steps].each do |step| %>
+          <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
+            <div>
+              <strong><%= step[:label] %></strong>
+            </div>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <% if step[:completed] %>
+                <span class="badge text-bg-success">Termine</span>
+              <% else %>
+                <%= link_to step[:cta_label], step[:cta_path], class: "btn btn-sm btn-outline-quest" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <% if @daily_login_claim[:claimed] %>
   <div class="surface-card mb-4" role="status" aria-live="polite">
     <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
@@ -69,6 +102,18 @@
     </div>
   </div>
 </div>
+
+<% if @shop_upgrade_prompt.present? %>
+  <div class="surface-card mb-4" role="complementary" aria-label="Suggestion boutique">
+    <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
+      <div>
+        <h2 class="section-title mb-1">Boost recommande</h2>
+        <p class="quest-meta mb-0">Tu as valide <%= @shop_upgrade_prompt[:quest_completions_7d] %> quetes sur 7 jours. Active un boost XP pour accelerer ta progression cette semaine.</p>
+      </div>
+      <%= link_to "Voir les boosts", @shop_upgrade_prompt[:cta_path], class: "btn btn-sm btn-brand" %>
+    </div>
+  </div>
+<% end %>
 
 <div class="row g-4 mb-4">
   <div class="col-lg-6">

@@ -15,6 +15,18 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.0] - 2026-03-28
+
+### Ajouté
+- Dashboard onboarding guide (60 secondes): checklist de 3 étapes (première quête, ouverture du leaderboard, première demande d'ami) avec CTA contextuels et progression affichée.
+- Prompt monétisation doux sur dashboard: carte "Boost recommandé" affichée uniquement pour les joueurs actifs (>= 3 quêtes validées sur 7 jours), sans interruption du flux principal.
+- Analytics admin conversion funnel (30 jours): sign-up, onboarding complété, première quête complétée, boutique ouverte, premier achat.
+- Événement analytics `shop_viewed` sur ouverture de la boutique avec métadonnée onglet (`tab`) pour mieux lire l'intention d'achat.
+
+### Modifié
+- Dashboard: ajout des blocs d'activation/monétisation en tête de page pour améliorer la découverte des actions clés et le passage boutique.
+- Admin analytics: ajout des taux de conversion vs sign-up pour chaque étape du funnel afin d'identifier les pertes de conversion.
+
 ## [1.19.0] - 2026-03-28
 
 ### Ajouté
