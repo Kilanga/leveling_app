@@ -17,6 +17,14 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.13] - 2026-03-28
+
+### Corrigé
+- Quetes: une meme quete ne peut plus etre revalidee avant le prochain reset quotidien de 22h (heure serveur).
+
+### Modifié
+- Reactivation de quete: blocage silencieux jusqu'au reset de 22h, sans indiquer d'horaire au joueur.
+
 ## [1.15.12] - 2026-03-28
 
 ### Ajouté

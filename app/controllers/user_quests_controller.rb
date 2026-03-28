@@ -11,9 +11,13 @@ class UserQuestsController < ApplicationController
       flash[:notice] = "Quête ajoutée avec succès !"
 
     elsif !user_quest.active?
-      # Si la quête était désactivée, la réactiver et réinitialiser `completed: false`
-      user_quest.update(active: true, completed: false)
-      flash[:notice] = "Quête réactivée avec succès !"
+      if user_quest.locked_until_daily_reset?
+        flash[:alert] = "Cette quete n'est pas encore disponible."
+      else
+        # Si la quête était désactivée, la réactiver et réinitialiser `completed: false`
+        user_quest.update(active: true, completed: false)
+        flash[:notice] = "Quête réactivée avec succès !"
+      end
 
     else
       flash[:alert] = "Tu suis déjà cette quête."
