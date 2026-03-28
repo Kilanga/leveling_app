@@ -6,10 +6,10 @@
       <p class="quest-meta mb-1">Ligue actuelle: <strong><%= @current_league_name %></strong></p>
       <p class="quest-meta mb-1">Prochain reset ligue: <strong><%= l(@next_league_settlement_at, format: :long) %></strong></p>
       <p class="quest-meta mb-3">Dans <strong><%= @league_settlement_countdown %></strong>. Classement complet de ta ligue, avec mise a jour au chargement de la page.</p>
-      <% if @league_standings.size < WeeklyLeague::ROOM_CAPACITY %>
+      <% if @league_standings.size < WeeklyLeague::MIN_MOVEMENT_COHORT_SIZE %>
         <p class="quest-meta mb-3 league-movement-hint">
-          Mouvement de ligue fige pour le moment: cohorte <strong><%= @league_standings.size %>/<%= WeeklyLeague::ROOM_CAPACITY %></strong>.
-          Les promotions/relegations s'activent a cohorte complete.
+          Mouvement de ligue fige pour le moment: cohorte <strong><%= @league_standings.size %>/<%= WeeklyLeague::MIN_MOVEMENT_COHORT_SIZE %></strong>.
+          Les promotions/relegations s'activent des 3 joueurs.
         </p>
       <% end %>
 

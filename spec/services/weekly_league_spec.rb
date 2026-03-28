@@ -50,10 +50,10 @@ RSpec.describe WeeklyLeague do
     expect(tier_two_users[-2].reload.league_tier).to eq(1)
   end
 
-  it "does not move players between tiers when a room is not full" do
-    category = Category.create!(name: "Under capacity settle")
+  it "does not move players between tiers when cohort is below minimum threshold" do
+    category = Category.create!(name: "Under threshold settle")
 
-    tier_two_users = (1..4).map { |i| create_user(index: 7000 + i, tier: 2) }
+    tier_two_users = (1..2).map { |i| create_user(index: 7000 + i, tier: 2) }
     tier_two_users.each_with_index do |user, idx|
       add_previous_week_xp(user, 500 - idx, category)
     end
@@ -77,14 +77,25 @@ RSpec.describe WeeklyLeague do
     expect(counts[3]).to eq(20)
   end
 
-  it "does not project movement in a small cohort" do
+  it "does not project movement in a tiny cohort" do
     category = Category.create!(name: "Small cohort")
-    users = (1..4).map { |i| create_user(index: 2000 + i, tier: 2) }
+    users = (1..2).map { |i| create_user(index: 2000 + i, tier: 2) }
     users.each_with_index { |user, idx| add_previous_week_xp(user, 400 - idx, category) }
 
     standings = WeeklyLeague.standings(User.where(id: users.map(&:id)).to_a, range: Time.current.all_week)
 
     expect(standings.map { |entry| entry[:projected_movement] }.uniq).to eq([0])
+  end
+
+  it "projects movement once cohort reaches three players" do
+    category = Category.create!(name: "Minimum cohort")
+    users = (1..3).map { |i| create_user(index: 2500 + i, tier: 2) }
+    users.each_with_index { |user, idx| add_previous_week_xp(user, 600 - idx, category) }
+
+    standings = WeeklyLeague.standings(User.where(id: users.map(&:id)).to_a, range: Time.current.all_week)
+
+    expect(standings.first[:projected_movement]).to eq(1)
+    expect(standings.last[:projected_movement]).to eq(-1)
   end
 
   it "never projects impossible moves at tier boundaries" do

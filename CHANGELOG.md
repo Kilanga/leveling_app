@@ -17,6 +17,16 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.4] - 2026-03-28
+
+### Corrigé
+- Ligues: promotions/relegations activees des que la cohorte atteint 3 joueurs (au lieu d'attendre une room pleine de 50), tout en conservant une capacite maximale de 50 joueurs par room.
+- Projection de mouvement: alignement de l'indicateur UP/DOWN/HOLD sur ce meme seuil minimal de 3 joueurs.
+
+### Modifié
+- Classement ligue: ajout d'un libelle explicite Montee/Descente/Maintien a cote de l'icone de tendance pour faciliter la lecture.
+- Classement ligue: centrage visuel du pseudo et du titre equipé pour un rendu plus net dans le tableau.
+
 ## [1.16.3] - 2026-03-28
 
 ### Modifié

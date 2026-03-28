@@ -1,6 +1,7 @@
 class WeeklyLeague
   TIERS = ["Bronze", "Silver", "Gold", "Platinum", "Diamond"].freeze
   PROMOTION_RATE = 0.2
+  MIN_MOVEMENT_COHORT_SIZE = 3
   ROOM_CAPACITY = 50
   SETTLEMENT_DAY_OFFSET = 6
   SETTLEMENT_HOUR = 19
@@ -113,8 +114,8 @@ class WeeklyLeague
     private
 
     def promotion_relegation_count_for(size)
-      # A tier room must be full before opening movement to another tier.
-      return 0 if size < ROOM_CAPACITY
+      # Movement is enabled as soon as a minimum competitive cohort is reached.
+      return 0 if size < MIN_MOVEMENT_COHORT_SIZE
 
       [(size * PROMOTION_RATE).floor, 1].max
     end

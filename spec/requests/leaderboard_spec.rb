@@ -60,13 +60,13 @@ RSpec.describe "Leaderboard", type: :request do
       expect(response.body).to include("Prochain reset ligue")
     end
 
-    it "renders hold-only indicators for partial cohorts and no filter form" do
+    it "renders hold-only indicators when cohort is below movement threshold" do
       category = Category.create!(name: "Focus")
       current = create_user_with_stat(index: 100, category: category, xp: 1, league_tier: 2, league_room: 1)
       sign_in current
       add_weekly_xp_for(current, category: category, xp: 1)
 
-      focused_users = (1..12).map do |i|
+      focused_users = (1..1).map do |i|
         user = create_user_with_stat(index: 100 + i, category: category, xp: 1500 - i, league_tier: 2, league_room: 1)
         add_weekly_xp_for(user, category: category, xp: 1500 - i)
         user
@@ -76,13 +76,11 @@ RSpec.describe "Leaderboard", type: :request do
 
       expect(response).to have_http_status(:success)
       expect(response.body).to include(focused_users.first.pseudo)
-      expect(response.body).to include(focused_users[9].pseudo)
-      expect(response.body).to include(focused_users[10].pseudo)
-      expect(response.body).to include(focused_users[11].pseudo)
       expect(response.body).to include(current.pseudo)
       expect(response.body).to include("•")
       expect(response.body).not_to include("▲")
       expect(response.body).not_to include("▼")
+      expect(response.body).to include("cohorte")
       expect(response.body).to include("Prochain reset ligue")
       expect(response.body).not_to include("Filtrer")
       expect(response.body).not_to include("room")
