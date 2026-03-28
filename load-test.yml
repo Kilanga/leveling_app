@@ -1,0 +1,32 @@
+config:
+  target: 'https://arnaudlothe.site'
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: 'Warm up'
+    - duration: 60
+      arrivalRate: 15
+      name: 'Sustained load'
+    - duration: 30
+      arrivalRate: 5
+      name: 'Cool down'
+  processor: './tmp/load-test-processor.js'
+  http:
+    timeout: 10
+
+scenarios:
+  - name: 'Public landing page flow'
+    flow:
+      - get:
+          url: '/'
+          capture:
+            html: 'title'
+      - think: 2
+      - get:
+          url: '/welcome'
+      - think: 3
+      - get:
+          url: '/users/sign_in'
+      - think: 2
+      - get:
+          url: '/users/sign_up'
