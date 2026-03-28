@@ -2,7 +2,7 @@
 set -euo pipefail
 
 APP_NAME="${1:-leveling-app}"
-EXPECTED_RUBY_PREFIX="3.3.6"
+EXPECTED_RUBY_PREFIX="3.3.11"
 
 echo "== Local runtime =="
 LOCAL_RUBY="$(ruby -e 'print RUBY_VERSION')"
