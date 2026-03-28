@@ -6,6 +6,12 @@
       <p class="quest-meta mb-1">Ligue actuelle: <strong><%= @current_league_name %></strong></p>
       <p class="quest-meta mb-1">Prochain reset ligue: <strong><%= l(@next_league_settlement_at, format: :long) %></strong></p>
       <p class="quest-meta mb-3">Dans <strong><%= @league_settlement_countdown %></strong>. Classement complet de ta ligue, avec mise a jour au chargement de la page.</p>
+      <% if @league_standings.size < WeeklyLeague::ROOM_CAPACITY %>
+        <p class="quest-meta mb-3 league-movement-hint">
+          Mouvement de ligue fige pour le moment: cohorte <strong><%= @league_standings.size %>/<%= WeeklyLeague::ROOM_CAPACITY %></strong>.
+          Les promotions/relegations s'activent a cohorte complete.
+        </p>
+      <% end %>
 
       <h2 class="section-title">Classement ligue hebdomadaire</h2>
       <div class="table-responsive league-table-scroll">
@@ -27,25 +33,30 @@
                     #<%= entry[:rank] %>
                     <% if entry[:projected_movement].to_i > 0 %>
                       <span class="league-trend league-trend--up" aria-label="Promotion projetee" title="Promotion projetee">▲</span>
+                      <span class="league-movement-label league-movement-label--up">Montee</span>
                     <% elsif entry[:projected_movement].to_i < 0 %>
                       <span class="league-trend league-trend--down" aria-label="Relegation projetee" title="Relegation projetee">▼</span>
+                      <span class="league-movement-label league-movement-label--down">Descente</span>
                     <% else %>
                       <span class="league-trend league-trend--hold" aria-label="Maintien projete" title="Maintien projete">•</span>
+                      <span class="league-movement-label league-movement-label--hold">Maintien</span>
                     <% end %>
                   </td>
                   <td>
                     <%= user_avatar_image(entry[:user], width: 44, height: 44, css_class: "rounded-circle", alt: "Avatar de #{entry[:user].pseudo}") %>
                   </td>
                   <td>
-                    <span class="profile-frame-container <%= frame_wrapper_classes(entry[:user].active_profile_frame) %>">
-                      <%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-decoration-none" %>
-                    </span>
-                    <% if entry[:user].active_title %>
-                      <span class="badge bg-<%= entry[:user].title_rarity_class %>"><%= entry[:user].active_title.name %></span>
-                    <% end %>
-                    <% if entry[:user].id == current_user.id %>
-                      <span class="badge text-bg-dark ms-1">Toi</span>
-                    <% end %>
+                    <div class="leaderboard-player-meta">
+                      <span class="profile-frame-container <%= frame_wrapper_classes(entry[:user].active_profile_frame) %>">
+                        <%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-decoration-none" %>
+                      </span>
+                      <% if entry[:user].active_title %>
+                        <span class="badge bg-<%= entry[:user].title_rarity_class %>"><%= entry[:user].active_title.name %></span>
+                      <% end %>
+                      <% if entry[:user].id == current_user.id %>
+                        <span class="badge text-bg-dark">Toi</span>
+                      <% end %>
+                    </div>
                   </td>
                   <td><%= entry[:weekly_xp] %></td>
                   <td><%= entry[:tier] %></td>
