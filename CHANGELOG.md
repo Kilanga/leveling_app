@@ -15,6 +15,17 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.21.0] - 2026-03-28
+
+### Ajouté
+- Sitemap XML dynamique expose via `/sitemap.xml` avec URLs publiques principales (accueil, legal, auth).
+- SEO international: balises `hreflang` (`fr`, `en`, `x-default`) ajoutees dans le layout principal.
+- Open Graph: ajout de `og:locale:alternate` pour signaler les locales alternatives.
+
+### Modifié
+- Resolution de locale: prise en charge du parametre `?locale=` en priorite, puis fallback sur `Accept-Language`.
+- SEO social: helper OG image centralise et prepare par type de page.
+
 ## [1.20.9] - 2026-03-28
 
 ### Ajouté

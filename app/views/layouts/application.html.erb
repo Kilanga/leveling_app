@@ -7,11 +7,21 @@
   <% if page_canonical_url.present? %>
     <link rel="canonical" href="<%= page_canonical_url %>">
   <% end %>
+  <% page_alternate_locale_urls.each do |locale_code, href| %>
+    <link rel="alternate" hreflang="<%= locale_code %>" href="<%= href %>">
+  <% end %>
+  <% if page_x_default_url.present? %>
+    <link rel="alternate" hreflang="x-default" href="<%= page_x_default_url %>">
+  <% end %>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Leveling">
   <meta property="og:title" content="<%= page_meta_title %>">
   <meta property="og:description" content="<%= page_meta_description %>">
   <meta property="og:locale" content="<%= page_og_locale %>">
+  <% page_alternate_locale_urls.each_key do |locale_code| %>
+    <% next if locale_code == html_locale_tag %>
+    <meta property="og:locale:alternate" content="<%= locale_code == 'fr' ? 'fr_FR' : locale_code %>">
+  <% end %>
   <% if page_canonical_url.present? %>
     <meta property="og:url" content="<%= page_canonical_url %>">
   <% end %>

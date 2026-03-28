@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   post "stripe/webhook", to: "stripe_webhooks#create"
   root "welcome#index"
   get "welcome", to: "welcome#index"
+  get "sitemap", to: "pages#sitemap", defaults: { format: :xml }
   get "terms", to: "pages#terms", as: :terms
   get "privacy", to: "pages#privacy", as: :privacy
   get "dashboard", to: "dashboard#index", defaults: { format: :html }

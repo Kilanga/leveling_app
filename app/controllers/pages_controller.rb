@@ -11,4 +11,17 @@ class PagesController < ApplicationController
   def privacy
     # Static page, no logic needed
   end
+
+  def sitemap
+    @public_urls = [
+      root_url,
+      welcome_url,
+      terms_url,
+      privacy_url,
+      new_user_registration_url,
+      new_user_session_url
+    ]
+
+    render :sitemap, formats: :xml
+  end
 end
