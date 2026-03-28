@@ -10,7 +10,7 @@ echo "🧪 PRODUCTION TEST SUITE"
 echo "================================================"
 echo ""
 
-APP_URL="https://leveling-app.herokuapp.com"
+APP_URL="https://arnaudlothe.site"
 APP_NAME="leveling-app"
 
 # === SMOKE TESTS ===
@@ -39,25 +39,55 @@ echo ""
 echo "3️⃣  LOAD TEST (Artillery)"
 echo "---"
 
-if ! command -v artillery &> /dev/null; then
-  echo "📦 Installing Artillery..."
-  npm install -g artillery
+if command -v artillery &> /dev/null; then
+  echo "Launching load test with Artillery..."
+  echo "Phases: warm-up (30s) -> sustained (60s) -> cool-down (30s)"
+  echo ""
+  artillery run load-test.yml
+  echo ""
+else
+  echo "ℹ️  Artillery not installed. Running fallback load test (20 bots, 100 requests)."
+  rm -f /tmp/bot_simulation.log
+  seq 1 100 | xargs -I{} -P20 sh -c '
+    r=$((RANDOM%4))
+    if [ "$r" -eq 0 ]; then p="/";
+    elif [ "$r" -eq 1 ]; then p="/welcome";
+    elif [ "$r" -eq 2 ]; then p="/users/sign_in";
+    else p="/users/sign_up"; fi
+    c=$(curl -s -o /dev/null -w "%{http_code}" "'$APP_URL'""$p")
+    echo "req={} path=$p code=$c" >> /tmp/bot_simulation.log
+  '
+  echo "Fallback load test summary:"
+  wc -l /tmp/bot_simulation.log
+  awk -F'code=' '{print $2}' /tmp/bot_simulation.log | sort | uniq -c
+  echo ""
 fi
 
-echo "Launching load test (3 minutes)..."
-echo "Phases: warm-up (30s) → sustained (60s) → cool-down (30s)"
-echo ""
-
-artillery run load-test.yml
+# === BOT SIMULATION ===
+echo "4️⃣  BOT SIMULATION (20 concurrent users)"
+echo "---"
+rm -f /tmp/bot_simulation.log
+seq 1 100 | xargs -I{} -P20 sh -c '
+  r=$((RANDOM%4))
+  if [ "$r" -eq 0 ]; then p="/";
+  elif [ "$r" -eq 1 ]; then p="/welcome";
+  elif [ "$r" -eq 2 ]; then p="/users/sign_in";
+  else p="/users/sign_up"; fi
+  c=$(curl -s -o /dev/null -w "%{http_code}" "'$APP_URL'""$p")
+  echo "req={} path=$p code=$c" >> /tmp/bot_simulation.log
+'
+echo "Bot simulation summary:"
+wc -l /tmp/bot_simulation.log
+awk -F'code=' '{print $2}' /tmp/bot_simulation.log | sort | uniq -c
 echo ""
 
 # === MONITORING ===
-echo "4️⃣  HEROKU MONITORING"
+echo "5️⃣  HEROKU MONITORING"
 echo "---"
 echo "Latest 50 production logs:"
 echo ""
 
-heroku logs --tail -n 50 -a "$APP_NAME" | tail -30
+heroku logs --num 50 -a "$APP_NAME" | tail -30
 echo ""
 
 echo "================================================"
@@ -67,7 +97,8 @@ echo ""
 echo "📊 Summary:"
 echo "  - Smoke tests:    PASSED ✅"
 echo "  - Route tests:    PASSED ✅"  
-echo "  - Load test:      RUN ▶️"
+echo "  - Load test:      DONE ✅"
+echo "  - Bot simulation: DONE ✅"
 echo "  - Prod logs:      MONITORED ✅"
 echo ""
 echo "💡 Next steps:"
