@@ -195,6 +195,7 @@ fr:
       locked_badge: "Verrouille jusqu'au reset"
       join_button: "Rejoindre"
       dominant_faction: "Faction dominante sur le cycle en cours: %{name}"
+      influence_points: "%{count} influence"
       previous_winner: "Guilde gagnante (semaine precedente): %{name}"
       view_participants: "Voir participants"
       no_participants: "Aucun participant enregistre."

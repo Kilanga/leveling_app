@@ -224,6 +224,7 @@ en:
       locked_badge: "Locked until reset"
       join_button: "Join"
       dominant_faction: "Dominant faction this cycle: %{name}"
+      influence_points: "%{count} influence"
       previous_winner: "Previous week winner: %{name}"
       view_participants: "View participants"
       no_participants: "No participants recorded."

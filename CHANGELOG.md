@@ -15,6 +15,11 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.3] - 2026-03-28
+
+### Corrigé
+- Dashboard guildes: affichage homogène des scores en `influence` pour la faction dominante et le tableau des factions (suppression de l'unité `Orbes` dans ce contexte).
+
 ## [1.20.2] - 2026-03-28
 
 ### Modifié
