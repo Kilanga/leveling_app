@@ -1218,6 +1218,19 @@ body::before {
   animation: frameStandardPulse 3.2s ease-in-out infinite;
 }
 
+.profile-frame-standard::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -35%;
+  width: 26%;
+  height: 180%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(170, 225, 255, 0.55), rgba(255, 255, 255, 0));
+  transform: rotate(18deg) translateX(-180%);
+  animation: frameSheenSweep 3.1s ease-in-out infinite;
+  pointer-events: none;
+}
+
 .profile-frame-standard a {
   color: #87ceeb;
 }
@@ -1234,6 +1247,19 @@ body::before {
   letter-spacing: 0.03em;
   text-shadow: 0 0 8px rgba(138, 75, 166, 0.3);
   animation: frameElectricFlicker 2.2s ease-in-out infinite;
+}
+
+.profile-frame-electrique::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(200, 125, 235, 0), rgba(200, 125, 235, 0.55), rgba(200, 125, 235, 0));
+  transform: skewX(-18deg);
+  animation: frameStaticArc 1.35s steps(2, end) infinite;
+  pointer-events: none;
 }
 
 .profile-frame-electrique a {
@@ -1255,6 +1281,16 @@ body::before {
   animation: frameLegendaryGlow 2.8s ease-in-out infinite;
 }
 
+.profile-frame-legendaire::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, rgba(255, 224, 132, 0), rgba(255, 224, 132, 0.22), rgba(255, 224, 132, 0));
+  transform: translateX(-120%);
+  animation: frameGoldSweep 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
 .profile-frame-legendaire a {
   color: #ffd98d;
   text-shadow: 0 0 10px rgba(212, 169, 71, 0.4);
@@ -1265,12 +1301,23 @@ body::before {
   background: linear-gradient(90deg, #4da6d6, #35b5e6);
   border-radius: 999px;
   transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .xp-theme-standard .xp-fill {
   background: linear-gradient(90deg, #4da6d6, #35b5e6);
   background-size: 180% 100%;
   animation: xpFlowSoft 4.2s linear infinite;
+}
+
+.xp-theme-standard .xp-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(220, 245, 255, 0.45), rgba(255, 255, 255, 0));
+  transform: translateX(-120%);
+  animation: xpShimmerSweep 3.8s ease-in-out infinite;
 }
 
 .xp-theme-samourai .xp-fill {
@@ -1280,6 +1327,15 @@ body::before {
   animation: xpFlowSoft 3.6s linear infinite, xpSamouraiBreath 1.8s ease-in-out infinite;
 }
 
+.xp-theme-samourai .xp-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(115deg, rgba(255, 220, 210, 0) 0 10px, rgba(255, 220, 210, 0.3) 10px 14px, rgba(255, 220, 210, 0) 14px 22px);
+  transform: translateX(-35%);
+  animation: xpShimmerSweep 2.2s linear infinite;
+}
+
 .xp-theme-neon .xp-fill {
   background: linear-gradient(90deg, #00d084, #00ff99);
   box-shadow: 0 0 12px rgba(0, 208, 132, 0.5);
@@ -1287,11 +1343,29 @@ body::before {
   animation: xpFlowSoft 3s linear infinite, xpNeonPulse 1.2s ease-in-out infinite;
 }
 
+.xp-theme-neon .xp-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(235, 255, 248, 0), rgba(235, 255, 248, 0.55), rgba(235, 255, 248, 0));
+  transform: translateX(-120%);
+  animation: xpShimmerSweep 1.8s ease-in-out infinite;
+}
+
 .xp-theme-legendaire .xp-fill {
   background: linear-gradient(90deg, #d4a947, #ffd98d);
   box-shadow: 0 0 16px rgba(212, 169, 71, 0.5);
   background-size: 200% 100%;
   animation: xpFlowSoft 2.8s linear infinite, xpLegendarySpark 2.1s ease-in-out infinite;
+}
+
+.xp-theme-legendaire .xp-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(95deg, rgba(255, 245, 215, 0), rgba(255, 245, 215, 0.62), rgba(255, 245, 215, 0));
+  transform: translateX(-120%);
+  animation: xpShimmerSweep 1.6s ease-in-out infinite;
 }
 
 /* ========== COSMETICS: Profile Cards ========== */
@@ -1342,6 +1416,12 @@ body::before {
   animation: cardLift 4s ease-in-out infinite;
 }
 
+.profile-card-standard::after {
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0), rgba(170, 225, 255, 0.28), rgba(255, 255, 255, 0));
+  transform: translateX(-120%);
+  animation: cardSheenSlide 3.4s ease-in-out infinite;
+}
+
 .profile-card-standard::before {
   background: rgba(64, 137, 197, 0.3);
 }
@@ -1351,6 +1431,16 @@ body::before {
   border: 1px solid rgba(72, 152, 212, 0.5);
   border-color: #4898d4;
   animation: cardLift 4.3s ease-in-out infinite;
+}
+
+.profile-card-bleu-nuit::after {
+  background:
+    radial-gradient(circle at 14% 24%, rgba(183, 228, 255, 0.45) 0 1px, rgba(183, 228, 255, 0) 2px),
+    radial-gradient(circle at 42% 32%, rgba(183, 228, 255, 0.38) 0 1px, rgba(183, 228, 255, 0) 2px),
+    radial-gradient(circle at 78% 20%, rgba(183, 228, 255, 0.42) 0 1px, rgba(183, 228, 255, 0) 2px),
+    radial-gradient(circle at 66% 58%, rgba(183, 228, 255, 0.33) 0 1px, rgba(183, 228, 255, 0) 2px),
+    linear-gradient(135deg, rgba(140, 200, 255, 0.08), rgba(140, 200, 255, 0));
+  animation: cardNightStars 2.8s ease-in-out infinite;
 }
 
 .profile-card-bleu-nuit .profile-card-text {
@@ -1366,6 +1456,11 @@ body::before {
   border: 1px solid rgba(230, 100, 50, 0.5);
   border-color: #e66432;
   animation: cardFlameFlicker 1.9s ease-in-out infinite;
+}
+
+.profile-card-incendie::after {
+  background: linear-gradient(180deg, rgba(255, 165, 92, 0), rgba(255, 165, 92, 0.16) 58%, rgba(255, 210, 160, 0.22));
+  animation: cardEmberRise 2.1s ease-in-out infinite;
 }
 
 .profile-card-incendie .profile-card-text {
@@ -1450,6 +1545,19 @@ body::before {
   }
 }
 
+@keyframes frameSheenSweep {
+  0%,
+  20% {
+    transform: rotate(18deg) translateX(-180%);
+  }
+  56% {
+    transform: rotate(18deg) translateX(480%);
+  }
+  100% {
+    transform: rotate(18deg) translateX(480%);
+  }
+}
+
 @keyframes frameElectricFlicker {
   0%,
   100% {
@@ -1463,6 +1571,21 @@ body::before {
   }
 }
 
+@keyframes frameStaticArc {
+  0%,
+  100% {
+    opacity: 0;
+    transform: skewX(-18deg) translateX(-140%);
+  }
+  18% {
+    opacity: 0.65;
+  }
+  28% {
+    opacity: 0;
+    transform: skewX(-18deg) translateX(330%);
+  }
+}
+
 @keyframes frameLegendaryGlow {
   0%,
   100% {
@@ -1473,12 +1596,38 @@ body::before {
   }
 }
 
+@keyframes frameGoldSweep {
+  0%,
+  18% {
+    transform: translateX(-120%);
+  }
+  54% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
 @keyframes xpFlowSoft {
   0% {
     background-position: 0% 50%;
   }
   100% {
     background-position: 100% 50%;
+  }
+}
+
+@keyframes xpShimmerSweep {
+  0%,
+  12% {
+    transform: translateX(-120%);
+  }
+  60% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(130%);
   }
 }
 
@@ -1522,6 +1671,29 @@ body::before {
   }
 }
 
+@keyframes cardSheenSlide {
+  0%,
+  20% {
+    transform: translateX(-120%);
+  }
+  68% {
+    transform: translateX(140%);
+  }
+  100% {
+    transform: translateX(140%);
+  }
+}
+
+@keyframes cardNightStars {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
 @keyframes cardFlameFlicker {
   0%,
   100% {
@@ -1529,6 +1701,18 @@ body::before {
   }
   50% {
     box-shadow: 0 12px 26px rgba(4, 16, 28, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 14px rgba(255, 145, 83, 0.32);
+  }
+}
+
+@keyframes cardEmberRise {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translateY(-2px);
   }
 }
 

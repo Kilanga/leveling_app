@@ -17,6 +17,13 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.11] - 2026-03-28
+
+### Modifié
+- Cosmetiques: animations renforcees sur tous les cadres (balayage lumineux, arc electrique, sweep dore legendaire).
+- Cosmetiques: themes XP retravailles avec effets de flux et de brillance plus visibles sur chaque variante.
+- Cartes de visite Standard, Bleu Nuit et Incendie: animations visuelles distinctes (sheen, twinkle, ember) pour un rendu plus premium.
+
 ## [1.15.10] - 2026-03-27
 
 ### Corrigé
