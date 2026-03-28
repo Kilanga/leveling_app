@@ -17,6 +17,14 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.15.12] - 2026-03-28
+
+### Ajouté
+- Nouveau cosmétique cadre: "Cadre Gyrophare Police" avec effet rouge/bleu alterné type gyrophare.
+
+### Modifié
+- Mapping helper cosmétiques et styles CSS étendus pour supporter l'animation dédiée du cadre Gyrophare.
+
 ## [1.15.11] - 2026-03-28
 
 ### Modifié

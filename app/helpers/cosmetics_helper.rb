@@ -12,6 +12,8 @@ module CosmeticsHelper
       "profile-frame-electrique"
     when /legendaire/
       "profile-frame-legendaire"
+    when /gyrophare|police/
+      "profile-frame-gyrophare"
     else
       "profile-frame-none"
     end

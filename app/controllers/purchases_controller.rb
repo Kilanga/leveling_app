@@ -43,6 +43,14 @@ class PurchasesController < ApplicationController
       price_euros: nil
     },
     {
+      name: "Cadre Gyrophare Police",
+      item_type: "profile_frame",
+      description: "Cadre tactique rouge/bleu avec flash alterne type gyrophare.",
+      rarity: "epic",
+      price_coins: 650,
+      price_euros: nil
+    },
+    {
       name: "Theme XP Standard",
       item_type: "xp_theme",
       description: "Barre XP bleu classique avec progression lineaire.",

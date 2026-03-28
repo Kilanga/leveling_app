@@ -1291,6 +1291,49 @@ body::before {
   pointer-events: none;
 }
 
+.profile-frame-gyrophare {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #8aa0be;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(13, 23, 36, 0.86), rgba(24, 38, 56, 0.86));
+  box-shadow: 0 0 10px rgba(100, 138, 180, 0.25), inset 0 0 8px rgba(120, 150, 190, 0.2);
+  color: #dcecff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  animation: framePoliceFlash 0.95s steps(1, end) infinite;
+}
+
+.profile-frame-gyrophare a {
+  color: #dcecff;
+  text-shadow: 0 0 10px rgba(205, 230, 255, 0.38);
+}
+
+.profile-frame-gyrophare::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 66, 66, 0.45), rgba(255, 66, 66, 0.08));
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: framePoliceLeft 0.95s steps(1, end) infinite;
+}
+
+.profile-frame-gyrophare::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(270deg, rgba(80, 160, 255, 0.5), rgba(80, 160, 255, 0.1));
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: framePoliceRight 0.95s steps(1, end) infinite;
+}
+
 .profile-frame-legendaire a {
   color: #ffd98d;
   text-shadow: 0 0 10px rgba(212, 169, 71, 0.4);
@@ -1609,6 +1652,41 @@ body::before {
   }
 }
 
+@keyframes framePoliceFlash {
+  0%,
+  45% {
+    border-color: rgba(255, 86, 86, 0.9);
+    box-shadow: 0 0 14px rgba(255, 86, 86, 0.5), inset 0 0 10px rgba(255, 86, 86, 0.2);
+  }
+  46%,
+  100% {
+    border-color: rgba(95, 175, 255, 0.92);
+    box-shadow: 0 0 14px rgba(95, 175, 255, 0.55), inset 0 0 10px rgba(95, 175, 255, 0.23);
+  }
+}
+
+@keyframes framePoliceLeft {
+  0%,
+  45% {
+    opacity: 0.95;
+  }
+  46%,
+  100% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes framePoliceRight {
+  0%,
+  45% {
+    opacity: 0.15;
+  }
+  46%,
+  100% {
+    opacity: 0.98;
+  }
+}
+
 @keyframes xpFlowSoft {
   0% {
     background-position: 0% 50%;
@@ -1754,6 +1832,7 @@ body::before {
   .profile-frame-standard,
   .profile-frame-electrique,
   .profile-frame-legendaire,
+  .profile-frame-gyrophare,
   .xp-theme-standard .xp-fill,
   .xp-theme-samourai .xp-fill,
   .xp-theme-neon .xp-fill,
@@ -1764,6 +1843,12 @@ body::before {
   .profile-card-royale,
   .profile-card-royale .profile-card-header::after,
   .profile-card-royale .profile-card-header::before {
+    animation-duration: 12s !important;
+    animation-timing-function: linear !important;
+  }
+
+  .profile-frame-gyrophare::before,
+  .profile-frame-gyrophare::after {
     animation-duration: 12s !important;
     animation-timing-function: linear !important;
   }
