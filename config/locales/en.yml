@@ -653,3 +653,8 @@ en:
     formats:
       short: "%b %d, %H:%M"
       long: "%B %d, %Y, %H:%M:%S"
+
+  date:
+    formats:
+      short: "%b %d, %Y"
+      long: "%B %d, %Y"

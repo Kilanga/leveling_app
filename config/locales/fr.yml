@@ -624,3 +624,8 @@ fr:
     formats:
       short: "%d %b, %H:%M"
       long: "%d %B %Y, %H:%M:%S"
+
+  date:
+    formats:
+      short: "%d %b %Y"
+      long: "%d %B %Y"
