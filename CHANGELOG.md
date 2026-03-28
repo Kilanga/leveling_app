@@ -15,6 +15,11 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.20.8] - 2026-03-28
+
+### Corrigé
+- Quetes recommandees: ajout d'un garde-fou dans la vue (`first(3)`) pour garantir l'affichage de 3 cards maximum meme en cas d'etat cache incoherent.
+
 ## [1.20.7] - 2026-03-28
 
 ### Modifié

@@ -68,7 +68,7 @@
       <h2 class="section-title"><%= t('quests.index.recommended_heading') %></h2>
       <% if @recommended_quests.any? %>
         <div class="quest-reco-grid">
-          <% @recommended_quests.each do |quest| %>
+          <% @recommended_quests.first(3).each do |quest| %>
             <% user_quest = @user_quests_by_quest_id[quest.id] %>
             <article class="quest-reco-card">
               <div class="d-flex justify-content-between align-items-start gap-2 flex-wrap">
