@@ -89,3 +89,8 @@ en:
         description: "Create your Leveling account and start your progression today."
       devise_passwords_new:
         title: "Forgot password"
+
+  time:
+    formats:
+      short: "%b %d, %H:%M"
+      long: "%B %d, %Y, %H:%M:%S"

@@ -60,3 +60,8 @@ fr:
         description: "Cree ton compte Leveling et lance ta progression des aujourd'hui."
       devise_passwords_new:
         title: "Mot de passe oublie"
+
+  time:
+    formats:
+      short: "%d %b, %H:%M"
+      long: "%d %B %Y, %H:%M:%S"
