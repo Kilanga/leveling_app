@@ -25,6 +25,7 @@ Regle de normalisation Keep a Changelog:
 ### Modifié
 - Infra web Heroku: mise a jour de Puma vers la branche 7.x (compatibilite Router 2.0 recommandee).
 - Deploiement Heroku: ajout d'un `Procfile` explicite pour declarer le process web.
+- Deploiement Heroku (auto-deploy GitHub): ajout de la phase `release` pour executer `rails db:migrate` automatiquement a chaque nouvelle release.
 
 ## [1.16.1] - 2026-03-28
 
