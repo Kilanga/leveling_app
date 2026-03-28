@@ -256,11 +256,6 @@
 
     <hr class="hud-divider">
 
-    <div class="d-flex gap-2 flex-wrap mb-4">
-      <%= link_to t('dashboard.shop_link'), new_purchase_path, class: "btn btn-outline-quest btn-arcade" %>
-      <%= link_to t('dashboard.report_bug_link'), "https://github.com/Kilanga/leveling_app/issues/new", class: "btn btn-outline-secondary btn-arcade", target: "_blank", rel: "noopener" %>
-    </div>
-
     <section class="hud-section mb-4">
       <h2 class="section-title mb-3"><%= t('dashboard.progression_heading') %></h2>
       <% @stats.each do |stat| %>
