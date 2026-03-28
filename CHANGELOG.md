@@ -17,6 +17,19 @@ Regle de normalisation Keep a Changelog:
 
 ## [Non publié]
 
+## [1.16.1] - 2026-03-28
+
+### Corrigé
+- Factions: changement de guilde desormais verrouille jusqu'au reset hebdomadaire (mercredi 12h, heure serveur) apres une adhesion ou un switch.
+- Contrats journaliers: reclamation de prime rendue idempotente (pas de double-credit en cas de requetes concurrentes).
+- Quetes: ajout d'un fallback explicite sur les actions non reconnues pour eviter les comportements implicites.
+
+### Sécurité
+- Dashboard factions: suppression de l'interpolation SQL pour le calcul des classements de cycle (requetes agregees via sous-requetes jointes).
+
+### Modifié
+- Contrats journaliers: generation du board du jour serialisee et dedoublonnee par contrainte unique (`active_on`, `title`) pour eviter les doublons en concurrence.
+
 ## [1.16.0] - 2026-03-28
 
 ### Ajouté

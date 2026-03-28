@@ -10,13 +10,16 @@ class FactionInfluence < ApplicationRecord
 
   scope :for_date, ->(date) { where(on_date: date) }
 
-  def self.current_cycle_anchor_date(reference_time: Time.current)
+  def self.current_cycle_anchor_at(reference_time: Time.current)
     time = reference_time.in_time_zone
     days_since_reset_day = (time.wday - RESET_WDAY) % 7
     this_week_reset = (time - days_since_reset_day.days).change(hour: RESET_HOUR, min: 0, sec: 0)
-    cycle_start = time < this_week_reset ? this_week_reset - 7.days : this_week_reset
 
-    cycle_start.to_date
+    time < this_week_reset ? this_week_reset - 7.days : this_week_reset
+  end
+
+  def self.current_cycle_anchor_date(reference_time: Time.current)
+    current_cycle_anchor_at(reference_time: reference_time).to_date
   end
 
   def self.next_reset_at(reference_time: Time.current)

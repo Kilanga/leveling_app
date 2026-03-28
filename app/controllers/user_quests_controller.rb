@@ -69,6 +69,8 @@ class UserQuestsController < ApplicationController
     when "unfollow"
       @user_quest.update(active: false)
       redirect_to root_path, notice: "Quête supprimée de votre liste."
+    else
+      redirect_to root_path, alert: "Action de quete non reconnue."
     end
   end
 end

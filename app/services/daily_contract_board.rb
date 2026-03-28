@@ -9,17 +9,26 @@ class DailyContractBoard
 
   def self.ensure_for_today!
     today = Time.zone.today
-    existing = DailyContract.where(active_on: today)
-    return existing if existing.count >= 3
+    DailyContract.transaction do
+      DailyContract.connection.execute("LOCK TABLE daily_contracts IN EXCLUSIVE MODE")
 
-    used_titles = existing.pluck(:title)
-    candidates = CONTRACT_POOL.reject { |entry| used_titles.include?(entry[:title]) }
-    candidates = CONTRACT_POOL if candidates.size < 3 - existing.count
+      existing = DailyContract.where(active_on: today)
+      return existing if existing.count >= 3
 
-    candidates.sample(3 - existing.count).each do |entry|
-      DailyContract.create!(entry.merge(active_on: today))
+      used_titles = existing.pluck(:title)
+      candidates = CONTRACT_POOL.reject { |entry| used_titles.include?(entry[:title]) }
+      candidates = CONTRACT_POOL if candidates.size < 3 - existing.count
+
+      candidates.sample(3 - existing.count).each do |entry|
+        DailyContract.find_or_create_by!(active_on: today, title: entry[:title]) do |contract|
+          contract.description = entry[:description]
+          contract.target_count = entry[:target_count]
+          contract.reward_coins = entry[:reward_coins]
+          contract.risk_tier = entry[:risk_tier]
+        end
+      end
+
+      DailyContract.where(active_on: today)
     end
-
-    DailyContract.where(active_on: today)
   end
 end

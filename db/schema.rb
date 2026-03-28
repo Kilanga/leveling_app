@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_111500) do
     t.integer "target_count", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.index ["active_on", "title"], name: "index_daily_contracts_on_active_on_and_title", unique: true
     t.index ["active_on"], name: "index_daily_contracts_on_active_on"
   end
 
@@ -291,6 +292,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_111500) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.bigint "faction_id"
+    t.datetime "faction_joined_at"
     t.integer "league_last_move", default: 0, null: false
     t.date "league_last_settled_week"
     t.integer "league_room", default: 1, null: false

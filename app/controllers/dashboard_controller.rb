@@ -70,16 +70,27 @@ class DashboardController < ApplicationController
     previous_cycle_anchor = cycle_anchor - 7.days
     @next_faction_reset_at = FactionInfluence.next_reset_at
     @faction_reset_countdown = format_countdown(@next_faction_reset_at)
+    @can_change_faction = current_user.can_change_faction?
+    @faction_switch_available_at = current_user.faction_switch_available_at
     @factions = Faction.order(:name)
-    @faction_scores_today = Faction.left_outer_joins(:faction_influences)
-      .select("factions.*, COALESCE(SUM(CASE WHEN faction_influences.on_date = '#{cycle_anchor}' THEN faction_influences.points ELSE 0 END), 0) AS today_points")
-      .group("factions.id")
+
+    today_scores = FactionInfluence.where(on_date: cycle_anchor)
+      .select("faction_id, SUM(points) AS points")
+      .group(:faction_id)
+
+    @faction_scores_today = Faction
+      .joins("LEFT JOIN (#{today_scores.to_sql}) AS today_scores ON today_scores.faction_id = factions.id")
+      .select("factions.*, COALESCE(today_scores.points, 0) AS today_points")
       .order(Arel.sql("today_points DESC, factions.name ASC"))
     @leading_faction = @faction_scores_today.first
 
-    previous_scores = Faction.left_outer_joins(:faction_influences)
-      .select("factions.*, COALESCE(SUM(CASE WHEN faction_influences.on_date = '#{previous_cycle_anchor}' THEN faction_influences.points ELSE 0 END), 0) AS previous_points")
-      .group("factions.id")
+    previous_scores = FactionInfluence.where(on_date: previous_cycle_anchor)
+      .select("faction_id, SUM(points) AS points")
+      .group(:faction_id)
+
+    previous_scores = Faction
+      .joins("LEFT JOIN (#{previous_scores.to_sql}) AS previous_scores ON previous_scores.faction_id = factions.id")
+      .select("factions.*, COALESCE(previous_scores.points, 0) AS previous_points")
       .order(Arel.sql("previous_points DESC, factions.name ASC"))
     @previous_winning_faction = previous_scores.first
     @previous_winning_participants =

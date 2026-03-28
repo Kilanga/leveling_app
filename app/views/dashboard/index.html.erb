@@ -82,6 +82,14 @@
         <% end %>
         <% if current_user.faction.present? %>
           <p class="quest-meta mb-2">Ta faction actuelle: <strong><%= current_user.faction.name %></strong>.</p>
+          <% unless @can_change_faction %>
+            <p class="quest-meta mb-2">
+              Changement verrouille jusqu'au prochain reset
+              <% if @faction_switch_available_at.present? %>
+                (<%= l(@faction_switch_available_at, format: :short) %>)
+              <% end %>.
+            </p>
+          <% end %>
         <% else %>
           <p class="quest-meta mb-2">Choisis une faction pour commencer a capturer des territoires.</p>
         <% end %>
@@ -128,6 +136,8 @@
               </div>
               <% if current_user.faction_id == faction.id %>
                 <span class="badge text-bg-success">Equipee</span>
+              <% elsif current_user.faction.present? && !@can_change_faction %>
+                <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Verrouille jusqu'au reset</button>
               <% else %>
                 <%= button_to "Rejoindre", join_faction_path(faction), method: :post, class: "btn btn-sm btn-outline-quest", form: { data: { turbo: false } } %>
               <% end %>

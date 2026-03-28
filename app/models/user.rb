@@ -153,6 +153,19 @@ class User < ApplicationRecord
     WeeklyLeague.tier_name(self[:league_tier])
   end
 
+  def can_change_faction?(reference_time: Time.current)
+    return true if faction_id.blank?
+    return true if faction_joined_at.blank?
+
+    faction_joined_at < FactionInfluence.current_cycle_anchor_at(reference_time: reference_time)
+  end
+
+  def faction_switch_available_at(reference_time: Time.current)
+    return nil if can_change_faction?(reference_time: reference_time)
+
+    FactionInfluence.next_reset_at(reference_time: reference_time)
+  end
+
   def referral_code
     return nil if id.blank?
 
