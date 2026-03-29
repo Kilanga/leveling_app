@@ -1,0 +1,23 @@
+<div id="cookie-banner" class="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#222; color:#fff; padding:1rem; text-align:center; font-size:1rem;">
+  <span>
+    Ce site n'utilise pas de cookies de suivi ou de publicité. Seuls des cookies strictement nécessaires au fonctionnement (connexion, sécurité) sont utilisés. <br>
+    Si des cookies de mesure d'audience ou de personnalisation sont ajoutés, votre consentement sera requis conformément à la réglementation CNIL.
+  </span>
+  <button id="cookie-accept-btn" style="margin-left:1rem; background:#4caf50; color:#fff; border:none; padding:0.5rem 1rem; border-radius:4px; cursor:pointer;">OK</button>
+  <a href="/privacy" style="margin-left:1rem; color:#90caf9; text-decoration:underline;">En savoir plus</a>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (!localStorage.getItem("cookieConsent")) {
+      document.getElementById("cookie-banner").style.display = "block";
+    }
+    document.getElementById("cookie-accept-btn").onclick = function() {
+      localStorage.setItem("cookieConsent", "accepted");
+      document.getElementById("cookie-banner").style.display = "none";
+    };
+  });
+</script>
+<style>
+.cookie-banner { box-shadow: 0 -2px 8px rgba(0,0,0,0.2); }
+@media (max-width:600px) { .cookie-banner { font-size:0.9rem; padding:0.7rem; } }
+</style>

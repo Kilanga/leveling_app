@@ -24,6 +24,16 @@ Regle de normalisation Keep a Changelog:
 - Boutique leveling: l'apercu profil ne declenche plus de rechargement de page lors de la previsualisation d'un cosmetique ou d'un titre.
 - Boutique leveling: ajout d'indicateurs explicites dans le panneau de droite (`Cadre apercu`, `Theme XP apercu`, `Carte apercue`, simulation du titre/carte) pour confirmer visuellement l'item previsualise.
 
+## [1.21.5.1] - 2026-03-29
+
+### Modifié
+- Boutique leveling: panneau d'aperçu profil nettoyé, suppression des doublons d'affichage (plusieurs cartes de visite), amélioration du rendu visuel et de la clarté de l'UI lors de la prévisualisation d'un item.
+
+## [1.21.5.2] - 2026-03-29
+
+### Ajouté
+- Ajout d'un bandeau de consentement cookies (conformité CNIL/RGPD) : affichage d'une information claire sur l'usage des cookies, stockage du consentement en localStorage, et lien vers la politique de confidentialité. Aucun cookie de suivi ou traceur n'est utilisé par défaut.
+
 ## [1.21.4] - 2026-03-29
 
 ### Modifié
