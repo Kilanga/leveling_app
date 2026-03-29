@@ -64,6 +64,10 @@ fr:
 
   # DEVISE AUTHENTICATION
   devise:
+        failure:
+          user:
+            unauthenticated: "Vous devez vous connecter pour accéder à cette page."
+          unauthenticated: "Vous devez vous connecter ou créer un compte pour continuer."
     sessions:
       new:
         title: "Connexion"
