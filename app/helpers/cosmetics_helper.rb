@@ -8,6 +8,16 @@ module CosmeticsHelper
     case normalized_name
     when /standard/
       "profile-frame-standard"
+    when /terrain/
+      "profile-frame-terrain"
+    when /brise/
+      "profile-frame-brise"
+    when /pixel/
+      "profile-frame-pixel"
+    when /quartz/
+      "profile-frame-quartz"
+    when /sentinelle/
+      "profile-frame-sentinelle"
     when /electrique/
       "profile-frame-electrique"
     when /legendaire/
@@ -33,6 +43,14 @@ module CosmeticsHelper
     case normalized_name
     when /standard/
       "xp-theme-standard"
+    when /horizon/
+      "xp-theme-horizon"
+    when /glacier/
+      "xp-theme-glacier"
+    when /aurore/
+      "xp-theme-aurore"
+    when /flux/
+      "xp-theme-flux"
     when /samourai/
       "xp-theme-samourai"
     when /neon/
@@ -58,6 +76,14 @@ module CosmeticsHelper
     case normalized_name
     when /standard/
       "profile-card-standard"
+    when /escouade/
+      "profile-card-escouade"
+    when /novice/
+      "profile-card-novice"
+    when /brume/
+      "profile-card-brume"
+    when /vanguard/
+      "profile-card-vanguard"
     when /bleu nuit/
       "profile-card-bleu-nuit"
     when /incendie/

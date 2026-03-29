@@ -305,7 +305,7 @@
                     <% elsif item.item_type == "profile_card" %>
                       <div class="profile-card-container <%= profile_card_classes(item) %>">
                         <div class="profile-card-header"><%= current_user.pseudo %></div>
-                        <div class="profile-card-text">Apercu de ta presentation personnalisee</div>
+                        <div class="profile-card-text">Edition <%= item.name %></div>
                       </div>
                     <% elsif item.item_type == "title" %>
                       <span class="shop-state-chip shop-state-chip--available"><%= item.name %></span>
