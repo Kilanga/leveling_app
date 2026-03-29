@@ -1,4 +1,3 @@
-
 @use "sass:meta";
 @use "bootstrap" as *;
 // Footer sticky et très visible
@@ -91,13 +90,13 @@ body::before {
   flex-direction: column;
 }
 
-.	topbar-motivup {
-  border-bottom: 1px solid rgba(86, 202, 248, 0.46);
-  background: linear-gradient(120deg, #0a1623, #0f2233);
-  box-shadow: 0 12px 28px rgba(6, 18, 30, 0.45);
-}
-
-.	topbar-motivup .navbar-brand {
+  .topbar-motivup {
+  .topbar-motivup .navbar-brand {
+  .topbar-motivup .nav-link {
+  .topbar-motivup .nav-link:hover,
+  .topbar-motivup .nav-link:focus,
+  .topbar-motivup .nav-link.active {
+  .topbar-motivup .btn-link.nav-link {
   font-weight: 800;
   letter-spacing: 0.07em;
   color: #d7f2ff;
@@ -2433,4 +2432,3 @@ body::before {
 .shop-preview-card.profile-card-container .shop-impact-card .profile-card-text {
   margin-bottom: 0;
 }
-  
