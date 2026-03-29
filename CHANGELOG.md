@@ -15,6 +15,15 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.21.5] - 2026-03-29
+
+### Ajouté
+- Boutique leveling: ajout d'un mode d'apercu profil interactif en temps reel (cadre, theme XP, carte, titre) activable au clic sur chaque item via bouton `Apercu profil`.
+
+### Modifié
+- Boutique leveling: l'apercu profil ne declenche plus de rechargement de page lors de la previsualisation d'un cosmetique ou d'un titre.
+- Boutique leveling: ajout d'indicateurs explicites dans le panneau de droite (`Cadre apercu`, `Theme XP apercu`, `Carte apercue`, simulation du titre/carte) pour confirmer visuellement l'item previsualise.
+
 ## [1.21.4] - 2026-03-29
 
 ### Modifié
