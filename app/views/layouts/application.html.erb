@@ -112,6 +112,16 @@
     <%= render 'layouts/flash' %>
     <%= yield %>
   </main>
+  <footer class="footer-global">
+    <div>
+      <a href="<%= terms_path %>"><%= t('pages.terms.title', default: 'Conditions d\'Utilisation') %></a>
+      &nbsp;|&nbsp;
+      <a href="<%= privacy_path %>"><%= t('pages.privacy.title', default: 'Politique de Confidentialité') %></a>
+    </div>
+    <div style="margin-top: 0.5rem; font-size: 0.95em; color: #fff9;">
+      &copy; 2026 Leveling
+    </div>
+  </footer>
   </div>
 </body>
 </html>
