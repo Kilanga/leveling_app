@@ -1,24 +1,3 @@
-fr:
-  currency:
-    paid:
-      one: "Orbe"
-      other: "Orbes"
-    free:
-      one: "Fragment"
-      other: "Fragments"
-  layout:
-    brand_logo_alt: "Logo MotivUp"
-    nav:
-      home: "Accueil"
-      quests: "Quetes"
-      shop: "Boutique"
-      leaderboard: "Classement"
-      friends: "Amis"
-      notifications: "Notifications"
-      profile: "Profil"
-      report_bug: "Signaler un bug"
-      sign_out: "Deconnexion"
-      sign_in: "Connexion"
 
   meta:
     base_title: "MotivUp"

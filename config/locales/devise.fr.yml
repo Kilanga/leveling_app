@@ -1,0 +1,56 @@
+fr:
+  devise:
+    confirmations:
+      confirmed: "Votre adresse e-mail a été confirmée avec succès."
+      send_instructions: "Vous allez recevoir un e-mail avec les instructions pour confirmer votre adresse."
+      send_paranoid_instructions: "Si votre adresse e-mail existe dans notre base, vous recevrez un e-mail avec les instructions pour la confirmation."
+      already_confirmed: "Votre adresse e-mail a déjà été confirmée. Veuillez vous connecter."
+      not_found: "Nous n'avons pas pu trouver un utilisateur avec cette adresse e-mail."
+      send_instructions: "Vous allez recevoir un e-mail avec les instructions pour confirmer votre adresse."
+      send_paranoid_instructions: "Si votre adresse e-mail existe dans notre base, vous recevrez un e-mail avec les instructions pour la confirmation."
+    failure:
+      already_authenticated: "Vous êtes déjà connecté."
+      unauthenticated: "Vous devez vous connecter ou créer un compte pour continuer."
+      unconfirmed: "Vous devez confirmer votre adresse e-mail avant de continuer."
+      locked: "Votre compte est verrouillé."
+      invalid: "Adresse e-mail ou mot de passe invalide."
+      not_found_in_database: "Adresse e-mail ou mot de passe invalide."
+      timeout: "Votre session a expiré. Veuillez vous reconnecter."
+      inactive: "Votre compte n'est pas encore activé."
+    mailer:
+      confirmation_instructions:
+        subject: "Instructions de confirmation"
+      reset_password_instructions:
+        subject: "Instructions de réinitialisation du mot de passe"
+      unlock_instructions:
+        subject: "Instructions de déverrouillage"
+      email_changed:
+        subject: "Changement d'adresse e-mail"
+      password_change:
+        subject: "Changement de mot de passe"
+    omniauth_callbacks:
+      failure: "Impossible de vous authentifier via %{kind} car \"%{reason}\"."
+      success: "Authentifié avec succès via %{kind} compte."
+    passwords:
+      no_token: "Vous ne pouvez accéder à cette page que depuis un e-mail de réinitialisation de mot de passe."
+      send_instructions: "Vous allez recevoir un e-mail avec les instructions pour réinitialiser votre mot de passe."
+      send_paranoid_instructions: "Si votre adresse e-mail existe dans notre base, vous recevrez un e-mail avec les instructions pour réinitialiser votre mot de passe."
+      updated: "Votre mot de passe a été modifié avec succès. Vous êtes maintenant connecté."
+      updated_not_active: "Votre mot de passe a été modifié avec succès."
+    registrations:
+      signed_up: "Bienvenue ! Vous vous êtes inscrit avec succès."
+      signed_up_but_inactive: "Vous vous êtes inscrit avec succès. Cependant, nous n'avons pas pu vous connecter car votre compte n'est pas encore activé."
+      signed_up_but_locked: "Vous vous êtes inscrit avec succès. Cependant, nous n'avons pas pu vous connecter car votre compte est verrouillé."
+      signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à votre adresse e-mail. Veuillez ouvrir ce lien pour activer votre compte."
+      update_needs_confirmation: "Vous avez mis à jour votre compte avec succès, mais nous devons vérifier votre nouvelle adresse e-mail. Veuillez vérifier vos e-mails et cliquer sur le lien de confirmation pour finaliser la modification."
+      updated: "Votre compte a été mis à jour avec succès."
+      destroyed: "Au revoir ! Votre compte a bien été supprimé. Nous espérons vous revoir bientôt."
+    sessions:
+      signed_in: "Connexion réussie."
+      signed_out: "Déconnexion réussie."
+      already_signed_out: "Déjà déconnecté."
+    unlocks:
+      send_instructions: "Vous allez recevoir un e-mail avec les instructions pour déverrouiller votre compte."
+      send_paranoid_instructions: "Si votre compte existe, vous recevrez un e-mail avec les instructions pour le déverrouiller."
+      unlocked: "Votre compte a été déverrouillé avec succès. Veuillez vous connecter."
+      already_unlocked: "Votre compte est déjà déverrouillé. Veuillez vous connecter."
