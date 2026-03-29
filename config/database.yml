@@ -85,5 +85,5 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  url: <%= ENV["SUPABASE_DATABASE_URL"].presence || ENV["DATABASE_URL"] %>
   prepared_statements: false
