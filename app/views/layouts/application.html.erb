@@ -112,14 +112,14 @@
     <%= render 'layouts/flash' %>
     <%= yield %>
   </main>
-  <footer class="footer-global">
+  <footer class="footer-global" style="background: linear-gradient(120deg, #0a1623, #0f2233); border-top: 1px solid rgba(86,202,248,0.12); color: #b8d8ec; padding: 0.7rem 0 0.4rem 0; text-align: center; font-size: 0.97em; opacity: 0.82;">
     <div>
-      <a href="<%= terms_path %>"><%= t('pages.terms.title', default: 'Conditions d\'Utilisation') %></a>
-      &nbsp;|&nbsp;
-      <a href="<%= privacy_path %>"><%= t('pages.privacy.title', default: 'Politique de Confidentialité') %></a>
+      <a href="<%= terms_path %>" style="color: #7ddcff; text-decoration: underline; font-weight: 400; opacity: 0.85;"> <%= t('pages.terms.title', default: "Conditions d'Utilisation") %></a>
+      <span style="color: #2ab8f2; font-weight: 400; opacity: 0.5;"> | </span>
+      <a href="<%= privacy_path %>" style="color: #7ddcff; text-decoration: underline; font-weight: 400; opacity: 0.85;"> <%= t('pages.privacy.title', default: "Politique de Confidentialité") %></a>
     </div>
-    <div style="margin-top: 0.5rem; font-size: 0.95em; color: #fff9;">
-      &copy; 2026 MotivUp
+    <div style="margin-top: 0.3rem; color: #b8d8ec; opacity: 0.65;">
+      &copy; <%= Time.current.year %> MotivUp
     </div>
   </footer>
   </div>
