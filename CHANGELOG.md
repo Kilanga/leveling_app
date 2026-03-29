@@ -18,7 +18,7 @@ Regle de normalisation Keep a Changelog:
 ## [1.21.7] - 2026-03-29
 
 ### Corrigé
-- Footer global : visibilité et contraste renforcés (sticky, bordure claire, responsive). Le footer avec liens légaux est désormais toujours visible sur toutes les pages.
+- Footer global : rendu plus petit, non sticky (n'est plus toujours accroché en bas de l'écran), padding réduit, texte et liens plus discrets pour une intégration minimale et élégante.
 
 ## [1.21.6] - 2026-03-29
 
