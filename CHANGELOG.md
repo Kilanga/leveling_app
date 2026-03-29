@@ -1,7 +1,3 @@
-## [1.21.7] - 2026-03-29
-
-### Corrigé
-- Footer global : visibilité et contraste renforcés (sticky, bordure claire, responsive). Le footer avec liens légaux est désormais toujours visible sur toutes les pages.
 # Journal des modifications
 
 Toutes les modifications notables de ce projet sont documentées dans ce fichier.
@@ -18,6 +14,11 @@ Regle de normalisation Keep a Changelog:
 - Sous-sections autorisees: `Ajouté`, `Modifié`, `Corrigé`, `Supprimé`, `Déprécié`, `Sécurité`
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
+
+## [1.21.7] - 2026-03-29
+
+### Corrigé
+- Footer global : visibilité et contraste renforcés (sticky, bordure claire, responsive). Le footer avec liens légaux est désormais toujours visible sur toutes les pages.
 
 ## [1.21.6] - 2026-03-29
 
