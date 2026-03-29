@@ -110,19 +110,19 @@ devise:
       min_password_notice: "Minimum %{count} caracteres"
       update_button: "Mettre a jour"
   confirmations:
-      new:
-        title: "Confirmation email"
-        subtitle: "Renvoyer les instructions de confirmation."
-        email_label: "Email"
-        email_placeholder: "votre@email.com"
-        send_button: "Renvoyer les instructions"
-    unlocks:
-      new:
-        title: "Deverrouiller le compte"
-        subtitle: "Renvoyer les instructions de deverrouillage."
-        email_label: "Email"
-        email_placeholder: "votre@email.com"
-        send_button: "Renvoyer les instructions"
+    new:
+      title: "Confirmation email"
+      subtitle: "Renvoyer les instructions de confirmation."
+      email_label: "Email"
+      email_placeholder: "votre@email.com"
+      send_button: "Renvoyer les instructions"
+  unlocks:
+    new:
+      title: "Deverrouiller le compte"
+      subtitle: "Renvoyer les instructions de deverrouillage."
+      email_label: "Email"
+      email_placeholder: "votre@email.com"
+      send_button: "Renvoyer les instructions"
     shared_links:
       sign_in: "Se connecter"
       sign_up: "Creer un compte"
