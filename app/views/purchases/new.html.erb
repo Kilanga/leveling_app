@@ -432,6 +432,9 @@
                   <% else %>
                     <p class="quest-meta mb-0">Aucun titre equipe</p>
                   <% end %>
+                  <p class="quest-meta mb-0">Cadre apercu: <%= preview_frame&.name || "Aucun" %></p>
+                  <p class="quest-meta mb-0">Theme XP apercu: <%= preview_theme&.name || "Standard" %></p>
+                  <p class="quest-meta mb-0">Carte apercue: <%= preview_card&.name || "Aucune" %></p>
                 </div>
               </div>
             </div>
@@ -448,7 +451,9 @@
 
             <div class="shop-impact-card">
               <div class="preview-label mb-1">Carte de visite</div>
-              <p class="profile-card-text mb-0"><%= profile_card_text(current_user).presence || "Ton style s'affiche ici quand tu equipes une carte." %></p>
+              <p class="profile-card-text mb-0">
+                <%= preview_card.present? ? "Simulation: #{preview_card.name}" : (profile_card_text(current_user).presence || "Ton style s'affiche ici quand tu equipes une carte.") %>
+              </p>
             </div>
           </div>
 
