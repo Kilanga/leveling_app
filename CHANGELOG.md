@@ -15,6 +15,15 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.21.2] - 2026-03-28
+
+### Ajouté
+- Boutique `Recompenses`: ajout de cosmetiques de rarete `common` (cadre, theme XP, carte de visite) pour garantir un contenu visible des le debut.
+
+### Modifié
+- Boutique `Recompenses`: les nouveaux cosmetiques communs sont achetables en `Fragments`, avec option alternative en `Orbes` via le fallback deja present.
+- Boutique: ouverture par defaut sur l'onglet `Cosmetiques` (suppression de l'ecran vide a l'arrivee).
+
 ## [1.21.1] - 2026-03-28
 
 ### Modifié

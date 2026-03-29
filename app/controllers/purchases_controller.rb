@@ -123,7 +123,7 @@ class PurchasesController < ApplicationController
     @entry_offer_enabled = entry_offer_eligible?
     @entry_offer_bonus_rate = entry_offer_bonus_rate
 
-    @active_shop_tab = params[:tab].presence_in(%w[packs boosts titles cosmetics]) || "packs"
+    @active_shop_tab = params[:tab].presence_in(%w[boosts titles cosmetics rewards]) || "cosmetics"
     @focus_category_name = current_user.user_stats.includes(:category).order(total_xp: :desc).first&.category&.name || "tes objectifs"
 
     @coins_prices = COIN_PACKS.map do |label, config|
