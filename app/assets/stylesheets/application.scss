@@ -1,3 +1,29 @@
+// --- Footer global ---
+.footer-global {
+  width: 100%;
+  margin-top: 2.5rem;
+  padding: 1.1rem 0 0.7rem 0;
+  background: none;
+  color: #b7cbe0;
+  font-size: 0.98em;
+  text-align: center;
+  border-top: 1px solid rgba(86,202,248,0.13);
+  box-shadow: 0 -2px 16px 0 rgba(6,18,30,0.08);
+}
+
+.footer-global a {
+  color: #7ddcff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s;
+}
+.footer-global a:hover, .footer-global a:focus {
+  color: #2ab8f2;
+  text-decoration: underline;
+}
+.footer-global div {
+  margin-bottom: 0.2rem;
+}
 @use "sass:meta";
 @use "bootstrap" as *;
 // Footer sticky et très visible
