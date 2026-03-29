@@ -53,14 +53,6 @@ fr:
       notifications_index:
         title: "Notifications"
         description: "Consulte tes rappels, activités sociales et alertes de progression sur MotivUp."
-      devise_sessions_new:
-        title: "Connexion"
-        description: "Connecte-toi à MotivUp pour reprendre tes quêtes et continuer ta progression."
-      devise_registrations_new:
-        title: "Inscription"
-        description: "Crée ton compte MotivUp et lance ta progression dès aujourd'hui."
-      devise_passwords_new:
-        title: "Mot de passe oublie"
 
 # DEVISE AUTHENTICATION
 devise:
