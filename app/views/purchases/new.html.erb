@@ -2,13 +2,6 @@
 <p class="page-subtitle"><%= t('purchases.new.page_subtitle') %></p>
 <p class="quest-meta mb-1">Tes <strong>Orbes</strong> premium: <strong><%= current_user.coins %></strong></p>
 <p class="quest-meta mb-3">Tes <strong>Fragments</strong> de progression: <strong><%= current_user.free_credits_balance %></strong></p>
-<% preview_params = {
-  preview_profile_frame_id: @preview_profile_frame&.id,
-  preview_xp_theme_id: @preview_xp_theme&.id,
-  preview_profile_card_id: @preview_profile_card&.id,
-  preview_title_id: @preview_title&.id
-}.compact %>
-
 <% if @entry_offer_enabled %>
   <div class="surface-card mb-4 welcome-offer-card">
     <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
@@ -26,10 +19,10 @@
   <div class="card-body">
     <section class="hud-section mb-3">
       <div class="shop-tab-nav">
-        <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(preview_params.merge(tab: "cosmetics")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
-        <%= link_to t('purchases.new.tabs.boosts'), new_purchase_path(preview_params.merge(tab: "boosts")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
-        <%= link_to t('purchases.new.tabs.titles'), new_purchase_path(preview_params.merge(tab: "titles")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
-        <%= link_to t('purchases.new.tabs.rewards'), new_purchase_path(preview_params.merge(tab: "rewards")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
+        <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
+        <%= link_to t('purchases.new.tabs.boosts'), new_purchase_path(tab: "boosts"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
+        <%= link_to t('purchases.new.tabs.titles'), new_purchase_path(tab: "titles"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
+        <%= link_to t('purchases.new.tabs.rewards'), new_purchase_path(tab: "rewards"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
       </div>
     </section>
 
@@ -95,9 +88,13 @@
                   </div>
 
                   <div class="mb-2">
-                    <%= link_to "Apercu profil",
-                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_title_id: item.id)),
-                                class: "btn btn-sm btn-outline-secondary" %>
+                    <%= button_tag "Apercu profil",
+                                   type: "button",
+                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                   data: {
+                                     preview_type: "title",
+                                     preview_name: item.name
+                                   } %>
                   </div>
 
                   <% if equipped %>
@@ -165,9 +162,14 @@
                   </div>
 
                   <div class="mb-2">
-                    <%= link_to "Apercu profil",
-                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_frame_id: item.id)),
-                                class: "btn btn-sm btn-outline-secondary" %>
+                    <%= button_tag "Apercu profil",
+                                   type: "button",
+                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                   data: {
+                                     preview_type: "profile_frame",
+                                     preview_name: item.name,
+                                     preview_class: frame_wrapper_classes(item)
+                                   } %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -223,9 +225,14 @@
                   </div>
 
                   <div class="mb-2">
-                    <%= link_to "Apercu profil",
-                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_xp_theme_id: item.id)),
-                                class: "btn btn-sm btn-outline-secondary" %>
+                    <%= button_tag "Apercu profil",
+                                   type: "button",
+                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                   data: {
+                                     preview_type: "xp_theme",
+                                     preview_name: item.name,
+                                     preview_class: xp_theme_classes(item)
+                                   } %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -285,9 +292,14 @@
                   </div>
 
                   <div class="mb-2">
-                    <%= link_to "Apercu profil",
-                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_card_id: item.id)),
-                                class: "btn btn-sm btn-outline-secondary" %>
+                    <%= button_tag "Apercu profil",
+                                   type: "button",
+                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                   data: {
+                                     preview_type: "profile_card",
+                                     preview_name: item.name,
+                                     preview_class: profile_card_classes(item)
+                                   } %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -351,27 +363,46 @@
 
                   <% if item.item_type == "profile_frame" %>
                     <div class="mb-2">
-                      <%= link_to "Apercu profil",
-                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_frame_id: item.id)),
-                                  class: "btn btn-sm btn-outline-secondary" %>
+                      <%= button_tag "Apercu profil",
+                                     type: "button",
+                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                     data: {
+                                       preview_type: "profile_frame",
+                                       preview_name: item.name,
+                                       preview_class: frame_wrapper_classes(item)
+                                     } %>
                     </div>
                   <% elsif item.item_type == "xp_theme" %>
                     <div class="mb-2">
-                      <%= link_to "Apercu profil",
-                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_xp_theme_id: item.id)),
-                                  class: "btn btn-sm btn-outline-secondary" %>
+                      <%= button_tag "Apercu profil",
+                                     type: "button",
+                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                     data: {
+                                       preview_type: "xp_theme",
+                                       preview_name: item.name,
+                                       preview_class: xp_theme_classes(item)
+                                     } %>
                     </div>
                   <% elsif item.item_type == "profile_card" %>
                     <div class="mb-2">
-                      <%= link_to "Apercu profil",
-                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_card_id: item.id)),
-                                  class: "btn btn-sm btn-outline-secondary" %>
+                      <%= button_tag "Apercu profil",
+                                     type: "button",
+                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                     data: {
+                                       preview_type: "profile_card",
+                                       preview_name: item.name,
+                                       preview_class: profile_card_classes(item)
+                                     } %>
                     </div>
                   <% elsif item.item_type == "title" %>
                     <div class="mb-2">
-                      <%= link_to "Apercu profil",
-                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_title_id: item.id)),
-                                  class: "btn btn-sm btn-outline-secondary" %>
+                      <%= button_tag "Apercu profil",
+                                     type: "button",
+                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
+                                     data: {
+                                       preview_type: "title",
+                                       preview_name: item.name
+                                     } %>
                     </div>
                   <% end %>
 
@@ -418,23 +449,23 @@
           <% preview_theme = @preview_xp_theme %>
           <% preview_card = @preview_profile_card %>
           <% preview_title = @preview_title %>
-          <div class="shop-preview-card profile-card-container <%= profile_card_classes(preview_card) %> mb-4">
+          <div id="shop-preview-card" class="shop-preview-card profile-card-container <%= profile_card_classes(preview_card) %> mb-4">
             <div class="shop-impact-profile mb-3">
               <div class="d-flex align-items-center gap-3">
                 <%= user_avatar_image(current_user, width: 74, height: 74, css_class: "rounded-circle shop-preview-avatar", alt: "Avatar de #{current_user.pseudo}") %>
                 <div>
-                  <div class="profile-frame-container <%= frame_wrapper_classes(preview_frame) %>">
+                  <div id="shop-preview-frame" class="profile-frame-container <%= frame_wrapper_classes(preview_frame) %>">
                     <strong><%= current_user.pseudo %></strong>
                   </div>
                   <p class="quest-meta mb-1 mt-2">Niveau global <%= @total_level %></p>
                   <% if preview_title.present? %>
-                    <p class="quest-meta mb-0">Titre: <%= preview_title.name %></p>
+                    <p id="shop-preview-title" class="quest-meta mb-0">Titre: <%= preview_title.name %></p>
                   <% else %>
-                    <p class="quest-meta mb-0">Aucun titre equipe</p>
+                    <p id="shop-preview-title" class="quest-meta mb-0">Aucun titre equipe</p>
                   <% end %>
-                  <p class="quest-meta mb-0">Cadre apercu: <%= preview_frame&.name || "Aucun" %></p>
-                  <p class="quest-meta mb-0">Theme XP apercu: <%= preview_theme&.name || "Standard" %></p>
-                  <p class="quest-meta mb-0">Carte apercue: <%= preview_card&.name || "Aucune" %></p>
+                  <p id="shop-preview-frame-name" class="quest-meta mb-0">Cadre apercu: <%= preview_frame&.name || "Aucun" %></p>
+                  <p id="shop-preview-theme-name" class="quest-meta mb-0">Theme XP apercu: <%= preview_theme&.name || "Standard" %></p>
+                  <p id="shop-preview-card-name" class="quest-meta mb-0">Carte apercue: <%= preview_card&.name || "Aucune" %></p>
                 </div>
               </div>
             </div>
@@ -444,14 +475,14 @@
                 <span class="preview-label">Barre XP</span>
                 <span class="quest-meta">67%</span>
               </div>
-              <div class="xp-track shop-impact-xp-track <%= xp_theme_classes(preview_theme) %>">
+              <div id="shop-preview-xp-track" class="xp-track shop-impact-xp-track <%= xp_theme_classes(preview_theme) %>">
                 <div class="xp-fill" style="width: 67%"></div>
               </div>
             </div>
 
             <div class="shop-impact-card">
               <div class="preview-label mb-1">Carte de visite</div>
-              <p class="profile-card-text mb-0">
+              <p id="shop-preview-card-text" class="profile-card-text mb-0">
                 <%= preview_card.present? ? "Simulation: #{preview_card.name}" : (profile_card_text(current_user).presence || "Ton style s'affiche ici quand tu equipes une carte.") %>
               </p>
             </div>
