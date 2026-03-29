@@ -1,13 +1,16 @@
 // Footer sticky et très visible
 .footer-global {
-  background: #181f2a;
-  color: #e9f4ff;
-  border-top: 2px solid #56caf8;
+  background: #ff0033 !important; /* TEST: rouge vif */
+  color: #fff !important;
+  border-top: 4px solid #fff200 !important;
   margin-top: auto;
-  box-shadow: 0 -4px 24px rgba(0,0,0,0.22);
-  font-size: 1rem;
-  position: relative;
-  z-index: 10;
+  box-shadow: 0 -4px 24px #ff0033;
+  font-size: 1.2rem;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 99999;
+  padding: 2rem 0 2rem 0;
+  text-align: center;
 }
 .footer-global a {
   color: #7ddcff;
