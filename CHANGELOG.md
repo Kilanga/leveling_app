@@ -15,6 +15,11 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+## [1.21.4] - 2026-03-29
+
+### Modifié
+- Boutique `Fragments`: ajout d'un apercu visuel par item (cadre, theme XP, carte de visite, titre) dans la liste pour faciliter le choix avant achat.
+
 ## [1.21.3] - 2026-03-29
 
 ### Ajouté

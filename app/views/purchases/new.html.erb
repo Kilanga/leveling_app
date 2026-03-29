@@ -292,6 +292,26 @@
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
+                  <div class="shop-cosmetic-preview mb-2">
+                    <div class="preview-label">Apercu:</div>
+                    <% if item.item_type == "profile_frame" %>
+                      <div class="profile-frame-container <%= frame_wrapper_classes(item) %>">
+                        <%= current_user.pseudo %>
+                      </div>
+                    <% elsif item.item_type == "xp_theme" %>
+                      <div class="xp-track <%= xp_theme_classes(item) %>">
+                        <div class="xp-fill" style="width: 67%"></div>
+                      </div>
+                    <% elsif item.item_type == "profile_card" %>
+                      <div class="profile-card-container <%= profile_card_classes(item) %>">
+                        <div class="profile-card-header"><%= current_user.pseudo %></div>
+                        <div class="profile-card-text">Apercu de ta presentation personnalisee</div>
+                      </div>
+                    <% elsif item.item_type == "title" %>
+                      <span class="shop-state-chip shop-state-chip--available"><%= item.name %></span>
+                    <% end %>
+                  </div>
+
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
                       <%= owned ? "Possede" : "Disponible" %>
