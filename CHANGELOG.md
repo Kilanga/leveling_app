@@ -1,3 +1,7 @@
+## [1.21.7] - 2026-03-29
+
+### Corrigé
+- Footer global : visibilité et contraste renforcés (sticky, bordure claire, responsive). Le footer avec liens légaux est désormais toujours visible sur toutes les pages.
 # Journal des modifications
 
 Toutes les modifications notables de ce projet sont documentées dans ce fichier.
