@@ -13,6 +13,6 @@ class NotificationsController < ApplicationController
 
   def mark_all_read
     current_user.in_app_notifications.unread.update_all(read_at: Time.current)
-    redirect_to notifications_path, notice: I18n.t('flash.notifications.marked_as_read')
+    redirect_to notifications_path, notice: I18n.t("flash.notifications.marked_as_read")
   end
 end

@@ -82,6 +82,6 @@ class SeedDefaultCosmeticItems < ActiveRecord::Migration[8.1]
   end
 
   def down
-    ShopItem.where(item_type: ["profile_frame", "xp_theme", "profile_card"]).delete_all
+    ShopItem.where(item_type: [ "profile_frame", "xp_theme", "profile_card" ]).delete_all
   end
 end

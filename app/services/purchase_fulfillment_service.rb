@@ -47,7 +47,7 @@ class PurchaseFulfillmentService
       return if duration_seconds <= 0
 
       duration = duration_seconds.seconds
-      base_time = [user.boost_expires_at, Time.current].compact.max
+      base_time = [ user.boost_expires_at, Time.current ].compact.max
       user.update!(boost_expires_at: base_time + duration)
 
       create_purchase_record!(user, transaction_id, checkout_session, item_type: "boost")
@@ -64,7 +64,7 @@ class PurchaseFulfillmentService
     def create_purchase_record!(user, transaction_id, checkout_session, item_type:)
       Purchase.create!(
         user: user,
-        amount: [checkout_session.amount_total.to_i / 100, 1].max,
+        amount: [ checkout_session.amount_total.to_i / 100, 1 ].max,
         item_type: item_type,
         status: "completed",
         transaction_id: transaction_id

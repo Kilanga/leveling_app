@@ -4,7 +4,7 @@ class DailyContractsController < ApplicationController
   def accept
     contract = DailyContract.find(params[:id])
     unless contract.active_on == Time.zone.today
-      redirect_to dashboard_path, alert: I18n.t('flash.daily_contracts.contract_unavailable')
+      redirect_to dashboard_path, alert: I18n.t("flash.daily_contracts.contract_unavailable")
       return
     end
 
@@ -19,7 +19,7 @@ class DailyContractsController < ApplicationController
         .exists?
 
       if active_contract
-        redirect_to dashboard_path, alert: I18n.t('flash.daily_contracts.contract_already_active')
+        redirect_to dashboard_path, alert: I18n.t("flash.daily_contracts.contract_already_active")
         return
       end
 
@@ -28,9 +28,9 @@ class DailyContractsController < ApplicationController
     end
 
     if accepted
-      redirect_to dashboard_path, notice: I18n.t('flash.daily_contracts.contract_accepted')
+      redirect_to dashboard_path, notice: I18n.t("flash.daily_contracts.contract_accepted")
     else
-      redirect_to dashboard_path, alert: I18n.t('flash.daily_contracts.contract_unavailable')
+      redirect_to dashboard_path, alert: I18n.t("flash.daily_contracts.contract_unavailable")
     end
   end
 end

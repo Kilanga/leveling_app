@@ -2,7 +2,7 @@ module XpCalculator
   module_function
 
   def xp_needed_for_next_level(level)
-    l = [level.to_i, 1].max
+    l = [ level.to_i, 1 ].max
     previous_levels = l - 1
 
     # Monotonic blended curve: fast onboarding, then steady ramp-up without drop-offs.
@@ -21,6 +21,6 @@ module XpCalculator
       level += 1
     end
 
-    [level, xp_remaining]
+    [ level, xp_remaining ]
   end
 end

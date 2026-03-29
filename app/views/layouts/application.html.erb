@@ -14,7 +14,7 @@
     <link rel="alternate" hreflang="x-default" href="<%= page_x_default_url %>">
   <% end %>
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Leveling">
+  <meta property="og:site_name" content="MotivUp">
   <meta property="og:title" content="<%= page_meta_title %>">
   <meta property="og:description" content="<%= page_meta_description %>">
   <meta property="og:locale" content="<%= page_og_locale %>">
@@ -31,7 +31,7 @@
   <meta name="twitter:description" content="<%= page_meta_description %>">
   <meta name="twitter:image" content="<%= page_og_image_url %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= favicon_link_tag "logo-leveling.svg", type: "image/svg+xml" %>
+  <%= favicon_link_tag "logo-motivup.svg", type: "image/svg+xml" %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -42,11 +42,11 @@
 </head>
 <body>
   <div class="app-shell">
-  <nav class="navbar navbar-expand-lg navbar-dark topbar-leveling">
+  <nav class="navbar navbar-expand-lg navbar-dark topbar-motivup">
     <div class="container py-1">
       <a class="navbar-brand d-inline-flex align-items-center" href="<%= root_path %>">
-        <%= image_tag "logo-leveling.svg", width: 18, height: 18, alt: t("layout.brand_logo_alt"), class: "me-2" %>
-        <span>Leveling</span>
+        <%= image_tag "logo-motivup.svg", width: 18, height: 18, alt: t("layout.brand_logo_alt"), class: "me-2" %>
+        <span>MotivUp</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -101,7 +101,7 @@
             </li>
           <% end %>
           <li class="nav-item">
-            <%= link_to t("layout.nav.report_bug"), "https://github.com/Kilanga/leveling_app/issues/new", class: "nav-link", target: "_blank", rel: "noopener" %>
+            <%= link_to t("layout.nav.report_bug"), "https://github.com/Kilanga/motivup-app/issues/new", class: "nav-link", target: "_blank", rel: "noopener" %>
           </li>
         </ul>
       </div>
@@ -119,7 +119,7 @@
       <a href="<%= privacy_path %>"><%= t('pages.privacy.title', default: 'Politique de Confidentialité') %></a>
     </div>
     <div style="margin-top: 0.5rem; font-size: 0.95em; color: #fff9;">
-      &copy; 2026 Leveling
+      &copy; 2026 MotivUp
     </div>
   </footer>
   </div>

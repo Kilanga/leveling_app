@@ -8,7 +8,7 @@ class CreateProductEvents < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :product_events, [:event_name, :created_at]
-    add_index :product_events, [:user_id, :event_name, :created_at]
+    add_index :product_events, [ :event_name, :created_at ]
+    add_index :product_events, [ :user_id, :event_name, :created_at ]
   end
 end

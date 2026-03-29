@@ -8,19 +8,19 @@ class UserQuestsController < ApplicationController
     if user_quest.new_record?
       user_quest.assign_attributes(progress: 0, completed: false, active: true, completed_count: 0)
       user_quest.save
-      flash[:notice] = I18n.t('flash.quests.added_success')
+      flash[:notice] = I18n.t("flash.quests.added_success")
 
     elsif !user_quest.active?
       if user_quest.locked_until_daily_reset?
-        flash[:alert] = I18n.t('flash.quests.not_available')
+        flash[:alert] = I18n.t("flash.quests.not_available")
       else
         # Si la quête était désactivée, la réactiver et réinitialiser `completed: false`
         user_quest.update(active: true, completed: false)
-        flash[:notice] = I18n.t('flash.quests.reactivated_success')
+        flash[:notice] = I18n.t("flash.quests.reactivated_success")
       end
 
     else
-      flash[:alert] = I18n.t('flash.quests.already_tracking')
+      flash[:alert] = I18n.t("flash.quests.already_tracking")
     end
 
     redirect_to quests_path
@@ -30,9 +30,9 @@ class UserQuestsController < ApplicationController
     user_quest = current_user.user_quests.find(params[:id])
 
     if user_quest.update(active: false)
-      flash[:notice] = I18n.t('flash.quests.removed_success')
+      flash[:notice] = I18n.t("flash.quests.removed_success")
     else
-      flash[:alert] = I18n.t('errors.messages.generic_error')
+      flash[:alert] = I18n.t("errors.messages.generic_error")
     end
 
     redirect_to quests_path
@@ -62,15 +62,15 @@ class UserQuestsController < ApplicationController
         flash[:streak_up_quest_title] = quest_title
         flash[:streak_up_value] = @user_quest.completed_count.to_i
         referral_note = referral_result[:awarded] ? " Bonus parrainage: +#{referral_result[:invitee_reward]} Fragments." : ""
-        redirect_to root_path, notice: I18n.t('flash.weekly_quests.quest_completed', xp: gained_xp) + referral_note
+        redirect_to root_path, notice: I18n.t("flash.weekly_quests.quest_completed", xp: gained_xp) + referral_note
       else
-        redirect_to root_path, alert: I18n.t('errors.messages.quest_not_active')
+        redirect_to root_path, alert: I18n.t("errors.messages.quest_not_active")
       end
     when "unfollow"
       @user_quest.update(active: false)
-      redirect_to root_path, notice: I18n.t('flash.quests.removed_success')
+      redirect_to root_path, notice: I18n.t("flash.quests.removed_success")
     else
-      redirect_to root_path, alert: I18n.t('errors.messages.action_not_recognized')
+      redirect_to root_path, alert: I18n.t("errors.messages.action_not_recognized")
     end
   end
 end

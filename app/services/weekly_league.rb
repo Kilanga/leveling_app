@@ -1,5 +1,5 @@
 class WeeklyLeague
-  TIERS = ["Bronze", "Silver", "Gold", "Platinum", "Diamond"].freeze
+  TIERS = [ "Bronze", "Silver", "Gold", "Platinum", "Diamond" ].freeze
   PROMOTION_RATE = 0.2
   MIN_MOVEMENT_COHORT_SIZE = 3
   ROOM_CAPACITY = 50
@@ -55,7 +55,7 @@ class WeeklyLeague
 
         promotions.each do |user|
           user.update_columns(
-            league_tier: [user[:league_tier].to_i + 1, TIERS.size].min,
+            league_tier: [ user[:league_tier].to_i + 1, TIERS.size ].min,
             league_last_move: 1,
             league_last_settled_week: current_settlement_date
           )
@@ -63,7 +63,7 @@ class WeeklyLeague
 
         relegations.each do |user|
           user.update_columns(
-            league_tier: [user[:league_tier].to_i - 1, 1].max,
+            league_tier: [ user[:league_tier].to_i - 1, 1 ].max,
             league_last_move: -1,
             league_last_settled_week: current_settlement_date
           )
@@ -79,7 +79,7 @@ class WeeklyLeague
     def assign_rooms_if_needed!(tier: nil)
       return unless league_columns_available?
 
-      tiers = tier.present? ? [tier.to_i] : (1..TIERS.size).to_a
+      tiers = tier.present? ? [ tier.to_i ] : (1..TIERS.size).to_a
       tiers.each { |current_tier| rebalance_rooms_for_tier!(current_tier) }
     end
 
@@ -93,7 +93,7 @@ class WeeklyLeague
     end
 
     def tier_name(level)
-      TIERS[[level.to_i - 1, 0].max] || TIERS.first
+      TIERS[[ level.to_i - 1, 0 ].max] || TIERS.first
     end
 
     def weekly_xp(user, range: Time.current.all_week)
@@ -117,7 +117,7 @@ class WeeklyLeague
       # Movement is enabled as soon as a minimum competitive cohort is reached.
       return 0 if size < MIN_MOVEMENT_COHORT_SIZE
 
-      [(size * PROMOTION_RATE).floor, 1].max
+      [ (size * PROMOTION_RATE).floor, 1 ].max
     end
 
     def projected_movement_for(rank:, size:, tier_level:)

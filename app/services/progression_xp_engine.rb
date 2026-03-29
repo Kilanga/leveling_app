@@ -39,10 +39,10 @@ class ProgressionXpEngine
     private
 
     def build_gain(base_xp:, multipliers:)
-      base_xp = [base_xp.to_i, 1].max
+      base_xp = [ base_xp.to_i, 1 ].max
       total_multiplier = multipliers.compact.reduce(1.0) { |acc, value| acc * value.to_f }
-      capped_multiplier = [total_multiplier, MAX_MULTIPLIER].min
-      [(base_xp * capped_multiplier).round, 1].max
+      capped_multiplier = [ total_multiplier, MAX_MULTIPLIER ].min
+      [ (base_xp * capped_multiplier).round, 1 ].max
     end
 
     def streak_multiplier(streak_count)

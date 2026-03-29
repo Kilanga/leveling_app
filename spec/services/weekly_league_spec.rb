@@ -60,7 +60,7 @@ RSpec.describe WeeklyLeague do
 
     WeeklyLeague.settle_leagues_if_needed!(reference_time: settlement_reference_time)
 
-    expect(tier_two_users.map { |user| user.reload.league_tier }.uniq).to eq([2])
+    expect(tier_two_users.map { |user| user.reload.league_tier }.uniq).to eq([ 2 ])
   end
 
   it "rebalances rooms with a capacity of 50 players per league tier" do
@@ -84,7 +84,7 @@ RSpec.describe WeeklyLeague do
 
     standings = WeeklyLeague.standings(User.where(id: users.map(&:id)).to_a, range: Time.current.all_week)
 
-    expect(standings.map { |entry| entry[:projected_movement] }.uniq).to eq([0])
+    expect(standings.map { |entry| entry[:projected_movement] }.uniq).to eq([ 0 ])
   end
 
   it "projects movement once cohort reaches three players" do
@@ -138,7 +138,7 @@ RSpec.describe WeeklyLeague do
     users.each { |user| user.update_columns(league_last_settled_week: WeeklyLeague.last_settlement_at(reference_time: before_cutoff).to_date) }
     WeeklyLeague.settle_leagues_if_needed!(reference_time: before_cutoff)
 
-    expect(users.map { |u| u.reload.league_tier }.uniq).to eq([2])
+    expect(users.map { |u| u.reload.league_tier }.uniq).to eq([ 2 ])
   end
 
   it "settles at and after Sunday 19:00" do

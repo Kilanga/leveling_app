@@ -208,7 +208,7 @@ class User < ApplicationRecord
       end
 
       # Every 7th day grants a bigger bonus while keeping daily progression rewarding.
-      reward = 20 + ([streak, 7].min - 1) * 5
+      reward = 20 + ([ streak, 7 ].min - 1) * 5
       reward += 40 if (streak % 7).zero?
 
       update!(

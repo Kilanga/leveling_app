@@ -18,10 +18,10 @@ class AddIntegrityConstraints < ActiveRecord::Migration[8.0]
 
     execute "DELETE FROM friendships WHERE user_id = friend_id"
 
-    add_index :user_stats, [:user_id, :category_id], unique: true, if_not_exists: true
-    add_index :user_quests, [:user_id, :quest_id], unique: true, if_not_exists: true
-    add_index :user_items, [:user_id, :shop_item_id], unique: true, if_not_exists: true
-    add_index :friendships, [:user_id, :friend_id], unique: true, if_not_exists: true
+    add_index :user_stats, [ :user_id, :category_id ], unique: true, if_not_exists: true
+    add_index :user_quests, [ :user_id, :quest_id ], unique: true, if_not_exists: true
+    add_index :user_items, [ :user_id, :shop_item_id ], unique: true, if_not_exists: true
+    add_index :friendships, [ :user_id, :friend_id ], unique: true, if_not_exists: true
 
     add_check_constraint :friendships, "user_id <> friend_id", name: "friendships_user_not_self", if_not_exists: true
   end
@@ -29,10 +29,10 @@ class AddIntegrityConstraints < ActiveRecord::Migration[8.0]
   def down
     remove_check_constraint :friendships, name: "friendships_user_not_self", if_exists: true
 
-    remove_index :friendships, column: [:user_id, :friend_id], if_exists: true
-    remove_index :user_items, column: [:user_id, :shop_item_id], if_exists: true
-    remove_index :user_quests, column: [:user_id, :quest_id], if_exists: true
-    remove_index :user_stats, column: [:user_id, :category_id], if_exists: true
+    remove_index :friendships, column: [ :user_id, :friend_id ], if_exists: true
+    remove_index :user_items, column: [ :user_id, :shop_item_id ], if_exists: true
+    remove_index :user_quests, column: [ :user_id, :quest_id ], if_exists: true
+    remove_index :user_stats, column: [ :user_id, :category_id ], if_exists: true
 
     change_column_null :friendships, :status, true
     change_column_default :friendships, :status, from: "pending", to: nil

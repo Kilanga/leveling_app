@@ -72,7 +72,7 @@ class QuestsController < ApplicationController
     medium_index = ((xp_values.length - 1) * 0.66).floor
 
     easy_max = xp_values[easy_index]
-    medium_max = [xp_values[medium_index], easy_max + 1].max
+    medium_max = [ xp_values[medium_index], easy_max + 1 ].max
 
     { easy_max: easy_max, medium_max: medium_max }
   end

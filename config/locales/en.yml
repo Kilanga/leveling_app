@@ -37,7 +37,7 @@ en:
       other: "Fragments"
 
   layout:
-    brand_logo_alt: "Leveling logo"
+    brand_logo_alt: "MotivUp logo"
     nav:
       home: "Home"
       quests: "Quests"
@@ -51,15 +51,15 @@ en:
       sign_in: "Sign in"
 
   meta:
-    base_title: "Leveling"
-    default_description: "Leveling: a personal progression app with quests, titles, and leaderboards."
+    base_title: "MotivUp"
+    default_description: "MotivUp: a personal progression app with quests, titles, and leaderboards."
     pages:
       welcome_index:
         title: "Gamified Progress"
-        description: "Leveling turns personal growth into a game: quests, weekly leagues, streaks, and friend challenges."
+        description: "MotivUp turns personal growth into a game: quests, weekly leagues, streaks, and friend challenges."
       dashboard_index:
         title: "Dashboard"
-        description: "Track your progress, complete quests, and level up on Leveling."
+        description: "Track your progress, complete quests, and level up on MotivUp."
       quests_index:
         title: "Quests"
         description: "Browse available quests and pick the ones that move your progression forward."
@@ -67,27 +67,27 @@ en:
         title: "Quest Details"
       purchases_new:
         title: "Shop"
-        description: "Explore the Leveling shop: packs, boosts, and titles to personalize your profile."
+        description: "Explore the MotivUp shop: packs, boosts, and titles to personalize your profile."
       leaderboard_index:
         title: "Leaderboard"
-        description: "Compare your progress with other players on the Leveling leaderboard."
+        description: "Compare your progress with other players on the MotivUp leaderboard."
       users_show:
         title: "Profile"
-        description: "View your profile, equip titles, and track your evolution on Leveling."
+        description: "View your profile, equip titles, and track your evolution on MotivUp."
       friends_index:
         title: "Friends"
-        description: "Add friends, follow their progress, and move forward together on Leveling."
+        description: "Add friends, follow their progress, and move forward together on MotivUp."
       onboarding_show:
-        description: "Set your progression priorities and get started quickly on Leveling."
+        description: "Set your progression priorities and get started quickly on MotivUp."
       notifications_index:
         title: "Notifications"
-        description: "Check reminders, social activity, and progression alerts on Leveling."
+        description: "Check reminders, social activity, and progression alerts on MotivUp."
       devise_sessions_new:
         title: "Sign in"
-        description: "Sign in to Leveling to resume your quests and continue progressing."
+        description: "Sign in to MotivUp to resume your quests and continue progressing."
       devise_registrations_new:
         title: "Sign up"
-        description: "Create your Leveling account and start your progression today."
+        description: "Create your MotivUp account and start your progression today."
       devise_passwords_new:
         title: "Forgot password"
 
@@ -620,24 +620,24 @@ en:
   pages:
     terms:
       page_title: "Terms of Service"
-      page_description: "Read our terms of service for Leveling."
+      page_description: "Read our terms of service for MotivUp."
       section_use: "App Usage"
-      content_use: "Leveling is a gamified progression application. You agree to use this service in accordance with applicable laws and these terms. You may not use the app for fraudulent, defamatory, or illegal activities."
+      content_use: "MotivUp is a gamified progression application. You agree to use this service in accordance with applicable laws and these terms. You may not use the app for fraudulent, defamatory, or illegal activities."
       section_accounts: "User Accounts"
-      content_accounts: "You are responsible for the confidentiality of your credentials. Leveling is not responsible for unauthorized access if you share your login information. You agree to provide accurate information upon registration."
+      content_accounts: "You are responsible for the confidentiality of your credentials. MotivUp is not responsible for unauthorized access if you share your login information. You agree to provide accurate information upon registration."
       section_intellectual: "Intellectual Property"
-      content_intellectual: "All content provided by Leveling (design, mechanics, text) is protected by copyright. You may use the service for personal use, but you cannot reproduce or resell content without permission."
+      content_intellectual: "All content provided by MotivUp (design, mechanics, text) is protected by copyright. You may use the service for personal use, but you cannot reproduce or resell content without permission."
       section_limitation: "Limitation of Liability"
-      content_limitation: "Leveling is provided 'as is'. We do not guarantee that the service will be uninterrupted or error-free. Leveling is not responsible for data loss, interruptions, or indirect damages."
+      content_limitation: "MotivUp is provided 'as is'. We do not guarantee that the service will be uninterrupted or error-free. MotivUp is not responsible for data loss, interruptions, or indirect damages."
       section_changes: "Changes to Terms"
-      content_changes: "Leveling reserves the right to modify these terms at any time. Changes take effect immediately. Your continued use implies acceptance of modifications."
+      content_changes: "MotivUp reserves the right to modify these terms at any time. Changes take effect immediately. Your continued use implies acceptance of modifications."
       section_contact: "Contact"
       content_contact: "For any questions about these terms, contact us via the support form in the app."
     privacy:
       page_title: "Privacy Policy"
-      page_description: "Read our privacy policy for Leveling."
+      page_description: "Read our privacy policy for MotivUp."
       section_collection: "Data Collection"
-      content_collection: "Leveling collects information you submit (email, username, avatar). We also collect anonymous usage data to improve the service (progression events, session time)."
+      content_collection: "MotivUp collects information you submit (email, username, avatar). We also collect anonymous usage data to improve the service (progression events, session time)."
       section_use: "Data Usage"
       content_use: "Your personal data is used to authenticate your account, send confirmations and newsletters, improve the service, and detect abuse. We never sell your data to third parties."
       section_sharing: "Data Sharing"
@@ -647,7 +647,7 @@ en:
       section_rights: "Your Rights"
       content_rights: "You can request access, correction, or deletion of your personal data via support. Account deletion requests are processed within 30 days."
       section_changes: "Policy Changes"
-      content_changes: "Leveling may modify this policy at any time. Changes take effect immediately. Your continued use implies acceptance."
+      content_changes: "MotivUp may modify this policy at any time. Changes take effect immediately. Your continued use implies acceptance."
       section_contact: "Contact"
       content_contact: "For any questions about your data or this policy, contact us via the support form."
 

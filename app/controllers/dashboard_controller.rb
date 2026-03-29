@@ -61,7 +61,7 @@ class DashboardController < ApplicationController
     @weekly_streak_last_completed_on = current_user.weekly_streak_last_completed_on
     @daily_target = DAILY_TARGET
     @completed_today_count = completed_today_count
-    @daily_progress_percent = [(@completed_today_count.to_f / @daily_target * 100).round, 100].min
+    @daily_progress_percent = [ (@completed_today_count.to_f / @daily_target * 100).round, 100 ].min
     @daily_chest_claimed_today = daily_chest_claimed_today?
     @daily_chest_reward_free_credits = DAILY_CHEST_REWARD_FREE_CREDITS
     @friends_activity = recent_friends_activity
@@ -180,7 +180,7 @@ class DashboardController < ApplicationController
       current_active = WeeklyQuest.create!(
         title: "Hebdo: #{source_quest.title}",
         description: source_quest.description.presence || "Complete cette quete hebdomadaire pour un gros bonus.",
-        xp_reward: [source_quest.xp.to_i * 2, 300].max,
+        xp_reward: [ source_quest.xp.to_i * 2, 300 ].max,
         category: source_quest.category,
         valid_until: 7.days.from_now
       )

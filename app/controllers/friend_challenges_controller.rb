@@ -4,7 +4,7 @@ class FriendChallengesController < ApplicationController
   def create
     challenged = User.find(params[:friend_id])
     unless friends_with?(challenged)
-      return redirect_to friends_path, alert: I18n.t('errors.messages.challenge_requires_friend')
+      return redirect_to friends_path, alert: I18n.t("errors.messages.challenge_requires_friend")
     end
 
     challenge = FriendChallenge.create!(
@@ -26,7 +26,7 @@ class FriendChallengesController < ApplicationController
 
     ProductAnalytics.track(user: current_user, event_name: "friend_challenge_created", metadata: { challenge_id: challenge.id, friend_id: challenged.id })
 
-    redirect_to friends_path, notice: I18n.t('flash.friend_challenge.challenge_launched')
+    redirect_to friends_path, notice: I18n.t("flash.friend_challenge.challenge_launched")
   end
 
   private

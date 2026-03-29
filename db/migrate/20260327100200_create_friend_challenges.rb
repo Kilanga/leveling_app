@@ -14,6 +14,6 @@ class CreateFriendChallenges < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :friend_challenges, [:challenger_id, :challenged_id, :status], name: "index_friend_challenges_on_pair_and_status"
+    add_index :friend_challenges, [ :challenger_id, :challenged_id, :status ], name: "index_friend_challenges_on_pair_and_status"
   end
 end

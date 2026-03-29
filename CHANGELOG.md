@@ -15,6 +15,21 @@ Regle de normalisation Keep a Changelog:
 - Les anciens intitulés non standards (ex: `Tests`, `Améliorations UI`) sont ramenés a `Modifié`
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
+
+## [2.0.0] - 2026-03-29
+
+### Modifié
+- Migration complète du branding : Leveling → MotivUp (UI, titres, descriptions, logo, assets, variables d'environnement, helpers, etc.)
+- Mise à jour des mentions légales et politiques de confidentialité (français/anglais) : toutes les occurrences de Leveling remplacées par MotivUp.
+- Footer, navbar, meta tags, favicon, et copyright adaptés.
+- Nouveau logo SVG MotivUp (bleu, bouclier, M blanc).
+- Documentation et scripts (CONTRIBUTING.md, URLs, instructions) adaptés à MotivUp.
+
+### Rupture de compatibilité
+- Changement du nom du module principal Ruby, des variables d'environnement, et des chemins d'assets/images (logo, etc.).
+- Les anciennes URLs GitHub et noms de base de données ne sont plus valides (voir README/CONTRIBUTING pour les nouveaux liens et instructions).
+
+---
 ## [1.21.7] - 2026-03-29
 
 ### Corrigé

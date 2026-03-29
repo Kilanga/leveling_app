@@ -14,15 +14,15 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:pseudo, :avatar, :referral_code_input])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:pseudo, :avatar])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :pseudo, :avatar, :referral_code_input ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :pseudo, :avatar ])
   end
 
   def ensure_profile_completed
     return if devise_controller?
     return unless user_signed_in?
     return unless current_user.needs_profile_completion?
-    return if controller_name == "users" && ["complete_profile", "update_profile"].include?(action_name)
+    return if controller_name == "users" && [ "complete_profile", "update_profile" ].include?(action_name)
 
     redirect_to complete_profile_path
   end

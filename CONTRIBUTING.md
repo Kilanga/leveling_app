@@ -36,7 +36,7 @@ Before creating a release, add your release notes under `## [Non publié]`:
 Use the release script to run tests, update changelog, commit, tag, push, and run Heroku migrations:
 
 ```bash
-./release.sh 1.2.1 leveling-app
+./release.sh 2.0.0 motivup-app
 ```
 
 The script will:
@@ -97,12 +97,12 @@ git commit -m "perf: Optimize N+1 queries in leaderboard"
 Before releasing a new version:
 
 - [ ] `CHANGELOG.md` has release notes under `## [Non publié]`
-- [ ] Run release script: `./release.sh 1.2.1 leveling-app`
+- [ ] Run release script: `./release.sh 2.0.0 motivup-app`
 - [ ] Verify version bumping follows semver rules
-- [ ] Verify on GitHub: https://github.com/Kilanga/leveling_app/releases
+- [ ] Verify on GitHub: https://github.com/Kilanga/motivup-app/releases
 
 ## GitHub Releases
 
 GitHub automatically creates releases from git tags. Release notes are auto-populated from the tag message.
 
-View all releases: https://github.com/Kilanga/leveling_app/releases
+View all releases: https://github.com/Kilanga/motivup-app/releases

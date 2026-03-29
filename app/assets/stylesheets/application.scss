@@ -91,13 +91,13 @@ body::before {
   flex-direction: column;
 }
 
-.topbar-leveling {
+.	topbar-motivup {
   border-bottom: 1px solid rgba(86, 202, 248, 0.46);
   background: linear-gradient(120deg, #0a1623, #0f2233);
   box-shadow: 0 12px 28px rgba(6, 18, 30, 0.45);
 }
 
-.topbar-leveling .navbar-brand {
+.	topbar-motivup .navbar-brand {
   font-weight: 800;
   letter-spacing: 0.07em;
   color: #d7f2ff;
@@ -105,7 +105,7 @@ body::before {
   font-size: 0.95rem;
 }
 
-.topbar-leveling .nav-link {
+.	topbar-motivup .nav-link {
   color: rgba(206, 234, 255, 0.86);
   border-radius: 999px;
   padding: 0.42rem 0.8rem;
@@ -115,14 +115,14 @@ body::before {
   font-size: 0.78rem;
 }
 
-.topbar-leveling .nav-link:hover,
-.topbar-leveling .nav-link:focus,
-.topbar-leveling .nav-link.active {
+.	topbar-motivup .nav-link:hover,
+.	topbar-motivup .nav-link:focus,
+.	topbar-motivup .nav-link.active {
   color: #f2fbff;
   background: rgba(36, 170, 232, 0.24);
 }
 
-.topbar-leveling .btn-link.nav-link {
+.	topbar-motivup .btn-link.nav-link {
   text-decoration: none;
 }
 

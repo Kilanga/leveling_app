@@ -232,7 +232,7 @@ FREE_REWARD_ITEMS = [
         description: boost_description(config[:duration])
       }
     end
-    @best_value_pack_label = @coins_prices.max_by { |option| option[:total_coins].to_f / [option[:amount], 1].max }[:label]
+    @best_value_pack_label = @coins_prices.max_by { |option| option[:total_coins].to_f / [ option[:amount], 1 ].max }[:label]
 
     @title_items = ShopItem.where(item_type: "title")
                  .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
@@ -398,7 +398,6 @@ def purchase_with_orbes!(item, orbes_price, redirect_path, success_notice = "Obj
 end
 
 def handle_pack_purchase
-
     item_type = params[:item_type].to_s
     amount = params[:amount].to_i
 
@@ -438,15 +437,15 @@ def handle_pack_purchase
 
   def create_checkout_session(product_name, amount_eur, metadata = {})
     Stripe::Checkout::Session.create(
-      payment_method_types: ["card"],
-      line_items: [{
+      payment_method_types: [ "card" ],
+      line_items: [ {
         price_data: {
           currency: "eur",
           product_data: { name: product_name },
           unit_amount: amount_eur.to_i * 100
         },
         quantity: 1
-      }],
+      } ],
       mode: "payment",
       metadata: metadata.transform_values(&:to_s),
       success_url: success_purchases_url(session_id: "{CHECKOUT_SESSION_ID}"),
@@ -480,7 +479,7 @@ def handle_pack_purchase
         affordable_rank = item.price_coins.present? && item.price_coins <= current_user.coins ? 0 : 1
         rarity_rank = rarity_order.fetch(item.rarity, 9)
         price_rank = item.price_coins || (item.price_euros.to_i * 100)
-        [affordable_rank, rarity_rank, price_rank, item.name.to_s]
+        [ affordable_rank, rarity_rank, price_rank, item.name.to_s ]
       end
       .first(4)
   end

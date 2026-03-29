@@ -10,9 +10,9 @@ class EmailDripJob < ApplicationJob
     return unless user
 
     case step
-    when 'day3'
+    when "day3"
       UserMailer.welcome_day3_email(user).deliver_now
-    when 'day7'
+    when "day7"
       UserMailer.welcome_day7_email(user).deliver_now
     end
   end

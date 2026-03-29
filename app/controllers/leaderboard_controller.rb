@@ -59,7 +59,7 @@ class LeaderboardController < ApplicationController
   private
 
   def format_countdown(target_time)
-    remaining_seconds = [(target_time - Time.current).to_i, 0].max
+    remaining_seconds = [ (target_time - Time.current).to_i, 0 ].max
     days = remaining_seconds / 86_400
     hours = (remaining_seconds % 86_400) / 3_600
     minutes = (remaining_seconds % 3_600) / 60

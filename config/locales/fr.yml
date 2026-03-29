@@ -8,7 +8,7 @@ fr:
       other: "Fragments"
 
   layout:
-    brand_logo_alt: "Logo Leveling"
+    brand_logo_alt: "Logo MotivUp"
     nav:
       home: "Accueil"
       quests: "Quetes"
@@ -22,15 +22,15 @@ fr:
       sign_in: "Connexion"
 
   meta:
-    base_title: "Leveling"
-    default_description: "Leveling: l'application de progression personnelle avec quetes, titres et classement."
+    base_title: "MotivUp"
+    default_description: "MotivUp : l'application de progression personnelle avec quêtes, titres et classement."
     pages:
       welcome_index:
         title: "Progression gamifiee"
-        description: "Leveling transforme ta progression personnelle en jeu: quetes, ligues hebdo, streaks et defis entre amis."
+        description: "MotivUp transforme ta progression personnelle en jeu : quêtes, ligues hebdo, streaks et défis entre amis."
       dashboard_index:
         title: "Accueil"
-        description: "Suis ta progression, valide tes quetes et fais monter ton niveau sur Leveling."
+        description: "Suis ta progression, valide tes quêtes et fais monter ton niveau sur MotivUp."
       quests_index:
         title: "Quetes"
         description: "Explore les quetes disponibles et choisis celles qui font avancer ta progression."
@@ -38,27 +38,27 @@ fr:
         title: "Detail quete"
       purchases_new:
         title: "Boutique"
-        description: "Decouvre la boutique Leveling: packs, boosts et titres pour personnaliser ton profil."
+        description: "Découvre la boutique MotivUp : packs, boosts et titres pour personnaliser ton profil."
       leaderboard_index:
         title: "Classement"
-        description: "Compare ta progression avec les autres joueurs sur le classement Leveling."
+        description: "Compare ta progression avec les autres joueurs sur le classement MotivUp."
       users_show:
         title: "Profil"
-        description: "Consulte ton profil, equipe tes titres et suis ton evolution sur Leveling."
+        description: "Consulte ton profil, équipe tes titres et suis ton évolution sur MotivUp."
       friends_index:
         title: "Amis"
-        description: "Ajoute des amis, suis leur progression et avance ensemble sur Leveling."
+        description: "Ajoute des amis, suis leur progression et avance ensemble sur MotivUp."
       onboarding_show:
-        description: "Configure tes priorites de progression et demarre rapidement sur Leveling."
+        description: "Configure tes priorités de progression et démarre rapidement sur MotivUp."
       notifications_index:
         title: "Notifications"
-        description: "Consulte tes rappels, activites sociales et alertes de progression sur Leveling."
+        description: "Consulte tes rappels, activités sociales et alertes de progression sur MotivUp."
       devise_sessions_new:
         title: "Connexion"
-        description: "Connecte-toi a Leveling pour reprendre tes quetes et continuer ta progression."
+        description: "Connecte-toi à MotivUp pour reprendre tes quêtes et continuer ta progression."
       devise_registrations_new:
         title: "Inscription"
-        description: "Cree ton compte Leveling et lance ta progression des aujourd'hui."
+        description: "Crée ton compte MotivUp et lance ta progression dès aujourd'hui."
       devise_passwords_new:
         title: "Mot de passe oublie"
 
@@ -591,24 +591,24 @@ fr:
   pages:
     terms:
       page_title: "Conditions d'utilisation"
-      page_description: "Lisez nos conditions d'utilisation pour Leveling."
+      page_description: "Lisez nos conditions d'utilisation pour MotivUp."
       section_use: "Utilisation de l'application"
-      content_use: "Leveling est une application de progression gamifiée. Vous acceptez d'utiliser ce service conformément aux lois applicables et à ces conditions. Vous ne pouvez pas utiliser l'application pour activités frauduleuses, diffamatoires ou illégales."
+      content_use: "MotivUp est une application de progression gamifiée. Vous acceptez d'utiliser ce service conformément aux lois applicables et à ces conditions. Vous ne pouvez pas utiliser l'application pour activités frauduleuses, diffamatoires ou illégales."
       section_accounts: "Comptes utilisateur"
-      content_accounts: "Vous êtes responsable de la confidentialité de vos identifiants. Leveling n'est pas responsable des accès non autorisés si vous partagez vos credentials. Vous acceptez de fournir des informations exactes lors de l'enregistrement."
+      content_accounts: "Vous êtes responsable de la confidentialité de vos identifiants. MotivUp n'est pas responsable des accès non autorisés si vous partagez vos credentials. Vous acceptez de fournir des informations exactes lors de l'enregistrement."
       section_intellectual: "Propriété intellectuelle"
-      content_intellectual: "Tout contenu fourni par Leveling (design, mécanique, textes) est protégé par copyright. Vous pouvez utiliser le service pour votre usage personnel, mais vous ne pouvez pas reproduire ou revendre le contenu sans permission."
+      content_intellectual: "Tout contenu fourni par MotivUp (design, mécanique, textes) est protégé par copyright. Vous pouvez utiliser le service pour votre usage personnel, mais vous ne pouvez pas reproduire ou revendre le contenu sans permission."
       section_limitation: "Limitation de responsabilité"
-      content_limitation: "Leveling est fourni 'tel quel'. Nous ne garantissons pas que le service sera ininterrompu ou exempt d'erreurs. Leveling ne sera pas responsable pour pertes de données, interruptions, ou dommages indirects."
+      content_limitation: "MotivUp est fourni 'tel quel'. Nous ne garantissons pas que le service sera ininterrompu ou exempt d'erreurs. MotivUp ne sera pas responsable pour pertes de données, interruptions, ou dommages indirects."
       section_changes: "Modifications des conditions"
-      content_changes: "Leveling se réserve le droit de modifier ces conditions à tout moment. Les modifications entrent en vigueur immédiatement. Votre utilisation continue implique acceptation des modifications."
+      content_changes: "MotivUp se réserve le droit de modifier ces conditions à tout moment. Les modifications entrent en vigueur immédiatement. Votre utilisation continue implique acceptation des modifications."
       section_contact: "Contact"
       content_contact: "Pour toute question sur ces conditions, contactez-nous via le formulaire de support dans l'application."
     privacy:
       page_title: "Politique de confidentialité"
-      page_description: "Lisez notre politique de confidentialité pour Leveling."
+      page_description: "Lisez notre politique de confidentialité pour MotivUp."
       section_collection: "Collecte de données"
-      content_collection: "Leveling collecte les informations que vous soumettez (email, pseudo, avatar). Nous collectons également des données d'usage anonymes pour améliorer le service (événements de progression, temps de session)."
+      content_collection: "MotivUp collecte les informations que vous soumettez (email, pseudo, avatar). Nous collectons également des données d'usage anonymes pour améliorer le service (événements de progression, temps de session)."
       section_use: "Utilisation des données"
       content_use: "Vos données personnelles sont utilisées pour authentifier votre compte, envoyer confirmations et newsletters, améliorer le service et détecter les abus. Nous ne vendons jamais vos données à des tiers."
       section_sharing: "Partage de données"
@@ -618,7 +618,7 @@ fr:
       section_rights: "Vos droits"
       content_rights: "Vous pouvez demander l'accès, la rectification ou la suppression de vos données personnelles via le support. Les demandes de suppression de compte sont traitées sous 30 jours."
       section_changes: "Modifications de la politique"
-      content_changes: "Leveling peut modifier cette politique à tout moment. Les modifications entrent en vigueur immédiatement. Votre utilisation continue implique acceptation."
+      content_changes: "MotivUp peut modifier cette politique à tout moment. Les modifications entrent en vigueur immédiatement. Votre utilisation continue implique acceptation."
       section_contact: "Contact"
       content_contact: "Pour toute question sur vos données ou cette politique, contactez-nous via le formulaire de support."
 
