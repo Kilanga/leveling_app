@@ -278,9 +278,10 @@
           <% elsif @active_shop_tab == "rewards" %>
             <h2 class="section-title">Recompenses contre Fragments</h2>
             <p class="quest-meta mb-3">Ces objets se debloquent uniquement via ta progression gratuite.</p>
-            <% if @free_reward_items.any? %>
+            <% reward_items = Array(@free_reward_items) %>
+            <% if reward_items.any? %>
               <div class="shop-list shop-list--flat">
-                <% @free_reward_items.each do |item| %>
+                <% reward_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
                 <% owned = @owned_item_ids.include?(item.id) %>
                 <% fallback_orbes_price = (item.price_free_credits.to_i / 2.0).ceil %>

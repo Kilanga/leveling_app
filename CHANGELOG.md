@@ -24,6 +24,9 @@ Regle de normalisation Keep a Changelog:
 - Boutique `Recompenses`: les nouveaux cosmetiques communs sont achetables en `Fragments`, avec option alternative en `Orbes` via le fallback deja present.
 - Boutique: ouverture par defaut sur l'onglet `Cosmetiques` (suppression de l'ecran vide a l'arrivee).
 
+### Corrigé
+- Boutique `Recompenses`: garde-fou de rendu pour eviter l'erreur `undefined method any? for nil` quand la liste des items fragments n'est pas initialisee.
+
 ## [1.21.1] - 2026-03-28
 
 ### Modifié
