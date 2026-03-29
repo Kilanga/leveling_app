@@ -531,23 +531,7 @@ devise:
       card_text_updated: "Texte de carte mise a jour."
       card_text_error: "Impossible de mettre a jour le texte."
 
-  # ERROR MESSAGES
-  errors:
-    messages:
-      access_denied: "Acces interdit."
-      challenge_requires_friend: "Tu dois d'abord selectionner un ami."
-      reward_already_claimed: "Prime deja reclamee."
-      reward_not_available: "Prime indisponible."
-      shop_challenge_incomplete: "Defi boutique non complete."
-      invalid_stripe_session: "Session de paiement invalide."
-      payment_not_validated: "Paiement non valide."
-      invalid_payment_session: "Session de paiement invalide."
-      purchase_impossible: "Achat impossible."
-      payment_cancelled: "Paiement annule."
-      quest_not_active: "Quete non active."
-      action_not_recognized: "Action non reconnue."
-      daily_target_not_met: "Tu dois completer au moins %{target} quetes pour ouvrir le coffre quotidien."
-      daily_chest_already_claimed: "Coffre quotidien deja reclame."
+
 
   # COMMON LABELS & BUTTONS
   common:
