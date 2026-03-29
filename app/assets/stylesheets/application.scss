@@ -1,3 +1,6 @@
+
+@use "sass:meta";
+@use "bootstrap" as *;
 // Footer sticky et très visible
 .footer-global {
   background: #ff0033 !important; /* TEST: rouge vif */
@@ -25,8 +28,6 @@
   .footer-global { font-size: 0.95rem; padding-bottom: 1.2rem; }
   .page-content { padding-bottom: 4.5rem; }
 }
-@use "sass:meta";
-@use "bootstrap" as *;
 
 :root {
   --bg: #050b14;
