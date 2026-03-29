@@ -17,7 +17,6 @@ const bindShopPreviewHandlers = () => {
     const xpTrackElement = document.getElementById("shop-preview-xp-track");
     const xpNameElement = document.getElementById("shop-preview-theme-name");
     const cardElement = document.getElementById("shop-preview-card");
-    const cardNameElement = document.getElementById("shop-preview-card-name");
     const cardTextElement = document.getElementById("shop-preview-card-text");
     const titleElement = document.getElementById("shop-preview-title");
 
@@ -34,9 +33,6 @@ const bindShopPreviewHandlers = () => {
     if (previewType === "profile_card") {
       if (cardElement) {
         cardElement.className = `shop-preview-card profile-card-container ${previewClass} mb-4`;
-      }
-      if (cardNameElement) {
-        cardNameElement.textContent = `Carte apercue: ${previewName || "Aucune"}`;
       }
       if (cardTextElement) {
         cardTextElement.textContent = previewName ? `Simulation: ${previewName}` : "Ton style s'affiche ici quand tu equipes une carte.";

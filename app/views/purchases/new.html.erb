@@ -453,19 +453,18 @@
             <div class="shop-impact-profile mb-3">
               <div class="d-flex align-items-center gap-3">
                 <%= user_avatar_image(current_user, width: 74, height: 74, css_class: "rounded-circle shop-preview-avatar", alt: "Avatar de #{current_user.pseudo}") %>
-                <div>
+                <div class="shop-preview-meta">
                   <div id="shop-preview-frame" class="profile-frame-container <%= frame_wrapper_classes(preview_frame) %>">
                     <strong><%= current_user.pseudo %></strong>
                   </div>
                   <p class="quest-meta mb-1 mt-2">Niveau global <%= @total_level %></p>
                   <% if preview_title.present? %>
-                    <p id="shop-preview-title" class="quest-meta mb-0">Titre: <%= preview_title.name %></p>
+                    <p id="shop-preview-title" class="quest-meta mb-0 shop-preview-meta-row">Titre: <%= preview_title.name %></p>
                   <% else %>
-                    <p id="shop-preview-title" class="quest-meta mb-0">Aucun titre equipe</p>
+                    <p id="shop-preview-title" class="quest-meta mb-0 shop-preview-meta-row">Aucun titre equipe</p>
                   <% end %>
-                  <p id="shop-preview-frame-name" class="quest-meta mb-0">Cadre apercu: <%= preview_frame&.name || "Aucun" %></p>
-                  <p id="shop-preview-theme-name" class="quest-meta mb-0">Theme XP apercu: <%= preview_theme&.name || "Standard" %></p>
-                  <p id="shop-preview-card-name" class="quest-meta mb-0">Carte apercue: <%= preview_card&.name || "Aucune" %></p>
+                  <p id="shop-preview-frame-name" class="quest-meta mb-0 shop-preview-meta-row">Cadre apercu: <%= preview_frame&.name || "Aucun" %></p>
+                  <p id="shop-preview-theme-name" class="quest-meta mb-0 shop-preview-meta-row">Theme XP apercu: <%= preview_theme&.name || "Standard" %></p>
                 </div>
               </div>
             </div>
