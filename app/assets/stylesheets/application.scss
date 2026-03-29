@@ -1,51 +1,7 @@
 @use "sass:meta";
 @use "bootstrap" as *;
 // Footer sticky et très visible
-.footer-global {
-  background: linear-gradient(120deg, #0a1623, #0f2233);
-  color: var(--muted);
-  border-top: 1px solid var(--hud-line-soft);
-  margin-top: 2.5rem;
-  box-shadow: none;
-  font-size: 0.89rem;
-  position: static;
-  padding: 0.25rem 0 0.18rem 0;
-  text-align: center;
-  letter-spacing: 0.01em;
-  }
-  .footer-global a {
-    color: var(--brand-2);
-    text-decoration: underline dotted;
-    font-weight: 400;
-    opacity: 0.75;
-    font-size: 0.97em;
-    transition: color 0.18s, opacity 0.18s;
-  }
-  .footer-global a:hover {
-    color: #fff;
-    opacity: 1;
-  }
-  .footer-global div:last-child {
-    margin-top: 0.08rem;
-    font-size: 0.89em;
-    color: #b4ecff33;
-  }
-  @media (max-width: 600px) {
-    .footer-global { font-size: 0.87rem; padding-bottom: 0.3rem; }
-}
-.footer-global a {
-  color: #7ddcff;
-  text-decoration: underline;
-  font-weight: 600;
-}
-.footer-global a:hover {
-  color: #fff;
-  text-decoration: underline;
-}
-@media (max-width: 600px) {
-  .footer-global { font-size: 0.95rem; padding-bottom: 1.2rem; }
-  .page-content { padding-bottom: 4.5rem; }
-}
+
 
 :root {
   --bg: #050b14;
@@ -90,40 +46,42 @@ body::before {
   flex-direction: column;
 }
 
-  .topbar-motivup {
-  .topbar-motivup .navbar-brand {
-  .topbar-motivup .nav-link {
-  .topbar-motivup .nav-link:hover,
-  .topbar-motivup .nav-link:focus,
-  .topbar-motivup .nav-link.active {
-  .topbar-motivup .btn-link.nav-link {
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  color: #d7f2ff;
-  text-transform: uppercase;
-  font-size: 0.95rem;
+// SCSS imbriqué valide pour la topbar
+.topbar-motivup {
+  border-bottom: 1px solid rgba(86, 202, 248, 0.46);
+  background: linear-gradient(120deg, #0a1623, #0f2233);
+  box-shadow: 0 12px 28px rgba(6, 18, 30, 0.45);
+
+  .navbar-brand {
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    color: #d7f2ff;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+  }
+
+  .nav-link {
+    color: rgba(206, 234, 255, 0.86);
+    border-radius: 999px;
+    padding: 0.42rem 0.8rem;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.78rem;
+
+    &:hover,
+    &:focus,
+    &.active {
+      color: #f2fbff;
+      background: rgba(36, 170, 232, 0.24);
+    }
+  }
+
+  .btn-link.nav-link {
+    text-decoration: none;
+  }
 }
 
-.	topbar-motivup .nav-link {
-  color: rgba(206, 234, 255, 0.86);
-  border-radius: 999px;
-  padding: 0.42rem 0.8rem;
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.78rem;
-}
-
-.	topbar-motivup .nav-link:hover,
-.	topbar-motivup .nav-link:focus,
-.	topbar-motivup .nav-link.active {
-  color: #f2fbff;
-  background: rgba(36, 170, 232, 0.24);
-}
-
-.	topbar-motivup .btn-link.nav-link {
-  text-decoration: none;
-}
 
 .page-content {
   flex: 1;
@@ -282,7 +240,7 @@ body::before {
 
 .quest-list,
 .shop-list {
-  display: grid;
+    color: rgba(206, 234, 255, 0.86);
   gap: 0.9rem;
 }
 
@@ -294,12 +252,12 @@ body::before {
 .shop-row {
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(14, 25, 37, 0.88);
+    color: #f2fbff;
   padding: 0.85rem 0.95rem;
 }
 
 .shop-row--flat {
-  border: 0;
+    text-decoration: none;
   border-radius: 0;
   background: transparent;
   border-bottom: 1px solid rgba(64, 124, 166, 0.35);
