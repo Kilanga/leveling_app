@@ -2,6 +2,12 @@
 <p class="page-subtitle"><%= t('purchases.new.page_subtitle') %></p>
 <p class="quest-meta mb-1">Tes <strong>Orbes</strong> premium: <strong><%= current_user.coins %></strong></p>
 <p class="quest-meta mb-3">Tes <strong>Fragments</strong> de progression: <strong><%= current_user.free_credits_balance %></strong></p>
+<% preview_params = {
+  preview_profile_frame_id: @preview_profile_frame&.id,
+  preview_xp_theme_id: @preview_xp_theme&.id,
+  preview_profile_card_id: @preview_profile_card&.id,
+  preview_title_id: @preview_title&.id
+}.compact %>
 
 <% if @entry_offer_enabled %>
   <div class="surface-card mb-4 welcome-offer-card">
@@ -20,10 +26,10 @@
   <div class="card-body">
     <section class="hud-section mb-3">
       <div class="shop-tab-nav">
-        <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
-        <%= link_to t('purchases.new.tabs.boosts'), new_purchase_path(tab: "boosts"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
-        <%= link_to t('purchases.new.tabs.titles'), new_purchase_path(tab: "titles"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
-        <%= link_to t('purchases.new.tabs.rewards'), new_purchase_path(tab: "rewards"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
+        <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(preview_params.merge(tab: "cosmetics")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>
+        <%= link_to t('purchases.new.tabs.boosts'), new_purchase_path(preview_params.merge(tab: "boosts")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
+        <%= link_to t('purchases.new.tabs.titles'), new_purchase_path(preview_params.merge(tab: "titles")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
+        <%= link_to t('purchases.new.tabs.rewards'), new_purchase_path(preview_params.merge(tab: "rewards")), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
       </div>
     </section>
 
@@ -86,6 +92,12 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_euros %> EUR</span>
                     <% end %>
+                  </div>
+
+                  <div class="mb-2">
+                    <%= link_to "Apercu profil",
+                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_title_id: item.id)),
+                                class: "btn btn-sm btn-outline-secondary" %>
                   </div>
 
                   <% if equipped %>
@@ -152,6 +164,12 @@
                     <% end %>
                   </div>
 
+                  <div class="mb-2">
+                    <%= link_to "Apercu profil",
+                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_frame_id: item.id)),
+                                class: "btn btn-sm btn-outline-secondary" %>
+                  </div>
+
                   <% if !cosmetics_activation_supported %>
                     <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
                   <% elsif active %>
@@ -202,6 +220,12 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= item.price_euros %> EUR</span>
                     <% end %>
+                  </div>
+
+                  <div class="mb-2">
+                    <%= link_to "Apercu profil",
+                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_xp_theme_id: item.id)),
+                                class: "btn btn-sm btn-outline-secondary" %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -258,6 +282,12 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= item.price_euros %> EUR</span>
                     <% end %>
+                  </div>
+
+                  <div class="mb-2">
+                    <%= link_to "Apercu profil",
+                                new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_card_id: item.id)),
+                                class: "btn btn-sm btn-outline-secondary" %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -319,6 +349,32 @@
                     <span class="quest-meta"><%= item.price_free_credits %> Fragments ou <%= fallback_orbes_price %> Orbes</span>
                   </div>
 
+                  <% if item.item_type == "profile_frame" %>
+                    <div class="mb-2">
+                      <%= link_to "Apercu profil",
+                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_frame_id: item.id)),
+                                  class: "btn btn-sm btn-outline-secondary" %>
+                    </div>
+                  <% elsif item.item_type == "xp_theme" %>
+                    <div class="mb-2">
+                      <%= link_to "Apercu profil",
+                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_xp_theme_id: item.id)),
+                                  class: "btn btn-sm btn-outline-secondary" %>
+                    </div>
+                  <% elsif item.item_type == "profile_card" %>
+                    <div class="mb-2">
+                      <%= link_to "Apercu profil",
+                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_profile_card_id: item.id)),
+                                  class: "btn btn-sm btn-outline-secondary" %>
+                    </div>
+                  <% elsif item.item_type == "title" %>
+                    <div class="mb-2">
+                      <%= link_to "Apercu profil",
+                                  new_purchase_path(preview_params.merge(tab: @active_shop_tab, preview_title_id: item.id)),
+                                  class: "btn btn-sm btn-outline-secondary" %>
+                    </div>
+                  <% end %>
+
                   <% if owned %>
                     <% if item.item_type == "title" %>
                       <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: item.id }, class: "btn btn-sm btn-brand" %>
@@ -358,9 +414,10 @@
       <div class="col-lg-4">
         <section class="hud-section h-100">
           <h2 class="section-title">Apercu profil</h2>
-          <% preview_frame = current_user.respond_to?(:active_profile_frame) ? current_user.active_profile_frame : nil %>
-          <% preview_theme = current_user.respond_to?(:active_xp_theme) ? current_user.active_xp_theme : nil %>
-          <% preview_card = current_user.respond_to?(:active_profile_card) ? current_user.active_profile_card : nil %>
+          <% preview_frame = @preview_profile_frame %>
+          <% preview_theme = @preview_xp_theme %>
+          <% preview_card = @preview_profile_card %>
+          <% preview_title = @preview_title %>
           <div class="shop-preview-card profile-card-container <%= profile_card_classes(preview_card) %> mb-4">
             <div class="shop-impact-profile mb-3">
               <div class="d-flex align-items-center gap-3">
@@ -370,8 +427,8 @@
                     <strong><%= current_user.pseudo %></strong>
                   </div>
                   <p class="quest-meta mb-1 mt-2">Niveau global <%= @total_level %></p>
-                  <% if current_user.active_title.present? %>
-                    <p class="quest-meta mb-0">Titre: <%= current_user.active_title.name %></p>
+                  <% if preview_title.present? %>
+                    <p class="quest-meta mb-0">Titre: <%= preview_title.name %></p>
                   <% else %>
                     <p class="quest-meta mb-0">Aucun titre equipe</p>
                   <% end %>
