@@ -11,6 +11,7 @@
         description: "Suis ta progression, valide tes quêtes et fais monter ton niveau sur MotivUp."
       quests_index:
       fr:
+        hello: "Bonjour"
       pseudo_placeholder: "votre_pseudo"
       password_label: "Mot de passe"
       password_confirmation_label: "Confirmer le mot de passe"
