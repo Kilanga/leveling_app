@@ -10,45 +10,7 @@
         title: "Accueil"
         description: "Suis ta progression, valide tes quêtes et fais monter ton niveau sur MotivUp."
       quests_index:
-        title: "Quetes"
-        description: "Explore les quetes disponibles et choisis celles qui font avancer ta progression."
-      quests_show:
-        title: "Detail quete"
-      purchases_new:
-        title: "Boutique"
-        description: "Découvre la boutique MotivUp : packs, boosts et titres pour personnaliser ton profil."
-      leaderboard_index:
-        title: "Classement"
-        description: "Compare ta progression avec les autres joueurs sur le classement MotivUp."
-      users_show:
-        title: "Profil"
-        description: "Consulte ton profil, équipe tes titres et suis ton évolution sur MotivUp."
-      friends_index:
-        title: "Amis"
-        description: "Ajoute des amis, suis leur progression et avance ensemble sur MotivUp."
-      onboarding_show:
-        description: "Configure tes priorités de progression et démarre rapidement sur MotivUp."
-      notifications_index:
-        title: "Notifications"
-        description: "Consulte tes rappels, activités sociales et alertes de progression sur MotivUp."
-
-# DEVISE AUTHENTICATION
-devise:
-  failure:
-    user:
-      unauthenticated: "Vous devez vous connecter pour accéder à cette page."
-    unauthenticated: "Vous devez vous connecter ou créer un compte pour continuer."
-  sessions:
-    new:
-      title: "Connexion"
-      subtitle: "Reprends ta progression la ou tu l'as laissee."
-      sign_in_button: "Se connecter"
-  registrations:
-    new:
-      title: "Inscription"
-      subtitle: "Cree ton profil et choisis ton avatar de depart."
-      email_label: "Email"
-      pseudo_label: "Pseudo (3-22 caracteres)"
+      fr:
       pseudo_placeholder: "votre_pseudo"
       password_label: "Mot de passe"
       password_confirmation_label: "Confirmer le mot de passe"
