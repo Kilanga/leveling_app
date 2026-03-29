@@ -17,6 +17,90 @@ class PurchasesController < ApplicationController
     "Boost XP x2 (1 semaine)" => { amount: 50, duration: 7.days }
   }.freeze
 
+FREE_REWARD_ITEMS = [
+  {
+    name: "Cadre Terrain",
+    item_type: "profile_frame",
+    description: "Cadre commun debloquable des tes premieres recompenses.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 80
+  },
+  {
+    name: "Theme XP Horizon",
+    item_type: "xp_theme",
+    description: "Theme XP commun pour personnaliser ta barre des le debut.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 90
+  },
+  {
+    name: "Carte de Visite Escouade",
+    item_type: "profile_card",
+    description: "Carte commune simple et propre, ideale pour commencer.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 100
+  },
+  {
+    name: "Cadre Brise",
+    item_type: "profile_frame",
+    description: "Cadre commun minimaliste avec texture cristalline.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 110
+  },
+  {
+    name: "Theme XP Glacier",
+    item_type: "xp_theme",
+    description: "Theme commun froid et net pour une progression lisible.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 120
+  },
+  {
+    name: "Carte de Visite Novice",
+    item_type: "profile_card",
+    description: "Carte commune sobre pour afficher ton profil en debut de saison.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 130
+  },
+  {
+    name: "Cadre Quartz",
+    item_type: "profile_frame",
+    description: "Cadre commun clair avec reflets doux.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 160
+  },
+  {
+    name: "Theme XP Aurore",
+    item_type: "xp_theme",
+    description: "Theme commun aux tons doux pour une progression epuree.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 150
+  },
+  {
+    name: "Carte de Visite Brume",
+    item_type: "profile_card",
+    description: "Carte commune gris-bleu pour un style discret.",
+    rarity: "common",
+    price_coins: nil,
+    price_euros: nil,
+    price_free_credits: 170
+  }
+].freeze
+
   DEFAULT_COSMETIC_ITEMS = [
     {
       name: "Cadre Standard",
@@ -118,6 +202,7 @@ class PurchasesController < ApplicationController
 
   def new
     ensure_default_cosmetic_items!
+    ensure_default_free_reward_items!
 
     @entry_offer_variant = Experimentation.variant_for(user: current_user, experiment_key: "entry_offer_copy")
     @entry_offer_enabled = entry_offer_eligible?
@@ -163,10 +248,13 @@ class PurchasesController < ApplicationController
     @card_items = ShopItem.where(item_type: "profile_card")
                  .where("price_coins IS NOT NULL OR price_euros IS NOT NULL")
                  .order(rarity: :asc, name: :asc)
+    @free_reward_items = ShopItem
+      .where.not(price_free_credits: nil)
+      .order(price_free_credits: :asc, rarity: :asc, name: :asc)
     @owned_item_ids = current_user.user_items.pluck(:shop_item_id)
     @total_level = current_user.user_stats.sum(:level)
     @recommended_shop_items = recommended_shop_items
-    @item_personalized_descriptions = personalized_descriptions_by_item_id(@title_items + @cosmetic_items + @frame_items + @theme_items + @card_items + @recommended_shop_items)
+    @item_personalized_descriptions = personalized_descriptions_by_item_id(@title_items + @cosmetic_items + @frame_items + @theme_items + @card_items + @free_reward_items + @recommended_shop_items)
 
     @shop_challenge = build_shop_challenge
     @shop_challenge_claimed = shop_challenge_claimed?
@@ -474,6 +562,15 @@ def handle_pack_purchase
       item.save!
     end
   end
+
+
+def ensure_default_free_reward_items!
+  FREE_REWARD_ITEMS.each do |attributes|
+    item = ShopItem.find_or_initialize_by(name: attributes[:name], item_type: attributes[:item_type])
+    item.assign_attributes(attributes)
+    item.save!
+  end
+end
 
   def preferred_rarity_order
     if @total_level >= 40
