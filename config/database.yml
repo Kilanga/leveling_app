@@ -84,5 +84,5 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  database: <%= ENV.fetch("DB_NAME") { "leveling_app_production" } %>
   prepared_statements: false
