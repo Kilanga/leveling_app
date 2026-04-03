@@ -1,25 +1,3 @@
-fr:
-  currency:
-    paid:
-      one: "Orbe"
-      other: "Orbes"
-    free:
-      one: "Fragment"
-      other: "Fragments"
-
-  layout:
-    brand_logo_alt: "Logo MotivUp"
-    nav:
-      home: "Accueil"
-      quests: "Quetes"
-      shop: "Boutique"
-      leaderboard: "Classement"
-      friends: "Amis"
-      notifications: "Notifications"
-      profile: "Profil"
-      report_bug: "Signaler un bug"
-      sign_out: "Deconnexion"
-      sign_in: "Connexion"
 
   meta:
     base_title: "MotivUp"
@@ -32,101 +10,60 @@ fr:
         title: "Accueil"
         description: "Suis ta progression, valide tes quêtes et fais monter ton niveau sur MotivUp."
       quests_index:
-        title: "Quetes"
-        description: "Explore les quetes disponibles et choisis celles qui font avancer ta progression."
-      quests_show:
-        title: "Detail quete"
-      purchases_new:
-        title: "Boutique"
-        description: "Découvre la boutique MotivUp : packs, boosts et titres pour personnaliser ton profil."
-      leaderboard_index:
-        title: "Classement"
-        description: "Compare ta progression avec les autres joueurs sur le classement MotivUp."
-      users_show:
-        title: "Profil"
-        description: "Consulte ton profil, équipe tes titres et suis ton évolution sur MotivUp."
-      friends_index:
-        title: "Amis"
-        description: "Ajoute des amis, suis leur progression et avance ensemble sur MotivUp."
-      onboarding_show:
-        description: "Configure tes priorités de progression et démarre rapidement sur MotivUp."
-      notifications_index:
-        title: "Notifications"
-        description: "Consulte tes rappels, activités sociales et alertes de progression sur MotivUp."
-      devise_sessions_new:
-        title: "Connexion"
-        description: "Connecte-toi à MotivUp pour reprendre tes quêtes et continuer ta progression."
-      devise_registrations_new:
-        title: "Inscription"
-        description: "Crée ton compte MotivUp et lance ta progression dès aujourd'hui."
-      devise_passwords_new:
-        title: "Mot de passe oublie"
-
-  # DEVISE AUTHENTICATION
-  devise:
-    sessions:
-      new:
-        title: "Connexion"
-        subtitle: "Reprends ta progression la ou tu l'as laissee."
-        sign_in_button: "Se connecter"
-    registrations:
-      new:
-        title: "Inscription"
-        subtitle: "Cree ton profil et choisis ton avatar de depart."
-        email_label: "Email"
-        pseudo_label: "Pseudo (3-22 caracteres)"
-        pseudo_placeholder: "votre_pseudo"
-        password_label: "Mot de passe"
-        password_confirmation_label: "Confirmer le mot de passe"
-        referral_code_label: "Code parrainage (optionnel)"
-        referral_code_placeholder: "LVL1234"
-        avatar_label: "Choisir votre avatar"
-        avatar_warrior: "Guerrier"
-        avatar_warrior_female: "Guerriere"
-        sign_up_button: "S'inscrire"
-        min_password_notice: "Minimum %{count} caracteres"
-      edit:
-        title: "Mon compte"
-        subtitle: "Mets a jour tes informations de connexion."
-        new_password_label: "Nouveau mot de passe"
-        new_password_help: "Laisse vide si tu ne veux pas le changer."
-        password_confirmation_label: "Confirmer le mot de passe"
-        current_password_label: "Mot de passe actuel"
-        current_password_help: "Obligatoire pour valider les changements."
-        pending_confirmation_alert: "En attente de confirmation pour: %{email}"
-        update_button: "Mettre a jour"
-        delete_account_heading: "Suppression du compte"
-        delete_account_help: "Cette action est definitive."
-        delete_account_button: "Supprimer mon compte"
-        delete_account_confirmation: "Confirmer la suppression ?"
-    passwords:
-      new:
-        title: "Mot de passe oublie"
-        subtitle: "On t'envoie un lien de reinitialisation immediatement."
-        email_label: "Email"
-        email_placeholder: "votre@email.com"
-        send_button: "Envoyer les instructions"
-      edit:
-        title: "Nouveau mot de passe"
-        subtitle: "Securise ton compte avec un mot de passe mis a jour."
-        new_password_label: "Nouveau mot de passe"
-        password_confirmation_label: "Confirmer le mot de passe"
-        min_password_notice: "Minimum %{count} caracteres"
-        update_button: "Mettre a jour"
-    confirmations:
-      new:
-        title: "Confirmation email"
-        subtitle: "Renvoyer les instructions de confirmation."
-        email_label: "Email"
-        email_placeholder: "votre@email.com"
-        send_button: "Renvoyer les instructions"
-    unlocks:
-      new:
-        title: "Deverrouiller le compte"
-        subtitle: "Renvoyer les instructions de deverrouillage."
-        email_label: "Email"
-        email_placeholder: "votre@email.com"
-        send_button: "Renvoyer les instructions"
+      fr:
+        hello: "Bonjour"
+      pseudo_placeholder: "votre_pseudo"
+      password_label: "Mot de passe"
+      password_confirmation_label: "Confirmer le mot de passe"
+      referral_code_label: "Code parrainage (optionnel)"
+      referral_code_placeholder: "LVL1234"
+      avatar_label: "Choisir votre avatar"
+      avatar_warrior: "Guerrier"
+      avatar_warrior_female: "Guerriere"
+      sign_up_button: "S'inscrire"
+      min_password_notice: "Minimum %{count} caracteres"
+    edit:
+      title: "Mon compte"
+      subtitle: "Mets a jour tes informations de connexion."
+      new_password_label: "Nouveau mot de passe"
+      new_password_help: "Laisse vide si tu ne veux pas le changer."
+      password_confirmation_label: "Confirmer le mot de passe"
+      current_password_label: "Mot de passe actuel"
+      current_password_help: "Obligatoire pour valider les changements."
+      pending_confirmation_alert: "En attente de confirmation pour: %{email}"
+      update_button: "Mettre a jour"
+      delete_account_heading: "Suppression du compte"
+      delete_account_help: "Cette action est definitive."
+      delete_account_button: "Supprimer mon compte"
+      delete_account_confirmation: "Confirmer la suppression ?"
+  passwords:
+    new:
+      title: "Mot de passe oublie"
+      subtitle: "On t'envoie un lien de reinitialisation immediatement."
+      email_label: "Email"
+      email_placeholder: "votre@email.com"
+      send_button: "Envoyer les instructions"
+    edit:
+      title: "Nouveau mot de passe"
+      subtitle: "Securise ton compte avec un mot de passe mis a jour."
+      new_password_label: "Nouveau mot de passe"
+      password_confirmation_label: "Confirmer le mot de passe"
+      min_password_notice: "Minimum %{count} caracteres"
+      update_button: "Mettre a jour"
+  confirmations:
+    new:
+      title: "Confirmation email"
+      subtitle: "Renvoyer les instructions de confirmation."
+      email_label: "Email"
+      email_placeholder: "votre@email.com"
+      send_button: "Renvoyer les instructions"
+  unlocks:
+    new:
+      title: "Deverrouiller le compte"
+      subtitle: "Renvoyer les instructions de deverrouillage."
+      email_label: "Email"
+      email_placeholder: "votre@email.com"
+      send_button: "Renvoyer les instructions"
     shared_links:
       sign_in: "Se connecter"
       sign_up: "Creer un compte"
@@ -535,23 +472,7 @@ fr:
       card_text_updated: "Texte de carte mise a jour."
       card_text_error: "Impossible de mettre a jour le texte."
 
-  # ERROR MESSAGES
-  errors:
-    messages:
-      access_denied: "Acces interdit."
-      challenge_requires_friend: "Tu dois d'abord selectionner un ami."
-      reward_already_claimed: "Prime deja reclamee."
-      reward_not_available: "Prime indisponible."
-      shop_challenge_incomplete: "Defi boutique non complete."
-      invalid_stripe_session: "Session de paiement invalide."
-      payment_not_validated: "Paiement non valide."
-      invalid_payment_session: "Session de paiement invalide."
-      purchase_impossible: "Achat impossible."
-      payment_cancelled: "Paiement annule."
-      quest_not_active: "Quete non active."
-      action_not_recognized: "Action non reconnue."
-      daily_target_not_met: "Tu dois completer au moins %{target} quetes pour ouvrir le coffre quotidien."
-      daily_chest_already_claimed: "Coffre quotidien deja reclame."
+
 
   # COMMON LABELS & BUTTONS
   common:
