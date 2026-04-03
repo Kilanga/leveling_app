@@ -12,6 +12,10 @@ class PagesController < ApplicationController
     # Static page, no logic needed
   end
 
+  def credentials
+    render layout: false
+  end
+
   def sitemap
     @public_urls = [
       root_url,

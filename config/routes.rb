@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "sitemap", to: "pages#sitemap", defaults: { format: :xml }
   get "terms", to: "pages#terms", as: :terms
   get "privacy", to: "pages#privacy", as: :privacy
+  get "credentials", to: "pages#credentials", as: :credentials
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
   post "dashboard/claim_daily_chest", to: "dashboard#claim_daily_chest", as: :claim_daily_chest
   devise_for :users, controllers: {
