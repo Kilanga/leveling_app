@@ -219,6 +219,25 @@ en:
     shop_link: Shop
     report_bug_link: Report a bug
     progression_heading: Category progression
+    quickstart:
+      heading: Quickstart guide
+      progress_hint: "%{done}/%{total} steps completed to finish your onboarding."
+      done_badge: Done
+    daily_login_chip: Daily login
+    streak_up_label: 'Streak up: %{title}'
+    boost_prompt:
+      heading: Recommended boost
+      hint: You completed %{count} quests in 7 days. Activate an XP boost to speed up your progress this week.
+      cta: View boosts
+    unknown_player: Unknown player
+    weekly_streak_label: 'Weekly streak: %{count} week(s)'
+    completed_times: Completed %{count} times
+    no_active_quest: No active quest. Start your next mission.
+    reward_label: 'Reward: %{count} XP'
+    completed_badge: Completed
+    weekly_quests_soon: New weekly quests coming soon.
+    level_label: Level %{level}
+    global_level_label: 'Global level: %{level}'
   quests:
     index:
       page_title: Quest hunt
@@ -351,8 +370,8 @@ en:
   leaderboard:
     index:
       page_title: Weekly league leaderboard
-      current_league: 'Current league: %{name}'
-      next_reset: 'Next league reset: %{date}'
+      current_league: 'Current league:'
+      next_reset: 'Next league reset:'
       next_reset_help: In %{time}. Complete league ranking of your league, with updates on page load.
       frozen_warning: 'League movement frozen for now: %{current}/%{total} cohort.'
       promotion_help: Promotions/relegations activate from %{count} players.
@@ -379,6 +398,56 @@ en:
         no_active_quests: No active quests right now.
         no_recent_quests: No recent quests.
         no_popular_quests: No popular quests.
+      countdown_hint: In %{countdown}. Full leaderboard of your league, refreshed on page load.
+      movement_hint: Promotions/relegations activate from %{count} players.
+      table_heading: Weekly league leaderboard
+      th_rank: Rank
+      th_avatar: Avatar
+      th_player: Player
+      th_week_xp: Week XP
+      th_league: League
+      promotion_projected: Projected promotion
+      relegation_projected: Projected relegation
+      hold_projected: Projected hold
+      up_label: Moving up
+      down_label: Moving down
+      hold_label: Holding
+      you_badge: You
+      avatar_alt: "%{pseudo}'s avatar"
+      no_data: No league data available.
+    player_home:
+      page_title: "%{pseudo}'s home"
+      page_subtitle: Public view of the player dashboard (read-only).
+      avatar_alt: "%{pseudo}'s avatar"
+      global_level: 'Global level:'
+      xp_this_week: 'XP this week:'
+      active_card: 'Active card:'
+      social_heading: Social
+      max_pending_requests: This player has reached the pending request limit.
+      add_friend_button: Add friend
+      already_friend: Already friends
+      request_pending: Request already pending
+      own_home: This is your home
+      category_progress_heading: Progress by category
+      level_label: Level %{level}
+      no_progress: No progress available.
+      weekly_quests_heading: Weekly quests
+      reward_label: 'Reward: %{count} XP'
+      completed_chip: Completed
+      in_progress_chip: In progress
+      no_weekly_quest: No weekly quest visible.
+      active_quests_heading: Active quests
+      no_active_quest: No active quest right now.
+      radar_heading: Progress radar
+      no_chart_data: No progress data to display.
+      recent_quests_heading: Recently completed quests
+      finished_on: Finished on %{date}
+      no_recent_quest: No recent quest.
+      most_completed_heading: Most completed quests
+      last_completion: 'Last completion: %{date}'
+      no_popular_quest: No popular quest.
+      total_completed: 'Total completed quests: %{count}'
+      back_to_leaderboard: Back to leaderboard
   friends:
     index:
       page_title: My friends list
@@ -408,6 +477,39 @@ en:
         heading: Most completed quests by my friends
       recent:
         heading: Recent quests by my friends
+      page_subtitle: Manage your circle, invitations, and active challenges.
+      challenge_button: Start a 48h challenge
+      no_friends: You don't have any friends yet.
+      active_challenges_heading: Active challenges
+      versus: Versus
+      ends_on: Ends on %{date}
+      xp_label: 'XP: %{count}'
+      no_active_challenge: No active challenge.
+      referral_heading: Referral
+      referral_hint: 'Invite a friend: they earn %{invitee} Fragments on their first validated quest and you earn %{inviter} Fragments.'
+      share_text: 'I''m leveling up on MotivUp. Come challenge me:'
+      share_button: Share
+      received_requests_heading: Received requests
+      awaiting_reply: Awaiting your reply
+      accept_button: Accept
+      reject_button: Decline
+      no_pending_request: No pending request.
+      sent_requests_heading: Sent requests
+      invitation_sent: Invitation sent
+      cancel_button: Cancel
+      search_heading: Search for a friend
+      search_label: Search by username
+      search_placeholder: Player username
+      search_button: Search
+      results_heading: Results
+      send_request_button: Send a request
+      no_player_found: No player found.
+      friends_most_completed_heading: Quests most completed by my friends
+      completed_times_by: Completed %{count} times by
+      no_popular_quest: No popular quest among your friends.
+      friends_recent_heading: Latest quests completed by my friends
+      finished_on_by: Finished on %{date} by
+      no_recent_quest: No recent quest.
   user:
     show:
       page_title: Profile
@@ -447,6 +549,58 @@ en:
         unlocked_badge: Unlocked
         locked_badge: Locked
         objective_not_reached: Objective not reached
+    profile:
+      page_title: "%{pseudo}'s profile"
+      avatar_alt: "%{pseudo}'s avatar"
+      stats_completed_quests: Completed quests
+      stats_xp_week: XP this week
+      stats_weekly_streak: Weekly streak
+      change_password: Change my password
+      new_pseudo_placeholder: New username
+      change_pseudo_button: Change my username
+      next_pseudo_change: Next username change available on %{date}.
+      pseudo_change_hint: The username can be changed once a week.
+      cosmetics_heading: Cosmetics
+      frame_heading: Profile Frame
+      frame_hint: Frame around your username on the leaderboard.
+      no_active_frame: No active frame
+      theme_heading: XP Bar Theme
+      theme_hint: Colors and style of your progress bar.
+      default_theme: Default theme
+      card_heading: Profile Card
+      card_hint: Shown on your profile and visible to other players.
+      no_active_card: No active card
+      card_text_placeholder: Your personal message (max 100 characters)
+      update_button: Update
+      active_badge: Active
+      active_badge_f: Active
+      equipped_badge: Equipped
+      titles_heading: My Titles
+      current_title_label: 'Current title:'
+      no_active_title: No active title
+      no_titles_available: No titles available right now. Earn them in the shop!
+      common_titles_heading: Free Common Titles
+      prestige_titles_heading: Free Prestige Titles
+      rarity_common: Common
+      unlocked_badge: Unlocked
+      locked_badge: Locked
+      goal_not_reached: Goal not reached
+      secret_goal: 'Goal: secret'
+      quests_history_heading: Quest history
+      quest_completed_times: Completed %{count} times
+      challenges_history_heading: Friend challenge history
+      versus: Versus
+      victory_badge: Victory (+%{count} Fragments)
+      defeat_badge: Defeat
+      draw_badge: Draw
+      no_finished_challenge: No finished challenge yet.
+    inventory:
+      page_title: "\U0001F392 %{pseudo}'s inventory"
+      titles_heading: "\U0001F3C6 Titles"
+      active_badge: Active
+      activate_button: Activate
+      titles_inventory_heading: Titles inventory
+      deactivate_button: Deactivate
   notifications:
     index:
       page_title: Notifications
@@ -555,6 +709,30 @@ en:
       cosmetic_activation_error: Unable to activate this cosmetic.
       card_text_updated: Profile card text updated.
       card_text_error: Unable to update card text.
+    access_denied: Access denied.
+    daily_chest:
+      not_ready: You must complete %{count} quests today to open the daily chest.
+      already_claimed: Daily chest already claimed today.
+      opened: 'Daily chest opened: +%{count} free credits.'
+    user:
+      invalid_pseudo: Invalid username.
+      pseudo_cooldown: You can change your username again on %{date}
+      pseudo_not_allowed: This username is not allowed.
+      pseudo_unchanged: This is already your username.
+      pseudo_updated: Username updated.
+      title_not_found: Title not found.
+      title_activated: Title activated.
+      title_removed: Title removed.
+      avatar_not_found: Avatar not found.
+      avatar_equipped: Avatar equipped successfully.
+      avatar_equip_failed: Unable to equip this avatar.
+      invalid_cosmetic_type: Invalid cosmetic type.
+      cosmetic_not_found: Cosmetic not found.
+      cosmetic_activated: Cosmetic activated successfully.
+      cosmetic_activation_failed: Unable to activate this cosmetic.
+      card_text_updated: Card text updated.
+      card_text_update_failed: Unable to update the text.
+    google_login_failed: Google sign-in failed.
   errors:
     messages:
       challenge_requires_friend: You can only launch a challenge with an accepted friend.

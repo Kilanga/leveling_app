@@ -1,16 +1,16 @@
-<h1 class="page-title">Profil de <%= @user.pseudo %></h1>
+<h1 class="page-title"><%= t('user.profile.page_title', pseudo: @user.pseudo) %></h1>
 
 <div class="row g-3 mb-4">
-  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong>Quetes completees</strong><p class="mb-0"><%= @completed_quests_total %></p></div></div></div>
-  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong>XP cette semaine</strong><p class="mb-0"><%= @xp_this_week %></p></div></div></div>
-  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong>Streak hebdo</strong><p class="mb-0"><%= @user.weekly_streak_count %></p></div></div></div>
+  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong><%= t('user.profile.stats_completed_quests') %></strong><p class="mb-0"><%= @completed_quests_total %></p></div></div></div>
+  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong><%= t('user.profile.stats_xp_week') %></strong><p class="mb-0"><%= @xp_this_week %></p></div></div></div>
+  <div class="col-md-4"><div class="surface-card"><div class="card-body"><strong><%= t('user.profile.stats_weekly_streak') %></strong><p class="mb-0"><%= @user.weekly_streak_count %></p></div></div></div>
 </div>
 
 <!-- Conteneur responsive -->
 <div class="row align-items-center g-4">
   <!-- Avatar (colonne gauche) -->
   <div class="col-md-4 text-center">
-    <%= user_avatar_image(@user, width: 250, height: 250, css_class: "rounded-circle", alt: "Avatar de #{@user.pseudo}") %>
+    <%= user_avatar_image(@user, width: 250, height: 250, css_class: "rounded-circle", alt: t('user.profile.avatar_alt', pseudo: @user.pseudo)) %>
   </div>
 
   <!-- Actions compte (colonne droite) -->
@@ -20,19 +20,19 @@
         <div class="row g-3 align-items-start">
           <div class="col-lg-8">
             <div class="d-grid gap-2">
-              <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-outline-quest" %>
+              <%= link_to t('user.profile.change_password'), edit_user_registration_path, class: "btn btn-outline-quest" %>
               <%= form_with url: update_pseudo_path, method: :patch, local: true, class: "d-grid gap-2" do %>
-                <%= text_field_tag "user[pseudo]", nil, class: "form-control", placeholder: "Nouveau pseudo", minlength: 3, maxlength: 22 %>
-                <%= submit_tag "Changer mon pseudo", class: "btn btn-outline-quest" %>
+                <%= text_field_tag "user[pseudo]", nil, class: "form-control", placeholder: t('user.profile.new_pseudo_placeholder'), minlength: 3, maxlength: 22 %>
+                <%= submit_tag t('user.profile.change_pseudo_button'), class: "btn btn-outline-quest" %>
               <% end %>
             </div>
           </div>
         </div>
 
         <% if @next_pseudo_change_at.present? %>
-          <p class="quest-meta mt-3 mb-0">Prochain changement de pseudo possible le <%= @next_pseudo_change_at.strftime("%d/%m/%Y") %>.</p>
+          <p class="quest-meta mt-3 mb-0"><%= t('user.profile.next_pseudo_change', date: @next_pseudo_change_at.strftime("%d/%m/%Y")) %></p>
         <% else %>
-          <p class="quest-meta mt-3 mb-0">Le pseudo peut etre modifie une fois par semaine.</p>
+          <p class="quest-meta mt-3 mb-0"><%= t('user.profile.pseudo_change_hint') %></p>
         <% end %>
       </div>
     </div>
@@ -40,26 +40,26 @@
 </div>
 
 <!-- Gestion des titres -->
-<h2 class="section-title mt-4">Cosmétiques</h2>
+<h2 class="section-title mt-4"><%= t('user.profile.cosmetics_heading') %></h2>
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
     <div class="row g-3">
       <!-- Profile Frame -->
       <div class="col-lg-6">
-        <h3 class="section-title">Cadre de Profil</h3>
-        <p class="quest-meta mb-2">Encadrement autour de ton pseudo au classement.</p>
+        <h3 class="section-title"><%= t('user.profile.frame_heading') %></h3>
+        <p class="quest-meta mb-2"><%= t('user.profile.frame_hint') %></p>
         <% frame = @user.active_profile_frame %>
         <% if frame.present? %>
           <div class="shop-state-chip shop-state-chip--equipped mb-2"><%= frame.name %></div>
         <% else %>
-          <div class="shop-state-chip shop-state-chip--available mb-2">Aucun cadre actif</div>
+          <div class="shop-state-chip shop-state-chip--available mb-2"><%= t('user.profile.no_active_frame') %></div>
         <% end %>
         <div class="shop-list shop-list--flat">
           <% @owned_frames.each do |item| %>
             <div class="shop-row shop-row--flat">
               <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
               <% if frame&.id == item.id %>
-                <span class="shop-state-chip shop-state-chip--equipped">Actif</span>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('user.profile.active_badge') %></span>
               <% else %>
                 <%= button_to item.name, { action: "activate_cosmetic" }, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-brand" %>
               <% end %>
@@ -70,20 +70,20 @@
 
       <!-- XP Theme -->
       <div class="col-lg-6">
-        <h3 class="section-title">Thème de Barre XP</h3>
-        <p class="quest-meta mb-2">Couleurs et style de ta barre de progression.</p>
+        <h3 class="section-title"><%= t('user.profile.theme_heading') %></h3>
+        <p class="quest-meta mb-2"><%= t('user.profile.theme_hint') %></p>
         <% theme = @user.active_xp_theme %>
         <% if theme.present? %>
           <div class="shop-state-chip shop-state-chip--equipped mb-2"><%= theme.name %></div>
         <% else %>
-          <div class="shop-state-chip shop-state-chip--available mb-2">Thème par défaut</div>
+          <div class="shop-state-chip shop-state-chip--available mb-2"><%= t('user.profile.default_theme') %></div>
         <% end %>
         <div class="shop-list shop-list--flat">
           <% @owned_themes.each do |item| %>
             <div class="shop-row shop-row--flat">
               <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
               <% if theme&.id == item.id %>
-                <span class="shop-state-chip shop-state-chip--equipped">Actif</span>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('user.profile.active_badge') %></span>
               <% else %>
                 <%= button_to item.name, { action: "activate_cosmetic" }, method: :post, params: { shop_item_id: item.id, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-brand" %>
               <% end %>
@@ -95,19 +95,19 @@
 
     <!-- Profile Card -->
     <div class="mt-4">
-      <h3 class="section-title">Carte de Visite</h3>
-      <p class="quest-meta mb-2">Affichée dans ton profil et visible par les autres joueurs.</p>
+      <h3 class="section-title"><%= t('user.profile.card_heading') %></h3>
+      <p class="quest-meta mb-2"><%= t('user.profile.card_hint') %></p>
       <% card = @user.active_profile_card %>
       <% if card.present? %>
         <div class="shop-state-chip shop-state-chip--equipped mb-2"><%= card.name %></div>
       <% else %>
-        <div class="shop-state-chip shop-state-chip--available mb-2">Aucune carte active</div>
+        <div class="shop-state-chip shop-state-chip--available mb-2"><%= t('user.profile.no_active_card') %></div>
       <% end %>
 
       <% if card.present? %>
         <%= form_with url: { action: "update_profile_card_text" }, method: :patch, local: true, class: "mb-3" do %>
-          <%= text_field_tag "profile_card_text", @user.profile_card_custom_text, class: "form-control", placeholder: "Ton message perso (max 100 caracteres)", maxlength: 100 %>
-          <%= submit_tag "Mettre a jour", class: "btn btn-sm btn-brand mt-2" %>
+          <%= text_field_tag "profile_card_text", @user.profile_card_custom_text, class: "form-control", placeholder: t('user.profile.card_text_placeholder'), maxlength: 100 %>
+          <%= submit_tag t('user.profile.update_button'), class: "btn btn-sm btn-brand mt-2" %>
         <% end %>
       <% end %>
 
@@ -116,7 +116,7 @@
           <div class="shop-row shop-row--flat">
             <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
             <% if card&.id == item.id %>
-              <span class="shop-state-chip shop-state-chip--equipped">Active</span>
+              <span class="shop-state-chip shop-state-chip--equipped"><%= t('user.profile.active_badge_f') %></span>
             <% else %>
               <%= button_to item.name, { action: "activate_cosmetic" }, method: :post, params: { shop_item_id: item.id, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-brand" %>
             <% end %>
@@ -127,15 +127,15 @@
   </div>
 </div>
 
-<h2 class="section-title mt-4">Mes Titres</h2>
+<h2 class="section-title mt-4"><%= t('user.profile.titles_heading') %></h2>
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
     <p class="mb-2">
-      <span class="shop-rarity-text shop-rarity-text--common">Titre actuel:</span>
+      <span class="shop-rarity-text shop-rarity-text--common"><%= t('user.profile.current_title_label') %></span>
       <% if @user.active_title.present? %>
         <span class="badge bg-<%= @user.title_rarity_class %>"><%= @user.active_title.name %></span>
       <% else %>
-        <strong class="text-white">Aucun titre actif</strong>
+        <strong class="text-white"><%= t('user.profile.no_active_title') %></strong>
       <% end %>
     </p>
     
@@ -153,7 +153,7 @@
             <div class="d-flex align-items-center gap-2 flex-wrap">
               <span class="badge bg-<%= badge_class %>"><%= title.name %></span>
               <% if is_active %>
-                <span class="shop-state-chip shop-state-chip--equipped">Equipe</span>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('user.profile.equipped_badge') %></span>
               <% end %>
             </div>
             <% unless is_active %>
@@ -163,12 +163,12 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-muted small">Aucun titre disponible pour le moment. Gagnez-les en boutique!</p>
+      <p class="text-muted small"><%= t('user.profile.no_titles_available') %></p>
     <% end %>
   </div>
 </div>
 
-<h2 class="section-title mt-4">Titres Communs Gratuits</h2>
+<h2 class="section-title mt-4"><%= t('user.profile.common_titles_heading') %></h2>
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
     <div class="shop-list shop-list--flat">
@@ -176,22 +176,22 @@
         <div class="shop-row shop-row--flat">
           <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
             <strong class="shop-rarity-text shop-rarity-text--common"><%= entry[:name] %></strong>
-            <span class="rarity-chip rarity-chip--common">Common</span>
+            <span class="rarity-chip rarity-chip--common"><%= t('user.profile.rarity_common') %></span>
           </div>
           <p class="quest-meta mb-1"><%= entry[:description] %></p>
           <p class="quest-meta mb-2">Objectif: <%= entry[:objective] %></p>
 
           <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
             <% if entry[:owned] %>
-              <span class="shop-state-chip shop-state-chip--owned">Debloque</span>
+              <span class="shop-state-chip shop-state-chip--owned"><%= t('user.profile.unlocked_badge') %></span>
               <% if entry[:active] %>
-                <span class="shop-state-chip shop-state-chip--equipped">Equipe</span>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('user.profile.equipped_badge') %></span>
               <% else %>
                 <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: entry[:id] }, class: "btn btn-sm btn-brand" %>
               <% end %>
             <% else %>
-              <span class="shop-state-chip shop-state-chip--available">Bloque</span>
-              <span class="quest-meta">Objectif non atteint</span>
+              <span class="shop-state-chip shop-state-chip--available"><%= t('user.profile.locked_badge') %></span>
+              <span class="quest-meta"><%= t('user.profile.goal_not_reached') %></span>
             <% end %>
           </div>
         </div>
@@ -200,7 +200,7 @@
   </div>
 </div>
 
-<h2 class="section-title mt-4">Titres Prestige Gratuits</h2>
+<h2 class="section-title mt-4"><%= t('user.profile.prestige_titles_heading') %></h2>
 <div class="surface-card surface-card--shell mb-4">
   <div class="card-body">
     <div class="shop-list shop-list--flat">
@@ -214,20 +214,20 @@
           <% if entry[:owned] %>
             <p class="quest-meta mb-2">Objectif: <%= entry[:objective] %></p>
           <% else %>
-            <p class="quest-meta mb-2">Objectif: secret</p>
+            <p class="quest-meta mb-2"><%= t('user.profile.secret_goal') %></p>
           <% end %>
 
           <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
             <% if entry[:owned] %>
-              <span class="shop-state-chip shop-state-chip--owned">Debloque</span>
+              <span class="shop-state-chip shop-state-chip--owned"><%= t('user.profile.unlocked_badge') %></span>
               <% if entry[:active] %>
-                <span class="shop-state-chip shop-state-chip--equipped">Equipe</span>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('user.profile.equipped_badge') %></span>
               <% else %>
                 <%= button_to "Equiper", activate_title_path, method: :post, params: { shop_item_id: entry[:id] }, class: "btn btn-sm btn-brand" %>
               <% end %>
             <% else %>
-              <span class="shop-state-chip shop-state-chip--available">Bloque</span>
-              <span class="quest-meta">Objectif non atteint</span>
+              <span class="shop-state-chip shop-state-chip--available"><%= t('user.profile.locked_badge') %></span>
+              <span class="quest-meta"><%= t('user.profile.goal_not_reached') %></span>
             <% end %>
           </div>
         </div>
@@ -236,32 +236,32 @@
   </div>
 </div>
 
-<h2 class="section-title mt-4">Historique des quêtes</h2>
+<h2 class="section-title mt-4"><%= t('user.profile.quests_history_heading') %></h2>
 <ul class="list-group surface-list">
   <% @user_quests.each do |user_quest| %>
     <li class="list-group-item">
-      <strong><%= user_quest.quest.title %></strong> - Complété <%= user_quest.completed_count %> fois
+      <strong><%= user_quest.quest.title %></strong> - <%= t('user.profile.quest_completed_times', count: user_quest.completed_count) %>
     </li>
   <% end %>
 </ul>
 
-<h2 class="section-title mt-4">Historique des defis amis</h2>
+<h2 class="section-title mt-4"><%= t('user.profile.challenges_history_heading') %></h2>
 <ul class="list-group surface-list">
   <% if @challenge_history.any? %>
     <% @challenge_history.each do |challenge| %>
       <% opponent = challenge.challenger == @user ? challenge.challenged : challenge.challenger %>
       <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <span>Contre <strong><%= opponent.pseudo %></strong></span>
+        <span><%= t('user.profile.versus') %> <strong><%= opponent.pseudo %></strong></span>
         <% if challenge.winner_id == @user.id %>
-          <span class="badge text-bg-success">Victoire (+<%= challenge.reward_coins %> Fragments)</span>
+          <span class="badge text-bg-success"><%= t('user.profile.victory_badge', count: challenge.reward_coins) %></span>
         <% elsif challenge.winner_id.present? %>
-          <span class="badge text-bg-secondary">Defaite</span>
+          <span class="badge text-bg-secondary"><%= t('user.profile.defeat_badge') %></span>
         <% else %>
-          <span class="badge text-bg-warning">Egalite</span>
+          <span class="badge text-bg-warning"><%= t('user.profile.draw_badge') %></span>
         <% end %>
       </li>
     <% end %>
   <% else %>
-    <li class="list-group-item">Aucun defi termine pour le moment.</li>
+    <li class="list-group-item"><%= t('user.profile.no_finished_challenge') %></li>
   <% end %>
 </ul>

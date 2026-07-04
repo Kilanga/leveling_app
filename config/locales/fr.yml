@@ -219,6 +219,25 @@ fr:
     shop_link: Boutique
     report_bug_link: Signaler un bug
     progression_heading: Progression des categories
+    quickstart:
+      heading: Guide rapide de départ
+      progress_hint: "%{done}/%{total} étapes complétées pour finir ton onboarding."
+      done_badge: Terminé
+    daily_login_chip: Connexion du jour
+    streak_up_label: 'Streak up : %{title}'
+    boost_prompt:
+      heading: Boost recommandé
+      hint: Tu as validé %{count} quêtes sur 7 jours. Active un boost XP pour accélérer ta progression cette semaine.
+      cta: Voir les boosts
+    unknown_player: Joueur inconnu
+    weekly_streak_label: 'Streak hebdo : %{count} semaine(s)'
+    completed_times: Complétée %{count} fois
+    no_active_quest: Aucune quête active. Lance ta prochaine mission.
+    reward_label: 'Récompense : %{count} XP'
+    completed_badge: Complétée
+    weekly_quests_soon: Nouvelles quêtes hebdomadaires bientôt.
+    level_label: Niveau %{level}
+    global_level_label: 'Niveau global : %{level}'
   quests:
     index:
       page_title: Chasse aux quetes
@@ -351,8 +370,8 @@ fr:
   leaderboard:
     index:
       page_title: Classement ligue hebdomadaire
-      current_league: 'Ligue actuelle: %{name}'
-      next_reset: 'Prochain reset ligue: %{date}'
+      current_league: 'Ligue actuelle:'
+      next_reset: 'Prochain reset ligue:'
       next_reset_help: Dans %{time}. Classement complet de ta ligue, avec mise a jour au chargement de la page.
       frozen_warning: 'Mouvement de ligue fige pour le moment: cohorte %{current}/%{total}.'
       promotion_help: Les promotions/relegations s'activent a partir de %{count} joueurs.
@@ -379,6 +398,56 @@ fr:
         no_active_quests: Aucune quete active en ce moment.
         no_recent_quests: Aucune quete recente.
         no_popular_quests: Aucune quete populaire.
+      countdown_hint: Dans %{countdown}. Classement complet de ta ligue, avec mise à jour au chargement de la page.
+      movement_hint: Les promotions/relégations s'activent à partir de %{count} joueurs.
+      table_heading: Classement ligue hebdomadaire
+      th_rank: Rang
+      th_avatar: Avatar
+      th_player: Joueur
+      th_week_xp: XP semaine
+      th_league: Ligue
+      promotion_projected: Promotion projetée
+      relegation_projected: Relégation projetée
+      hold_projected: Maintien projeté
+      up_label: Montée
+      down_label: Descente
+      hold_label: Maintien
+      you_badge: Toi
+      avatar_alt: Avatar de %{pseudo}
+      no_data: Aucune donnée de ligue disponible.
+    player_home:
+      page_title: Accueil de %{pseudo}
+      page_subtitle: Vue publique du dashboard joueur (lecture seule).
+      avatar_alt: Avatar de %{pseudo}
+      global_level: 'Niveau global:'
+      xp_this_week: 'XP cette semaine:'
+      active_card: 'Carte active:'
+      social_heading: Social
+      max_pending_requests: Ce joueur a atteint le max de demandes en attente.
+      add_friend_button: Ajouter en ami
+      already_friend: Déjà ami
+      request_pending: Demande déjà en attente
+      own_home: Ceci est ton accueil
+      category_progress_heading: Progression par catégorie
+      level_label: Niveau %{level}
+      no_progress: Aucune progression disponible.
+      weekly_quests_heading: Quêtes hebdomadaires
+      reward_label: 'Récompense: %{count} XP'
+      completed_chip: Complétée
+      in_progress_chip: En cours
+      no_weekly_quest: Aucune quête hebdomadaire visible.
+      active_quests_heading: Quêtes en cours
+      no_active_quest: Aucune quête active en ce moment.
+      radar_heading: Radar progression
+      no_chart_data: Aucune donnée de progression à afficher.
+      recent_quests_heading: Dernières quêtes réalisées
+      finished_on: Terminée le %{date}
+      no_recent_quest: Aucune quête récente.
+      most_completed_heading: Quêtes les plus réalisées
+      last_completion: 'Dernière complétion: %{date}'
+      no_popular_quest: Aucune quête populaire.
+      total_completed: 'Total quêtes complétées: %{count}'
+      back_to_leaderboard: Retour au classement
   friends:
     index:
       page_title: Liste de mes amis
@@ -408,6 +477,39 @@ fr:
         heading: Quetes les plus realisees par mes amis
       recent:
         heading: Dernieres quetes realisees par mes amis
+      page_subtitle: Gère ton cercle, tes invitations et tes défis actifs.
+      challenge_button: Lancer un défi 48h
+      no_friends: Tu n'as pas encore d'amis.
+      active_challenges_heading: Défis actifs
+      versus: Contre
+      ends_on: Se termine le %{date}
+      xp_label: 'XP : %{count}'
+      no_active_challenge: Aucun défi actif.
+      referral_heading: Parrainage
+      referral_hint: 'Invite un ami : il gagne %{invitee} Fragments à sa première quête validée et toi %{inviter} Fragments.'
+      share_text: 'Je progresse sur MotivUp. Viens me challenger :'
+      share_button: Partager
+      received_requests_heading: Demandes reçues
+      awaiting_reply: En attente de ta réponse
+      accept_button: Accepter
+      reject_button: Refuser
+      no_pending_request: Aucune demande en attente.
+      sent_requests_heading: Demandes envoyées
+      invitation_sent: Invitation envoyée
+      cancel_button: Annuler
+      search_heading: Rechercher un ami
+      search_label: Rechercher par pseudo
+      search_placeholder: Pseudo du joueur
+      search_button: Rechercher
+      results_heading: Résultats
+      send_request_button: Envoyer une demande
+      no_player_found: Aucun joueur trouvé.
+      friends_most_completed_heading: Quêtes les plus réalisées par mes amis
+      completed_times_by: Complétée %{count} fois par
+      no_popular_quest: Aucune quête populaire chez tes amis.
+      friends_recent_heading: Dernières quêtes réalisées par mes amis
+      finished_on_by: Terminé le %{date} par
+      no_recent_quest: Aucune quête récente.
   user:
     show:
       page_title: Profil
@@ -447,6 +549,58 @@ fr:
         unlocked_badge: Debloque
         locked_badge: Bloque
         objective_not_reached: Objectif non atteint
+    profile:
+      page_title: Profil de %{pseudo}
+      avatar_alt: Avatar de %{pseudo}
+      stats_completed_quests: Quêtes complétées
+      stats_xp_week: XP cette semaine
+      stats_weekly_streak: Streak hebdo
+      change_password: Modifier mon mot de passe
+      new_pseudo_placeholder: Nouveau pseudo
+      change_pseudo_button: Changer mon pseudo
+      next_pseudo_change: Prochain changement de pseudo possible le %{date}.
+      pseudo_change_hint: Le pseudo peut être modifié une fois par semaine.
+      cosmetics_heading: Cosmétiques
+      frame_heading: Cadre de Profil
+      frame_hint: Encadrement autour de ton pseudo au classement.
+      no_active_frame: Aucun cadre actif
+      theme_heading: Thème de Barre XP
+      theme_hint: Couleurs et style de ta barre de progression.
+      default_theme: Thème par défaut
+      card_heading: Carte de Visite
+      card_hint: Affichée dans ton profil et visible par les autres joueurs.
+      no_active_card: Aucune carte active
+      card_text_placeholder: Ton message perso (max 100 caractères)
+      update_button: Mettre à jour
+      active_badge: Actif
+      active_badge_f: Active
+      equipped_badge: Équipé
+      titles_heading: Mes Titres
+      current_title_label: 'Titre actuel:'
+      no_active_title: Aucun titre actif
+      no_titles_available: Aucun titre disponible pour le moment. Gagnez-les en boutique !
+      common_titles_heading: Titres Communs Gratuits
+      prestige_titles_heading: Titres Prestige Gratuits
+      rarity_common: Commun
+      unlocked_badge: Débloqué
+      locked_badge: Bloqué
+      goal_not_reached: Objectif non atteint
+      secret_goal: 'Objectif : secret'
+      quests_history_heading: Historique des quêtes
+      quest_completed_times: Complété %{count} fois
+      challenges_history_heading: Historique des défis amis
+      versus: Contre
+      victory_badge: Victoire (+%{count} Fragments)
+      defeat_badge: Défaite
+      draw_badge: Égalité
+      no_finished_challenge: Aucun défi terminé pour le moment.
+    inventory:
+      page_title: "\U0001F392 Inventaire de %{pseudo}"
+      titles_heading: "\U0001F3C6 Titres"
+      active_badge: Actif
+      activate_button: Activer
+      titles_inventory_heading: Inventaire des Titres
+      deactivate_button: Désactiver
   notifications:
     index:
       page_title: Notifications
@@ -555,6 +709,30 @@ fr:
       cosmetic_activation_error: Impossible d'activer ce cosmetic.
       card_text_updated: Texte de carte mise a jour.
       card_text_error: Impossible de mettre a jour le texte.
+    access_denied: Accès interdit.
+    daily_chest:
+      not_ready: Tu dois valider %{count} quêtes aujourd'hui pour ouvrir le coffre quotidien.
+      already_claimed: Coffre quotidien déjà réclamé aujourd'hui.
+      opened: 'Coffre quotidien ouvert : +%{count} crédits gratuits.'
+    user:
+      invalid_pseudo: Pseudo invalide.
+      pseudo_cooldown: Tu pourras rechanger ton pseudo le %{date}
+      pseudo_not_allowed: Ce pseudo n'est pas autorisé.
+      pseudo_unchanged: Ce pseudo est déjà le tien.
+      pseudo_updated: Pseudo mis à jour.
+      title_not_found: Titre introuvable.
+      title_activated: Titre activé.
+      title_removed: Titre retiré.
+      avatar_not_found: Avatar introuvable.
+      avatar_equipped: Avatar équipé avec succès.
+      avatar_equip_failed: Impossible d'équiper cet avatar.
+      invalid_cosmetic_type: Type de cosmétique invalide.
+      cosmetic_not_found: Cosmétique introuvable.
+      cosmetic_activated: Cosmétique activé avec succès.
+      cosmetic_activation_failed: Impossible d'activer ce cosmétique.
+      card_text_updated: Texte de carte mis à jour.
+      card_text_update_failed: Impossible de mettre à jour le texte.
+    google_login_failed: Connexion Google impossible.
   errors:
     messages:
       challenge_requires_friend: Tu ne peux lancer un defi qu'avec un ami accepte.

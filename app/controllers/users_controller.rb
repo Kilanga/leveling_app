@@ -31,23 +31,23 @@ class UsersController < ApplicationController
 
   def update_pseudo
     new_pseudo = params.dig(:user, :pseudo).to_s.strip
-    return redirect_to user_profile_path, alert: "Pseudo invalide." if new_pseudo.blank?
+    return redirect_to user_profile_path, alert: I18n.t("flash.user.invalid_pseudo") if new_pseudo.blank?
 
     if pseudo_change_locked?(current_user)
       available_at = current_user.pseudo_last_changed_at + PSEUDO_CHANGE_COOLDOWN
-      return redirect_to user_profile_path, alert: "Tu pourras rechanger ton pseudo le #{available_at.strftime('%d/%m/%Y')}"
+      return redirect_to user_profile_path, alert: I18n.t("flash.user.pseudo_cooldown", date: available_at.strftime("%d/%m/%Y"))
     end
 
     if banned_pseudo?(new_pseudo)
-      return redirect_to user_profile_path, alert: "Ce pseudo n'est pas autorise."
+      return redirect_to user_profile_path, alert: I18n.t("flash.user.pseudo_not_allowed")
     end
 
     if new_pseudo.casecmp(current_user.pseudo.to_s).zero?
-      return redirect_to user_profile_path, notice: "Ce pseudo est deja le tien."
+      return redirect_to user_profile_path, notice: I18n.t("flash.user.pseudo_unchanged")
     end
 
     if current_user.update(pseudo: new_pseudo, pseudo_last_changed_at: Time.current)
-      redirect_to user_profile_path, notice: "Pseudo mis a jour."
+      redirect_to user_profile_path, notice: I18n.t("flash.user.pseudo_updated")
     else
       redirect_to user_profile_path, alert: current_user.errors.full_messages.to_sentence
     end
@@ -55,39 +55,39 @@ class UsersController < ApplicationController
 
   def activate_title
     item = current_user.shop_items.find_by(id: params[:shop_item_id], item_type: "title")
-    return redirect_to user_profile_path, alert: "Titre introuvable." unless item
+    return redirect_to user_profile_path, alert: I18n.t("flash.user.title_not_found") unless item
 
     current_user.activate_title(item)
-    redirect_to user_profile_path, notice: "Titre activé."
+    redirect_to user_profile_path, notice: I18n.t("flash.user.title_activated")
   end
 
   def deactivate_title
     current_user.deactivate_title
-    redirect_to user_profile_path, notice: "Titre retiré."
+    redirect_to user_profile_path, notice: I18n.t("flash.user.title_removed")
   end
 
   def activate_avatar
     item = current_user.shop_items.find_by(id: params[:shop_item_id], item_type: "cosmetic")
-    return redirect_to new_purchase_path, alert: "Avatar introuvable." unless item
+    return redirect_to new_purchase_path, alert: I18n.t("flash.user.avatar_not_found") unless item
 
     if current_user.activate_avatar(item)
-      redirect_to new_purchase_path, notice: "Avatar equipe avec succes."
+      redirect_to new_purchase_path, notice: I18n.t("flash.user.avatar_equipped")
     else
-      redirect_to new_purchase_path, alert: "Impossible d'equiper cet avatar."
+      redirect_to new_purchase_path, alert: I18n.t("flash.user.avatar_equip_failed")
     end
   end
 
   def activate_cosmetic
     cosmetic_type = params[:cosmetic_type].to_s.presence
-    return redirect_to user_profile_path, alert: "Type de cosmetic invalide." unless cosmetic_type.in?(%w[profile_frame xp_theme profile_card])
+    return redirect_to user_profile_path, alert: I18n.t("flash.user.invalid_cosmetic_type") unless cosmetic_type.in?(%w[profile_frame xp_theme profile_card])
 
     item = current_user.shop_items.find_by(id: params[:shop_item_id], item_type: cosmetic_type)
-    return redirect_to user_profile_path, alert: "Cosmetic introuvable." unless item
+    return redirect_to user_profile_path, alert: I18n.t("flash.user.cosmetic_not_found") unless item
 
     if current_user.activate_cosmetic(item)
-      redirect_to user_profile_path, notice: "Cosmetic active avec succes."
+      redirect_to user_profile_path, notice: I18n.t("flash.user.cosmetic_activated")
     else
-      redirect_to user_profile_path, alert: "Impossible d'attiver ce cosmetic."
+      redirect_to user_profile_path, alert: I18n.t("flash.user.cosmetic_activation_failed")
     end
   end
 
@@ -95,9 +95,9 @@ class UsersController < ApplicationController
     new_text = params[:profile_card_text].to_s.strip.slice(0, 100)
 
     if current_user.update(profile_card_custom_text: new_text)
-      redirect_to user_profile_path, notice: "Texte de carte mise a jour."
+      redirect_to user_profile_path, notice: I18n.t("flash.user.card_text_updated")
     else
-      redirect_to user_profile_path, alert: "Impossible de mettre a jour le texte."
+      redirect_to user_profile_path, alert: I18n.t("flash.user.card_text_update_failed")
     end
   end
 

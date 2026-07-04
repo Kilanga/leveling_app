@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_admin!
     authenticate_user!
-    redirect_to root_path, alert: "Accès interdit." unless current_user&.admin?
+    redirect_to root_path, alert: I18n.t("flash.access_denied") unless current_user&.admin?
   end
 
   def configure_permitted_parameters

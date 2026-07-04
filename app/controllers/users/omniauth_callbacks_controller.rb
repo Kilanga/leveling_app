@@ -11,7 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   rescue StandardError => e
     Rails.logger.error("Google OAuth error: #{e.class} - #{e.message}")
-    redirect_to new_user_registration_path, alert: "Connexion Google impossible."
+    redirect_to new_user_registration_path, alert: I18n.t("flash.google_login_failed")
   end
 
   def failure

@@ -1,23 +1,23 @@
-<h1>🎒 Inventaire de <%= current_user.pseudo %></h1>
+<h1><%= t('user.inventory.page_title', pseudo: current_user.pseudo) %></h1>
 
-<h2>🏆 Titres</h2>
+<h2><%= t('user.inventory.titles_heading') %></h2>
 <ul>
   <% current_user.user_items.joins(:shop_item).where(shop_items: { category: "title" }).each do |user_item| %>
     <li>
       <strong><%= user_item.shop_item.name %></strong> - <%= user_item.shop_item.rarity.capitalize %>
       <% if user_item.active %>
-        <span class="badge bg-success">Actif</span>
+        <span class="badge bg-success"><%= t('user.inventory.active_badge') %></span>
       <% else %>
         <%= form_with url: user_item_path(user_item), method: :patch do %>
           <%= hidden_field_tag :activate, true %>
-          <%= submit_tag "Activer", class: "btn btn-primary btn-sm" %>
+          <%= submit_tag t('user.inventory.activate_button'), class: "btn btn-primary btn-sm" %>
         <% end %>
       <% end %>
     </li>
   <% end %>
 </ul>
 
-<h2>Inventaire des Titres</h2>
+<h2><%= t('user.inventory.titles_inventory_heading') %></h2>
 <ul class="list-group">
   <% current_user.user_items.includes(:shop_item).each do |user_item| %>
     <% if user_item.shop_item.category == "title" %>
@@ -27,13 +27,13 @@
           <% if current_user.active_title == user_item.shop_item %>
             <form action="<%= deactivate_title_path %>" method="post" class="d-inline">
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-              <%= submit_tag "Désactiver", class: "btn btn-warning btn-sm" %>
+              <%= submit_tag t('user.inventory.deactivate_button'), class: "btn btn-warning btn-sm" %>
             </form>
           <% else %>
             <form action="<%= activate_title_path %>" method="post" class="d-inline">
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <%= hidden_field_tag :title_id, user_item.shop_item.id %>
-              <%= submit_tag "Activer", class: "btn btn-success btn-sm" %>
+              <%= submit_tag t('user.inventory.activate_button'), class: "btn btn-success btn-sm" %>
             </form>
           <% end %>
         </div>
@@ -43,4 +43,4 @@
 </ul>
 
 
-<%= link_to "Retour", root_path, class: "btn btn-secondary" %>
+<%= link_to t('common.back'), root_path, class: "btn btn-secondary" %>

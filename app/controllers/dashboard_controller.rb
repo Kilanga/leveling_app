@@ -7,19 +7,19 @@ class DashboardController < ApplicationController
 
   def claim_daily_chest
     if completed_today_count < DAILY_TARGET
-      redirect_to dashboard_path, alert: "Tu dois valider #{DAILY_TARGET} quetes aujourd'hui pour ouvrir le coffre quotidien."
+      redirect_to dashboard_path, alert: I18n.t("flash.daily_chest.not_ready", count: DAILY_TARGET)
       return
     end
 
     if daily_chest_claimed_today?
-      redirect_to dashboard_path, alert: "Coffre quotidien deja reclame aujourd'hui."
+      redirect_to dashboard_path, alert: I18n.t("flash.daily_chest.already_claimed")
       return
     end
 
     claim_daily_chest_reward!
     ProductAnalytics.track(user: current_user, event_name: "daily_chest_claimed", metadata: { reward_free_credits: DAILY_CHEST_REWARD_FREE_CREDITS })
 
-    redirect_to dashboard_path, notice: "Coffre quotidien ouvert: +#{DAILY_CHEST_REWARD_FREE_CREDITS} credits gratuits."
+    redirect_to dashboard_path, notice: I18n.t("flash.daily_chest.opened", count: DAILY_CHEST_REWARD_FREE_CREDITS)
   end
 
   def index

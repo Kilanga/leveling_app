@@ -1,28 +1,28 @@
-<h1 class="page-title">Classement ligue hebdomadaire</h1>
+<h1 class="page-title"><%= t('leaderboard.index.page_title') %></h1>
 
 <div class="surface-card surface-card--shell">
   <div class="card-body">
     <section class="hud-section">
-      <p class="quest-meta mb-1">Ligue actuelle: <strong><%= @current_league_name %></strong></p>
-      <p class="quest-meta mb-1">Prochain reset ligue: <strong><%= l(@next_league_settlement_at, format: :long) %></strong></p>
-      <p class="quest-meta mb-3">Dans <strong><%= @league_settlement_countdown %></strong>. Classement complet de ta ligue, avec mise a jour au chargement de la page.</p>
+      <p class="quest-meta mb-1"><%= t('leaderboard.index.current_league') %> <strong><%= @current_league_name %></strong></p>
+      <p class="quest-meta mb-1"><%= t('leaderboard.index.next_reset') %> <strong><%= l(@next_league_settlement_at, format: :long) %></strong></p>
+      <p class="quest-meta mb-3"><%= t('leaderboard.index.countdown_hint', countdown: @league_settlement_countdown).html_safe %></p>
       <% if @league_standings.size < WeeklyLeague::MIN_MOVEMENT_COHORT_SIZE %>
         <p class="quest-meta mb-3 league-movement-hint">
           Mouvement de ligue fige pour le moment: cohorte <strong><%= @league_standings.size %>/<%= WeeklyLeague::ROOM_CAPACITY %></strong>.
-          Les promotions/relegations s'activent a partir de <strong><%= WeeklyLeague::MIN_MOVEMENT_COHORT_SIZE %> joueurs</strong>.
+          <%= t('leaderboard.index.movement_hint', count: WeeklyLeague::MIN_MOVEMENT_COHORT_SIZE) %>
         </p>
       <% end %>
 
-      <h2 class="section-title">Classement ligue hebdomadaire</h2>
+      <h2 class="section-title"><%= t('leaderboard.index.table_heading') %></h2>
       <div class="table-responsive league-table-scroll">
         <table class="table">
           <thead>
             <tr>
-              <th>Rang</th>
-              <th>Avatar</th>
-              <th>Joueur</th>
-              <th>XP semaine</th>
-              <th>Ligue</th>
+              <th><%= t('leaderboard.index.th_rank') %></th>
+              <th><%= t('leaderboard.index.th_avatar') %></th>
+              <th><%= t('leaderboard.index.th_player') %></th>
+              <th><%= t('leaderboard.index.th_week_xp') %></th>
+              <th><%= t('leaderboard.index.th_league') %></th>
             </tr>
           </thead>
           <tbody>
@@ -32,18 +32,18 @@
                   <td>
                     #<%= entry[:rank] %>
                     <% if entry[:projected_movement].to_i > 0 %>
-                      <span class="league-trend league-trend--up" aria-label="Promotion projetee" title="Promotion projetee">▲</span>
-                      <span class="league-movement-label league-movement-label--up">Montee</span>
+                      <span class="league-trend league-trend--up" aria-label="<%= t('leaderboard.index.promotion_projected') %>" title="<%= t('leaderboard.index.promotion_projected') %>">▲</span>
+                      <span class="league-movement-label league-movement-label--up"><%= t('leaderboard.index.up_label') %></span>
                     <% elsif entry[:projected_movement].to_i < 0 %>
-                      <span class="league-trend league-trend--down" aria-label="Relegation projetee" title="Relegation projetee">▼</span>
-                      <span class="league-movement-label league-movement-label--down">Descente</span>
+                      <span class="league-trend league-trend--down" aria-label="<%= t('leaderboard.index.relegation_projected') %>" title="<%= t('leaderboard.index.relegation_projected') %>">▼</span>
+                      <span class="league-movement-label league-movement-label--down"><%= t('leaderboard.index.down_label') %></span>
                     <% else %>
-                      <span class="league-trend league-trend--hold" aria-label="Maintien projete" title="Maintien projete">•</span>
-                      <span class="league-movement-label league-movement-label--hold">Maintien</span>
+                      <span class="league-trend league-trend--hold" aria-label="<%= t('leaderboard.index.hold_projected') %>" title="<%= t('leaderboard.index.hold_projected') %>">•</span>
+                      <span class="league-movement-label league-movement-label--hold"><%= t('leaderboard.index.hold_label') %></span>
                     <% end %>
                   </td>
                   <td>
-                    <%= user_avatar_image(entry[:user], width: 44, height: 44, css_class: "rounded-circle", alt: "Avatar de #{entry[:user].pseudo}") %>
+                    <%= user_avatar_image(entry[:user], width: 44, height: 44, css_class: "rounded-circle", alt: t('leaderboard.index.avatar_alt', pseudo: entry[:user].pseudo)) %>
                   </td>
                   <td>
                     <div class="leaderboard-player-meta">
@@ -54,7 +54,7 @@
                         <span class="badge bg-<%= entry[:user].title_rarity_class %>"><%= entry[:user].active_title.name %></span>
                       <% end %>
                       <% if entry[:user].id == current_user.id %>
-                        <span class="badge text-bg-dark">Toi</span>
+                        <span class="badge text-bg-dark"><%= t('leaderboard.index.you_badge') %></span>
                       <% end %>
                     </div>
                   </td>
@@ -64,7 +64,7 @@
               <% end %>
             <% else %>
               <tr>
-                <td colspan="5" class="text-center">Aucune donnee de ligue disponible.</td>
+                <td colspan="5" class="text-center"><%= t('leaderboard.index.no_data') %></td>
               </tr>
             <% end %>
           </tbody>
