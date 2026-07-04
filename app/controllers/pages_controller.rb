@@ -16,12 +16,22 @@ class PagesController < ApplicationController
     render layout: false
   end
 
+  def guilde_et_cie_privacy
+    # Static page, no logic needed
+  end
+
+  def guilde_et_cie_account_deletion
+    # Static page, no logic needed
+  end
+
   def sitemap
     @public_urls = [
       root_url,
       welcome_url,
       terms_url,
       privacy_url,
+      guilde_et_cie_privacy_url,
+      guilde_et_cie_account_deletion_url,
       new_user_registration_url,
       new_user_session_url
     ]

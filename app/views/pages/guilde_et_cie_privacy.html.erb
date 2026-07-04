@@ -1,0 +1,55 @@
+<% content_for :title, "#{t('pages.guilde_et_cie_privacy.page_title')} | Guilde & Cie" %>
+<% content_for :meta_description, t('pages.guilde_et_cie_privacy.page_description') %>
+
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <h1 class="page-title mb-4"><%= t('pages.guilde_et_cie_privacy.page_title') %></h1>
+
+    <div class="legal-content">
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_offline') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_offline') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_collection') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_collection') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_hosting') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_hosting') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_retention') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_retention') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_deletion') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_deletion') %>
+        <%= link_to t('pages.guilde_et_cie_privacy.deletion_link_text'), guilde_et_cie_account_deletion_path %>.
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_rights') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_rights') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_changes') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_privacy.content_changes') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_privacy.section_contact') %></h2>
+      <p class="quest-meta">
+        <%= t('pages.guilde_et_cie_privacy.content_contact') %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="text-center">
+  <%= link_to t('layout.nav.home'), root_path, class: "btn btn-outline-quest btn-arcade" %>
+</div>
