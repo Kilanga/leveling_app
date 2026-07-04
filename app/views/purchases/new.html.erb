@@ -79,16 +79,16 @@
                       <%= equipped ? t('purchases.new.titles.equipped_badge') : owned ? t('purchases.new.titles.owned_badge') : t('purchases.new.titles.available_badge') %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_coins %> Orbes</span>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= t('purchases.new.prices.orbs', count: item.price_coins) %></span>
                     <% elsif item.price_free_credits.present? %>
-                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_free_credits %> Fragments</span>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= t('purchases.new.prices.fragments', count: item.price_free_credits) %></span>
                     <% elsif item.price_euros.present? %>
-                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= item.price_euros %> EUR</span>
+                      <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
                   </div>
 
                   <div class="mb-2">
-                    <%= button_tag "Apercu profil",
+                    <%= button_tag t('purchases.new.preview.trigger_button'),
                                    type: "button",
                                    class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                    data: {
@@ -122,12 +122,12 @@
             <p class="quest-meta mb-3"><%= t('purchases.new.cosmetics.instruction') %></p>
             <% unless cosmetics_activation_supported %>
               <div class="alert alert-warning">
-                Les apercus et achats sont disponibles. L'activation des cosmetiques sera disponible apres migration complete de la base de donnees.
+                <%= t('purchases.new.cosmetics.activation_pending') %>
               </div>
             <% end %>
 
             <!-- Cadres de Profil -->
-            <h3 class="section-title mt-4">Cadres de Profil</h3>
+            <h3 class="section-title mt-4"><%= t('purchases.new.cosmetics.profile_frames_heading') %></h3>
             <div class="shop-list shop-list--flat">
               <% @frame_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
@@ -142,7 +142,7 @@
 
                   <!-- Aperçu du cadre -->
                   <div class="shop-cosmetic-preview mb-2">
-                    <div class="preview-label">Aperçu:</div>
+                    <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <div class="profile-frame-container <%= frame_wrapper_classes(item) %>">
                       <%= current_user.pseudo %>
                     </div>
@@ -150,19 +150,19 @@
 
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
-                      <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
+                      <%= active ? t('purchases.new.cosmetics.status_active') : owned ? t('purchases.new.cosmetics.status_owned') : t('purchases.new.cosmetics.status_available') %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta"><%= item.price_coins %> Orbes</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.orbs', count: item.price_coins) %></span>
                     <% elsif item.price_free_credits.present? %>
-                      <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.fragments', count: item.price_free_credits) %></span>
                     <% elsif item.price_euros.present? %>
-                      <span class="quest-meta"><%= item.price_euros %> EUR</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
                   </div>
 
                   <div class="mb-2">
-                    <%= button_tag "Apercu profil",
+                    <%= button_tag t('purchases.new.preview.trigger_button'),
                                    type: "button",
                                    class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                    data: {
@@ -173,7 +173,7 @@
                   </div>
 
                   <% if !cosmetics_activation_supported %>
-                    <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
+                    <span class="badge text-bg-secondary"><%= t('purchases.new.cosmetics.activation_unavailable') %></span>
                   <% elsif active %>
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_frame" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
@@ -181,7 +181,7 @@
                   <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
+                      <%= submit_tag t('purchases.new.cosmetics.buy_button'), class: "btn btn-outline-quest" %>
                     <% end %>
                   <% end %>
                 </div>
@@ -189,7 +189,7 @@
             </div>
 
             <!-- Themes XP -->
-            <h3 class="section-title mt-4">Thèmes de Barre XP</h3>
+            <h3 class="section-title mt-4"><%= t('purchases.new.cosmetics.xp_themes_heading') %></h3>
             <div class="shop-list shop-list--flat">
               <% @theme_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
@@ -204,7 +204,7 @@
 
                   <!-- Aperçu du thème XP -->
                   <div class="shop-cosmetic-preview mb-2">
-                    <div class="preview-label">Aperçu:</div>
+                    <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <div class="xp-track <%= xp_theme_classes(item) %>">
                       <div class="xp-fill" style="width: 65%"></div>
                     </div>
@@ -213,19 +213,19 @@
 
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
-                      <%= active ? "Actif" : owned ? "Possede" : "Disponible" %>
+                      <%= active ? t('purchases.new.cosmetics.status_active') : owned ? t('purchases.new.cosmetics.status_owned') : t('purchases.new.cosmetics.status_available') %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta"><%= item.price_coins %> Orbes</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.orbs', count: item.price_coins) %></span>
                     <% elsif item.price_free_credits.present? %>
-                      <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.fragments', count: item.price_free_credits) %></span>
                     <% elsif item.price_euros.present? %>
-                      <span class="quest-meta"><%= item.price_euros %> EUR</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
                   </div>
 
                   <div class="mb-2">
-                    <%= button_tag "Apercu profil",
+                    <%= button_tag t('purchases.new.preview.trigger_button'),
                                    type: "button",
                                    class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                    data: {
@@ -236,7 +236,7 @@
                   </div>
 
                   <% if !cosmetics_activation_supported %>
-                    <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
+                    <span class="badge text-bg-secondary"><%= t('purchases.new.cosmetics.activation_unavailable') %></span>
                   <% elsif active %>
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "xp_theme" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
@@ -244,7 +244,7 @@
                   <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
+                      <%= submit_tag t('purchases.new.cosmetics.buy_button'), class: "btn btn-outline-quest" %>
                     <% end %>
                   <% end %>
                 </div>
@@ -252,7 +252,7 @@
             </div>
 
             <!-- Cartes de Visite -->
-            <h3 class="section-title mt-4">Cartes de Visite</h3>
+            <h3 class="section-title mt-4"><%= t('purchases.new.cosmetics.profile_cards_heading') %></h3>
             <div class="shop-list shop-list--flat">
               <% @card_items.each do |item| %>
                 <% rarity_key = item.rarity.to_s.presence || "common" %>
@@ -267,32 +267,32 @@
 
                   <!-- Aperçu de la carte -->
                   <div class="shop-cosmetic-preview mb-2">
-                    <div class="preview-label">Aperçu:</div>
+                    <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <div class="profile-card-container <%= profile_card_classes(item) %>">
                       <div class="profile-card-header">
                         <%= current_user.pseudo %>
                       </div>
                       <div class="profile-card-text">
-                        Aperçu de ta présentation personnalisée
+                        <%= t('purchases.new.cosmetics.card_preview_hint') %>
                       </div>
                     </div>
                   </div>
 
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= active ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
-                      <%= active ? "Active" : owned ? "Possede" : "Disponible" %>
+                      <%= active ? t('purchases.new.cosmetics.status_active_f') : owned ? t('purchases.new.cosmetics.status_owned') : t('purchases.new.cosmetics.status_available') %>
                     </span>
                     <% if item.price_coins.present? %>
-                      <span class="quest-meta"><%= item.price_coins %> Orbes</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.orbs', count: item.price_coins) %></span>
                     <% elsif item.price_free_credits.present? %>
-                      <span class="quest-meta"><%= item.price_free_credits %> Fragments</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.fragments', count: item.price_free_credits) %></span>
                     <% elsif item.price_euros.present? %>
-                      <span class="quest-meta"><%= item.price_euros %> EUR</span>
+                      <span class="quest-meta"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
                   </div>
 
                   <div class="mb-2">
-                    <%= button_tag "Apercu profil",
+                    <%= button_tag t('purchases.new.preview.trigger_button'),
                                    type: "button",
                                    class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                    data: {
@@ -303,7 +303,7 @@
                   </div>
 
                   <% if !cosmetics_activation_supported %>
-                    <span class="badge text-bg-secondary">Activation indisponible sur cet environnement</span>
+                    <span class="badge text-bg-secondary"><%= t('purchases.new.cosmetics.activation_unavailable') %></span>
                   <% elsif active %>
                     <%= button_to "Desactiver", activate_cosmetic_path, method: :post, params: { shop_item_id: nil, cosmetic_type: "profile_card" }, class: "btn btn-sm btn-outline-secondary" %>
                   <% elsif owned %>
@@ -311,15 +311,15 @@
                   <% elsif item.price_coins.present? || item.price_free_credits.present? || item.price_euros.present? %>
                     <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                       <%= hidden_field_tag :shop_item_id, item.id %>
-                      <%= submit_tag "Acheter", class: "btn btn-outline-quest" %>
+                      <%= submit_tag t('purchases.new.cosmetics.buy_button'), class: "btn btn-outline-quest" %>
                     <% end %>
                   <% end %>
                 </div>
               <% end %>
             </div>
           <% elsif @active_shop_tab == "rewards" %>
-            <h2 class="section-title">Recompenses contre Fragments</h2>
-            <p class="quest-meta mb-3">Ces objets se debloquent uniquement via ta progression gratuite.</p>
+            <h2 class="section-title"><%= t('purchases.new.rewards.heading') %></h2>
+            <p class="quest-meta mb-3"><%= t('purchases.new.rewards.instruction') %></p>
             <% reward_items = Array(@free_reward_items) %>
             <% if reward_items.any? %>
               <div class="shop-list shop-list--flat">
@@ -335,7 +335,7 @@
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
                   <div class="shop-cosmetic-preview mb-2">
-                    <div class="preview-label">Apercu:</div>
+                    <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <% if item.item_type == "profile_frame" %>
                       <div class="profile-frame-container <%= frame_wrapper_classes(item) %>">
                         <%= current_user.pseudo %>
@@ -347,7 +347,7 @@
                     <% elsif item.item_type == "profile_card" %>
                       <div class="profile-card-container <%= profile_card_classes(item) %>">
                         <div class="profile-card-header"><%= current_user.pseudo %></div>
-                        <div class="profile-card-text">Edition <%= item.name %></div>
+                        <div class="profile-card-text"><%= t('purchases.new.rewards.edition', name: item.name) %></div>
                       </div>
                     <% elsif item.item_type == "title" %>
                       <span class="shop-state-chip shop-state-chip--available"><%= item.name %></span>
@@ -356,14 +356,14 @@
 
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
-                      <%= owned ? "Possede" : "Disponible" %>
+                      <%= owned ? t('purchases.new.cosmetics.status_owned') : t('purchases.new.cosmetics.status_available') %>
                     </span>
-                    <span class="quest-meta"><%= item.price_free_credits %> Fragments ou <%= fallback_orbes_price %> Orbes</span>
+                    <span class="quest-meta"><%= t('purchases.new.prices.fragments_or_orbs', fragments: item.price_free_credits, orbs: fallback_orbes_price) %></span>
                   </div>
 
                   <% if item.item_type == "profile_frame" %>
                     <div class="mb-2">
-                      <%= button_tag "Apercu profil",
+                      <%= button_tag t('purchases.new.preview.trigger_button'),
                                      type: "button",
                                      class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                      data: {
@@ -374,7 +374,7 @@
                     </div>
                   <% elsif item.item_type == "xp_theme" %>
                     <div class="mb-2">
-                      <%= button_tag "Apercu profil",
+                      <%= button_tag t('purchases.new.preview.trigger_button'),
                                      type: "button",
                                      class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                      data: {
@@ -385,7 +385,7 @@
                     </div>
                   <% elsif item.item_type == "profile_card" %>
                     <div class="mb-2">
-                      <%= button_tag "Apercu profil",
+                      <%= button_tag t('purchases.new.preview.trigger_button'),
                                      type: "button",
                                      class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                      data: {
@@ -396,7 +396,7 @@
                     </div>
                   <% elsif item.item_type == "title" %>
                     <div class="mb-2">
-                      <%= button_tag "Apercu profil",
+                      <%= button_tag t('purchases.new.preview.trigger_button'),
                                      type: "button",
                                      class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
                                      data: {
@@ -412,21 +412,21 @@
                     <% elsif %w[profile_frame xp_theme profile_card].include?(item.item_type) %>
                       <%= button_to "Activer", activate_cosmetic_path, method: :post, params: { shop_item_id: item.id, cosmetic_type: item.item_type }, class: "btn btn-sm btn-brand" %>
                     <% else %>
-                      <span class="badge text-bg-success">Debloque</span>
+                      <span class="badge text-bg-success"><%= t('purchases.new.rewards.unlocked_badge') %></span>
                     <% end %>
                   <% else %>
                     <div class="d-grid gap-2">
                       <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                         <%= hidden_field_tag :shop_item_id, item.id %>
                         <%= hidden_field_tag :currency, "fragments" %>
-                        <%= submit_tag "Debloquer avec #{item.price_free_credits} Fragments",
+                        <%= submit_tag t('purchases.new.rewards.unlock_with_fragments', count: item.price_free_credits),
                                        class: "btn btn-outline-quest",
                                        disabled: current_user.free_credits_balance < item.price_free_credits.to_i %>
                       <% end %>
                       <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
                         <%= hidden_field_tag :shop_item_id, item.id %>
                         <%= hidden_field_tag :currency, "orbes" %>
-                        <%= submit_tag "Debloquer avec #{fallback_orbes_price} Orbes",
+                        <%= submit_tag t('purchases.new.rewards.unlock_with_orbs', count: fallback_orbes_price),
                                        class: "btn btn-outline-secondary",
                                        disabled: current_user.coins < fallback_orbes_price %>
                       <% end %>
@@ -436,7 +436,7 @@
                 <% end %>
               </div>
             <% else %>
-              <div class="alert alert-warning mb-0">Aucune recompense disponible pour le moment.</div>
+              <div class="alert alert-warning mb-0"><%= t('purchases.new.rewards.none') %></div>
             <% end %>
           <% end %>
         </section>
@@ -444,7 +444,7 @@
 
       <div class="col-lg-4">
         <section class="hud-section h-100">
-          <h2 class="section-title">Apercu profil</h2>
+          <h2 class="section-title"><%= t('purchases.new.preview.heading') %></h2>
           <% preview_frame = @preview_profile_frame %>
           <% preview_theme = @preview_xp_theme %>
           <% preview_card = @preview_profile_card %>
@@ -452,26 +452,26 @@
           <div id="shop-preview-card" class="shop-preview-card profile-card-container <%= profile_card_classes(preview_card) %> mb-4">
             <div class="shop-impact-profile mb-3">
               <div class="d-flex align-items-center gap-3">
-                <%= user_avatar_image(current_user, width: 74, height: 74, css_class: "rounded-circle shop-preview-avatar", alt: "Avatar de #{current_user.pseudo}") %>
+                <%= user_avatar_image(current_user, width: 74, height: 74, css_class: "rounded-circle shop-preview-avatar", alt: t('purchases.new.preview.avatar_alt', pseudo: current_user.pseudo)) %>
                 <div class="shop-preview-meta">
                   <div id="shop-preview-frame" class="profile-frame-container <%= frame_wrapper_classes(preview_frame) %>">
                     <strong><%= current_user.pseudo %></strong>
                   </div>
                   <p class="quest-meta mb-1 mt-2">Niveau global <%= @total_level %></p>
                   <% if preview_title.present? %>
-                    <p id="shop-preview-title" class="quest-meta mb-0 shop-preview-meta-row">Titre: <%= preview_title.name %></p>
+                    <p id="shop-preview-title" class="quest-meta mb-0 shop-preview-meta-row"><%= t('purchases.new.preview.title_label', name: preview_title.name) %></p>
                   <% else %>
-                    <p id="shop-preview-title" class="quest-meta mb-0 shop-preview-meta-row">Aucun titre equipe</p>
+                    <p id="shop-preview-title" class="quest-meta mb-0 shop-preview-meta-row"><%= t('purchases.new.preview.no_title') %></p>
                   <% end %>
-                  <p id="shop-preview-frame-name" class="quest-meta mb-0 shop-preview-meta-row">Cadre apercu: <%= preview_frame&.name || "Aucun" %></p>
-                  <p id="shop-preview-theme-name" class="quest-meta mb-0 shop-preview-meta-row">Theme XP apercu: <%= preview_theme&.name || "Standard" %></p>
+                  <p id="shop-preview-frame-name" class="quest-meta mb-0 shop-preview-meta-row"><%= t('purchases.new.preview.frame_label', name: preview_frame&.name || t('purchases.new.preview.none')) %></p>
+                  <p id="shop-preview-theme-name" class="quest-meta mb-0 shop-preview-meta-row"><%= t('purchases.new.preview.theme_label', name: preview_theme&.name || t('purchases.new.preview.standard')) %></p>
                 </div>
               </div>
             </div>
 
             <div class="shop-impact-xp mb-3">
               <div class="d-flex align-items-center justify-content-between mb-1">
-                <span class="preview-label">Barre XP</span>
+                <span class="preview-label"><%= t('purchases.new.preview.xp_bar_label') %></span>
                 <span class="quest-meta">67%</span>
               </div>
               <div id="shop-preview-xp-track" class="xp-track shop-impact-xp-track <%= xp_theme_classes(preview_theme) %>">
@@ -480,14 +480,14 @@
             </div>
 
             <div class="shop-impact-card">
-              <div class="preview-label mb-1">Carte de visite</div>
+              <div class="preview-label mb-1"><%= t('purchases.new.preview.card_label') %></div>
               <p id="shop-preview-card-text" class="profile-card-text mb-0">
-                <%= preview_card.present? ? "Simulation: #{preview_card.name}" : (profile_card_text(current_user).presence || "Ton style s'affiche ici quand tu equipes une carte.") %>
+                <%= preview_card.present? ? t('purchases.new.preview.simulation', name: preview_card.name) : (profile_card_text(current_user).presence || t('purchases.new.preview.card_placeholder')) %>
               </p>
             </div>
           </div>
 
-            <h2 class="section-title">Orbes</h2>
+            <h2 class="section-title"><%= t('purchases.new.packs_heading') %></h2>
             <div class="shop-list shop-list--flat shop-list--boosts mb-4">
               <% @coins_prices.each do |option| %>
                 <% value_per_euro = (option[:total_coins].to_f / option[:amount]).round(1) %>
@@ -524,13 +524,13 @@
 
           <hr class="hud-divider">
 
-          <h2 class="section-title">Defi boutique hebdo</h2>
-          <p class="quest-meta mb-2">Complete les 3 objectifs et recupere <%= PurchasesController::SHOP_CHALLENGE_REWARD_FREE_CREDITS %> Fragments.</p>
+          <h2 class="section-title"><%= t('purchases.new.challenge.heading') %></h2>
+          <p class="quest-meta mb-2"><%= t('purchases.new.challenge.instruction', count: PurchasesController::SHOP_CHALLENGE_REWARD_FREE_CREDITS) %></p>
           <div class="shop-challenge-card mb-3">
             <% @shop_challenge.fetch(:steps, []).each do |step| %>
               <div class="shop-challenge-step">
                 <span class="shop-state-chip <%= step[:completed] ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-                  <%= step[:completed] ? 'OK' : 'A faire' %>
+                  <%= step[:completed] ? t('purchases.new.challenge.done') : t('purchases.new.challenge.todo') %>
                 </span>
                 <span><%= step[:label] %></span>
               </div>
@@ -538,11 +538,11 @@
           </div>
 
           <% if @shop_challenge_claimed %>
-            <span class="shop-state-chip shop-state-chip--owned">Recompense deja recuperee cette semaine</span>
+            <span class="shop-state-chip shop-state-chip--owned"><%= t('purchases.new.challenge.already_claimed') %></span>
           <% elsif @shop_challenge[:completed_all] %>
-            <%= button_to "Recuperer la recompense", claim_weekly_challenge_purchases_path, method: :post, class: "btn btn-brand" %>
+            <%= button_to t('purchases.new.challenge.claim_button'), claim_weekly_challenge_purchases_path, method: :post, class: "btn btn-brand" %>
           <% else %>
-            <span class="shop-state-chip shop-state-chip--available"><%= @shop_challenge.fetch(:completed_count, 0) %>/<%= @shop_challenge.fetch(:total_count, 0) %> objectifs completes</span>
+            <span class="shop-state-chip shop-state-chip--available"><%= t('purchases.new.challenge.progress', done: @shop_challenge.fetch(:completed_count, 0), total: @shop_challenge.fetch(:total_count, 0)) %></span>
           <% end %>
         </section>
       </div>
@@ -551,5 +551,5 @@
 </div>
 
 <div class="mt-4">
-  <%= link_to "Retour au tableau de bord", root_path, class: "btn btn-outline-secondary" %>
+  <%= link_to t('common.back_to_dashboard'), root_path, class: "btn btn-outline-secondary" %>
 </div>

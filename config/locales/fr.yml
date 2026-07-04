@@ -300,6 +300,54 @@ fr:
       cosmetics:
         heading: Cosmetiques
         instruction: Personnalise ton profil et tes barres de progression.
+        activation_pending: Les aperçus et achats sont disponibles. L'activation des cosmétiques sera disponible après migration complète de la base de données.
+        profile_frames_heading: Cadres de Profil
+        xp_themes_heading: Thèmes de Barre XP
+        profile_cards_heading: Cartes de Visite
+        preview_label: 'Aperçu:'
+        card_preview_hint: Aperçu de ta présentation personnalisée
+        status_active: Actif
+        status_active_f: Active
+        status_owned: Possédé
+        status_available: Disponible
+        buy_button: Acheter
+        activation_unavailable: Activation indisponible sur cet environnement
+      prices:
+        orbs: "%{count} Orbes"
+        fragments: "%{count} Fragments"
+        euros: "%{count} EUR"
+        fragments_or_orbs: "%{fragments} Fragments ou %{orbs} Orbes"
+      rewards:
+        heading: Récompenses contre Fragments
+        instruction: Ces objets se débloquent uniquement via ta progression gratuite.
+        edition: Édition %{name}
+        unlocked_badge: Débloqué
+        none: Aucune récompense disponible pour le moment.
+        unlock_with_fragments: Débloquer avec %{count} Fragments
+        unlock_with_orbs: Débloquer avec %{count} Orbes
+      preview:
+        heading: Aperçu profil
+        trigger_button: Aperçu profil
+        avatar_alt: Avatar de %{pseudo}
+        title_label: 'Titre: %{name}'
+        no_title: Aucun titre équipé
+        frame_label: 'Cadre aperçu: %{name}'
+        theme_label: 'Thème XP aperçu: %{name}'
+        none: Aucun
+        standard: Standard
+        xp_bar_label: Barre XP
+        card_label: Carte de visite
+        simulation: 'Simulation: %{name}'
+        card_placeholder: Ton style s'affiche ici quand tu équipes une carte.
+      packs_heading: Orbes
+      challenge:
+        heading: Défi boutique hebdo
+        instruction: Complète les 3 objectifs et récupère %{count} Fragments.
+        done: OK
+        todo: À faire
+        already_claimed: Récompense déjà récupérée cette semaine
+        claim_button: Récupérer la récompense
+        progress: "%{done}/%{total} objectifs complétés"
   leaderboard:
     index:
       page_title: Classement ligue hebdomadaire
@@ -433,8 +481,8 @@ fr:
       challenge_launched: Defi lance pour 48h.
     purchases:
       shop_challenge_completed: "+%{amount} Fragments recuperes via le defi boutique !"
-      purchase_confirmed: Achat confirme !
-      unlocked_with_fragments: Objet deverrouille avec tes Fragments !
+      purchase_confirmed: Achat confirmé !
+      unlocked_with_fragments: Objet débloqué avec tes Fragments !
       purchase_success: Objet achete avec succes !
       impossible_purchase: Achat impossible.
       title_unlocked_by_objectives: Ce titre se deverrouille via des objectifs, pas en boutique.
@@ -442,6 +490,21 @@ fr:
       purchase_insufficient_fragments: Tu n'as pas assez de Fragments pour cet achat.
       purchase_insufficient_orbs: Tu n'as pas assez d'Orbes pour acheter cet objet.
       invalid_currency: Choisis une monnaie valide pour cet achat (Fragments ou Orbes).
+      challenge_incomplete: Défi hebdo incomplet pour le moment.
+      challenge_already_claimed: Récompense hebdo déjà récupérée.
+      challenge_claimed: "+%{count} crédits gratuits récupérés via le défi boutique !"
+      purchase_failed: Achat impossible.
+      stripe_session_invalid: Session Stripe invalide.
+      payment_not_validated: Paiement non validé.
+      payment_session_mismatch: Session de paiement invalide pour cet utilisateur.
+      purchase_unavailable: Achat impossible pour le moment.
+      payment_cancelled: Paiement annulé.
+      title_not_purchasable: Ce titre se débloque via des objectifs, pas en boutique.
+      already_owned: Vous possédez déjà cet objet.
+      not_enough_fragments: Tu n'as pas assez de Fragments pour cet achat.
+      not_enough_orbs: Tu n'as pas assez d'Orbes pour acheter cet objet.
+      invalid_pack: Pack invalide.
+      invalid_payment_url: URL de paiement invalide.
     dashboard:
       daily_chest_opened: 'Coffre quotidien ouvert: +%{amount} Fragments.'
     daily_contracts:
@@ -522,6 +585,7 @@ fr:
     delete: Supprimer
     close: Fermer
     back: Retour
+    back_to_dashboard: Retour au tableau de bord
   pages:
     terms:
       page_title: Conditions d'utilisation

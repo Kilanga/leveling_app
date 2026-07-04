@@ -264,11 +264,11 @@ FREE_REWARD_ITEMS = [
     challenge = build_shop_challenge
 
     unless challenge[:completed_all]
-      return redirect_to new_purchase_path(tab: "cosmetics"), alert: "Defi hebdo incomplet pour le moment."
+      return redirect_to new_purchase_path(tab: "cosmetics"), alert: I18n.t("flash.purchases.challenge_incomplete")
     end
 
     if shop_challenge_claimed?
-      return redirect_to new_purchase_path(tab: "cosmetics"), alert: "Recompense hebdo deja recuperee."
+      return redirect_to new_purchase_path(tab: "cosmetics"), alert: I18n.t("flash.purchases.challenge_already_claimed")
     end
 
     ActiveRecord::Base.transaction do
@@ -284,9 +284,9 @@ FREE_REWARD_ITEMS = [
 
     ProductAnalytics.track(user: current_user, event_name: "shop_challenge_claimed", metadata: { reward_free_credits: SHOP_CHALLENGE_REWARD_FREE_CREDITS })
 
-    redirect_to new_purchase_path(tab: "cosmetics"), notice: "+#{SHOP_CHALLENGE_REWARD_FREE_CREDITS} credits gratuits recuperes via le defi boutique !"
+    redirect_to new_purchase_path(tab: "cosmetics"), notice: I18n.t("flash.purchases.challenge_claimed", count: SHOP_CHALLENGE_REWARD_FREE_CREDITS)
   rescue ActiveRecord::RecordNotUnique
-    redirect_to new_purchase_path(tab: "cosmetics"), alert: "Recompense hebdo deja recuperee."
+    redirect_to new_purchase_path(tab: "cosmetics"), alert: I18n.t("flash.purchases.challenge_already_claimed")
   end
 
   def create
@@ -295,21 +295,21 @@ FREE_REWARD_ITEMS = [
     return handle_shop_item_purchase if params[:shop_item_id].present?
     return handle_pack_purchase if params[:item_type].present? && params[:amount].present?
 
-    redirect_to new_purchase_path, alert: "Achat impossible."
+    redirect_to new_purchase_path, alert: I18n.t("flash.purchases.purchase_failed")
   end
 
   def success
     checkout_session_id = params[:session_id]
-    return redirect_to new_purchase_path, alert: "Session Stripe invalide." if checkout_session_id.blank?
+    return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.stripe_session_invalid") if checkout_session_id.blank?
 
     checkout_session = Stripe::Checkout::Session.retrieve(checkout_session_id)
     unless checkout_session.payment_status == "paid"
-      return redirect_to new_purchase_path, alert: "Paiement non validé."
+      return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.payment_not_validated")
     end
 
     metadata_user_id = checkout_session.metadata["user_id"].to_i
     if metadata_user_id.positive? && metadata_user_id != current_user.id
-      return redirect_to new_purchase_path, alert: "Session de paiement invalide pour cet utilisateur."
+      return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.payment_session_mismatch")
     end
 
     PurchaseFulfillmentService.process_checkout_session(checkout_session)
@@ -318,14 +318,14 @@ FREE_REWARD_ITEMS = [
     session.delete(:shop_item_id)
     session.delete(:pending_purchase)
 
-    redirect_to root_path, notice: "Achat confirme !"
+    redirect_to root_path, notice: I18n.t("flash.purchases.purchase_confirmed")
   rescue StandardError => e
     Rails.logger.error("Purchase success flow failed: #{e.class} #{e.message}")
-    redirect_to new_purchase_path, alert: "Achat impossible pour le moment."
+    redirect_to new_purchase_path, alert: I18n.t("flash.purchases.purchase_unavailable")
   end
 
   def cancel
-    redirect_to new_purchase_path, alert: "Paiement annulé."
+    redirect_to new_purchase_path, alert: I18n.t("flash.purchases.payment_cancelled")
   end
 
   private
@@ -334,11 +334,11 @@ def handle_shop_item_purchase
   item = ShopItem.find(params[:shop_item_id])
 
   if item.item_type == "title" && (item.rarity == "common" || (item.price_coins.blank? && item.price_euros.blank? && item.price_free_credits.blank?))
-    return redirect_to new_purchase_path, alert: "Ce titre se débloque via des objectifs, pas en boutique."
+    return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.title_not_purchasable")
   end
 
   if current_user.user_items.exists?(shop_item: item)
-    return redirect_to new_purchase_path, alert: "Vous possedez deja cet objet."
+    return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.already_owned")
   end
 
   if item.price_coins.present?
@@ -363,7 +363,7 @@ def handle_shop_item_purchase
     return safe_redirect_to_checkout(checkout_url)
   end
 
-  redirect_to new_purchase_path, alert: "Achat impossible."
+  redirect_to new_purchase_path, alert: I18n.t("flash.purchases.purchase_failed")
 end
 
 def purchase_free_reward_with_explicit_currency!(item)
@@ -374,17 +374,17 @@ def purchase_free_reward_with_explicit_currency!(item)
     if current_user.free_credits_balance >= item.price_free_credits
       current_user.update!(free_credits: current_user.free_credits_balance - item.price_free_credits)
       current_user.user_items.find_or_create_by!(shop_item: item)
-      return redirect_to new_purchase_path(tab: "rewards"), notice: "Objet debloque avec tes Fragments !"
+      return redirect_to new_purchase_path(tab: "rewards"), notice: I18n.t("flash.purchases.unlocked_with_fragments")
     end
 
-    return redirect_to new_purchase_path(tab: "rewards"), alert: "Tu n'as pas assez de Fragments pour cet achat."
+    return redirect_to new_purchase_path(tab: "rewards"), alert: I18n.t("flash.purchases.not_enough_fragments")
   end
 
   if selected_currency == "orbes"
     return purchase_with_orbes!(item, fallback_orbes_price, new_purchase_path(tab: "rewards"), "Objet debloque avec tes Orbes (tarif de secours) !")
   end
 
-  redirect_to new_purchase_path(tab: "rewards"), alert: "Choisis une monnaie valide pour cet achat (Fragments ou Orbes)."
+  redirect_to new_purchase_path(tab: "rewards"), alert: I18n.t("flash.purchases.invalid_currency")
 end
 
 def purchase_with_orbes!(item, orbes_price, redirect_path, success_notice = "Objet acheté avec succès!")
@@ -394,7 +394,7 @@ def purchase_with_orbes!(item, orbes_price, redirect_path, success_notice = "Obj
     return redirect_to redirect_path, notice: success_notice
   end
 
-  redirect_to redirect_path, alert: "Tu n'as pas assez d'Orbes pour acheter cet objet."
+  redirect_to redirect_path, alert: I18n.t("flash.purchases.not_enough_orbs")
 end
 
 def handle_pack_purchase
@@ -431,7 +431,7 @@ def handle_pack_purchase
       )
       safe_redirect_to_checkout(checkout_url)
     else
-      redirect_to new_purchase_path, alert: "Pack invalide."
+      redirect_to new_purchase_path, alert: I18n.t("flash.purchases.invalid_pack")
     end
   end
 
@@ -458,12 +458,12 @@ def handle_pack_purchase
     allowed_hosts = [ "checkout.stripe.com", "pay.stripe.com" ]
 
     unless uri.is_a?(URI::HTTPS) && allowed_hosts.include?(uri.host)
-      return redirect_to new_purchase_path, alert: "URL de paiement invalide."
+      return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.invalid_payment_url")
     end
 
     redirect_to uri.to_s, allow_other_host: true
   rescue URI::InvalidURIError
-    redirect_to new_purchase_path, alert: "URL de paiement invalide."
+    redirect_to new_purchase_path, alert: I18n.t("flash.purchases.invalid_payment_url")
   end
 
   def recommended_shop_items
