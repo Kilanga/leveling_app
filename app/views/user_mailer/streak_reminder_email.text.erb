@@ -1,0 +1,6 @@
+<%= t("mailers.streak_reminder.heading", pseudo: @user.pseudo) %>
+
+<%= t("mailers.streak_reminder.body", count: @user.weekly_streak_count) %>
+<%= t("mailers.streak_reminder.urgency", days: @days_left) %>
+
+<%= t("mailers.streak_reminder.cta") %> : <%= quests_url %>

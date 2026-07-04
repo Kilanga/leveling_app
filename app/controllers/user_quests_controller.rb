@@ -44,6 +44,7 @@ class UserQuestsController < ApplicationController
     case params[:action_type]
     when "complete"
       quest_title = @user_quest.quest.title
+      weekly_xp_before = WeeklyLeague.weekly_xp(current_user)
       gained_xp = XpAwarder.complete_user_quest!(@user_quest)
       if gained_xp
         @user_quest.reload
@@ -54,6 +55,7 @@ class UserQuestsController < ApplicationController
         UserDailyContract.progress_for_user!(current_user)
         referral_result = ReferralRewarder.claim_if_eligible!(current_user)
         streak = WeeklyStreakTracker.register_completion!(current_user)
+        FriendOvertakeNotifier.call(current_user, xp_before: weekly_xp_before)
         ProductAnalytics.track(
           user: current_user,
           event_name: "quest_completed",

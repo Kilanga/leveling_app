@@ -20,6 +20,7 @@ en:
       report_bug: Report a bug
       sign_out: Sign out
       sign_in: Sign in
+      achievements: Achievements
     locale_switcher:
       switch_to_fr: Switch to French
       switch_to_en: Switch to English
@@ -612,6 +613,12 @@ en:
       read_badge: Read
       open_button: Open
       no_notifications: No notifications at the moment.
+    friend_overtaken:
+      title: A friend passed you!
+      body: "%{pseudo} just passed you on this week's XP leaderboard. Strike back by completing a quest!"
+    streak_reminder:
+      title: Your streak is at risk!
+      body: You haven't completed any quest this week. %{days} day(s) left to keep your %{count}-week streak alive.
   admin:
     users:
       index:
@@ -843,3 +850,49 @@ en:
     formats:
       short: "%m/%d/%Y"
       long: "%B %d, %Y"
+  mailers:
+    streak_reminder:
+      subject: "⚡ Your %{count}-week streak is at risk!"
+      heading: "%{pseudo}, your streak needs you!"
+      body: You haven't completed a quest this week yet. Your %{count}-week streak will be lost on Sunday night.
+      urgency: "%{days} day(s) left — a single quest is enough."
+      cta: Complete a quest
+  achievements:
+    index:
+      page_title: Achievements
+      page_subtitle: "%{done}/%{total} achievements unlocked. Each achievement unlocks a free title."
+      equipped_badge: Equipped
+      unlocked_badge: Unlocked
+      locked_badge: Locked
+      objective_label: Goal
+      progress_label: 'Progress: %{percent}%'
+    stats:
+      completed_quests: Completed quests
+      unique_completed_quests: Unique quests completed
+      total_level: Total level
+      weekly_completed_total: Weekly quests completed
+      categories_with_500_xp: Categories at 500+ XP
+      categories_with_1500_xp: Categories at 1500+ XP
+      categories_with_level_20: Categories level 20+
+    defs:
+      eclaireur:
+        objective: Complete 5 quests in total.
+        description: You've taken your first steps as an adventurer.
+      regulier:
+        objective: Complete 20 quests in total and 2 weekly quests overall.
+        description: Your consistency is starting to show.
+      polyvalent:
+        objective: Reach 500 XP in 3 different categories.
+        description: You're progressing on several fronts.
+      cadence:
+        objective: Complete 4 weekly quests overall and 25 quests in total.
+        description: Your weekly rhythm is solid.
+      stratege:
+        objective: Reach a total level of 60 and complete 30 quests.
+        description: You build your progress with discipline.
+      architecte:
+        objective: Complete 70 unique quests and reach 1500 XP in 4 categories.
+        description: You master a wide range of missions.
+      ascension:
+        objective: Reach level 20 in all 5 categories and a total level of 120.
+        description: You embody the game's overall excellence.

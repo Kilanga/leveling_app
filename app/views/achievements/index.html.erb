@@ -1,0 +1,46 @@
+<% content_for :title, "MotivUp | #{t('achievements.index.page_title')}" %>
+
+<h1 class="page-title"><%= t('achievements.index.page_title') %></h1>
+<p class="page-subtitle"><%= t('achievements.index.page_subtitle', done: @unlocked_count, total: @achievements.size) %></p>
+
+<div class="surface-card surface-card--shell">
+  <div class="card-body">
+    <div class="quest-list quest-list--flat">
+      <% @achievements.each do |achievement| %>
+        <% unlocked = achievement[:owned] || achievement[:unlocked] %>
+        <div class="quest-row quest-row--flat mb-2">
+          <div class="d-flex align-items-start justify-content-between gap-2 mb-1 flex-wrap">
+            <strong class="shop-rarity-text shop-rarity-text--<%= achievement[:rarity] %>"><%= achievement[:name] %></strong>
+            <div class="d-flex gap-2 align-items-center flex-wrap">
+              <span class="rarity-chip rarity-chip--<%= achievement[:rarity] %>"><%= achievement[:rarity].capitalize %></span>
+              <% if achievement[:active] %>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('achievements.index.equipped_badge') %></span>
+              <% elsif unlocked %>
+                <span class="shop-state-chip shop-state-chip--owned"><%= t('achievements.index.unlocked_badge') %></span>
+              <% else %>
+                <span class="shop-state-chip shop-state-chip--available"><%= t('achievements.index.locked_badge') %></span>
+              <% end %>
+            </div>
+          </div>
+
+          <p class="quest-meta mb-1"><%= achievement[:description] %></p>
+          <p class="quest-meta mb-2"><%= t('achievements.index.objective_label') %> : <%= achievement[:objective] %></p>
+
+          <div class="xp-track mb-1">
+            <div class="xp-fill" style="width: <%= (achievement[:progress] * 100).round %>%"></div>
+          </div>
+          <div class="d-flex justify-content-between flex-wrap gap-2">
+            <span class="muted-label"><%= t('achievements.index.progress_label', percent: (achievement[:progress] * 100).round) %></span>
+            <span class="muted-label">
+              <% achievement[:requirements].each_with_index do |req, i| %><%= " · " if i.positive? %><%= t("achievements.stats.#{req[:stat]}") %> : <%= req[:current] %>/<%= req[:threshold] %><% end %>
+            </span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">
+  <%= link_to t('common.back_to_dashboard'), root_path, class: "btn btn-outline-secondary" %>
+</div>

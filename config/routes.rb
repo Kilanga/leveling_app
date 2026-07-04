@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   patch "profil/pseudo", to: "users#update_pseudo", as: :update_pseudo
 
   get "profil", to: "users#show", as: :user_profile
+  get "succes", to: "achievements#index", as: :achievements
 
   # Admin
   namespace :admin do

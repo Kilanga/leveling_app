@@ -1,0 +1,8 @@
+<h2><%= t("mailers.streak_reminder.heading", pseudo: @user.pseudo) %></h2>
+<p><%= t("mailers.streak_reminder.body", count: @user.weekly_streak_count) %></p>
+<p><%= t("mailers.streak_reminder.urgency", days: @days_left) %></p>
+<p>
+  <a href="<%= quests_url %>" style="display:inline-block;padding:10px 18px;background:#2ab8f2;color:#fff;text-decoration:none;border-radius:6px;">
+    <%= t("mailers.streak_reminder.cta") %>
+  </a>
+</p>

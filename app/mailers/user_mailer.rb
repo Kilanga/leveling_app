@@ -14,6 +14,12 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: "Discover your stats on Leveling 📊")
   end
 
+  def streak_reminder_email(user)
+    @user = user
+    @days_left = (Date.current.end_of_week - Date.current).to_i + 1
+    mail(to: @user.email, subject: I18n.t("mailers.streak_reminder.subject", count: user.weekly_streak_count))
+  end
+
   def purchase_confirmation(user:, summary:, amount_eur: nil)
     @user = user
     @summary = summary

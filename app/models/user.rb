@@ -21,6 +21,13 @@ class User < ApplicationRecord
   has_many :purchases, dependent: :destroy
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships, source: :friend
+
+  # Amis effectifs : amitiés acceptées, dans les deux sens.
+  def accepted_friends
+    sent = friendships.accepted.pluck(:friend_id)
+    received = Friendship.accepted.where(friend_id: id).pluck(:user_id)
+    User.where(id: (sent + received).uniq)
+  end
   has_many :user_weekly_quests, dependent: :destroy
   has_many :weekly_quests, through: :user_weekly_quests
   has_many :user_badges, dependent: :destroy

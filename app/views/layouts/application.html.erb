@@ -68,6 +68,9 @@
           <li class="nav-item">
             <%= link_to t("layout.nav.friends"), friends_path, class: "nav-link" if user_signed_in? %>
           </li>
+          <li class="nav-item">
+            <%= link_to t("layout.nav.achievements"), achievements_path, class: "nav-link" if user_signed_in? %>
+          </li>
         </ul>
         <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">
           <% if user_signed_in? %>

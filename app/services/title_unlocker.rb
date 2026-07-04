@@ -1,54 +1,23 @@
 class TitleUnlocker
+  # Chaque définition exprime ses conditions en seuils structurés
+  # (stat => valeur minimale) pour permettre le calcul de progression
+  # sur la page Succès. Les libellés vivent dans les fichiers de locale
+  # sous achievements.defs.<key>.
   TITLE_DEFINITIONS = [
-    {
-      name: "Eclaireur",
-      rarity: "common",
-      objective: "Completer 5 quetes au total.",
-      description: "Tu as fait tes premiers pas d'aventurier.",
-      condition: ->(stats) { stats[:completed_quests] >= 5 }
-    },
-    {
-      name: "Regulier",
-      rarity: "common",
-      objective: "Completer 20 quetes au total et 2 quetes hebdomadaires au cumul.",
-      description: "Ta constance commence a se voir.",
-      condition: ->(stats) { stats[:completed_quests] >= 20 && stats[:weekly_completed_total] >= 2 }
-    },
-    {
-      name: "Polyvalent",
-      rarity: "common",
-      objective: "Atteindre 500 XP dans 3 categories differentes.",
-      description: "Tu progresses sur plusieurs fronts.",
-      condition: ->(stats) { stats[:categories_with_500_xp] >= 3 }
-    },
-    {
-      name: "Cadence Hebdo",
-      rarity: "common",
-      objective: "Completer 4 quetes hebdomadaires au cumul et 25 quetes au total.",
-      description: "Ton rythme hebdomadaire est solide.",
-      condition: ->(stats) { stats[:weekly_completed_total] >= 4 && stats[:completed_quests] >= 25 }
-    },
-    {
-      name: "Stratege Patient",
-      rarity: "rare",
-      objective: "Atteindre un niveau total de 60 et completer 30 quetes.",
-      description: "Tu construis ta progression avec discipline.",
-      condition: ->(stats) { stats[:total_level] >= 60 && stats[:completed_quests] >= 30 }
-    },
-    {
-      name: "Architecte du Progres",
-      rarity: "epic",
-      objective: "Completer 70 quetes uniques et atteindre 1500 XP dans 4 categories.",
-      description: "Tu maitrises un large spectre de missions.",
-      condition: ->(stats) { stats[:unique_completed_quests] >= 70 && stats[:categories_with_1500_xp] >= 4 }
-    },
-    {
-      name: "Ascension Totale",
-      rarity: "legendary",
-      objective: "Atteindre le niveau 20 dans les 5 categories et un niveau total de 120.",
-      description: "Tu incarnes l'excellence globale du jeu.",
-      condition: ->(stats) { stats[:categories_with_level_20] >= 5 && stats[:total_level] >= 120 }
-    }
+    { key: "eclaireur",   name: "Eclaireur",             rarity: "common",
+      requirements: { completed_quests: 5 } },
+    { key: "regulier",    name: "Regulier",              rarity: "common",
+      requirements: { completed_quests: 20, weekly_completed_total: 2 } },
+    { key: "polyvalent",  name: "Polyvalent",            rarity: "common",
+      requirements: { categories_with_500_xp: 3 } },
+    { key: "cadence",     name: "Cadence Hebdo",         rarity: "common",
+      requirements: { weekly_completed_total: 4, completed_quests: 25 } },
+    { key: "stratege",    name: "Stratege Patient",      rarity: "rare",
+      requirements: { total_level: 60, completed_quests: 30 } },
+    { key: "architecte",  name: "Architecte du Progres", rarity: "epic",
+      requirements: { unique_completed_quests: 70, categories_with_1500_xp: 4 } },
+    { key: "ascension",   name: "Ascension Totale",      rarity: "legendary",
+      requirements: { categories_with_level_20: 5, total_level: 120 } }
   ].freeze
 
   class << self
@@ -56,7 +25,7 @@ class TitleUnlocker
       stats = stats_for(user)
 
       TITLE_DEFINITIONS.each do |definition|
-        next unless definition[:condition].call(stats)
+        next unless met?(definition, stats)
 
         item = find_or_create_title!(definition)
         user.user_items.find_or_create_by!(shop_item: item)
@@ -70,29 +39,45 @@ class TitleUnlocker
       TITLE_DEFINITIONS.map do |definition|
         item = ShopItem.find_by(name: definition[:name], item_type: "title")
         owned = item.present? && owned_ids.include?(item.id)
-        unlocked = definition[:condition].call(stats)
 
         {
           id: item&.id,
+          key: definition[:key],
           name: definition[:name],
           rarity: definition[:rarity],
-          objective: definition[:objective],
-          description: definition[:description],
+          objective: I18n.t("achievements.defs.#{definition[:key]}.objective"),
+          description: I18n.t("achievements.defs.#{definition[:key]}.description"),
           owned: owned,
-          unlocked: unlocked,
-          active: item.present? && user.active_title_id == item.id
+          unlocked: met?(definition, stats),
+          active: item.present? && user.active_title_id == item.id,
+          progress: progress_ratio(definition, stats),
+          requirements: definition[:requirements].map do |stat, threshold|
+            { stat: stat, current: [ stats[stat], threshold ].min, threshold: threshold }
+          end
         }
       end
     end
 
     private
 
+    def met?(definition, stats)
+      definition[:requirements].all? { |stat, threshold| stats[stat] >= threshold }
+    end
+
+    # Progression globale = moyenne des ratios de chaque exigence (bornés à 1).
+    def progress_ratio(definition, stats)
+      ratios = definition[:requirements].map do |stat, threshold|
+        [ stats[stat].to_f / threshold, 1.0 ].min
+      end
+      (ratios.sum / ratios.size).round(3)
+    end
+
     def find_or_create_title!(definition)
       ShopItem.find_or_create_by!(name: definition[:name], item_type: "title") do |item|
         item.rarity = definition[:rarity]
         item.price_coins = nil
         item.price_euros = nil
-        item.description = definition[:description]
+        item.description = I18n.t("achievements.defs.#{definition[:key]}.description", locale: I18n.default_locale)
       end
     end
 

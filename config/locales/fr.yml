@@ -20,6 +20,7 @@ fr:
       report_bug: Signaler un bug
       sign_out: Deconnexion
       sign_in: Connexion
+      achievements: Succès
     locale_switcher:
       switch_to_fr: Passer en français
       switch_to_en: Passer en anglais
@@ -612,6 +613,12 @@ fr:
       read_badge: Lue
       open_button: Ouvrir
       no_notifications: Aucune notification pour le moment.
+    friend_overtaken:
+      title: Un ami t'a dépassé !
+      body: "%{pseudo} vient de te dépasser au classement XP de la semaine. Réplique en validant une quête !"
+    streak_reminder:
+      title: Ta streak est en danger !
+      body: Tu n'as validé aucune quête cette semaine. Il te reste %{days} jour(s) pour préserver ta streak de %{count} semaine(s).
   admin:
     users:
       index:
@@ -843,3 +850,49 @@ fr:
     formats:
       short: "%d/%m/%Y"
       long: "%d %B %Y"
+  mailers:
+    streak_reminder:
+      subject: "⚡ Ta streak de %{count} semaine(s) est en danger !"
+      heading: "%{pseudo}, ta streak a besoin de toi !"
+      body: Tu n'as pas encore validé de quête cette semaine. Ta streak de %{count} semaine(s) sera perdue dimanche soir.
+      urgency: Il te reste %{days} jour(s) — une seule quête suffit.
+      cta: Valider une quête
+  achievements:
+    index:
+      page_title: Succès
+      page_subtitle: "%{done}/%{total} succès débloqués. Chaque succès débloque un titre gratuit."
+      equipped_badge: Équipé
+      unlocked_badge: Débloqué
+      locked_badge: À débloquer
+      objective_label: Objectif
+      progress_label: 'Progression : %{percent} %'
+    stats:
+      completed_quests: Quêtes complétées
+      unique_completed_quests: Quêtes uniques complétées
+      total_level: Niveau total
+      weekly_completed_total: Quêtes hebdo complétées
+      categories_with_500_xp: Catégories à 500+ XP
+      categories_with_1500_xp: Catégories à 1500+ XP
+      categories_with_level_20: Catégories niveau 20+
+    defs:
+      eclaireur:
+        objective: Compléter 5 quêtes au total.
+        description: Tu as fait tes premiers pas d'aventurier.
+      regulier:
+        objective: Compléter 20 quêtes au total et 2 quêtes hebdomadaires au cumul.
+        description: Ta constance commence à se voir.
+      polyvalent:
+        objective: Atteindre 500 XP dans 3 catégories différentes.
+        description: Tu progresses sur plusieurs fronts.
+      cadence:
+        objective: Compléter 4 quêtes hebdomadaires au cumul et 25 quêtes au total.
+        description: Ton rythme hebdomadaire est solide.
+      stratege:
+        objective: Atteindre un niveau total de 60 et compléter 30 quêtes.
+        description: Tu construis ta progression avec discipline.
+      architecte:
+        objective: Compléter 70 quêtes uniques et atteindre 1500 XP dans 4 catégories.
+        description: Tu maîtrises un large spectre de missions.
+      ascension:
+        objective: Atteindre le niveau 20 dans les 5 catégories et un niveau total de 120.
+        description: Tu incarnes l'excellence globale du jeu.
