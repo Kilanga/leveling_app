@@ -39,9 +39,10 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "example.com" }
 
-  # Rails 8 host authorization can block request specs default hosts.
-  config.hosts << "www.example.com"
-  config.hosts << "example.org"
+  # L'autorisation d'hôte (Rails 8) bloque les hôtes des tests request
+  # (www.example.com) et le serveur Capybara/Selenium des tests système
+  # (127.0.0.1:port aléatoire) ; on la désactive entièrement en test.
+  config.hosts.clear
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -52,6 +53,4 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-  # Raise error when a before_action's only/except options reference missing actions.
-  config.action_controller.raise_on_missing_callback_actions = true
-end
+  # Raise error when a before_action's only/except optio
