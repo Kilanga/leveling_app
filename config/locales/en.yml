@@ -20,6 +20,9 @@ en:
       report_bug: Report a bug
       sign_out: Sign out
       sign_in: Sign in
+    locale_switcher:
+      switch_to_fr: Switch to French
+      switch_to_en: Switch to English
   meta:
     base_title: MotivUp
     default_description: 'MotivUp: a personal progression app with quests, titles, and leaderboards.'

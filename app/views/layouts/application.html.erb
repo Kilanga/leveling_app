@@ -103,6 +103,14 @@
           <li class="nav-item">
             <%= link_to t("layout.nav.report_bug"), "https://github.com/Kilanga/motivup-app/issues/new", class: "nav-link", target: "_blank", rel: "noopener" %>
           </li>
+          <li class="nav-item d-flex align-items-center gap-1 locale-switcher">
+            <% I18n.available_locales.each do |loc| %>
+              <%= link_to loc.to_s.upcase,
+                          "#{request.path}?#{request.query_parameters.merge(locale: loc).to_query}",
+                          class: "nav-link p-1 #{'fw-bold text-decoration-underline' if I18n.locale == loc}",
+                          "aria-label": t("layout.locale_switcher.switch_to_#{loc}") %>
+            <% end %>
+          </li>
         </ul>
       </div>
     </div>

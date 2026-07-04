@@ -20,6 +20,9 @@ fr:
       report_bug: Signaler un bug
       sign_out: Deconnexion
       sign_in: Connexion
+    locale_switcher:
+      switch_to_fr: Passer en français
+      switch_to_en: Passer en anglais
   meta:
     base_title: MotivUp
     default_description: 'MotivUp : l''application de progression personnelle avec quêtes, titres et classement.'

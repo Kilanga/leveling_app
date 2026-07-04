@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  around_action :switch_locale
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :ensure_profile_completed
   before_action :resolve_due_friend_challenges
@@ -7,6 +8,18 @@ class ApplicationController < ActionController::Base
   after_action :track_page_view
 
   protected
+
+  # Locale : param ?locale=fr|en > session > défaut. Le choix est persisté en session.
+  def switch_locale(&action)
+    requested = params[:locale].to_s
+    locale =
+      if I18n.available_locales.map(&:to_s).include?(requested)
+        session[:locale] = requested
+      else
+        session[:locale].presence_in(I18n.available_locales.map(&:to_s)) || I18n.default_locale
+      end
+    I18n.with_locale(locale, &action)
+  end
 
   def authenticate_admin!
     authenticate_user!
