@@ -89,7 +89,7 @@ module ApplicationHelper
   end
 
 def page_canonical_url
-  return nil unless request.get?
+  return nil unless request.get? || request.head?
 
   "#{request.base_url}#{request.path}"
 end
@@ -117,7 +117,7 @@ def page_og_locale
 end
 
 def page_alternate_locale_urls
-  return {} unless request.get?
+  return {} unless request.get? || request.head?
 
   I18n.available_locales.each_with_object({}) do |locale, acc|
     query = request.query_parameters.merge(locale: locale.to_s)
@@ -127,7 +127,7 @@ def page_alternate_locale_urls
 end
 
 def page_x_default_url
-  return nil unless request.get?
+  return nil unless request.get? || request.head?
 
   "#{request.base_url}#{request.path}"
 end

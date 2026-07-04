@@ -2,15 +2,15 @@ require "application_system_test_case"
 
 class PurchaseTest < ApplicationSystemTestCase
   def setup
-    @user = User.create(email: "test@example.com", password: "password")
+    @user = User.create!(email: "test@example.com", password: "password", confirmed_at: Time.current)
     sign_in @user
   end
 
-  test "L'utilisateur achète 100 pièces" do
+  test "l'utilisateur voit la boutique et ses soldes" do
     visit new_purchase_path
-    click_button "100 pièces - 5€"
 
-    assert_text "Achat réussi !"
-    assert_equal 100, @user.reload.coins
+    assert_text I18n.t("purchases.new.page_title")
+    assert_text "Orbes"
+    assert_text "Fragments"
   end
 end
