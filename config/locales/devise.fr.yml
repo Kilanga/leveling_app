@@ -54,3 +54,8 @@ fr:
       send_paranoid_instructions: "Si votre compte existe, vous recevrez un e-mail avec les instructions pour le déverrouiller."
       unlocked: "Votre compte a été déverrouillé avec succès. Veuillez vous connecter."
       already_unlocked: "Votre compte est déjà déverrouillé. Veuillez vous connecter."
+  errors:
+    messages:
+      not_saved:
+        one: "1 erreur a empêché l'enregistrement de ce %{resource} :"
+        other: "%{count} erreurs ont empêché l'enregistrement de ce %{resource} :"
