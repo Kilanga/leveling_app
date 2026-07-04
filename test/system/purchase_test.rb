@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class PurchaseTest < ApplicationSystemTestCase
   def setup
-    @user = User.create!(email: "test@example.com", password: "password", confirmed_at: Time.current)
+    @user = create(:user)
     sign_in @user
   end
 
