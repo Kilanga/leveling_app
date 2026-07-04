@@ -896,3 +896,7 @@ en:
       ascension:
         objective: Reach level 20 in all 5 categories and a total level of 120.
         description: You embody the game's overall excellence.
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'Validation failed: %{errors}'

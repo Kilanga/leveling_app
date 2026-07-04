@@ -9,7 +9,7 @@ class FriendOvertakeNotifierTest < ActiveSupport::TestCase
 
   def complete_quest!(user, xp: 100)
     quest = create(:quest, xp: xp)
-    create(:user_quest, user: user, quest: quest, completed: true)
+    create(:user_quest, user: user, quest: quest, completed: true, progress: 0)
   end
 
   test "notifie l'ami dépassé une seule fois par semaine" do

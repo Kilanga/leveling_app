@@ -896,3 +896,7 @@ fr:
       ascension:
         objective: Atteindre le niveau 20 dans les 5 catégories et un niveau total de 120.
         description: Tu incarnes l'excellence globale du jeu.
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'La validation a échoué : %{errors}'
