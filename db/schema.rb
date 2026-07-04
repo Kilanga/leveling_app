@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_28_173000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_04_160000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -296,6 +296,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_28_173000) do
     t.datetime "faction_joined_at"
     t.integer "free_credits", default: 0, null: false
     t.integer "league_last_move", default: 0, null: false
+    t.string "locale"
     t.date "league_last_settled_week"
     t.integer "league_room", default: 1, null: false
     t.integer "league_tier", default: 1, null: false

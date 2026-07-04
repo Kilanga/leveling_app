@@ -17,7 +17,10 @@ class UserMailer < ApplicationMailer
   def streak_reminder_email(user)
     @user = user
     @days_left = (Date.current.end_of_week - Date.current).to_i + 1
-    mail(to: @user.email, subject: I18n.t("mailers.streak_reminder.subject", count: user.weekly_streak_count))
+    locale = user.locale.presence_in(I18n.available_locales.map(&:to_s)) || I18n.default_locale
+    I18n.with_locale(locale) do
+      mail(to: @user.email, subject: I18n.t("mailers.streak_reminder.subject", count: user.weekly_streak_count))
+    end
   end
 
   def purchase_confirmation(user:, summary:, amount_eur: nil)

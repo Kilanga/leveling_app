@@ -26,13 +26,7 @@ class FriendChallengeResolver
 
         if winner
           winner.add_free_credits!(challenge.reward_coins)
-          InAppNotification.create!(
-            user: winner,
-            kind: "challenge_won",
-            title: "Defi gagne !",
-            body: "Tu remportes #{challenge.reward_coins} Fragments.",
-            cta_path: "/friends"
-          )
+          InAppNotifier.notify!(user: winner, kind: "challenge_won", cta_path: "/friends", count: challenge.reward_coins)
         end
       end
     end

@@ -75,13 +75,7 @@ class FriendsController < ApplicationController
 
       if friendship.save
         ProductAnalytics.track(user: current_user, event_name: "friend_request_sent", metadata: { friend_id: friend.id })
-        InAppNotification.create!(
-          user: friend,
-          kind: "friend_request",
-          title: "Nouvelle demande d'ami",
-          body: "#{current_user.pseudo} t'a envoye une demande.",
-          cta_path: "/friends"
-        )
+        InAppNotifier.notify!(user: friend, kind: "friend_request", cta_path: "/friends", pseudo: current_user.pseudo)
         redirect_back fallback_location: friends_path, notice: I18n.t("flash.friend_challenges.request_sent")
       else
         redirect_back fallback_location: friends_path, alert: I18n.t("flash.friend_challenges.error_sending_request", error: friendship.errors.full_messages.join(", "))
@@ -106,16 +100,10 @@ class FriendsController < ApplicationController
       friendship.update(status: "accepted")
       friend = friendship.user == current_user ? friendship.friend : friendship.user
       ProductAnalytics.track(user: current_user, event_name: "friend_request_accepted", metadata: { friend_id: friend.id })
-      InAppNotification.create!(
-        user: friend,
-        kind: "friend_accept",
-        title: "Demande acceptee",
-        body: "#{current_user.pseudo} a accepte ton invitation.",
-        cta_path: "/friends"
-      )
-      flash[:notice] = "Amitié acceptée !"
+      InAppNotifier.notify!(user: friend, kind: "friend_accept", cta_path: "/friends", pseudo: current_user.pseudo)
+      flash[:notice] = I18n.t("flash.friends.accepted")
     else
-      flash[:alert] = "Aucune demande trouvée."
+      flash[:alert] = I18n.t("flash.friends.request_not_found")
     end
 
     redirect_to friends_path
@@ -127,9 +115,9 @@ class FriendsController < ApplicationController
 
     if friendship
       friendship.destroy
-      flash[:notice] = "Demande refusée."
+      flash[:notice] = I18n.t("flash.friends.rejected")
     else
-      flash[:alert] = "Aucune demande trouvée."
+      flash[:alert] = I18n.t("flash.friends.request_not_found")
     end
 
     redirect_to friends_path
@@ -142,9 +130,9 @@ class FriendsController < ApplicationController
 
     if friendship
       friendship.destroy
-      flash[:notice] = "Amitié supprimée avec succès."
+      flash[:notice] = I18n.t("flash.friends.removed")
     else
-      flash[:alert] = "Impossible de supprimer cet ami."
+      flash[:alert] = I18n.t("flash.friends.remove_failed")
     end
 
     redirect_to friends_path

@@ -598,6 +598,7 @@ en:
       defeat_badge: Defeat
       draw_badge: Draw
       no_finished_challenge: No finished challenge yet.
+      rematch_button: Rematch
     inventory:
       page_title: "\U0001F392 %{pseudo}'s inventory"
       titles_heading: "\U0001F3C6 Titles"
@@ -619,6 +620,18 @@ en:
     streak_reminder:
       title: Your streak is at risk!
       body: You haven't completed any quest this week. %{days} day(s) left to keep your %{count}-week streak alive.
+    friend_request:
+      title: New friend request
+      body: "%{pseudo} sent you a request."
+    friend_accept:
+      title: Request accepted
+      body: "%{pseudo} accepted your invitation."
+    challenge_received:
+      title: New friend challenge
+      body: "%{pseudo} challenges you for 48h."
+    challenge_won:
+      title: Challenge won!
+      body: You win %{count} Fragments.
   admin:
     users:
       index:
@@ -743,6 +756,12 @@ en:
       card_text_updated: Card text updated.
       card_text_update_failed: Unable to update the text.
     google_login_failed: Google sign-in failed.
+    friends:
+      accepted: Friendship accepted!
+      request_not_found: No request found.
+      rejected: Request declined.
+      removed: Friendship removed successfully.
+      remove_failed: Unable to remove this friend.
   errors:
     messages:
       challenge_requires_friend: You can only launch a challenge with an accepted friend.

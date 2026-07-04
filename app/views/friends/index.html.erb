@@ -126,7 +126,7 @@
           <% @users.each do |user| %>
             <div class="quest-row quest-row--flat friend-row">
               <strong><%= user.pseudo %></strong>
-              <% unless current_user.friends.include?(user) %>
+              <% unless current_user.accepted_friends.include?(user) %>
                 <%= button_to t('friends.index.send_request_button'), friends_path(friend_id: user.id), method: :post, class: "btn btn-sm btn-brand" %>
               <% end %>
             </div>

@@ -16,15 +16,7 @@ class StreakReminder
       at_risk_users(week_start).find_each do |user|
         next if already_reminded_this_week?(user)
 
-        I18n.with_locale(I18n.default_locale) do
-          InAppNotification.create!(
-            user: user,
-            kind: KIND,
-            title: I18n.t("notifications.streak_reminder.title"),
-            body: I18n.t("notifications.streak_reminder.body", count: user.weekly_streak_count, days: days_left + 1),
-            cta_path: "/quests"
-          )
-        end
+        InAppNotifier.notify!(user: user, kind: KIND, cta_path: "/quests", count: user.weekly_streak_count, days: days_left + 1)
         UserMailer.streak_reminder_email(user).deliver_now rescue Rails.logger.error("StreakReminder mail failed for user #{user.id}: #{$!.message}")
         sent += 1
       end

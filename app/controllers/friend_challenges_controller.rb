@@ -16,13 +16,7 @@ class FriendChallengesController < ApplicationController
       reward_coins: 80
     )
 
-    InAppNotification.create!(
-      user: challenged,
-      kind: "challenge_received",
-      title: "Nouveau defi ami",
-      body: "#{current_user.pseudo} te defie pendant 48h.",
-      cta_path: "/friends"
-    )
+    InAppNotifier.notify!(user: challenged, kind: "challenge_received", cta_path: "/friends", pseudo: current_user.pseudo)
 
     ProductAnalytics.track(user: current_user, event_name: "friend_challenge_created", metadata: { challenge_id: challenge.id, friend_id: challenged.id })
 

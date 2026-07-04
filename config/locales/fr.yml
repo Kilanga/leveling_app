@@ -598,6 +598,7 @@ fr:
       defeat_badge: Défaite
       draw_badge: Égalité
       no_finished_challenge: Aucun défi terminé pour le moment.
+      rematch_button: Revanche
     inventory:
       page_title: "\U0001F392 Inventaire de %{pseudo}"
       titles_heading: "\U0001F3C6 Titres"
@@ -619,6 +620,18 @@ fr:
     streak_reminder:
       title: Ta streak est en danger !
       body: Tu n'as validé aucune quête cette semaine. Il te reste %{days} jour(s) pour préserver ta streak de %{count} semaine(s).
+    friend_request:
+      title: Nouvelle demande d'ami
+      body: "%{pseudo} t'a envoyé une demande."
+    friend_accept:
+      title: Demande acceptée
+      body: "%{pseudo} a accepté ton invitation."
+    challenge_received:
+      title: Nouveau défi ami
+      body: "%{pseudo} te défie pendant 48h."
+    challenge_won:
+      title: Défi gagné !
+      body: Tu remportes %{count} Fragments.
   admin:
     users:
       index:
@@ -743,6 +756,12 @@ fr:
       card_text_updated: Texte de carte mis à jour.
       card_text_update_failed: Impossible de mettre à jour le texte.
     google_login_failed: Connexion Google impossible.
+    friends:
+      accepted: Amitié acceptée !
+      request_not_found: Aucune demande trouvée.
+      rejected: Demande refusée.
+      removed: Amitié supprimée avec succès.
+      remove_failed: Impossible de supprimer cet ami.
   errors:
     messages:
       challenge_requires_friend: Tu ne peux lancer un defi qu'avec un ami accepte.

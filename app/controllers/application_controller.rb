@@ -9,15 +9,18 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # Locale : param ?locale=fr|en > session > défaut. Le choix est persisté en session.
+  # Locale : param ?locale=fr|en > session > préférence compte > défaut.
+  # Le choix explicite est persisté en session et sur le compte.
   def switch_locale(&action)
+    available = I18n.available_locales.map(&:to_s)
     requested = params[:locale].to_s
-    locale =
-      if I18n.available_locales.map(&:to_s).include?(requested)
-        session[:locale] = requested
-      else
-        session[:locale].presence_in(I18n.available_locales.map(&:to_s)) || I18n.default_locale
-      end
+    if available.include?(requested)
+      session[:locale] = requested
+      current_user&.update_column(:locale, requested) if current_user&.locale != requested
+    end
+    locale = session[:locale].presence_in(available) ||
+             current_user&.locale.presence_in(available) ||
+             I18n.default_locale
     I18n.with_locale(locale, &action)
   end
 

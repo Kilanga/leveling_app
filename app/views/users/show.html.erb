@@ -259,6 +259,9 @@
         <% else %>
           <span class="badge text-bg-warning"><%= t('user.profile.draw_badge') %></span>
         <% end %>
+        <% if @user == current_user && current_user.accepted_friends.include?(opponent) %>
+          <%= button_to t('user.profile.rematch_button'), friend_challenges_path(friend_id: opponent.id), method: :post, class: "btn btn-sm btn-outline-quest" %>
+        <% end %>
       </li>
     <% end %>
   <% else %>
