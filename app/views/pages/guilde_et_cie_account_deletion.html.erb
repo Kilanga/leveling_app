@@ -1,0 +1,50 @@
+<% content_for :title, "#{t('pages.guilde_et_cie_account_deletion.page_title')} | Guilde & Cie" %>
+<% content_for :meta_description, t('pages.guilde_et_cie_account_deletion.page_description') %>
+
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <h1 class="page-title mb-4"><%= t('pages.guilde_et_cie_account_deletion.page_title') %></h1>
+
+    <div class="legal-content">
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_account_deletion.intro') %>
+      </p>
+
+      <div class="surface-card mb-3" style="background: rgba(0,0,0,0.15);">
+        <div class="card-body">
+          <p class="quest-meta mb-3">
+            <%= t('pages.guilde_et_cie_account_deletion.request_instructions') %>
+          </p>
+          <%= mail_to "arnaud.lothe@gmail.com",
+                t('pages.guilde_et_cie_account_deletion.request_button'),
+                subject: t('pages.guilde_et_cie_account_deletion.mail_subject'),
+                body: t('pages.guilde_et_cie_account_deletion.mail_body'),
+                class: "btn btn-outline-quest btn-arcade" %>
+        </div>
+      </div>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_account_deletion.section_scope') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_account_deletion.content_scope') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_account_deletion.section_not_affected') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_account_deletion.content_not_affected') %>
+      </p>
+
+      <h2 class="section-title mt-4 mb-3"><%= t('pages.guilde_et_cie_account_deletion.section_delay') %></h2>
+      <p class="quest-meta mb-3">
+        <%= t('pages.guilde_et_cie_account_deletion.content_delay') %>
+      </p>
+    </div>
+
+    <p class="quest-meta">
+      <%= link_to t('pages.guilde_et_cie_account_deletion.privacy_link_text'), guilde_et_cie_privacy_path %>
+    </p>
+  </div>
+</section>
+
+<div class="text-center">
+  <%= link_to t('layout.nav.home'), root_path, class: "btn btn-outline-quest btn-arcade" %>
+</div>

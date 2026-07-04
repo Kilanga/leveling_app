@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get "terms", to: "pages#terms", as: :terms
   get "privacy", to: "pages#privacy", as: :privacy
   get "credentials", to: "pages#credentials", as: :credentials
+  get "guilde-et-cie/confidentialite", to: "pages#guilde_et_cie_privacy", as: :guilde_et_cie_privacy
+  get "guilde-et-cie/suppression-compte", to: "pages#guilde_et_cie_account_deletion", as: :guilde_et_cie_account_deletion
   get "dashboard", to: "dashboard#index", defaults: { format: :html }
   post "dashboard/claim_daily_chest", to: "dashboard#claim_daily_chest", as: :claim_daily_chest
   devise_for :users, controllers: {
