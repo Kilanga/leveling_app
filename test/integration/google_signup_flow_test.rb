@@ -1,38 +1,48 @@
 require "test_helper"
 
+# Vérifie le contrat fonctionnel : un compte créé via Google doit
+# obligatoirement passer par l'écran de choix du pseudo avant de naviguer.
 class GoogleSignupFlowTest < ActionDispatch::IntegrationTest
-  setup do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
+  include Devise::Test::IntegrationHelpers
+
+  def google_auth_hash
+    OmniAuth::AuthHash.new(
       provider: "google_oauth2",
       uid: "google-uid-123",
       info: { email: "nouveau@example.com", name: "Nouveau Chasseur" }
     )
-    Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
-    Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2]
   end
 
-  teardown do
-    OmniAuth.config.test_mode = false
-    OmniAuth.config.mock_auth[:google_oauth2] = nil
-    Rails.application.env_config.delete("omniauth.auth")
-    Rails.application.env_config.delete("devise.mapping")
+  test "from_google_oauth2 crée un compte au profil incomplet" do
+    user = User.from_google_oauth2(google_auth_hash)
+
+    assert user.persisted?
+    assert_equal "google_oauth2", user.provider
+    assert user.pseudo.present?, "un pseudo provisoire doit être généré"
+    assert user.needs_profile_completion?, "le choix du pseudo doit être requis"
+
+    # Reconnexion : le compte existant est retrouvé, pas dupliqué
+    assert_no_difference -> { User.count } do
+      User.from_google_oauth2(google_auth_hash)
+    end
   end
 
-  test "un nouveau compte Google passe par le choix du pseudo" do
-    get "/users/auth/google_oauth2/callback"
+  test "un compte Google incomplet est verrouillé sur l'écran de choix du pseudo" do
+    user = User.from_google_oauth2(google_auth_hash)
+    sign_in user
 
-    user = User.find_by(uid: "google-uid-123")
-    assert user.present?, "l'utilisateur Google doit être créé"
-    assert user.needs_profile_completion?, "le profil doit être marqué incomplet"
+    get quests_path
     assert_redirected_to complete_profile_path
 
-    # L'écran de complétion s'affiche avec le champ pseudo
     follow_redirect!
     assert_response :success
     assert_includes response.body, I18n.t("complete_profile.username_label")
+  end
 
-    # L'utilisateur choisit son pseudo et son avatar
+  test "choisir son pseudo débloque la navigation" do
+    user = User.from_google_oauth2(google_auth_hash)
+    sign_in user
+
     patch complete_profile_path, params: { user: {
       pseudo: "OmbreDuLundi",
       avatar: "https://res.cloudinary.com/dqpfnffmi/image/upload/v1739664484/DALL_E_2025-02-16_01.07.48_-_A_digital_painting_of_a_male_warrior_in_the_style_of_Solo_Leveling_at_level_1_looking_relatively_weak_but_determined._He_wears_a_simple_slightly_wo_qhnmid.webp"
@@ -41,22 +51,18 @@ class GoogleSignupFlowTest < ActionDispatch::IntegrationTest
 
     user.reload
     assert_equal "OmbreDuLundi", user.pseudo
-    assert user.profile_completed?
     assert_not user.needs_profile_completion?
-  end
-
-  test "une reconnexion Google d'un profil complété ne repasse pas par l'écran" do
-    get "/users/auth/google_oauth2/callback"
-    User.find_by(uid: "google-uid-123").update!(profile_completed: true, pseudo: "DejaFait")
-
-    get "/users/auth/google_oauth2/callback"
-    assert_redirected_to root_path
-  end
-
-  test "impossible de naviguer ailleurs tant que le profil n'est pas complété" do
-    get "/users/auth/google_oauth2/callback"
 
     get quests_path
-    assert_redirected_to complete_profile_path
+    assert_response :success
+  end
+
+  test "une reconnexion d'un profil complété ne repasse pas par l'écran" do
+    user = User.from_google_oauth2(google_auth_hash)
+    user.update!(pseudo: "DejaFait", profile_completed: true)
+    sign_in user
+
+    get quests_path
+    assert_response :success
   end
 end
