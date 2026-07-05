@@ -86,3 +86,8 @@ production:
   <<: *default
   url: <%= ENV["SUPABASE_DATABASE_URL"].presence || ENV["DATABASE_URL"] %>
   prepared_statements: false
+  # Supabase/pgBouncer en mode transaction (port 6543) : les verrous
+  # consultatifs de session ne survivent pas d'une requête à l'autre.
+  # On les désactive pour que `rails db:migrate` (phase release Heroku)
+  # ne lève plus ActiveRecord::ConcurrentMigrationError.
+  advisory_locks: false
