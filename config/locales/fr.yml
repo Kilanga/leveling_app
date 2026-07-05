@@ -954,3 +954,9 @@ fr:
       completions_label: Quêtes complétées
       categories_heading: Progression par catégorie
       no_data: Aucune donnée pour le moment. Lance ta première quête !
+  hunter_rank:
+    badge: Rang %{letter}
+    title: Chasseur de rang %{letter}
+    profile_heading: Rang de chasseur
+    progress_to_next: "%{level}/%{next_threshold} niveaux vers le rang %{next_letter}"
+    max_rank: Rang maximal atteint. Tu es une légende.

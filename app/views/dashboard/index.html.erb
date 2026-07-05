@@ -1,5 +1,6 @@
-<h1 class="page-title">
+<h1 class="page-title d-flex align-items-center gap-2 flex-wrap">
   <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
+  <%= hunter_rank_badge(HunterRank.for_user(current_user)) %>
 </h1>
 <p class="page-subtitle">
   <%= t('dashboard.subtitle') %>

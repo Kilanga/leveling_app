@@ -8,7 +8,9 @@ class WeeklyLeague
 
   class << self
     def standings(users, range: Time.current.all_week)
-      xp_map = weekly_xp_by_user(users.map(&:id), range: range)
+      user_ids = users.map(&:id)
+      xp_map = weekly_xp_by_user(user_ids, range: range)
+      level_map = UserStat.where(user_id: user_ids).group(:user_id).sum(:level)
       ranked = users.sort_by { |u| -xp_map.fetch(u.id, 0) }
       ranked.map.with_index(1) do |user, rank|
         tier_level = user[:league_tier].to_i.nonzero? || 1
@@ -16,6 +18,7 @@ class WeeklyLeague
           user: user,
           rank: rank,
           weekly_xp: xp_map.fetch(user.id, 0),
+          total_level: level_map.fetch(user.id, 0),
           tier: tier_for_user(user),
           movement: league_columns_available? ? user[:league_last_move].to_i : 0,
           projected_movement: projected_movement_for(rank: rank, size: ranked.size, tier_level: tier_level)

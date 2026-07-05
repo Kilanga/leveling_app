@@ -954,3 +954,9 @@ en:
       completions_label: Completed quests
       categories_heading: Progress by category
       no_data: No data yet. Start your first quest!
+  hunter_rank:
+    badge: Rank %{letter}
+    title: Rank %{letter} hunter
+    profile_heading: Hunter rank
+    progress_to_next: "%{level}/%{next_threshold} levels toward rank %{next_letter}"
+    max_rank: Maximum rank reached. You are a legend.

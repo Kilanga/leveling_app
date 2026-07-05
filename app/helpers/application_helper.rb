@@ -88,6 +88,13 @@ module ApplicationHelper
     end
   end
 
+def hunter_rank_badge(rank, css_class: "")
+  content_tag(:span,
+              t("hunter_rank.badge", letter: rank[:letter]),
+              class: "hunter-rank-badge hunter-rank-badge--#{rank[:letter].downcase} #{css_class}".strip,
+              title: t("hunter_rank.title", letter: rank[:letter]))
+end
+
 def page_canonical_url
   return nil unless request.get? || request.head?
 

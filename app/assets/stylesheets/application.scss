@@ -2416,3 +2416,34 @@ body::before {
 .shop-preview-card.profile-card-container .shop-impact-card .profile-card-text {
   margin-bottom: 0;
 }
+
+// --- Rangs de chasseur (E -> S) ---
+.hunter-rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1em;
+  padding: 0.15em 0.5em;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+}
+.hunter-rank-badge--e { color: #9eb6cd; border-color: rgba(158, 182, 205, 0.45); background: rgba(158, 182, 205, 0.12); }
+.hunter-rank-badge--d { color: #5cbf8b; border-color: rgba(92, 191, 139, 0.5); background: rgba(92, 191, 139, 0.12); }
+.hunter-rank-badge--c { color: #2ab8f2; border-color: rgba(42, 184, 242, 0.5); background: rgba(42, 184, 242, 0.12); }
+.hunter-rank-badge--b { color: #b287f2; border-color: rgba(178, 135, 242, 0.55); background: rgba(178, 135, 242, 0.14); }
+.hunter-rank-badge--a { color: #ff9d5c; border-color: rgba(255, 157, 92, 0.55); background: rgba(255, 157, 92, 0.14); }
+.hunter-rank-badge--s {
+  color: #ffd75c;
+  border-color: rgba(255, 215, 92, 0.65);
+  background: rgba(255, 215, 92, 0.14);
+  box-shadow: 0 0 10px rgba(255, 215, 92, 0.35);
+  animation: hunter-rank-s-glow 2.2s ease-in-out infinite;
+}
+@keyframes hunter-rank-s-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(255, 215, 92, 0.25); }
+  50% { box-shadow: 0 0 14px rgba(255, 215, 92, 0.55); }
+}

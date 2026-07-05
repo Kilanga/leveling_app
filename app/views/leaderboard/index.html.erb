@@ -49,6 +49,7 @@
                     <div class="leaderboard-player-meta">
                       <span class="profile-frame-container <%= frame_wrapper_classes(entry[:user].active_profile_frame) %>">
                         <%= link_to entry[:user].pseudo, leaderboard_path(entry[:user]), class: "text-decoration-none" %>
+                        <%= hunter_rank_badge(HunterRank.for_level(entry[:total_level] || 0)) if entry.key?(:total_level) %>
                       </span>
                       <% if entry[:user].active_title %>
                         <span class="badge bg-<%= entry[:user].title_rarity_class %>"><%= entry[:user].active_title.name %></span>

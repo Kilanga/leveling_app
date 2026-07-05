@@ -1,4 +1,7 @@
-<h1 class="page-title"><%= t('leaderboard.player_home.page_title', pseudo: @player.pseudo) %></h1>
+<div class="d-flex align-items-center gap-2 flex-wrap">
+  <h1 class="page-title mb-0"><%= t('leaderboard.player_home.page_title', pseudo: @player.pseudo) %></h1>
+  <%= hunter_rank_badge(HunterRank.for_level(@player_total_level)) %>
+</div>
 <p class="page-subtitle"><%= t('leaderboard.player_home.page_subtitle') %></p>
 
 <% active_player_card = @player.respond_to?(:active_profile_card) ? @player.active_profile_card : nil %>
