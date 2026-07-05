@@ -8,6 +8,7 @@ class GoogleSignupFlowTest < ActionDispatch::IntegrationTest
       uid: "google-uid-123",
       info: { email: "nouveau@example.com", name: "Nouveau Chasseur" }
     )
+    Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2]
   end
 
@@ -15,6 +16,7 @@ class GoogleSignupFlowTest < ActionDispatch::IntegrationTest
     OmniAuth.config.test_mode = false
     OmniAuth.config.mock_auth[:google_oauth2] = nil
     Rails.application.env_config.delete("omniauth.auth")
+    Rails.application.env_config.delete("devise.mapping")
   end
 
   test "un nouveau compte Google passe par le choix du pseudo" do
