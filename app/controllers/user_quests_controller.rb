@@ -54,6 +54,7 @@ class UserQuestsController < ApplicationController
           FactionBoss.check!(current_user.faction)
         end
         UserDailyContract.progress_for_user!(current_user)
+        system_result = SystemQuestBoard.register_completion!(current_user, @user_quest.quest)
         referral_result = ReferralRewarder.claim_if_eligible!(current_user)
         streak = WeeklyStreakTracker.register_completion!(current_user)
         FriendOvertakeNotifier.call(current_user, xp_before: weekly_xp_before)
@@ -65,7 +66,13 @@ class UserQuestsController < ApplicationController
         flash[:streak_up_quest_title] = quest_title
         flash[:streak_up_value] = @user_quest.completed_count.to_i
         referral_note = referral_result[:awarded] ? " Bonus parrainage: +#{referral_result[:invitee_reward]} Fragments." : ""
-        redirect_to root_path, notice: I18n.t("flash.weekly_quests.quest_completed", xp: gained_xp) + referral_note
+        perfect_note =
+          if system_result&.perfect_day
+            " " + I18n.t("flash.system_quests.perfect_day", xp: system_result.bonus_xp, fragments: system_result.bonus_fragments)
+          else
+            ""
+          end
+        redirect_to root_path, notice: I18n.t("flash.weekly_quests.quest_completed", xp: gained_xp) + referral_note + perfect_note
       else
         redirect_to root_path, alert: I18n.t("errors.messages.quest_not_active")
       end

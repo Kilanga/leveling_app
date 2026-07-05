@@ -14,16 +14,21 @@ il prouve sa valeur pour des récompenses exclusives.
 - Barre de progression vers le rang suivant sur le profil
 - Service : `HunterRank`
 
-## Phase 2 — Le Système : quêtes quotidiennes imposées
+## Phase 2 — Le Système : quêtes quotidiennes imposées ✅ (implémenté)
 - À minuit (recurring Solid Queue), 3-4 quêtes du jour assignées par joueur,
   pondérées vers ses catégories faibles (user_stats les plus bas)
-- Bonus « journée parfaite » : +XP et +Fragments si tout est complété
+  → `SystemQuestAssigner` + filet de sécurité au chargement du dashboard
+- Bonus « journée parfaite » : +25% XP (catégorie la plus faible) et
+  +40 Fragments si tout est complété → `SystemQuestBoard`
 - Malus doux : rater 2 jours de suite gèle la progression du contrat hebdo
-  (pas de perte d'XP — on punit jamais la progression acquise)
-- Fondation existante : daily_contracts (à faire évoluer vers l'assignation
-  de quêtes précises), UserDailyContract.progress_for_user!
-- Réécriture du catalogue : ton Solo Leveling (« Traque matinale : 30 min
-  de sport avant 9h »), difficulté E→S alignée sur les rangs, XP rééquilibré
+  (pas de perte d'XP — on punit jamais la progression acquise) ;
+  compléter une quête du jour lève le gel
+- Choix retenu : nouvelle table `system_quest_assignments` (assignation
+  par joueur/jour) plutôt qu'évolution des daily_contracts, qui ne sont
+  plus proposés sur le dashboard
+- Réécriture du catalogue : ton Solo Leveling, difficulté E→S alignée sur
+  les rangs, XP rééquilibré par difficulté → `QuestCatalog` (source unique
+  seeds + migration de données, historique joueurs préservé)
 
 ## Phase 3 — Saisons (6 semaines)
 - Modèle Season (starts_on, ends_on, name, number)
@@ -39,6 +44,8 @@ il prouve sa valeur pour des récompenses exclusives.
   (plus de clic « Aperçu profil »), lueur animée par rareté (epic/legendary)
 - Passe de saison (dépend Phase 3) : piste gratuite + piste premium (Stripe),
   paliers débloqués à l'XP saisonnier
+- Nouveaux objets à acheter : élargir le catalogue (cosmétiques, cadres,
+  thèmes XP, titres...) pour alimenter les offres rotatives et le passe
 
 ## Phase 5 — Landing page « Arise-like »
 - Hero : « Solo Leveling pour ta vraie vie » + mockup du dashboard

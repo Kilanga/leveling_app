@@ -24,7 +24,6 @@ class DashboardController < ApplicationController
 
   def index
     Faction.bootstrap_defaults!
-    DailyContractBoard.ensure_for_today!
 
     @daily_login_claim = current_user.claim_daily_login_bonus!
 
@@ -102,15 +101,17 @@ class DashboardController < ApplicationController
         []
       end
 
-    today_contracts = DailyContract.for_today
-    today_contracts.each do |contract|
-      current_user.user_daily_contracts.find_or_create_by!(daily_contract: contract)
-    end
-    @daily_contract_offers = current_user.user_daily_contracts.includes(:daily_contract)
-      .joins(:daily_contract)
-      .where(daily_contracts: { active_on: Time.zone.today })
-      .order("daily_contracts.reward_coins DESC")
-    @active_daily_contract = @daily_contract_offers.find { |entry| entry.accepted? }
+    # Le Système : quêtes du jour imposées (filet de sécurité si le job
+    # récurrent de minuit n'est pas encore passé pour ce joueur).
+    SystemQuestAssigner.assign_for!(current_user)
+    @system_assignments = current_user.system_quest_assignments
+      .for_day(Time.zone.today)
+      .includes(quest: :category)
+      .order(:id)
+      .to_a
+    @system_perfect_day = @system_assignments.any? && @system_assignments.all?(&:completed?)
+    @system_perfect_day_fragments = SystemQuestBoard::PERFECT_DAY_FRAGMENTS
+    @weekly_progression_frozen = SystemQuestBoard.weekly_progression_frozen?(current_user)
 
     respond_to do |format|
       format.html

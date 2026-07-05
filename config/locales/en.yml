@@ -176,6 +176,14 @@ en:
     no_completion_week: No completion this week.
     view_league: View league in Leaderboard
     xp_boost_active: Active XP Boost until %{date}
+    system_quests:
+      title: The System — Daily quests
+      subtitle: The System has picked your targets. Complete them all for a perfect day.
+      difficulty_label: Difficulty %{letter}
+      perfect_day_hint: 'Perfect day: complete everything for bonus XP and +%{fragments} Fragments.'
+      perfect_day_done: Perfect day achieved. The System acknowledges your worth.
+      frozen_warning: Two days without answering the System — your weekly contract is frozen. Complete a daily quest to unfreeze it.
+      empty: The System has not assigned your daily quests yet. Check back in a moment.
     daily_objective:
       title: Daily objective
       instruction: Complete %{count} quests to maintain your rhythm.
@@ -720,6 +728,11 @@ en:
       already_member: You already are a member of %{name}.
       change_locked: Faction change locked until weekly reset (%{time}).
       faction_joined: 'Faction joined: %{name}.'
+    system_quests:
+      quest_completed: 'System quest completed! +%{xp} XP.'
+      already_completed: This System quest is already completed.
+      perfect_day: 'Perfect day! Bonus: +%{xp} XP and +%{fragments} Fragments.'
+      weekly_frozen: Weekly contract frozen by the System. Complete a daily quest to resume your progression.
     weekly_quests:
       quest_completed: 'Quest completed! XP added: %{xp}'
       already_completed: This weekly quest is already completed.

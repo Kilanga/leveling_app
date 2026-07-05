@@ -47,6 +47,18 @@ class XpAwarder
       end
     end
 
+    # Attribution directe d'XP (bonus du Système, événements...) :
+    # crédite l'XP global et l'XP de catégorie, sans passer par une quête.
+    def award_bonus_xp!(user:, category:, xp_amount:)
+      ActiveRecord::Base.transaction do
+        user.increment!(:xp, xp_amount)
+        apply_category_xp!(user: user, category: category, xp_amount: xp_amount)
+        TitleUnlocker.call(user)
+      end
+
+      xp_amount
+    end
+
     private
 
     def apply_category_xp!(user:, category:, xp_amount:)

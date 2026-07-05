@@ -43,6 +43,7 @@ class User < ApplicationRecord
   has_many :user_daily_contracts, dependent: :destroy
   has_many :daily_contracts, through: :user_daily_contracts
   has_many :faction_contributions, dependent: :destroy
+  has_many :system_quest_assignments, dependent: :destroy
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true

@@ -176,6 +176,14 @@ fr:
     no_completion_week: Aucune validation cette semaine.
     view_league: Voir la ligue dans Classement
     xp_boost_active: Boost XP actif jusqu'a %{date}
+    system_quests:
+      title: Le Système — Quêtes du jour
+      subtitle: Le Système a choisi tes cibles. Complète-les toutes pour la journée parfaite.
+      difficulty_label: Difficulté %{letter}
+      perfect_day_hint: 'Journée parfaite : complète tout pour un bonus d''XP et +%{fragments} Fragments.'
+      perfect_day_done: Journée parfaite accomplie. Le Système reconnaît ta valeur.
+      frozen_warning: Deux jours sans réponse au Système — ton contrat hebdo est gelé. Complète une quête du jour pour le débloquer.
+      empty: Le Système n'a pas encore assigné tes quêtes du jour. Reviens dans un instant.
     daily_objective:
       title: Objectif du jour
       instruction: Valide %{count} quetes pour maintenir ton rythme.
@@ -720,6 +728,11 @@ fr:
       already_member: Tu fais deja partie de %{name}.
       change_locked: Changement de faction verrouille jusqu'au reset hebdomadaire (%{time}).
       faction_joined: 'Faction rejointe: %{name}.'
+    system_quests:
+      quest_completed: 'Quête du Système validée ! +%{xp} XP.'
+      already_completed: Cette quête du Système est déjà validée.
+      perfect_day: 'Journée parfaite ! Bonus : +%{xp} XP et +%{fragments} Fragments.'
+      weekly_frozen: Contrat hebdo gelé par le Système. Complète une quête du jour pour reprendre ta progression.
     weekly_quests:
       quest_completed: 'Quete completee ! XP ajoute : %{xp}'
       already_completed: Cette quete hebdomadaire est deja validee.

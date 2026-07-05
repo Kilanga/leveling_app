@@ -1,6 +1,10 @@
 # Tâches récurrentes exécutées par le dispatcher Solid Queue
 # (nécessite SOLID_QUEUE_IN_PUMA=1 sur Heroku, cf. config/puma.rb)
 production:
+  system_quests:
+    command: "SystemQuestAssigner.assign_all!"
+    schedule: every day at midnight
+
   streak_reminders:
     command: "StreakReminder.call"
     schedule: every day at 4pm

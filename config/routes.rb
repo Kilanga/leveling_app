@@ -60,6 +60,11 @@ Rails.application.routes.draw do
       post :join
     end
   end
+  resources :system_quests, only: [] do
+    member do
+      post :complete
+    end
+  end
   resources :daily_contracts, only: [] do
     member do
       post :accept

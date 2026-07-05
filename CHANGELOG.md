@@ -16,6 +16,20 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.1.0] - 2026-07-05
+
+### Ajouté
+- V2 Phase 1 — Rangs de chasseur E→S : rang permanent calculé depuis le niveau total (`HunterRank`), affiché sur navbar, profil, classement et dashboard, avec barre de progression vers le rang suivant.
+- V2 Phase 2 — Le Système : 3-4 quêtes du jour imposées à chaque chasseur (job Solid Queue à minuit + filet de sécurité au chargement du dashboard), pondérées vers ses catégories faibles et alignées sur son rang (`SystemQuestAssigner`).
+- Bonus « journée parfaite » : +25% de l'XP des quêtes du jour (crédité sur la catégorie la plus faible) et +40 Fragments quand tout est complété (`SystemQuestBoard`).
+- Malus doux : 2 jours entièrement ratés gèlent la progression du contrat hebdo jusqu'à la prochaine quête du jour complétée — aucune XP n'est jamais retirée.
+- Section « Le Système — Quêtes du jour » sur le dashboard : validation directe, badge de difficulté, bannière de gel, indicateur journée parfaite (FR/EN).
+- Difficulté E→S sur les quêtes, alignée sur les rangs de chasseur.
+
+### Modifié
+- Réécriture complète du catalogue des 100 quêtes au ton Solo Leveling avec XP rééquilibré par difficulté (E:100 → S:600), via `QuestCatalog` (source unique pour seeds et migration de données — l'historique des joueurs est préservé).
+- Les daily contracts (offres génériques) ne sont plus proposés sur le dashboard : remplacés par les quêtes du Système.
+
 ## [2.0.0] - 2026-03-29
 
 ### Modifié
