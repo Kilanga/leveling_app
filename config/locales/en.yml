@@ -393,6 +393,18 @@ en:
         ends_at_midnight: New deals at midnight
         buy_button: Grab the deal
   leaderboard:
+    season:
+      heading: "%{name}"
+      subtitle: XP earned over the 6-week season. Nothing is lost at the end — only the rewards are exclusive.
+      days_remaining:
+        one: 1 day left
+        other: "%{count} days left"
+      my_rank: 'Your season rank: #%{rank} with %{xp} XP.'
+      no_rank_yet: Earn XP to enter the season leaderboard.
+      rewards_hint: 'Season end: unique title for the top 3, exclusive badge for the top 10%.'
+      th_season_xp: Season XP
+      top3_tooltip: In the running for the unique title (top 3)
+      empty: Nobody ranked yet. Be the first hunter to mark this season.
     index:
       page_title: Weekly league leaderboard
       current_league: 'Current league:'
@@ -635,6 +647,12 @@ en:
       read_badge: Read
       open_button: Open
       no_notifications: No notifications at the moment.
+    season_top3:
+      title: 'Top 3 of %{season}!'
+      body: 'Rank #%{rank} — the unique title and the exclusive season badge are yours.'
+    season_top10:
+      title: 'Top 10% of %{season}'
+      body: 'Rank #%{rank} — the exclusive season badge joins your collection.'
     friend_overtaken:
       title: A friend passed you!
       body: "%{pseudo} just passed you on this week's XP leaderboard. Strike back by completing a quest!"

@@ -16,6 +16,15 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.2.0] - 2026-07-05
+
+### Ajouté
+- V2 Phase 3 — Saisons de 6 semaines : modèle `Season` (numéro, nom thématique, dates), créées automatiquement et enchaînées sans trou (`SeasonManager`).
+- Ledger d'XP saisonnier (`user_seasons`) alimenté par `XpAwarder` à chaque gain d'XP : classement saisonnier exact, prêt pour le passe de saison (Phase 4).
+- Classement saisonnier sur la page Classement : top 20, rang personnel, jours restants, rappel des récompenses (FR/EN).
+- Clôture de saison (job récurrent quotidien) : badge exclusif pour le top 10% (table user_badges réveillée), titre unique « Souverain de la Saison N » pour le top 3, notifications in-app.
+- Aucun reset : XP, rangs et succès restent permanents ; seule la course saisonnière repart de zéro.
+
 ## [2.1.0] - 2026-07-05
 
 ### Ajouté

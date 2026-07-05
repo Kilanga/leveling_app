@@ -393,6 +393,18 @@ fr:
         ends_at_midnight: Nouvelles offres à minuit
         buy_button: Saisir l'offre
   leaderboard:
+    season:
+      heading: "%{name}"
+      subtitle: XP cumulé sur la saison de 6 semaines. Rien n'est perdu à la fin — seules les récompenses sont exclusives.
+      days_remaining:
+        one: 1 jour restant
+        other: "%{count} jours restants"
+      my_rank: 'Ton rang saisonnier : #%{rank} avec %{xp} XP.'
+      no_rank_yet: Gagne de l'XP pour entrer au classement saisonnier.
+      rewards_hint: 'Fin de saison : titre unique pour le top 3, badge exclusif pour le top 10%.'
+      th_season_xp: XP saison
+      top3_tooltip: En course pour le titre unique (top 3)
+      empty: Personne au classement pour l'instant. Sois le premier chasseur à marquer la saison.
     index:
       page_title: Classement ligue hebdomadaire
       current_league: 'Ligue actuelle:'
@@ -635,6 +647,12 @@ fr:
       read_badge: Lue
       open_button: Ouvrir
       no_notifications: Aucune notification pour le moment.
+    season_top3:
+      title: 'Top 3 de la %{season} !'
+      body: 'Rang #%{rank} — le titre unique et le badge exclusif de la saison sont à toi.'
+    season_top10:
+      title: 'Top 10% de la %{season}'
+      body: 'Rang #%{rank} — le badge exclusif de la saison rejoint ta collection.'
     friend_overtaken:
       title: Un ami t'a dépassé !
       body: "%{pseudo} vient de te dépasser au classement XP de la semaine. Réplique en validant une quête !"

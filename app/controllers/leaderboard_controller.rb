@@ -15,6 +15,15 @@ class LeaderboardController < ApplicationController
     @current_league_name = current_user.league_tier_name
     @next_league_settlement_at = WeeklyLeague.next_settlement_at
     @league_settlement_countdown = format_countdown(@next_league_settlement_at)
+
+    # Classement saisonnier (XP cumulé sur la saison de 6 semaines)
+    if SeasonManager.ready?
+      @current_season = SeasonManager.current!
+      @season_entries = SeasonManager.leaderboard(@current_season, limit: 20)
+      @my_season_entry = @current_season.user_seasons.find_by(user: current_user)
+      @my_season_rank = SeasonManager.rank_for(current_user, @current_season)
+      @season_days_remaining = @current_season.days_remaining
+    end
   end
 
   def show

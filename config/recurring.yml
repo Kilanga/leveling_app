@@ -5,6 +5,10 @@ production:
     command: "SystemQuestAssigner.assign_all!"
     schedule: every day at midnight
 
+  season_lifecycle:
+    command: "SeasonManager.close_finished_seasons!"
+    schedule: every day at 00:15
+
   streak_reminders:
     command: "StreakReminder.call"
     schedule: every day at 4pm

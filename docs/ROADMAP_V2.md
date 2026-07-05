@@ -30,11 +30,14 @@ il prouve sa valeur pour des récompenses exclusives.
   les rangs, XP rééquilibré par difficulté → `QuestCatalog` (source unique
   seeds + migration de données, historique joueurs préservé)
 
-## Phase 3 — Saisons (6 semaines)
-- Modèle Season (starts_on, ends_on, name, number)
-- Classement saisonnier (XP cumulé sur la saison)
-- Fin de saison (recurring) : badge exclusif (table user_badges, dormante,
-  à réveiller) + titre unique pour le top 3 / top 10%
+## Phase 3 — Saisons (6 semaines) ✅ (implémenté)
+- Modèle Season (starts_on, ends_on, name, number) + noms thématiques
+  Solo Leveling, saisons enchaînées sans trou → `SeasonManager`
+- Classement saisonnier : ledger `user_seasons` alimenté par XpAwarder
+  (exact, et réutilisable pour le passe de saison Phase 4)
+- Fin de saison (recurring quotidien) : badge exclusif top 10%
+  (user_badges réveillée) + titre unique « Souverain de la Saison N »
+  pour le top 3, notifications in-app
 - Reset : ligues hebdo uniquement. XP, rangs et succès sont permanents.
 
 ## Phase 4 — Boutique attractive

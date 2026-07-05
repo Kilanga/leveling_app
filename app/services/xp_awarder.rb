@@ -17,6 +17,7 @@ class XpAwarder
         )
 
         user_quest.update!(active: false, completed: true)
+        SeasonManager.add_xp!(user_quest.user, gained_xp)
         TitleUnlocker.call(user_quest.user)
 
         gained_xp
@@ -41,6 +42,7 @@ class XpAwarder
           xp_amount: gained_xp
         )
 
+        SeasonManager.add_xp!(user, gained_xp)
         TitleUnlocker.call(user)
 
         gained_xp
@@ -53,6 +55,7 @@ class XpAwarder
       ActiveRecord::Base.transaction do
         user.increment!(:xp, xp_amount)
         apply_category_xp!(user: user, category: category, xp_amount: xp_amount)
+        SeasonManager.add_xp!(user, xp_amount)
         TitleUnlocker.call(user)
       end
 
