@@ -15,4 +15,17 @@ test:
   <<: *default
 
 production:
-  <<: *default
+  # Valeurs volontairement élevées : la charge de polling sur la base est
+  # minime, et au-delà de ces seuils on n'économise plus rien tout en
+  # ajoutant de la latence.
+  dispatchers:
+    # Jobs différés/récurrents (drip, tâches quotidiennes) : 5 min suffisent.
+    - polling_interval: 300
+      batch_size: 500
+  workers:
+    # Jobs immédiats (emails deliver_later dont le reçu d'achat) : 15s max
+    # pour rester imperceptible sur un mail transactionnel.
+    - queues: "*"
+      threads: 3
+      processes: 1
+      polling_interval: 15
