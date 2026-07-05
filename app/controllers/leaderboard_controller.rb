@@ -9,7 +9,7 @@ class LeaderboardController < ApplicationController
     league_users_scope = league_users_scope.where(league_tier: current_user[:league_tier].to_i.nonzero? || 1) if User.column_names.include?("league_tier")
     league_users_scope = league_users_scope.where(league_room: current_user[:league_room].to_i.nonzero? || 1) if User.column_names.include?("league_room")
 
-    full_standings = WeeklyLeague.standings(league_users_scope.to_a)
+    full_standings = WeeklyLeague.standings(league_users_scope.includes(:active_title, :active_profile_frame).to_a)
     @league_standings = full_standings
     @my_league_entry = full_standings.find { |entry| entry[:user].id == current_user.id }
     @current_league_name = current_user.league_tier_name
@@ -43,7 +43,7 @@ class LeaderboardController < ApplicationController
                                  .order("weekly_quests.valid_until ASC")
     @player_active_quests = @player.user_quests
                    .where(completed: false, active: true)
-                   .includes(:quest)
+                   .includes(quest: :category)
                    .order(updated_at: :desc)
 
     @most_completed_quests = @player.user_quests

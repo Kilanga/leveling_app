@@ -8,13 +8,14 @@ class WeeklyLeague
 
   class << self
     def standings(users, range: Time.current.all_week)
-      ranked = users.sort_by { |u| -weekly_xp(u, range: range) }
+      xp_map = weekly_xp_by_user(users.map(&:id), range: range)
+      ranked = users.sort_by { |u| -xp_map.fetch(u.id, 0) }
       ranked.map.with_index(1) do |user, rank|
         tier_level = user[:league_tier].to_i.nonzero? || 1
         {
           user: user,
           rank: rank,
-          weekly_xp: weekly_xp(user, range: range),
+          weekly_xp: xp_map.fetch(user.id, 0),
           tier: tier_for_user(user),
           movement: league_columns_available? ? user[:league_last_move].to_i : 0,
           projected_movement: projected_movement_for(rank: rank, size: ranked.size, tier_level: tier_level)
@@ -41,7 +42,8 @@ class WeeklyLeague
         grouped_by_room = User.where(league_tier: tier).group_by { |user| user[:league_room].to_i.nonzero? || 1 }
 
         grouped_by_room.each_value do |tier_room_users|
-          ranked = tier_room_users.sort_by { |u| -weekly_xp(u, range: previous_week_range) }
+          room_xp = weekly_xp_by_user(tier_room_users.map(&:id), range: previous_week_range)
+          ranked = tier_room_users.sort_by { |u| -room_xp.fetch(u.id, 0) }
           move_count = promotion_relegation_count_for(ranked.size)
           next if move_count.zero?
 
@@ -98,6 +100,15 @@ class WeeklyLeague
 
     def weekly_xp(user, range: Time.current.all_week)
       user.user_quests.where(completed: true, updated_at: range).joins(:quest).sum("quests.xp")
+    end
+
+    # XP hebdo de plusieurs joueurs en une seule requête groupée
+    # (évite 2 requêtes par joueur sur la page classement).
+    def weekly_xp_by_user(user_ids, range: Time.current.all_week)
+      UserQuest.where(user_id: user_ids, completed: true, updated_at: range)
+               .joins(:quest)
+               .group(:user_id)
+               .sum("quests.xp")
     end
 
     def next_settlement_at(reference_time: Time.current)

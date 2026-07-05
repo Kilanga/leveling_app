@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_04_181000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_05_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -152,6 +152,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_181000) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id", "created_at"], name: "index_in_app_notifications_on_user_id_and_created_at"
+    t.index ["user_id", "kind", "created_at"], name: "index_notifications_on_user_kind_created"
     t.index ["user_id", "read_at"], name: "index_in_app_notifications_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_in_app_notifications_on_user_id"
   end
@@ -379,7 +380,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_181000) do
     t.bigint "quest_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["completed", "updated_at"], name: "index_user_quests_on_completed_updated"
     t.index ["quest_id"], name: "index_user_quests_on_quest_id"
+    t.index ["user_id", "completed", "updated_at"], name: "index_user_quests_on_user_completed_updated"
     t.index ["user_id", "quest_id"], name: "index_user_quests_on_user_id_and_quest_id", unique: true
     t.index ["user_id"], name: "index_user_quests_on_user_id"
   end

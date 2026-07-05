@@ -36,7 +36,7 @@ class DashboardController < ApplicationController
       .where("weekly_quests.valid_until >= ?", Time.current)
       .includes(:weekly_quest)
 
-    @user_quests = current_user.user_quests.includes(:quest)
+    @user_quests = current_user.user_quests.includes(quest: :category)
     @stats = current_user.user_stats.includes(:category)
 
     @stats.each do |stat|
