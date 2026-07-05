@@ -1,5 +1,6 @@
 require "test_helper"
 require "ostruct"
+require "minitest/mock"
 
 class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   setup do
