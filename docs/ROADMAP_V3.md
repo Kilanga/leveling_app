@@ -22,7 +22,7 @@ Prérequis technique : appliquer les migrations V2 en attente (voir
   commit du `db/schema.rb` régénéré.
 - Aucun code applicatif à changer — c'est un état de base non migré.
 
-## Phase 1 — Redesign « moins de cards » (toute l'app)
+## Phase 1 — Redesign « moins de cards » (toute l'app) 🔶 (pass 1 livré)
 Objectif : diviser par ~2 le nombre de conteneurs `surface-card` visibles et
 faire ressortir une seule action prioritaire par écran.
 - **Langage visuel unique** : une classe de section calme (`hud-panel`)
@@ -41,6 +41,20 @@ faire ressortir une seule action prioritaire par écran.
   grilles resserrées, moins de chrome par item.
 - Respect `prefers-reduced-motion`, accessibilité (contrastes, focus) conservés.
 - FR/EN inchangés (on réutilise les clés i18n existantes).
+
+> **Réalisé — pass 1 (2026-07-06)** :
+> - **Grammaire « moins de cards » app-wide** : `.surface-card` calmé (halo
+>   interne retiré, ombre adoucie) → tous les écrans (boutique, profil, stats,
+>   classement, dashboard) respirent davantage. Alias `.hud-panel` posé.
+> - **Dashboard** : les 5 bandeaux empilés (push, quickstart, bonus login,
+>   streak-up, suggestion boutique) fusionnés en **une seule zone d'alertes
+>   discrète** (`.hud-alerts`) à liseré, au lieu de 5 cartes pleine largeur.
+> - `prefers-reduced-motion` et accessibilité inchangés ; clés i18n réutilisées.
+>
+> _Reste pour un pass 2 (restructuration fine par écran)_ : en-tête chasseur
+> unifié (pseudo+rang+streak+objectif), sections factions/progression
+> repliables, grilles resserrées boutique/profil. À faire idéalement avec un
+> retour visuel (screenshots ou extension Chrome connectée).
 
 ## Phase 2 — Quêtes : moins nombreuses, plus impactantes + nouveaux thèmes ✅ (implémenté)
 - **Densité réduite** : le Système passe de 3-4 quêtes/jour à **2-3**, chacune

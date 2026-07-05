@@ -9,8 +9,9 @@
   <% end %>
 </p>
 
+<div class="hud-alerts mb-4">
 <% if ENV["VAPID_PUBLIC_KEY"].present? %>
-  <div class="surface-card mb-4 push-prompt" role="complementary">
+  <div class="hud-alert push-prompt" role="complementary">
     <div class="card-body d-flex justify-content-between align-items-center gap-3 flex-wrap">
       <div>
         <strong><%= t('dashboard.push_prompt.heading') %></strong>
@@ -26,7 +27,7 @@
 <% end %>
 
 <% if @show_quickstart_guide %>
-  <div class="surface-card mb-4" role="status" aria-live="polite">
+  <div class="hud-alert" role="status" aria-live="polite">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-2">
         <div>
@@ -59,7 +60,7 @@
 <% end %>
 
 <% if @daily_login_claim[:claimed] %>
-  <div class="surface-card mb-4" role="status" aria-live="polite">
+  <div class="hud-alert" role="status" aria-live="polite">
     <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
       <div>
         <strong><%= t('dashboard.daily_bonus_claimed', amount: @daily_login_claim[:reward]) %></strong>
@@ -71,7 +72,7 @@
 <% end %>
 
 <% if flash[:streak_up_quest_title].present? && flash[:streak_up_value].present? %>
-  <div class="surface-card streak-up-banner mb-4" role="status" aria-live="polite">
+  <div class="hud-alert streak-up-banner" role="status" aria-live="polite">
     <div class="card-body d-flex justify-content-between align-items-center gap-2 flex-wrap">
       <strong><%= t('dashboard.streak_up_label', title: flash[:streak_up_quest_title]) %></strong>
       <span class="streak-up-banner__value">x<%= flash[:streak_up_value] %></span>
@@ -80,7 +81,7 @@
 <% end %>
 
 <% if @shop_upgrade_prompt.present? %>
-  <div class="surface-card mb-4" role="complementary" aria-label="Suggestion boutique">
+  <div class="hud-alert" role="complementary" aria-label="Suggestion boutique">
     <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
       <div>
         <h2 class="section-title mb-1"><%= t('dashboard.boost_prompt.heading') %></h2>
@@ -90,6 +91,7 @@
     </div>
   </div>
 <% end %>
+</div>
 
 <div class="row g-4 mb-4">
   <div class="col-lg-8">

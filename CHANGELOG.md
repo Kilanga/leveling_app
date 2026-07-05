@@ -16,6 +16,12 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.6.0] - 2026-07-06
+
+### Modifié
+- V3 Phase 1 (pass 1) — Grammaire « moins de cards » sur toute l'app : `.surface-card` calmé (halo interne retiré, ombre adoucie), alias `.hud-panel` pour les sections calmes ; boutique, profil, stats, classement et dashboard respirent davantage.
+- V3 Phase 1 (pass 1) — Dashboard : les 5 bandeaux de notification empilés (push, quickstart, bonus login, streak-up, suggestion boutique) sont fusionnés en une seule zone d'alertes discrète (`.hud-alerts`) au lieu de 5 cartes pleine largeur. `prefers-reduced-motion` et clés i18n inchangés.
+
 ## [2.5.0] - 2026-07-06
 
 ### Ajouté

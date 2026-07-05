@@ -2844,3 +2844,41 @@ body::before {
     animation: none;
   }
 }
+
+/* === V3 Phase 1 : grammaire « moins de cards » (toute l'app) === */
+
+/* Cartes globalement plus calmes : on retire le halo interne et on adoucit
+   l'ombre. Impacte tous les écrans qui utilisent .surface-card. */
+.surface-card {
+  box-shadow: 0 6px 16px rgba(6, 27, 42, 0.28);
+}
+
+/* Section calme réutilisable (alias sémantique de .hud-section). */
+.hud-panel {
+  background: transparent;
+  padding: 0.45rem 0;
+}
+
+/* Zone d'alertes unifiée du dashboard : remplace l'empilement de cartes
+   pleine largeur par une seule colonne discrète à liseré. */
+.hud-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-left: 2px solid var(--hud-line-soft);
+  padding-left: 0.85rem;
+}
+
+.hud-alert {
+  border: 1px solid var(--hud-line-soft);
+  border-radius: 2px;
+  background: rgba(13, 24, 37, 0.55);
+}
+
+.hud-alert .card-body {
+  padding: 0.65rem 0.9rem;
+}
+
+.hud-alert .section-title {
+  font-size: 1rem;
+}
