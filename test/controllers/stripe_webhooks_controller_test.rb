@@ -1,6 +1,5 @@
 require "test_helper"
 require "ostruct"
-require "minitest/mock"
 
 class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -14,6 +13,15 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  # minitest/mock n'est plus dans minitest 6 : stub manuel
+  def with_stubbed_construct_event(event)
+    original = Stripe::Webhook.method(:construct_event)
+    Stripe::Webhook.define_singleton_method(:construct_event) { |*| event }
+    yield
+  ensure
+    Stripe::Webhook.define_singleton_method(:construct_event, original)
+  end
+
   test "checkout.session.completed valide -> traite l'achat" do
     session = OpenStruct.new(
       id: "cs_test_webhook",
@@ -22,7 +30,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     )
     event = OpenStruct.new(type: "checkout.session.completed", data: OpenStruct.new(object: session))
 
-    Stripe::Webhook.stub(:construct_event, event) do
+    with_stubbed_construct_event(event) do
       assert_difference -> { Purchase.count }, 1 do
         post stripe_webhook_url, params: "{}", headers: { "Stripe-Signature" => "any", "CONTENT_TYPE" => "application/json" }
       end
@@ -33,7 +41,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
 
   test "type d'événement inconnu -> ok sans effet" do
     event = OpenStruct.new(type: "invoice.paid", data: OpenStruct.new(object: nil))
-    Stripe::Webhook.stub(:construct_event, event) do
+    with_stubbed_construct_event(event) do
       assert_no_difference -> { Purchase.count } do
         post stripe_webhook_url, params: "{}", headers: { "Stripe-Signature" => "any", "CONTENT_TYPE" => "application/json" }
       end
