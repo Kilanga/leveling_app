@@ -96,6 +96,7 @@
             <%= t('leaderboard.season.no_rank_yet') %>
           <% end %>
           <%= t('leaderboard.season.rewards_hint') %>
+          <%= link_to t('season_pass.page_title'), season_pass_path, class: "ms-1" %>
         </p>
 
         <% if @season_entries.any? %>

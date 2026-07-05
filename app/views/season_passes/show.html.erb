@@ -1,0 +1,96 @@
+<h1 class="page-title"><%= t('season_pass.page_title') %></h1>
+
+<div class="surface-card surface-card--shell">
+  <div class="card-body">
+    <section class="hud-section">
+      <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-2">
+        <div>
+          <h2 class="section-title mb-1"><%= @season.name %></h2>
+          <p class="quest-meta mb-0"><%= t('season_pass.subtitle') %></p>
+        </div>
+        <span class="shop-state-chip shop-state-chip--available">
+          <%= t('leaderboard.season.days_remaining', count: @days_remaining) %>
+        </span>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mb-2">
+        <p class="quest-meta mb-0"><%= t('season_pass.my_xp', xp: @state[:xp]) %></p>
+        <% if @state[:premium] %>
+          <span class="shop-state-chip shop-state-chip--equipped"><%= t('season_pass.premium_active') %></span>
+        <% else %>
+          <%= button_to t('season_pass.buy_premium_button', price: @price_eur), buy_season_pass_path, method: :post, class: "btn btn-brand" %>
+        <% end %>
+      </div>
+
+      <% if @state[:next_tier] %>
+        <% previous_threshold = SeasonPass::TIERS.find { |t| t[:tier] == @state[:next_tier][:tier] - 1 }&.dig(:xp).to_i %>
+        <% span = [@state[:next_tier][:xp] - previous_threshold, 1].max %>
+        <% percent = [((@state[:xp] - previous_threshold).to_f / span * 100).round, 100].min %>
+        <div class="xp-track mb-1">
+          <div class="xp-fill" style="width: <%= [percent, 0].max %>%"></div>
+        </div>
+        <p class="quest-meta mb-3"><%= t('season_pass.next_tier_hint', tier: @state[:next_tier][:tier], xp: @state[:next_tier][:xp] - @state[:xp]) %></p>
+      <% else %>
+        <div class="alert alert-success mb-3"><%= t('season_pass.all_tiers_unlocked') %></div>
+      <% end %>
+
+      <div class="table-responsive league-table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th><%= t('season_pass.th_tier') %></th>
+              <th><%= t('season_pass.th_xp') %></th>
+              <th><%= t('season_pass.th_free') %></th>
+              <th><%= t('season_pass.th_premium') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @state[:tiers].each do |tier| %>
+              <tr class="<%= 'league-current-user-row' if tier[:unlocked] && !(tier[:free_claimed] && (!@state[:premium] || tier[:premium_claimed])) %>">
+                <td><strong><%= tier[:tier] %></strong></td>
+                <td><%= tier[:xp] %> XP</td>
+                <td>
+                  <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="quest-meta"><%= season_pass_reward_label(tier[:free]) %></span>
+                    <% if tier[:free_claimed] %>
+                      <span class="badge text-bg-success"><%= t('season_pass.claimed_badge') %></span>
+                    <% elsif tier[:unlocked] %>
+                      <%= button_to t('season_pass.claim_button'), claim_season_pass_path, method: :post,
+                                    params: { tier: tier[:tier], track: "free" }, class: "btn btn-sm btn-brand" %>
+                    <% else %>
+                      <span class="shop-state-chip shop-state-chip--available">🔒</span>
+                    <% end %>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="quest-meta <%= 'shop-rarity-text shop-rarity-text--legendary' if tier[:premium][:title] %>">
+                      <%= season_pass_reward_label(tier[:premium]) %>
+                    </span>
+                    <% if tier[:premium_claimed] %>
+                      <span class="badge text-bg-success"><%= t('season_pass.claimed_badge') %></span>
+                    <% elsif tier[:unlocked] && @state[:premium] %>
+                      <%= button_to t('season_pass.claim_button'), claim_season_pass_path, method: :post,
+                                    params: { tier: tier[:tier], track: "premium" }, class: "btn btn-sm btn-brand" %>
+                    <% elsif !@state[:premium] %>
+                      <span class="shop-state-chip shop-state-chip--available"><%= t('season_pass.premium_locked') %></span>
+                    <% else %>
+                      <span class="shop-state-chip shop-state-chip--available">🔒</span>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="quest-meta mb-0"><%= t('season_pass.footer_note') %></p>
+    </section>
+  </div>
+</div>
+
+<div class="mt-4 d-flex gap-2 flex-wrap">
+  <%= link_to t('common.back_to_dashboard'), root_path, class: "btn btn-outline-secondary" %>
+  <%= link_to t('season_pass.back_to_shop'), new_purchase_path, class: "btn btn-outline-secondary" %>
+</div>

@@ -21,7 +21,7 @@
       <section class="hud-section mb-3 daily-deals">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
           <h2 class="section-title mb-0">⚡ <%= t('purchases.new.deals.heading') %></h2>
-          <span class="shop-state-chip shop-state-chip--best"><%= t('purchases.new.deals.ends_at_midnight') %></span>
+          <span class="shop-state-chip shop-state-chip--best js-deal-countdown" data-deadline="<%= Time.zone.now.end_of_day.iso8601 %>"><%= t('purchases.new.deals.ends_at_midnight') %></span>
         </div>
         <div class="row g-3">
           <% @daily_deals.each do |deal| %>
@@ -59,6 +59,7 @@
         <%= link_to t('purchases.new.tabs.boosts'), new_purchase_path(tab: "boosts"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'boosts'}" %>
         <%= link_to t('purchases.new.tabs.titles'), new_purchase_path(tab: "titles"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'titles'}" %>
         <%= link_to t('purchases.new.tabs.rewards'), new_purchase_path(tab: "rewards"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'rewards'}" %>
+        <%= link_to t('season_pass.page_title'), season_pass_path, class: "shop-tab" %>
       </div>
     </section>
 
@@ -110,6 +111,15 @@
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
+                  <!-- Aperçu du titre -->
+                  <div class="shop-cosmetic-preview shop-cosmetic-preview--<%= rarity_key %> mb-2">
+                    <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <strong><%= current_user.pseudo %></strong>
+                      <span class="shop-state-chip shop-state-chip--available shop-rarity-text--<%= rarity_key %>"><%= item.name %></span>
+                    </div>
+                  </div>
+
                   <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-2">
                     <span class="shop-state-chip <%= equipped ? 'shop-state-chip--equipped' : owned ? 'shop-state-chip--owned' : 'shop-state-chip--available' %>">
                       <%= equipped ? t('purchases.new.titles.equipped_badge') : owned ? t('purchases.new.titles.owned_badge') : t('purchases.new.titles.available_badge') %>
@@ -121,16 +131,6 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta shop-rarity-text shop-rarity-text--<%= rarity_key %>"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
-                  </div>
-
-                  <div class="mb-2">
-                    <%= button_tag t('purchases.new.preview.trigger_button'),
-                                   type: "button",
-                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                   data: {
-                                     preview_type: "title",
-                                     preview_name: item.name
-                                   } %>
                   </div>
 
                   <% if equipped %>
@@ -177,7 +177,7 @@
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
                   <!-- Aperçu du cadre -->
-                  <div class="shop-cosmetic-preview mb-2">
+                  <div class="shop-cosmetic-preview shop-cosmetic-preview--<%= rarity_key %> mb-2">
                     <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <div class="profile-frame-container <%= frame_wrapper_classes(item) %>">
                       <%= current_user.pseudo %>
@@ -195,17 +195,6 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
-                  </div>
-
-                  <div class="mb-2">
-                    <%= button_tag t('purchases.new.preview.trigger_button'),
-                                   type: "button",
-                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                   data: {
-                                     preview_type: "profile_frame",
-                                     preview_name: item.name,
-                                     preview_class: frame_wrapper_classes(item)
-                                   } %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -239,7 +228,7 @@
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
                   <!-- Aperçu du thème XP -->
-                  <div class="shop-cosmetic-preview mb-2">
+                  <div class="shop-cosmetic-preview shop-cosmetic-preview--<%= rarity_key %> mb-2">
                     <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <div class="xp-track <%= xp_theme_classes(item) %>">
                       <div class="xp-fill" style="width: 65%"></div>
@@ -258,17 +247,6 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
-                  </div>
-
-                  <div class="mb-2">
-                    <%= button_tag t('purchases.new.preview.trigger_button'),
-                                   type: "button",
-                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                   data: {
-                                     preview_type: "xp_theme",
-                                     preview_name: item.name,
-                                     preview_class: xp_theme_classes(item)
-                                   } %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -302,7 +280,7 @@
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
                   <!-- Aperçu de la carte -->
-                  <div class="shop-cosmetic-preview mb-2">
+                  <div class="shop-cosmetic-preview shop-cosmetic-preview--<%= rarity_key %> mb-2">
                     <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <div class="profile-card-container <%= profile_card_classes(item) %>">
                       <div class="profile-card-header">
@@ -325,17 +303,6 @@
                     <% elsif item.price_euros.present? %>
                       <span class="quest-meta"><%= t('purchases.new.prices.euros', count: item.price_euros) %></span>
                     <% end %>
-                  </div>
-
-                  <div class="mb-2">
-                    <%= button_tag t('purchases.new.preview.trigger_button'),
-                                   type: "button",
-                                   class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                   data: {
-                                     preview_type: "profile_card",
-                                     preview_name: item.name,
-                                     preview_class: profile_card_classes(item)
-                                   } %>
                   </div>
 
                   <% if !cosmetics_activation_supported %>
@@ -370,7 +337,7 @@
                   </div>
                   <p class="quest-meta mb-2"><%= @item_personalized_descriptions[item.id] %></p>
 
-                  <div class="shop-cosmetic-preview mb-2">
+                  <div class="shop-cosmetic-preview shop-cosmetic-preview--<%= rarity_key %> mb-2">
                     <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
                     <% if item.item_type == "profile_frame" %>
                       <div class="profile-frame-container <%= frame_wrapper_classes(item) %>">
@@ -397,50 +364,6 @@
                     <span class="quest-meta"><%= t('purchases.new.prices.fragments_or_orbs', fragments: item.price_free_credits, orbs: fallback_orbes_price) %></span>
                   </div>
 
-                  <% if item.item_type == "profile_frame" %>
-                    <div class="mb-2">
-                      <%= button_tag t('purchases.new.preview.trigger_button'),
-                                     type: "button",
-                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                     data: {
-                                       preview_type: "profile_frame",
-                                       preview_name: item.name,
-                                       preview_class: frame_wrapper_classes(item)
-                                     } %>
-                    </div>
-                  <% elsif item.item_type == "xp_theme" %>
-                    <div class="mb-2">
-                      <%= button_tag t('purchases.new.preview.trigger_button'),
-                                     type: "button",
-                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                     data: {
-                                       preview_type: "xp_theme",
-                                       preview_name: item.name,
-                                       preview_class: xp_theme_classes(item)
-                                     } %>
-                    </div>
-                  <% elsif item.item_type == "profile_card" %>
-                    <div class="mb-2">
-                      <%= button_tag t('purchases.new.preview.trigger_button'),
-                                     type: "button",
-                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                     data: {
-                                       preview_type: "profile_card",
-                                       preview_name: item.name,
-                                       preview_class: profile_card_classes(item)
-                                     } %>
-                    </div>
-                  <% elsif item.item_type == "title" %>
-                    <div class="mb-2">
-                      <%= button_tag t('purchases.new.preview.trigger_button'),
-                                     type: "button",
-                                     class: "btn btn-sm btn-outline-secondary js-shop-preview-trigger",
-                                     data: {
-                                       preview_type: "title",
-                                       preview_name: item.name
-                                     } %>
-                    </div>
-                  <% end %>
 
                   <% if owned %>
                     <% if item.item_type == "title" %>

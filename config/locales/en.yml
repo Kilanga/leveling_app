@@ -392,6 +392,31 @@ en:
         heading: Daily deals
         ends_at_midnight: New deals at midnight
         buy_button: Grab the deal
+  season_pass:
+    page_title: Season pass
+    subtitle: Earn season XP to unlock tiers. Free track for everyone, premium track for the major rewards.
+    my_xp: 'Your season XP: %{xp}'
+    premium_active: Premium track active
+    buy_premium_button: Unlock the premium track — €%{price}
+    next_tier_hint: 'Tier %{tier} in %{xp} XP.'
+    all_tiers_unlocked: All tiers unlocked. Season mastered, hunter.
+    th_tier: Tier
+    th_xp: XP required
+    th_free: Free track
+    th_premium: Premium track
+    claim_button: Claim
+    claimed_badge: Claimed
+    premium_locked: Premium required
+    footer_note: A reached tier stays claimable until the season ends. Season XP never decreases.
+    back_to_shop: Back to shop
+    checkout_product_name: 'Premium pass — %{name}'
+    rewards:
+      fragments: '%{count} Fragments'
+      orbs: '%{count} Orbs'
+      boost:
+        one: XP Boost x2 (1 day)
+        other: XP Boost x2 (%{count} days)
+      title: Exclusive title "Chosen of the Season"
   leaderboard:
     season:
       heading: "%{name}"
@@ -746,6 +771,11 @@ en:
       already_member: You already are a member of %{name}.
       change_locked: Faction change locked until weekly reset (%{time}).
       faction_joined: 'Faction joined: %{name}.'
+    season_pass:
+      claimed: 'Tier claimed: %{reward}.'
+      not_claimable: This tier cannot be claimed (not enough XP, already claimed, or premium required).
+      already_premium: Your premium track is already active for this season.
+      unavailable: The season pass is not available yet.
     system_quests:
       quest_completed: 'System quest completed! +%{xp} XP.'
       already_completed: This System quest is already completed.

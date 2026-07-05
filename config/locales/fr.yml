@@ -392,6 +392,31 @@ fr:
         heading: Offres du jour
         ends_at_midnight: Nouvelles offres à minuit
         buy_button: Saisir l'offre
+  season_pass:
+    page_title: Passe de saison
+    subtitle: Gagne de l'XP saisonnier pour débloquer les paliers. Piste gratuite pour tous, piste premium pour les récompenses majeures.
+    my_xp: 'Ton XP saisonnier : %{xp}'
+    premium_active: Piste premium active
+    buy_premium_button: Débloquer la piste premium — %{price} €
+    next_tier_hint: 'Palier %{tier} dans %{xp} XP.'
+    all_tiers_unlocked: Tous les paliers sont débloqués. Saison maîtrisée, chasseur.
+    th_tier: Palier
+    th_xp: XP requis
+    th_free: Piste gratuite
+    th_premium: Piste premium
+    claim_button: Réclamer
+    claimed_badge: Réclamé
+    premium_locked: Premium requis
+    footer_note: Un palier atteint reste réclamable jusqu'à la fin de la saison. L'XP saisonnier ne diminue jamais.
+    back_to_shop: Retour à la boutique
+    checkout_product_name: 'Passe premium — %{name}'
+    rewards:
+      fragments: '%{count} Fragments'
+      orbs: '%{count} Orbes'
+      boost:
+        one: Boost XP x2 (1 jour)
+        other: Boost XP x2 (%{count} jours)
+      title: Titre exclusif « Élu de la Saison »
   leaderboard:
     season:
       heading: "%{name}"
@@ -746,6 +771,11 @@ fr:
       already_member: Tu fais deja partie de %{name}.
       change_locked: Changement de faction verrouille jusqu'au reset hebdomadaire (%{time}).
       faction_joined: 'Faction rejointe: %{name}.'
+    season_pass:
+      claimed: 'Palier réclamé : %{reward}.'
+      not_claimable: Ce palier n'est pas réclamable (XP insuffisant, déjà réclamé ou premium requis).
+      already_premium: Ta piste premium est déjà active pour cette saison.
+      unavailable: Le passe de saison n'est pas encore disponible.
     system_quests:
       quest_completed: 'Quête du Système validée ! +%{xp} XP.'
       already_completed: Cette quête du Système est déjà validée.

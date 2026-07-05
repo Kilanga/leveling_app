@@ -46,6 +46,8 @@ class User < ApplicationRecord
   has_many :system_quest_assignments, dependent: :destroy
   has_many :user_seasons, dependent: :destroy
   has_many :seasons, through: :user_seasons
+  has_many :user_season_passes, dependent: :destroy
+  has_many :season_pass_claims, dependent: :destroy
 
   belongs_to :active_title, class_name: "ShopItem", optional: true
   belongs_to :active_avatar_item, class_name: "ShopItem", optional: true

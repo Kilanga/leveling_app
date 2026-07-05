@@ -60,6 +60,10 @@ Rails.application.routes.draw do
       post :join
     end
   end
+  resource :season_pass, only: [ :show ], controller: "season_passes" do
+    post :claim
+    post :buy
+  end
   resources :system_quests, only: [] do
     member do
       post :complete

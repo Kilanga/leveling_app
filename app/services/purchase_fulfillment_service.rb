@@ -14,12 +14,25 @@ class PurchaseFulfillmentService
         process_coins!(user, checkout_session, transaction_id)
       when "boost"
         process_boost!(user, checkout_session, transaction_id)
+      when "season_pass"
+        process_season_pass!(user, checkout_session, transaction_id)
       else
         process_generic!(user, checkout_session, transaction_id)
       end
     end
 
     private
+
+    def process_season_pass!(user, checkout_session, transaction_id)
+      season = Season.find_by(id: checkout_session.metadata["season_id"])
+      return if season.nil?
+
+      SeasonPass.unlock_premium!(user, season, transaction_id: transaction_id)
+      create_purchase_record!(user, transaction_id, checkout_session, item_type: "season_pass")
+      ProductAnalytics.track(user: user, event_name: "purchase_completed", metadata: { kind: "season_pass", season_id: season.id, transaction_id: transaction_id })
+      send_purchase_email!(user, "Passe premium — #{season.name}", checkout_session)
+    end
+
 
     def process_shop_item!(user, checkout_session, transaction_id)
       item = ShopItem.find_by(id: checkout_session.metadata["shop_item_id"])

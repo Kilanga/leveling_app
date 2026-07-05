@@ -1,4 +1,6 @@
 class PurchasesController < ApplicationController
+  include StripeCheckout
+
   before_action :authenticate_user!
   SHOP_CHALLENGE_REWARD_FREE_CREDITS = 200
   WELCOME_BONUS_BY_VARIANT = {
@@ -196,6 +198,54 @@ FREE_REWARD_ITEMS = [
       description: "Carte luxe violet-or avec couronne animee.",
       rarity: "epic",
       price_coins: 500,
+      price_euros: nil
+    },
+    {
+      name: "Cadre Porte de Donjon",
+      item_type: "profile_frame",
+      description: "Bordure bleu portail, comme une porte de donjon qui s'ouvre autour de ton pseudo.",
+      rarity: "rare",
+      price_coins: 350,
+      price_euros: nil
+    },
+    {
+      name: "Cadre Monarque des Ombres",
+      item_type: "profile_frame",
+      description: "Bordure noire aux flammes violettes. Le cadre des chasseurs qui ne craignent plus rien.",
+      rarity: "legendary",
+      price_coins: 900,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Ombre Violette",
+      item_type: "xp_theme",
+      description: "Barre violette aux volutes d'ombre, digne d'un monarque en pleine ascension.",
+      rarity: "epic",
+      price_coins: 450,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Sang de Boss",
+      item_type: "xp_theme",
+      description: "Barre rouge sombre qui pulse comme la jauge de vie d'un boss de raid.",
+      rarity: "legendary",
+      price_coins: 700,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Guilde d'Elite",
+      item_type: "profile_card",
+      description: "Carte bleu profond aux insignes d'argent des guildes de haut rang.",
+      rarity: "epic",
+      price_coins: 550,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Rang S",
+      item_type: "profile_card",
+      description: "Carte noire et or frappee du sceau de rang S. Reservee a ceux qui visent le sommet.",
+      rarity: "legendary",
+      price_coins: 800,
       price_euros: nil
     }
   ].freeze
@@ -437,36 +487,6 @@ def handle_pack_purchase
     end
   end
 
-  def create_checkout_session(product_name, amount_eur, metadata = {})
-    Stripe::Checkout::Session.create(
-      payment_method_types: [ "card" ],
-      line_items: [ {
-        price_data: {
-          currency: "eur",
-          product_data: { name: product_name },
-          unit_amount: amount_eur.to_i * 100
-        },
-        quantity: 1
-      } ],
-      mode: "payment",
-      metadata: metadata.transform_values(&:to_s),
-      success_url: success_purchases_url(session_id: "{CHECKOUT_SESSION_ID}"),
-      cancel_url: cancel_purchases_url
-    ).url
-  end
-
-  def safe_redirect_to_checkout(checkout_url)
-    uri = URI.parse(checkout_url)
-    allowed_hosts = [ "checkout.stripe.com", "pay.stripe.com" ]
-
-    unless uri.is_a?(URI::HTTPS) && allowed_hosts.include?(uri.host)
-      return redirect_to new_purchase_path, alert: I18n.t("flash.purchases.invalid_payment_url")
-    end
-
-    redirect_to uri.to_s, allow_other_host: true
-  rescue URI::InvalidURIError
-    redirect_to new_purchase_path, alert: I18n.t("flash.purchases.invalid_payment_url")
-  end
 
   def recommended_shop_items
     rarity_order = preferred_rarity_order
@@ -555,9 +575,10 @@ def handle_pack_purchase
   end
 
   def ensure_default_cosmetic_items!
-    return if ShopItem.where(item_type: %w[profile_frame xp_theme profile_card]).exists?
+    existing_names = ShopItem.where(item_type: %w[profile_frame xp_theme profile_card]).pluck(:name)
+    missing = DEFAULT_COSMETIC_ITEMS.reject { |attributes| existing_names.include?(attributes[:name]) }
 
-    DEFAULT_COSMETIC_ITEMS.each do |attributes|
+    missing.each do |attributes|
       item = ShopItem.find_or_initialize_by(name: attributes[:name], item_type: attributes[:item_type])
       item.assign_attributes(attributes)
       item.save!

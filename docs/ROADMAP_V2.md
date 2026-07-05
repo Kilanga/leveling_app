@@ -40,15 +40,17 @@ il prouve sa valeur pour des récompenses exclusives.
   pour le top 3, notifications in-app
 - Reset : ligues hebdo uniquement. XP, rangs et succès sont permanents.
 
-## Phase 4 — Boutique attractive
-- Offres rotatives : 3 objets en promo -20/30%, rotation quotidienne
-  déterministe (seed = date), compte à rebours affiché
-- Préviews immersives : aperçu du cosmétique directement dans la carte
-  (plus de clic « Aperçu profil »), lueur animée par rareté (epic/legendary)
-- Passe de saison (dépend Phase 3) : piste gratuite + piste premium (Stripe),
-  paliers débloqués à l'XP saisonnier
-- Nouveaux objets à acheter : élargir le catalogue (cosmétiques, cadres,
-  thèmes XP, titres...) pour alimenter les offres rotatives et le passe
+## Phase 4 — Boutique attractive ✅ (implémenté)
+- Offres rotatives : 3 objets en promo -25%, rotation quotidienne
+  déterministe (seed = date), compte à rebours live affiché
+- Préviews immersives : aperçu directement dans la carte (bouton modal
+  « Aperçu profil » supprimé, aperçu inline ajouté aux titres),
+  lueur animée par rareté (epic/legendary), respecte prefers-reduced-motion
+- Passe de saison : 10 paliers à l'XP saisonnier (`SeasonPass`), piste
+  gratuite + piste premium 10 € (Stripe, fulfillment webhook/succès),
+  titre exclusif « Élu de la Saison N » au palier 10 premium
+- Nouveaux objets : 7 cosmétiques (Cadre Monarque des Ombres, Thème XP
+  Sang de Boss, Carte Rang S...) pour alimenter offres et passe
 
 ## Phase 5 — Landing page « Arise-like »
 - Hero : « Solo Leveling pour ta vraie vie » + mockup du dashboard

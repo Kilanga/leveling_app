@@ -16,6 +16,18 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.3.0] - 2026-07-05
+
+### Ajouté
+- V2 Phase 4 — Passe de saison : 10 paliers débloqués à l'XP saisonnier, piste gratuite (Fragments/Orbes) et piste premium à 10 € via Stripe (Orbes majorés, boosts XP, titre exclusif « Élu de la Saison N » au palier 10). Page dédiée /season_pass liée depuis la boutique et le classement.
+- 7 nouveaux cosmétiques au ton Solo Leveling : Cadre Porte de Donjon, Cadre Monarque des Ombres, Thème XP Ombre Violette, Thème XP Sang de Boss, Carte Guilde d'Élite, Carte Rang S (+ création automatique des objets manquants en boutique).
+- Compte à rebours live sur les offres du jour (rotation à minuit).
+- Lueur animée par rareté (epic/legendary) sur les aperçus boutique, avec respect de prefers-reduced-motion.
+
+### Modifié
+- Préviews immersives : les aperçus vivent directement dans les cartes boutique ; le bouton modal « Aperçu profil » et son JS sont supprimés, les titres gagnent un aperçu inline.
+- Création de session Stripe extraite dans un concern partagé (`StripeCheckout`), fulfillment étendu au passe de saison.
+
 ## [2.2.0] - 2026-07-05
 
 ### Ajouté

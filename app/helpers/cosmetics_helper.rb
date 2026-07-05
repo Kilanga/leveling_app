@@ -24,6 +24,10 @@ module CosmeticsHelper
       "profile-frame-legendaire"
     when /gyrophare|police/
       "profile-frame-gyrophare"
+    when /donjon/
+      "profile-frame-donjon"
+    when /monarque/
+      "profile-frame-monarque"
     else
       "profile-frame-none"
     end
@@ -57,6 +61,10 @@ module CosmeticsHelper
       "xp-theme-neon"
     when /legendaire/
       "xp-theme-legendaire"
+    when /ombre/
+      "xp-theme-ombre"
+    when /boss/
+      "xp-theme-boss"
     else
       "xp-theme-standard"
     end
@@ -90,6 +98,10 @@ module CosmeticsHelper
       "profile-card-incendie"
     when /royale/
       "profile-card-royale"
+    when /guilde/
+      "profile-card-guilde"
+    when /rang s/
+      "profile-card-rang-s"
     else
       "profile-card-none"
     end

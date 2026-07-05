@@ -2464,3 +2464,112 @@ body::before {
   box-shadow: 0 0 12px rgba(255, 215, 92, 0.3);
   animation: hunter-rank-s-glow 2.2s ease-in-out infinite;
 }
+
+/* === V2 Phase 4 : lueur animée par rareté sur les aperçus boutique === */
+.shop-cosmetic-preview--epic {
+  border-radius: 10px;
+  animation: rarity-glow-epic 2.2s ease-in-out infinite;
+}
+
+.shop-cosmetic-preview--legendary {
+  border-radius: 10px;
+  animation: rarity-glow-legendary 1.8s ease-in-out infinite;
+}
+
+@keyframes rarity-glow-epic {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(167, 86, 245, 0.35); }
+  50% { box-shadow: 0 0 14px 3px rgba(167, 86, 245, 0.65); }
+}
+
+@keyframes rarity-glow-legendary {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(255, 193, 7, 0.4); }
+  50% { box-shadow: 0 0 18px 5px rgba(255, 193, 7, 0.75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-cosmetic-preview--epic,
+  .shop-cosmetic-preview--legendary {
+    animation: none;
+    box-shadow: 0 0 10px 2px rgba(167, 86, 245, 0.45);
+  }
+}
+
+/* === V2 Phase 4 : nouveaux cosmétiques === */
+.profile-frame-donjon {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #3f8fd4;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(16, 42, 70, 0.85), rgba(24, 60, 100, 0.85));
+  box-shadow: 0 0 14px rgba(63, 143, 212, 0.45), inset 0 0 8px rgba(63, 143, 212, 0.25);
+  color: #bfe0ff;
+  font-weight: 700;
+}
+
+.profile-frame-monarque {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #7b3ff2;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(20, 8, 34, 0.92), rgba(43, 16, 66, 0.92));
+  box-shadow: 0 0 18px rgba(123, 63, 242, 0.55), inset 0 0 10px rgba(123, 63, 242, 0.3);
+  color: #d9c2ff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 10px rgba(123, 63, 242, 0.6);
+  animation: frameMonarqueGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes frameMonarqueGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(123, 63, 242, 0.45), inset 0 0 8px rgba(123, 63, 242, 0.25); }
+  50% { box-shadow: 0 0 26px rgba(123, 63, 242, 0.8), inset 0 0 14px rgba(123, 63, 242, 0.45); }
+}
+
+.xp-theme-ombre .xp-fill {
+  background: linear-gradient(90deg, #5d2ba8, #9a5cf5);
+  box-shadow: 0 0 12px rgba(139, 79, 240, 0.55);
+  background-size: 190% 100%;
+  animation: xpFlowSoft 3s linear infinite;
+}
+
+.xp-theme-boss .xp-fill {
+  background: linear-gradient(90deg, #6f0e18, #d42a3c);
+  box-shadow: 0 0 12px rgba(212, 42, 60, 0.55);
+  background-size: 190% 100%;
+  animation: xpFlowSoft 3s linear infinite, xpBossPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes xpBossPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
+}
+
+.profile-card-guilde {
+  background: linear-gradient(145deg, rgba(14, 30, 56, 0.96), rgba(22, 46, 84, 0.96));
+  border: 1px solid rgba(150, 180, 220, 0.55);
+}
+
+.profile-card-guilde .profile-card-text {
+  color: #c4d8f2;
+}
+
+.profile-card-rang-s {
+  background: linear-gradient(145deg, rgba(12, 10, 8, 0.97), rgba(34, 26, 10, 0.97));
+  border: 1px solid rgba(212, 169, 71, 0.65);
+  animation: cardRangSGlow 2.6s ease-in-out infinite;
+}
+
+.profile-card-rang-s .profile-card-text {
+  color: #ffd98d;
+}
+
+@keyframes cardRangSGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(212, 169, 71, 0.35); }
+  50% { box-shadow: 0 0 22px rgba(212, 169, 71, 0.65); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-frame-monarque,
+  .xp-theme-boss .xp-fill,
+  .profile-card-rang-s {
+    animation: none;
+  }
+}
