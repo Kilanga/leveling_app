@@ -8,16 +8,17 @@ class GoogleSignupFlowTest < ActionDispatch::IntegrationTest
       uid: "google-uid-123",
       info: { email: "nouveau@example.com", name: "Nouveau Chasseur" }
     )
+    Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2]
   end
 
   teardown do
     OmniAuth.config.test_mode = false
     OmniAuth.config.mock_auth[:google_oauth2] = nil
+    Rails.application.env_config.delete("omniauth.auth")
   end
 
   test "un nouveau compte Google passe par le choix du pseudo" do
-    post "/users/auth/google_oauth2"
-    follow_redirect! # -> callback
+    get "/users/auth/google_oauth2/callback"
 
     user = User.find_by(uid: "google-uid-123")
     assert user.present?, "l'utilisateur Google doit être créé"
@@ -43,18 +44,15 @@ class GoogleSignupFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "une reconnexion Google d'un profil complété ne repasse pas par l'écran" do
-    post "/users/auth/google_oauth2"
-    follow_redirect!
+    get "/users/auth/google_oauth2/callback"
     User.find_by(uid: "google-uid-123").update!(profile_completed: true, pseudo: "DejaFait")
 
-    post "/users/auth/google_oauth2"
-    follow_redirect!
+    get "/users/auth/google_oauth2/callback"
     assert_redirected_to root_path
   end
 
   test "impossible de naviguer ailleurs tant que le profil n'est pas complété" do
-    post "/users/auth/google_oauth2"
-    follow_redirect!
+    get "/users/auth/google_oauth2/callback"
 
     get quests_path
     assert_redirected_to complete_profile_path
