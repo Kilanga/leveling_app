@@ -1,19 +1,27 @@
 <% dashboard_rank = HunterRank.for_user(current_user) %>
 <% hero_ring_c = 327 %>
 <% hero_ring_off = (hero_ring_c * (1 - [[dashboard_rank[:progress].to_f, 0].max, 1].min)).round %>
-<section class="game-hero mb-4">
+<% dash_card = current_user.active_profile_card %>
+<% dash_card_theme = dash_card.present? ? profile_card_classes(dash_card).to_s.gsub("profile-card-", "player-home-theme--") : "player-home-theme--none" %>
+<% dash_card_text = dash_card.present? ? profile_card_text(current_user) : nil %>
+<section class="game-hero player-home-shell <%= dash_card_theme %> mb-4">
   <div class="game-hero__main">
-    <h1 class="page-title d-flex align-items-center gap-2 flex-wrap mb-1">
-      <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
-      <%= hunter_rank_badge(dashboard_rank) %>
-      <% if current_user.boost_active? %>
-        <span class="badge text-bg-warning"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
-      <% end %>
-      <% if current_user.active_title.present? %>
-        <span class="badge bg-<%= current_user.title_rarity_class %>"><%= current_user.active_title.name %></span>
-      <% end %>
-    </h1>
-    <p class="page-subtitle mb-0"><%= t('dashboard.subtitle') %></p>
+    <div class="game-hero__identity">
+      <%= user_avatar_image(current_user, width: 76, height: 76, css_class: "game-hero__avatar", alt: current_user.pseudo) %>
+      <div>
+        <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+          <span class="profile-frame-container game-hero__name <%= frame_wrapper_classes(current_user.active_profile_frame) %>"><%= current_user.pseudo %></span>
+          <%= hunter_rank_badge(dashboard_rank) %>
+          <% if current_user.boost_active? %>
+            <span class="badge text-bg-warning"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
+          <% end %>
+          <% if current_user.active_title.present? %>
+            <span class="badge bg-<%= current_user.title_rarity_class %>"><%= current_user.active_title.name %></span>
+          <% end %>
+        </div>
+        <p class="page-subtitle mb-0"><%= dash_card_text.presence || t('dashboard.subtitle') %></p>
+      </div>
+    </div>
 
     <div class="game-chips">
       <span class="game-chip">🔥 <%= t('dashboard.weekly_streak_label', count: @weekly_streak_count) %></span>
@@ -21,7 +29,7 @@
       <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "game-chip", style: "text-decoration:none;" %>
     </div>
 
-    <div style="max-width: 520px;">
+    <div class="game-hero__progress">
       <div class="xp-track <%= xp_theme_classes(current_user.active_xp_theme) %>"><div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div></div>
       <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
         <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
@@ -40,41 +48,11 @@
       <circle cx="75" cy="75" r="52" fill="none" stroke="var(--game-accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="<%= hero_ring_c %>" stroke-dashoffset="<%= hero_ring_off %>" style="filter: drop-shadow(0 0 8px rgba(79,168,255,0.6));"></circle>
     </svg>
     <div class="game-hero__ring-label">
-      <div style="font-family:'"'"'Manrope'"'"',sans-serif;font-size:1.9rem;font-weight:800;line-height:1;color:#fbfdfc;"><%= @total_level %></div>
+      <div class="game-hero__ring-level"><%= @total_level %></div>
       <div class="quest-meta mt-1"><%= dashboard_rank[:letter] %><% if dashboard_rank[:next_threshold] %> · <%= dashboard_rank[:level] %>/<%= dashboard_rank[:next_threshold] %><% end %></div>
     </div>
   </div>
 </section>
-
-<% dash_card = current_user.active_profile_card %>
-<% dash_card_theme = dash_card.present? ? profile_card_classes(dash_card).to_s.gsub("profile-card-", "player-home-theme--") : "player-home-theme--none" %>
-<% dash_card_text = dash_card.present? ? profile_card_text(current_user) : nil %>
-<div class="surface-card surface-card--shell player-home-shell <%= dash_card_theme %> mb-4">
-  <div class="card-body">
-    <section class="hud-section player-home-panel player-home-identity mb-0">
-      <div class="d-flex align-items-center gap-3 flex-wrap">
-        <%= user_avatar_image(current_user, width: 84, height: 84, css_class: "rounded-circle", alt: current_user.pseudo) %>
-        <div>
-          <div class="profile-frame-container <%= frame_wrapper_classes(current_user.active_profile_frame) %>">
-            <strong><%= current_user.pseudo %></strong>
-          </div>
-          <% if current_user.active_title.present? %>
-            <span class="badge bg-<%= current_user.title_rarity_class %> mt-2 d-inline-block"><%= current_user.active_title.name %></span>
-          <% end %>
-          <% if dash_card_text.present? %>
-            <p class="quest-meta mb-0 mt-2 player-home-identity-text"><%= dash_card_text %></p>
-          <% end %>
-          <div class="player-home-identity-meta mt-2">
-            <span class="profile-card-meta-item"><%= t('leaderboard.player_home.global_level') %> <strong><%= @total_level %></strong></span>
-            <% if dash_card.present? %>
-              <span class="profile-card-meta-item"><%= t('leaderboard.player_home.active_card') %> <strong><%= dash_card.name %></strong></span>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
 
 <div class="hud-alerts mb-4">
 <% if ENV["VAPID_PUBLIC_KEY"].present? %>

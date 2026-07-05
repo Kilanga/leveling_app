@@ -3007,3 +3007,38 @@ h1, h2, h3, h4,
 @media (prefers-reduced-motion: reduce) {
   .game-progress__fill { box-shadow: none; }
 }
+
+/* === V3 : hero unifié (profil + progression en un seul bloc) === */
+.game-hero__identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+.game-hero__avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.game-hero .profile-frame-container.game-hero__name { display: inline-block; }
+.game-hero__name {
+  font-family: "Manrope", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fbfdfc;
+  line-height: 1.1;
+}
+.game-hero__progress { max-width: 520px; }
+.game-hero__ring-level {
+  font-family: "Manrope", sans-serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fbfdfc;
+}
+/* le hero garde son halo, mais si une carte le thémise on évite d'empiler */
+.game-hero.player-home-shell { position: relative; }
