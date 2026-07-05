@@ -6,14 +6,14 @@
 set -euo pipefail
 
 VERSION="${1:-}"
-HEROKU_APP="${2:-${HEROKU_APP:-leveling-app}}"
+HEROKU_APP="${2:-${HEROKU_APP:-motivup-app}}"
 CHANGELOG_FILE="CHANGELOG.md"
 TODAY="$(date +%F)"
 
 usage() {
   echo "Usage: ./release.sh <version> [heroku-app]"
-  echo "Example: ./release.sh 1.2.1 leveling-app"
-  echo "Default Heroku app: leveling-app (or HEROKU_APP env var)"
+  echo "Example: ./release.sh 1.2.1 motivup-app"
+  echo "Default Heroku app: motivup-app (or HEROKU_APP env var)"
 }
 
 if [[ -z "$VERSION" ]]; then

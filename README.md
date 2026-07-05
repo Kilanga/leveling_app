@@ -27,7 +27,7 @@
 	- Requires `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
 	- Callback URL to configure in Google Cloud Console:
 	  - `https://your-domain.com/users/auth/google_oauth2/callback`
-	  - Example Heroku: `https://leveling-app.herokuapp.com/users/auth/google_oauth2/callback`
+	  - Example Heroku: `https://arnaudlothe.site/users/auth/google_oauth2/callback`
 - Cloudinary:
 	- Requires `CLOUDINARY_URL`.
 	- In development, app falls back to local storage if `CLOUDINARY_URL` is missing.
@@ -42,7 +42,7 @@
 
 - Add release notes under `## [Non publié]` in `CHANGELOG.md`
 - Run full release flow (tests + changelog versioning + tag + push + Heroku migrate/restart):
-	- `./release.sh 1.2.1 leveling-app`
+	- `./release.sh 1.2.1 motivup-app`
 
 ## Ruby 3.3 Migration Checklist
 
@@ -58,15 +58,15 @@ GitHub Actions:
 
 Heroku:
 - Ruby buildpack resolves version from `Gemfile` and lockfile.
-- Deploy after local re-lock on Ruby 3.3, then verify runtime with `heroku run ruby -v -a leveling-app`.
+- Deploy after local re-lock on Ruby 3.3, then verify runtime with `heroku run ruby -v -a motivup-app`.
 - Verify app boot + release migration logs after deploy.
 
 Supabase/PostgreSQL:
 - Ruby upgrade does not require PostgreSQL server upgrade by itself.
-- Validate connectivity post-deploy with `heroku run "bundle exec rails db:migrate:status" -a leveling-app`.
+- Validate connectivity post-deploy with `heroku run "bundle exec rails db:migrate:status" -a motivup-app`.
 
 End-to-end check:
-- Run `./script/check_ruby33_readiness.sh leveling-app` to validate local Ruby, bundle health, Heroku Ruby runtime, and migration status.
+- Run `./script/check_ruby33_readiness.sh motivup-app` to validate local Ruby, bundle health, Heroku Ruby runtime, and migration status.
 
 Dev Container troubleshooting:
 - If VS Code terminal still reports Ruby 3.2.x, rebuild the container (`Dev Containers: Rebuild Container`) to refresh the base image.
