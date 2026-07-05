@@ -15,7 +15,7 @@ Rails.application.configure do
   config.silence_healthcheck_path = "/up"
   config.active_support.report_deprecations = false
   # config.cache_store = :solid_cache_store
-  # config.active_job.queue_adapter = :solid_queue
+  config.active_job.queue_adapter = :solid_queue
   # config.solid_queue.connects_to = { database: { writing: :queue } }
   config.i18n.fallbacks = true
   config.active_record.dump_schema_after_migration = false

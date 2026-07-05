@@ -632,6 +632,9 @@ fr:
     challenge_won:
       title: Défi gagné !
       body: Tu remportes %{count} Fragments.
+    reactivation:
+      title: Tes quêtes t'attendent !
+      body: Ça fait deux semaines qu'on ne t'a pas vu. Une petite quête pour reprendre le rythme ?
   admin:
     users:
       index:
@@ -876,6 +879,12 @@ fr:
       body: Tu n'as pas encore validé de quête cette semaine. Ta streak de %{count} semaine(s) sera perdue dimanche soir.
       urgency: Il te reste %{days} jour(s) — une seule quête suffit.
       cta: Valider une quête
+    reactivation:
+      subject: "On ne t'a pas vu depuis un moment... \U0001F5E1️"
+      heading: "%{pseudo}, tes quêtes t'attendent !"
+      body: Ça fait deux semaines qu'aucune quête n'a été validée. Ta progression est toujours là, prête à reprendre.
+      tip: 'Astuce : une seule quête suffit pour relancer ta streak hebdo.'
+      cta: Reprendre l'aventure
   achievements:
     index:
       page_title: Succès

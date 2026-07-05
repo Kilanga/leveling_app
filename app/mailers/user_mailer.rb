@@ -23,6 +23,14 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def reactivation_email(user)
+    @user = user
+    locale = user.locale.presence_in(I18n.available_locales.map(&:to_s)) || I18n.default_locale
+    I18n.with_locale(locale) do
+      mail(to: @user.email, subject: I18n.t("mailers.reactivation.subject"))
+    end
+  end
+
   def purchase_confirmation(user:, summary:, amount_eur: nil)
     @user = user
     @summary = summary

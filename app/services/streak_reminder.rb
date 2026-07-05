@@ -17,7 +17,7 @@ class StreakReminder
         next if already_reminded_this_week?(user)
 
         InAppNotifier.notify!(user: user, kind: KIND, cta_path: "/quests", count: user.weekly_streak_count, days: days_left + 1)
-        UserMailer.streak_reminder_email(user).deliver_now rescue Rails.logger.error("StreakReminder mail failed for user #{user.id}: #{$!.message}")
+        UserMailer.streak_reminder_email(user).deliver_later
         sent += 1
       end
       sent

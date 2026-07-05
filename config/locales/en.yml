@@ -632,6 +632,9 @@ en:
     challenge_won:
       title: Challenge won!
       body: You win %{count} Fragments.
+    reactivation:
+      title: Your quests await!
+      body: It's been two weeks since we saw you. A small quest to get back on track?
   admin:
     users:
       index:
@@ -876,6 +879,12 @@ en:
       body: You haven't completed a quest this week yet. Your %{count}-week streak will be lost on Sunday night.
       urgency: "%{days} day(s) left — a single quest is enough."
       cta: Complete a quest
+    reactivation:
+      subject: "We haven't seen you in a while... \U0001F5E1️"
+      heading: "%{pseudo}, your quests await!"
+      body: It's been two weeks without a completed quest. Your progress is still there, ready to resume.
+      tip: 'Tip: a single quest is enough to restart your weekly streak.'
+      cta: Resume the adventure
   achievements:
     index:
       page_title: Achievements
