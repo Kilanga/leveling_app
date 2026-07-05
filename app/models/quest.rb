@@ -12,6 +12,21 @@ class Quest < ApplicationRecord
 
   scope :with_difficulty, ->(letters) { where(difficulty: Array(letters)) }
 
+  # Quêtes signature « boss » (V3) : objectifs d'aspiration à fort XP, tenus
+  # hors du tirage quotidien du Système. `standard` = tout le reste.
+  scope :signature, -> { where(signature: true) }
+  scope :standard, -> {
+    if Quest.column_names.include?("signature")
+      where(signature: [ false, nil ])
+    else
+      all
+    end
+  }
+
+  def signature?
+    has_attribute?(:signature) ? !!self[:signature] : false
+  end
+
   def difficulty_index
     DIFFICULTIES.index(difficulty) || 0
   end
