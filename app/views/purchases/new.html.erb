@@ -34,6 +34,26 @@
                   <span class="shop-state-chip shop-state-chip--best">-<%= (DailyShopDeals::DISCOUNT_RATE * 100).round %>%</span>
                 </div>
                 <p class="quest-meta mb-2"><%= item.description %></p>
+
+                <div class="shop-cosmetic-preview shop-cosmetic-preview--<%= item.rarity %> mb-2">
+                  <div class="preview-label"><%= t('purchases.new.cosmetics.preview_label') %></div>
+                  <% case item.item_type %>
+                  <% when "profile_frame" %>
+                    <div class="profile-frame-container <%= frame_wrapper_classes(item) %>"><%= current_user.pseudo %></div>
+                  <% when "xp_theme" %>
+                    <div class="xp-track <%= xp_theme_classes(item) %>"><div class="xp-fill" style="width: 65%"></div></div>
+                  <% when "profile_card" %>
+                    <div class="profile-card-container <%= profile_card_classes(item) %>">
+                      <div class="profile-card-header"><%= current_user.pseudo %></div>
+                      <div class="profile-card-text"><%= t('purchases.new.cosmetics.card_preview_hint') %></div>
+                    </div>
+                  <% else %>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <strong><%= current_user.pseudo %></strong>
+                      <span class="shop-state-chip shop-state-chip--available shop-rarity-text--<%= item.rarity %>"><%= item.name %></span>
+                    </div>
+                  <% end %>
+                </div>
                 <p class="quest-meta mb-2">
                   <s class="muted-label"><%= t('purchases.new.prices.orbs', count: deal[:original_price]) %></s>
                   <strong class="ms-1"><%= t('purchases.new.prices.orbs', count: deal[:deal_price]) %></strong>

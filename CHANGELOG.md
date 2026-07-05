@@ -16,6 +16,14 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.7.1] - 2026-07-06
+
+### Corrigé
+- Classement : « Prochain reset ligue » affichait « Translation missing: fr.date.month_names ». Ajout des noms de mois/jours français (`date.month_names`, `day_names`…) dans `fr.yml`.
+
+### Ajouté
+- Boutique : les offres du jour affichent désormais l'aperçu visuel du cosmétique (cadre, thème XP, carte ou titre) au lieu du seul texte.
+
 ## [2.7.0] - 2026-07-06
 
 ### Modifié
