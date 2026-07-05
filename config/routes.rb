@@ -78,6 +78,12 @@ Rails.application.routes.draw do
   get "profil", to: "users#show", as: :user_profile
   get "succes", to: "achievements#index", as: :achievements
 
+  # PWA
+  get "manifest", to: "rails/pwa#manifest", as: :pwa_manifest
+  get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker
+  resources :push_subscriptions, only: [ :create ]
+  delete "push_subscriptions", to: "push_subscriptions#destroy"
+
   # Admin
   namespace :admin do
     resources :quests, except: [ :show ]

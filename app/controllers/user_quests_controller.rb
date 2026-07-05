@@ -51,6 +51,7 @@ class UserQuestsController < ApplicationController
         if current_user.faction.present?
           FactionInfluence.add_points!(faction: current_user.faction, points: 1)
           FactionContribution.add_points!(faction: current_user.faction, user: current_user, points: 1)
+          FactionBoss.check!(current_user.faction)
         end
         UserDailyContract.progress_for_user!(current_user)
         referral_result = ReferralRewarder.claim_if_eligible!(current_user)

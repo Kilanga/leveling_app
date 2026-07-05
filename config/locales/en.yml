@@ -242,6 +242,14 @@ en:
     weekly_quests_soon: New weekly quests coming soon.
     level_label: Level %{level}
     global_level_label: 'Global level: %{level}'
+    push_prompt:
+      heading: Enable notifications
+      hint: Get alerted when your streak is at risk or a friend passes you.
+      cta: Enable
+    faction_boss:
+      heading: Weekly faction boss
+      defeated: Defeated!
+      hint: 'Accumulate %{target} influence points this week: every member earns %{reward} Fragments.'
   quests:
     index:
       page_title: Quest hunt
@@ -635,6 +643,9 @@ en:
     reactivation:
       title: Your quests await!
       body: It's been two weeks since we saw you. A small quest to get back on track?
+    faction_boss_defeated:
+      title: Faction boss defeated!
+      body: The %{faction} faction reached its weekly goal. +%{count} Fragments for you!
   admin:
     users:
       index:

@@ -135,7 +135,8 @@ GEM
       reline (>= 0.3.8)
     devise (5.0.4)
       bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
+      openssl (4.0.2)
+    orm_adapter (~> 0.1)
       railties (>= 7.0)
       responders
       warden (~> 1.2.3)
@@ -306,6 +307,7 @@ GEM
     omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    openssl (4.0.2)
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     parallel (1.26.3)
@@ -516,6 +518,9 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    web-push (3.1.0)
+      jwt (~> 3.0)
+      openssl (>= 3.0)
     websocket (1.2.11)
     websocket-driver (0.8.0)
       base64
@@ -568,6 +573,7 @@ DEPENDENCIES
   stripe
   thruster
   turbo-rails
+  web-push
   tzinfo-data
   web-console
 

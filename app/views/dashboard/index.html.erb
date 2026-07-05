@@ -8,6 +8,22 @@
   <% end %>
 </p>
 
+<% if ENV["VAPID_PUBLIC_KEY"].present? %>
+  <div class="surface-card mb-4 push-prompt" role="complementary">
+    <div class="card-body d-flex justify-content-between align-items-center gap-3 flex-wrap">
+      <div>
+        <strong><%= t('dashboard.push_prompt.heading') %></strong>
+        <p class="quest-meta mb-0"><%= t('dashboard.push_prompt.hint') %></p>
+      </div>
+      <button id="enable-push-btn" class="btn btn-sm btn-brand"
+              data-vapid-key="<%= ENV["VAPID_PUBLIC_KEY"] %>"
+              data-csrf="<%= form_authenticity_token %>">
+        <%= t('dashboard.push_prompt.cta') %>
+      </button>
+    </div>
+  </div>
+<% end %>
+
 <% if @show_quickstart_guide %>
   <div class="surface-card mb-4" role="status" aria-live="polite">
     <div class="card-body">
@@ -84,6 +100,21 @@
         <% end %>
         <% if current_user.faction.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.current_faction', name: current_user.faction.name) %></p>
+          <% boss = FactionBoss.progress_for(current_user.faction) %>
+          <div class="quest-row quest-row--flat mb-3">
+            <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-1">
+              <strong><%= t('dashboard.faction_boss.heading') %></strong>
+              <% if boss[:defeated] %>
+                <span class="shop-state-chip shop-state-chip--equipped"><%= t('dashboard.faction_boss.defeated') %></span>
+              <% else %>
+                <span class="shop-state-chip shop-state-chip--available"><%= boss[:points] %>/<%= boss[:target] %></span>
+              <% end %>
+            </div>
+            <p class="quest-meta mb-2"><%= t('dashboard.faction_boss.hint', target: boss[:target], reward: FactionBoss::REWARD_FRAGMENTS) %></p>
+            <div class="xp-track">
+              <div class="xp-fill" style="width: <%= (boss[:ratio] * 100).round %>%"></div>
+            </div>
+          </div>
           <% unless @can_change_faction %>
             <p class="quest-meta mb-2"><%= t('dashboard.factions.change_locked') %></p>
           <% end %>

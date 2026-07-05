@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_04_170000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_04_181000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -95,6 +95,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_170000) do
   create_table "faction_influences", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "faction_id", null: false
+    t.datetime "boss_rewarded_at"
     t.date "on_date", null: false
     t.integer "points", default: 0, null: false
     t.datetime "updated_at", null: false
@@ -176,6 +177,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_170000) do
     t.bigint "user_id", null: false
     t.index ["transaction_id"], name: "index_purchases_on_transaction_id_unique", unique: true, where: "(transaction_id IS NOT NULL)"
     t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
+  create_table "push_subscriptions", force: :cascade do |t|
+    t.string "auth_key", null: false
+    t.datetime "created_at", null: false
+    t.text "endpoint", null: false
+    t.string "p256dh_key", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["endpoint"], name: "index_push_subscriptions_on_endpoint", unique: true
+    t.index ["user_id"], name: "index_push_subscriptions_on_user_id"
   end
 
   create_table "quests", force: :cascade do |t|
@@ -473,6 +485,7 @@ add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "j
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "push_subscriptions", "users"
   add_foreign_key "experiment_assignments", "users"
   add_foreign_key "faction_contributions", "factions"
   add_foreign_key "faction_contributions", "users"

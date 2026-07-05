@@ -242,6 +242,14 @@ fr:
     weekly_quests_soon: Nouvelles quêtes hebdomadaires bientôt.
     level_label: Niveau %{level}
     global_level_label: 'Niveau global : %{level}'
+    push_prompt:
+      heading: Active les notifications
+      hint: Reçois une alerte quand ta streak est en danger ou qu'un ami te dépasse.
+      cta: Activer
+    faction_boss:
+      heading: Boss hebdo de faction
+      defeated: Vaincu !
+      hint: 'Cumulez %{target} points d''influence cette semaine : chaque membre gagne %{reward} Fragments.'
   quests:
     index:
       page_title: Chasse aux quetes
@@ -635,6 +643,9 @@ fr:
     reactivation:
       title: Tes quêtes t'attendent !
       body: Ça fait deux semaines qu'on ne t'a pas vu. Une petite quête pour reprendre le rythme ?
+    faction_boss_defeated:
+      title: Boss de faction vaincu !
+      body: La faction %{faction} a atteint son objectif hebdo. +%{count} Fragments pour toi !
   admin:
     users:
       index:

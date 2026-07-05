@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :user_items
   has_many :shop_items, through: :user_items
   has_many :in_app_notifications, dependent: :destroy
+  has_many :push_subscriptions, dependent: :destroy
   has_many :experiment_assignments, dependent: :destroy
   has_many :friend_challenges_as_challenger, class_name: "FriendChallenge", foreign_key: :challenger_id, dependent: :destroy
   has_many :friend_challenges_as_challenged, class_name: "FriendChallenge", foreign_key: :challenged_id, dependent: :destroy
