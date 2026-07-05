@@ -16,6 +16,13 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.5.0] - 2026-07-06
+
+### Ajouté
+- V3 Phase 3 — Boutique : 3 nouveaux cosmétiques achetables en Orbes — Cadre Armée des Ombres (légendaire), Thème XP Éveil National (épique), Carte de Visite Souverain (légendaire) — intégrés automatiquement aux offres du jour.
+- V3 Phase 3 — 3 objets premium exclusifs payants en euros via Stripe (cosmétique uniquement, sans avantage gameplay) : Cadre de la Faille (4 €), Thème XP Couronne Suprême (3 €), Carte de Visite Monarque (4 €).
+- Rendu visuel des nouveaux cosmétiques (cadres, thèmes XP, cartes) via `CosmeticsHelper` + classes CSS animées, avec respect de `prefers-reduced-motion`.
+
 ## [2.4.0] - 2026-07-05
 
 ### Ajouté

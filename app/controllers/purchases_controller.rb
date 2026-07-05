@@ -247,6 +247,56 @@ FREE_REWARD_ITEMS = [
       rarity: "legendary",
       price_coins: 800,
       price_euros: nil
+    },
+    # --- V3 Phase 3 : nouveaux cosmetiques Orbes (in-game) ---
+    {
+      name: "Cadre Armee des Ombres",
+      item_type: "profile_frame",
+      description: "Bordure noire aux spectres violets de l'armee des ombres. Pour ceux qui commandent leurs propres demons.",
+      rarity: "legendary",
+      price_coins: 950,
+      price_euros: nil
+    },
+    {
+      name: "Theme XP Eveil National",
+      item_type: "xp_theme",
+      description: "Barre bleu-or eclatante, comme l'onde d'un eveil qui reveille toute une nation.",
+      rarity: "epic",
+      price_coins: 450,
+      price_euros: nil
+    },
+    {
+      name: "Carte de Visite Souverain",
+      item_type: "profile_card",
+      description: "Carte pourpre et or au sceau du souverain. L'identite de ceux qui ne suivent plus personne.",
+      rarity: "legendary",
+      price_coins: 850,
+      price_euros: nil
+    },
+    # --- V3 Phase 3 : objets premium exclusifs (euros, cosmetique only) ---
+    {
+      name: "Cadre de la Faille",
+      item_type: "profile_frame",
+      description: "Cadre premium exclusif : une faille dimensionnelle turquoise fendue d'eclats sombres.",
+      rarity: "legendary",
+      price_coins: nil,
+      price_euros: 4
+    },
+    {
+      name: "Theme XP Couronne Supreme",
+      item_type: "xp_theme",
+      description: "Theme XP premium exclusif : degrade or imperial couronne d'un halo blanc.",
+      rarity: "legendary",
+      price_coins: nil,
+      price_euros: 3
+    },
+    {
+      name: "Carte de Visite Monarque",
+      item_type: "profile_card",
+      description: "Carte premium exclusive : noir absolu, flammes violettes et sceau du Monarque des Ombres.",
+      rarity: "legendary",
+      price_coins: nil,
+      price_euros: 4
     }
   ].freeze
 

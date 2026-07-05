@@ -68,7 +68,7 @@ faire ressortir une seule action prioritaire par écran.
 > - Tests : `spec/services/quest_catalog_spec.rb`,
 >   `system_quest_assigner_spec.rb`, `system_quest_board_spec.rb`.
 
-## Phase 3 — Boutique : nouveaux objets à acheter
+## Phase 3 — Boutique : nouveaux objets à acheter ✅ (implémenté)
 - **Nouveaux cosmétiques** (crédits in-game) dans la lignée des 7 objets V2 :
   cadres, thèmes XP, cartes de rang inédits (ex. « Cadre Armée des Ombres »,
   « Thème Éveil National », « Carte Souverain »).
@@ -79,6 +79,20 @@ faire ressortir une seule action prioritaire par écran.
   paliers du passe de saison.
 - Validation modèle `ShopItem` (types/raretés existants réutilisés), seeds,
   images Active Storage, tests d'achat.
+
+> **Réalisé (2026-07-06)** :
+> - **3 cosmétiques Orbes** (in-game) : Cadre Armée des Ombres (légendaire),
+>   Thème XP Éveil National (épique), Carte de Visite Souverain (légendaire).
+> - **3 objets premium € exclusifs** (Stripe, cosmétique only, sans avantage
+>   gameplay) : Cadre de la Faille (4 €), Thème XP Couronne Suprême (3 €),
+>   Carte de Visite Monarque (4 €).
+> - Rendu visuel complet : mapping `CosmeticsHelper` + classes CSS animées,
+>   `prefers-reduced-motion` respecté.
+> - Intégration automatique aux **offres du jour** pour les objets Orbes
+>   (`DailyShopDeals`) ; les objets premium restent hors remise.
+> - Flux d'achat réutilisé tel quel (Orbes / Fragments / Stripe pour l'€).
+> - Tests : `spec/helpers/cosmetics_helper_spec.rb` (mappings + non-régression
+>   + garde-fou « premium = cosmétique only »).
 
 ## Principes (repris de la V2, toujours valables)
 - Jamais punir la progression acquise (XP / rang / succès permanents).

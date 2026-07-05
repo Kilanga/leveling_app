@@ -28,6 +28,10 @@ module CosmeticsHelper
       "profile-frame-donjon"
     when /monarque/
       "profile-frame-monarque"
+    when /armee/
+      "profile-frame-armee"
+    when /faille/
+      "profile-frame-faille"
     else
       "profile-frame-none"
     end
@@ -65,6 +69,10 @@ module CosmeticsHelper
       "xp-theme-ombre"
     when /boss/
       "xp-theme-boss"
+    when /eveil/
+      "xp-theme-eveil"
+    when /couronne/
+      "xp-theme-couronne"
     else
       "xp-theme-standard"
     end
@@ -102,6 +110,10 @@ module CosmeticsHelper
       "profile-card-guilde"
     when /rang s/
       "profile-card-rang-s"
+    when /souverain/
+      "profile-card-souverain"
+    when /monarque/
+      "profile-card-monarque"
     else
       "profile-card-none"
     end

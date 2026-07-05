@@ -2750,3 +2750,97 @@ body::before {
 .landing-top-hunter .quest-meta {
   margin-left: auto;
 }
+
+/* === V3 Phase 3 : nouveaux cosmétiques (Orbes + premium) === */
+
+/* Cadres */
+.profile-frame-armee {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #6d3fd6;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(10, 6, 20, 0.94), rgba(28, 12, 48, 0.94));
+  box-shadow: 0 0 18px rgba(120, 70, 230, 0.5), inset 0 0 10px rgba(80, 200, 190, 0.25);
+  color: #cbb8ff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 10px rgba(120, 70, 230, 0.6);
+  animation: frameArmeeGlow 2.6s ease-in-out infinite;
+}
+
+@keyframes frameArmeeGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(120,70,230,0.4), inset 0 0 8px rgba(80,200,190,0.2); }
+  50% { box-shadow: 0 0 26px rgba(120,70,230,0.8), inset 0 0 14px rgba(80,200,190,0.4); }
+}
+
+.profile-frame-faille {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid #2fd6c8;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(4, 20, 22, 0.95), rgba(8, 40, 44, 0.95));
+  box-shadow: 0 0 20px rgba(47, 214, 200, 0.55), inset 0 0 10px rgba(47, 214, 200, 0.3);
+  color: #b9fff6;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 12px rgba(47, 214, 200, 0.65);
+  animation: frameFailleGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes frameFailleGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(47,214,200,0.4), inset 0 0 8px rgba(47,214,200,0.25); }
+  50% { box-shadow: 0 0 28px rgba(47,214,200,0.85), inset 0 0 16px rgba(47,214,200,0.5); }
+}
+
+/* Thèmes XP */
+.xp-theme-eveil .xp-fill {
+  background: linear-gradient(90deg, #1f6dd0, #e8c15a);
+  box-shadow: 0 0 12px rgba(90, 150, 230, 0.55);
+  background-size: 190% 100%;
+  animation: xpFlowSoft 3s linear infinite;
+}
+
+.xp-theme-couronne .xp-fill {
+  background: linear-gradient(90deg, #b8860b, #ffe9a8, #b8860b);
+  box-shadow: 0 0 14px rgba(255, 216, 120, 0.6);
+  background-size: 200% 100%;
+  animation: xpFlowSoft 2.6s linear infinite, xpCouronneShine 2s ease-in-out infinite;
+}
+
+@keyframes xpCouronneShine {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+/* Cartes de visite */
+.profile-card-souverain {
+  background: linear-gradient(145deg, rgba(26, 10, 40, 0.97), rgba(48, 20, 20, 0.97));
+  border: 1px solid rgba(212, 160, 90, 0.6);
+  animation: cardSouverainGlow 2.8s ease-in-out infinite;
+}
+.profile-card-souverain .profile-card-text { color: #f0c98a; }
+
+@keyframes cardSouverainGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(160, 90, 200, 0.3); }
+  50% { box-shadow: 0 0 22px rgba(200, 150, 90, 0.55); }
+}
+
+.profile-card-monarque {
+  background: linear-gradient(145deg, rgba(6, 4, 12, 0.98), rgba(26, 8, 40, 0.98));
+  border: 1px solid rgba(140, 80, 240, 0.7);
+  animation: cardMonarqueGlow 2.4s ease-in-out infinite;
+}
+.profile-card-monarque .profile-card-text { color: #d9c2ff; }
+
+@keyframes cardMonarqueGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(140, 80, 240, 0.4); }
+  50% { box-shadow: 0 0 26px rgba(140, 80, 240, 0.75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-frame-armee,
+  .profile-frame-faille,
+  .xp-theme-couronne .xp-fill,
+  .profile-card-souverain,
+  .profile-card-monarque {
+    animation: none;
+  }
+}
