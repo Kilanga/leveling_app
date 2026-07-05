@@ -3042,3 +3042,21 @@ h1, h2, h3, h4,
 }
 /* le hero garde son halo, mais si une carte le thémise on évite d'empiler */
 .game-hero.player-home-shell { position: relative; }
+
+/* === V3 : responsive mobile des composants « jeu » === */
+@media (max-width: 768px) {
+  .game-hero { padding: 1.3rem 1.2rem; gap: 1.3rem; }
+  .game-hero__main { min-width: 0; }
+  .game-hero__ring { margin: 0 auto; }
+  .game-hero__ring svg { width: 118px; height: 118px; }
+  .game-hero__ring-level { font-size: 1.5rem; }
+  .game-hero__name { font-size: 1.35rem; }
+  .game-hero__avatar { width: 60px; height: 60px; }
+  .game-hero__identity { gap: 0.75rem; margin-bottom: 1rem; }
+  .game-rings { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  .surface-card .card-body { padding: 1.1rem; }
+  .game-hero__progress { max-width: 100%; }
+}
+@media (max-width: 420px) {
+  .game-chip { font-size: 0.8rem; padding: 0.45rem 0.8rem; }
+}
