@@ -3,6 +3,8 @@
 Référence produit : Arise / Solo Leveling — on garde l'ADN chasseur de la V2.
 Décisions validées le 05/07/2026 avec Arnaud.
 
+> **État : V3 livrée (2026-07-06)** — Phases 0 à 3 implémentées, testées et déployées en production (Heroku, release v70). Fine-tuning visuel possible en itératif (retours/screenshots).
+
 ## Vision
 La V2 a empilé les mécaniques (rangs, Système, saisons, factions, boutique,
 passe). Le résultat : des écrans denses, une pile de cartes qui noie le geste
@@ -22,7 +24,7 @@ Prérequis technique : appliquer les migrations V2 en attente (voir
   commit du `db/schema.rb` régénéré.
 - Aucun code applicatif à changer — c'est un état de base non migré.
 
-## Phase 1 — Redesign « moins de cards » (toute l'app) 🔶 (pass 2 — refonte « jeu mobile »)
+## Phase 1 — Redesign « moins de cards » (toute l'app) ✅ (implémenté — refonte « jeu mobile »)
 Objectif : diviser par ~2 le nombre de conteneurs `surface-card` visibles et
 faire ressortir une seule action prioritaire par écran.
 - **Langage visuel unique** : une classe de section calme (`hud-panel`)
