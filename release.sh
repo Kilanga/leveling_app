@@ -118,8 +118,12 @@ echo "Pushing branch and tag..."
 git push origin master
 git push origin "v$VERSION"
 
-echo "Running Heroku migrations on $HEROKU_APP..."
-heroku run bundle exec rails db:migrate -a "$HEROKU_APP"
+echo "Verifying Heroku migrations on $HEROKU_APP..."
+# La phase `release` du Procfile (`rails db:migrate`) applique deja les migrations
+# au deploiement. On NE relance PAS db:migrate ici : deux migrations concurrentes
+# se disputent le verrou consultatif Postgres (ConcurrentMigrationError). On se
+# contente d'un controle en lecture seule du statut.
+heroku run bundle exec rails db:migrate:status -a "$HEROKU_APP" | tail -20
 
 echo "Restarting Heroku dynos..."
 heroku ps:restart -a "$HEROKU_APP"
