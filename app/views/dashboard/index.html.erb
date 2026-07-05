@@ -9,6 +9,9 @@
       <% if current_user.boost_active? %>
         <span class="badge text-bg-warning"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
       <% end %>
+      <% if current_user.active_title.present? %>
+        <span class="badge bg-<%= current_user.title_rarity_class %>"><%= current_user.active_title.name %></span>
+      <% end %>
     </h1>
     <p class="page-subtitle mb-0"><%= t('dashboard.subtitle') %></p>
 
@@ -19,7 +22,7 @@
     </div>
 
     <div style="max-width: 520px;">
-      <div class="game-progress"><div class="game-progress__fill" style="width: <%= @daily_progress_percent %>%"></div></div>
+      <div class="xp-track <%= xp_theme_classes(current_user.active_xp_theme) %>"><div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div></div>
       <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
         <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
         <% if @daily_chest_claimed_today %>
@@ -42,6 +45,36 @@
     </div>
   </div>
 </section>
+
+<% dash_card = current_user.active_profile_card %>
+<% dash_card_theme = dash_card.present? ? profile_card_classes(dash_card).to_s.gsub("profile-card-", "player-home-theme--") : "player-home-theme--none" %>
+<% dash_card_text = dash_card.present? ? profile_card_text(current_user) : nil %>
+<div class="surface-card surface-card--shell player-home-shell <%= dash_card_theme %> mb-4">
+  <div class="card-body">
+    <section class="hud-section player-home-panel player-home-identity mb-0">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+        <%= user_avatar_image(current_user, width: 84, height: 84, css_class: "rounded-circle", alt: current_user.pseudo) %>
+        <div>
+          <div class="profile-frame-container <%= frame_wrapper_classes(current_user.active_profile_frame) %>">
+            <strong><%= current_user.pseudo %></strong>
+          </div>
+          <% if current_user.active_title.present? %>
+            <span class="badge bg-<%= current_user.title_rarity_class %> mt-2 d-inline-block"><%= current_user.active_title.name %></span>
+          <% end %>
+          <% if dash_card_text.present? %>
+            <p class="quest-meta mb-0 mt-2 player-home-identity-text"><%= dash_card_text %></p>
+          <% end %>
+          <div class="player-home-identity-meta mt-2">
+            <span class="profile-card-meta-item"><%= t('leaderboard.player_home.global_level') %> <strong><%= @total_level %></strong></span>
+            <% if dash_card.present? %>
+              <span class="profile-card-meta-item"><%= t('leaderboard.player_home.active_card') %> <strong><%= dash_card.name %></strong></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
 <div class="hud-alerts mb-4">
 <% if ENV["VAPID_PUBLIC_KEY"].present? %>

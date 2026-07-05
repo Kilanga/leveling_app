@@ -16,6 +16,11 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.7.2] - 2026-07-06
+
+### Ajouté
+- Dashboard : les cosmétiques équipés (payants ou non) sont désormais visibles sur le tableau de bord — bloc identité avec pseudo encadré (cadre de profil), thème de carte de visite, titre actif et niveau global, et le thème XP équipé est appliqué à la barre de progression.
+
 ## [2.7.1] - 2026-07-06
 
 ### Corrigé
