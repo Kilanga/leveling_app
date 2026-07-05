@@ -1,0 +1,56 @@
+<% content_for :title, "MotivUp | #{t('stats.show.page_title')}" %>
+
+<h1 class="page-title"><%= t('stats.show.page_title') %></h1>
+<p class="page-subtitle"><%= t('stats.show.page_subtitle') %></p>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6"><div class="surface-card"><div class="card-body"><strong><%= t('stats.show.total_level') %></strong><p class="mb-0"><%= @total_level %></p></div></div></div>
+  <div class="col-md-3 col-6"><div class="surface-card"><div class="card-body"><strong><%= t('stats.show.total_xp') %></strong><p class="mb-0"><%= @total_xp %></p></div></div></div>
+  <div class="col-md-3 col-6"><div class="surface-card"><div class="card-body"><strong><%= t('stats.show.completed_total') %></strong><p class="mb-0"><%= @completed_total %></p></div></div></div>
+  <div class="col-md-3 col-6"><div class="surface-card"><div class="card-body"><strong><%= t('stats.show.current_streak') %></strong><p class="mb-0"><%= @current_streak %></p></div></div></div>
+</div>
+
+<div class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+      <h2 class="section-title mb-0"><%= t('stats.show.weekly_chart_heading') %></h2>
+      <% if @best_week && @best_week[:xp].positive? %>
+        <span class="shop-state-chip shop-state-chip--best"><%= t('stats.show.best_week', label: @best_week[:label], xp: @best_week[:xp]) %></span>
+      <% end %>
+    </div>
+    <div class="stats-chart-wrap">
+      <canvas id="weeklyStatsChart"
+              height="220"
+              data-series="<%= @weekly_series.to_json %>"
+              data-xp-label="<%= t('stats.show.xp_label') %>"
+              data-completions-label="<%= t('stats.show.completions_label') %>"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="surface-card surface-card--shell">
+  <div class="card-body">
+    <h2 class="section-title"><%= t('stats.show.categories_heading') %></h2>
+    <% if @stats.any? %>
+      <% @stats.each do |stat| %>
+        <% xp_needed = XpCalculator.xp_needed_for_next_level(stat.level) %>
+        <% percent = xp_needed.positive? ? [(stat.xp.to_f / xp_needed * 100), 100].min.round : 0 %>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between flex-wrap gap-2 mb-1">
+            <strong><%= stat.category.name %> - <%= t('dashboard.level_label', level: stat.level) %></strong>
+            <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
+          </div>
+          <div class="xp-track">
+            <div class="xp-fill" style="width: <%= percent %>%"></div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-warning mb-0"><%= t('stats.show.no_data') %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-4">
+  <%= link_to t('common.back_to_dashboard'), root_path, class: "btn btn-outline-secondary" %>
+</div>

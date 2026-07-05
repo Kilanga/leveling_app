@@ -21,6 +21,7 @@ fr:
       sign_out: Deconnexion
       sign_in: Connexion
       achievements: Succès
+      stats: Stats
     locale_switcher:
       switch_to_fr: Passer en français
       switch_to_en: Passer en anglais
@@ -939,3 +940,17 @@ fr:
     errors:
       messages:
         record_invalid: 'La validation a échoué : %{errors}'
+  stats:
+    show:
+      page_title: Mes statistiques
+      page_subtitle: Ta progression sur les 8 dernières semaines.
+      total_level: Niveau total
+      total_xp: XP total
+      completed_total: Quêtes complétées
+      current_streak: Streak (semaines)
+      weekly_chart_heading: XP et quêtes par semaine
+      best_week: 'Meilleure semaine : %{label} (%{xp} XP)'
+      xp_label: XP
+      completions_label: Quêtes complétées
+      categories_heading: Progression par catégorie
+      no_data: Aucune donnée pour le moment. Lance ta première quête !

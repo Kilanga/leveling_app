@@ -21,6 +21,7 @@ en:
       sign_out: Sign out
       sign_in: Sign in
       achievements: Achievements
+      stats: Stats
     locale_switcher:
       switch_to_fr: Switch to French
       switch_to_en: Switch to English
@@ -939,3 +940,17 @@ en:
     errors:
       messages:
         record_invalid: 'Validation failed: %{errors}'
+  stats:
+    show:
+      page_title: My statistics
+      page_subtitle: Your progress over the last 8 weeks.
+      total_level: Total level
+      total_xp: Total XP
+      completed_total: Completed quests
+      current_streak: Streak (weeks)
+      weekly_chart_heading: XP and quests per week
+      best_week: 'Best week: %{label} (%{xp} XP)'
+      xp_label: XP
+      completions_label: Completed quests
+      categories_heading: Progress by category
+      no_data: No data yet. Start your first quest!

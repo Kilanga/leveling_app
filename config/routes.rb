@@ -77,6 +77,7 @@ Rails.application.routes.draw do
 
   get "profil", to: "users#show", as: :user_profile
   get "succes", to: "achievements#index", as: :achievements
+  get "stats", to: "stats#show", as: :stats
 
   # PWA
   get "manifest", to: "rails/pwa#manifest", as: :pwa_manifest

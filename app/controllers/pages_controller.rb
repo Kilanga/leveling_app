@@ -32,8 +32,7 @@ class PagesController < ApplicationController
       privacy_url,
       guilde_et_cie_privacy_url,
       guilde_et_cie_account_deletion_url,
-      new_user_registration_url,
-      new_user_session_url
+      new_user_registration_url
     ]
 
     render :sitemap, formats: :xml
