@@ -16,6 +16,12 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.7.0] - 2026-07-06
+
+### Modifié
+- V3 Phase 1 (pass 2) — Refonte « jeu mobile » site-wide : polices Manrope (titres) + Inter (texte), cartes arrondies et translucides (`.surface-card`), boutons et badges en pilule, titres non capitalisés, quadrillage de fond adouci. Toutes les pages adoptent le nouveau look.
+- V3 Phase 1 (pass 2) — Dashboard repensé : en-tête « hero » unifié (pseudo + rang + boost + série + objectif du jour + barre de progression + coffre + anneau de niveau), Le Système mis en avant, progression par catégorie affichée en anneaux circulaires, factions en pleine largeur. Toutes les données, actions et clés i18n préservées.
+
 ## [2.6.0] - 2026-07-06
 
 ### Modifié

@@ -1,13 +1,47 @@
-<h1 class="page-title d-flex align-items-center gap-2 flex-wrap">
-  <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
-  <%= hunter_rank_badge(HunterRank.for_user(current_user)) %>
-</h1>
-<p class="page-subtitle">
-  <%= t('dashboard.subtitle') %>
-  <% if current_user.boost_active? %>
-    <span class="badge text-bg-warning ms-2"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
-  <% end %>
-</p>
+<% dashboard_rank = HunterRank.for_user(current_user) %>
+<% hero_ring_c = 327 %>
+<% hero_ring_off = (hero_ring_c * (1 - [[dashboard_rank[:progress].to_f, 0].max, 1].min)).round %>
+<section class="game-hero mb-4">
+  <div class="game-hero__main">
+    <h1 class="page-title d-flex align-items-center gap-2 flex-wrap mb-1">
+      <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
+      <%= hunter_rank_badge(dashboard_rank) %>
+      <% if current_user.boost_active? %>
+        <span class="badge text-bg-warning"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
+      <% end %>
+    </h1>
+    <p class="page-subtitle mb-0"><%= t('dashboard.subtitle') %></p>
+
+    <div class="game-chips">
+      <span class="game-chip">🔥 <%= t('dashboard.weekly_streak_label', count: @weekly_streak_count) %></span>
+      <span class="game-chip game-chip--accent"><%= t('dashboard.daily_objective.title') %> · <%= @completed_today_count %> / <%= @daily_target %></span>
+      <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "game-chip", style: "text-decoration:none;" %>
+    </div>
+
+    <div style="max-width: 520px;">
+      <div class="game-progress"><div class="game-progress__fill" style="width: <%= @daily_progress_percent %>%"></div></div>
+      <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
+        <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
+        <% if @daily_chest_claimed_today %>
+          <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
+        <% else %>
+          <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-hero__ring">
+    <svg width="150" height="150" viewBox="0 0 150 150" style="transform: rotate(-90deg);">
+      <circle cx="75" cy="75" r="52" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"></circle>
+      <circle cx="75" cy="75" r="52" fill="none" stroke="var(--game-accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="<%= hero_ring_c %>" stroke-dashoffset="<%= hero_ring_off %>" style="filter: drop-shadow(0 0 8px rgba(79,168,255,0.6));"></circle>
+    </svg>
+    <div class="game-hero__ring-label">
+      <div style="font-family:'"'"'Manrope'"'"',sans-serif;font-size:1.9rem;font-weight:800;line-height:1;color:#fbfdfc;"><%= @total_level %></div>
+      <div class="quest-meta mt-1"><%= dashboard_rank[:letter] %><% if dashboard_rank[:next_threshold] %> · <%= dashboard_rank[:level] %>/<%= dashboard_rank[:next_threshold] %><% end %></div>
+    </div>
+  </div>
+</section>
 
 <div class="hud-alerts mb-4">
 <% if ENV["VAPID_PUBLIC_KEY"].present? %>
@@ -93,10 +127,8 @@
 <% end %>
 </div>
 
-<div class="row g-4 mb-4">
-  <div class="col-lg-8">
-    <div class="surface-card h-100">
-      <div class="card-body">
+<div class="surface-card mb-4">
+  <div class="card-body">
         <h2 class="section-title mb-3"><%= t('dashboard.factions.title') %></h2>
         <% if @next_faction_reset_at.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.reset_in', time: @faction_reset_countdown) %></p>
@@ -175,55 +207,10 @@
             </div>
           <% end %>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4">
-    <div class="surface-card mb-4">
-      <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
-        <div>
-          <strong><%= t('dashboard.weekly_streak_label', count: @weekly_streak_count) %></strong>
-          <p class="quest-meta mb-0">
-            <% if @weekly_streak_last_completed_on.present? %>
-              <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
-            <% else %>
-              <%= t('dashboard.no_completion_week') %>
-            <% end %>
-          </p>
-        </div>
-        <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
-      </div>
-    </div>
-
-    <div class="surface-card daily-objective-card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-          <div>
-            <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
-            <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
-          </div>
-          <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-            <%= @completed_today_count %> / <%= @daily_target %>
-          </span>
-        </div>
-        <div class="xp-track mt-3">
-          <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
-          <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
-          <% if @daily_chest_claimed_today %>
-            <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
-          <% else %>
-            <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
-          <% end %>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
-<div class="surface-card mb-4" id="system-quests">
+<div class="surface-card game-panel--feature mb-4" id="system-quests">
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
       <div>
@@ -343,19 +330,27 @@
 
     <section class="hud-section mb-4">
       <h2 class="section-title mb-3"><%= t('dashboard.progression_heading') %></h2>
-      <% @stats.each do |stat| %>
-        <% xp_needed = xp_needed_for_next_level(stat.level) %>
-        <% percent = (stat.xp.to_f / [xp_needed, 1].max * 100).round %>
-        <div class="mb-3">
-          <div class="d-flex justify-content-between flex-wrap gap-2 mb-1">
-            <strong><%= stat.category.name %> - <%= t('dashboard.level_label', level: stat.level) %></strong>
-            <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
+      <div class="game-rings">
+        <% ring_c = 226 %>
+        <% @stats.each do |stat| %>
+          <% xp_needed = xp_needed_for_next_level(stat.level) %>
+          <% pct = [[stat.xp.to_f / [xp_needed, 1].max, 0].max, 1.0].min %>
+          <% ring_off = (ring_c * (1 - pct)).round %>
+          <div class="game-ring">
+            <div class="game-ring__wrap">
+              <svg width="84" height="84" viewBox="0 0 84 84" style="transform: rotate(-90deg);">
+                <circle cx="42" cy="42" r="36" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8"></circle>
+                <circle cx="42" cy="42" r="36" fill="none" stroke="var(--game-accent)" stroke-width="8" stroke-linecap="round" stroke-dasharray="<%= ring_c %>" stroke-dashoffset="<%= ring_off %>"></circle>
+              </svg>
+              <div class="game-ring__label"><%= stat.level %></div>
+            </div>
+            <div>
+              <div style="font-weight:700;color:#f4fbf7;"><%= stat.category.name %></div>
+              <div class="quest-meta"><%= stat.xp %> / <%= xp_needed %> XP</div>
+            </div>
           </div>
-          <div class="xp-track <%= xp_theme_classes(current_user.active_xp_theme) %>">
-            <div class="xp-fill" style="width: <%= percent %>%"></div>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </section>
 
     <section class="hud-section">

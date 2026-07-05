@@ -22,7 +22,7 @@ Prérequis technique : appliquer les migrations V2 en attente (voir
   commit du `db/schema.rb` régénéré.
 - Aucun code applicatif à changer — c'est un état de base non migré.
 
-## Phase 1 — Redesign « moins de cards » (toute l'app) 🔶 (pass 1 livré)
+## Phase 1 — Redesign « moins de cards » (toute l'app) 🔶 (pass 2 — refonte « jeu mobile »)
 Objectif : diviser par ~2 le nombre de conteneurs `surface-card` visibles et
 faire ressortir une seule action prioritaire par écran.
 - **Langage visuel unique** : une classe de section calme (`hud-panel`)

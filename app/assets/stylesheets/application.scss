@@ -2882,3 +2882,128 @@ body::before {
 .hud-alert .section-title {
   font-size: 1rem;
 }
+
+/* ============================================================= */
+/* === V3 Phase 1 (pass 2) : UI « jeu mobile » — SITE ENTIER === */
+/* ============================================================= */
+:root {
+  --game-accent: #4fa8ff;
+  --game-accent-2: #1e6fe0;
+  --game-ink: #eef2ef;
+  --game-radius: 20px;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+/* Fond à quadrillage plus discret, plus « propre »/mobile. */
+body::before { opacity: 0.08; }
+
+h1, h2, h3, h4,
+.page-title, .section-title {
+  font-family: "Manrope", "Inter", sans-serif;
+}
+
+/* Titres non capitalisés, plus doux (moins « terminal »). */
+.page-title { text-transform: none; letter-spacing: -0.01em; font-weight: 800; }
+.section-title { text-transform: none; letter-spacing: -0.01em; font-weight: 800; }
+
+/* Cartes arrondies et translucides (grammaire du mockup), site-wide. */
+.surface-card {
+  border-radius: var(--game-radius);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(3, 10, 18, 0.35);
+}
+.surface-card .card-body { padding: 1.35rem 1.5rem; }
+.surface-card--shell .card-body { padding: 1.6rem 1.7rem; }
+
+/* Boutons et badges en pilule. */
+.btn-brand,
+.btn-outline-quest,
+.btn-outline-danger,
+.btn-outline-secondary,
+.btn.btn-sm { border-radius: 999px; }
+.btn-brand {
+  background: linear-gradient(140deg, var(--game-accent), var(--game-accent-2));
+  border-color: transparent;
+  color: #04101f;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(79, 168, 255, 0.28);
+}
+.badge { border-radius: 999px; padding: 0.4em 0.7em; }
+.shop-state-chip {
+  border-radius: 999px;
+  padding: 0.32rem 0.72rem;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-weight: 800;
+}
+
+/* Lignes de quête arrondies. */
+.quest-row--flat {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.9rem 1rem;
+}
+
+/* ---- Composants dashboard « jeu mobile » ---- */
+.game-hero {
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2rem 2.2rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 2.2rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.game-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 88% 12%, rgba(79, 168, 255, 0.16), transparent 55%);
+  pointer-events: none;
+}
+.game-hero__main { position: relative; flex: 1; min-width: 260px; }
+.game-hero__ring { position: relative; display: flex; align-items: center; justify-content: center; }
+.game-hero__ring-label {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+}
+
+.game-chips { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 1rem 0 1.3rem; }
+.game-chip {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 800;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--game-ink);
+}
+.game-chip--accent { background: rgba(79, 168, 255, 0.1); border-color: rgba(79, 168, 255, 0.25); color: #a9d4ff; }
+
+.game-progress { height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.game-progress__fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--game-accent-2), var(--game-accent)); box-shadow: 0 0 14px rgba(79, 168, 255, 0.5); }
+
+/* Panneau « mis en avant » (Le Système). */
+.game-panel--feature {
+  border: 1px solid rgba(79, 168, 255, 0.22);
+  box-shadow: 0 0 0 1px rgba(79, 168, 255, 0.06), 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* Grille d'anneaux de progression par catégorie. */
+.game-rings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+.game-ring {
+  display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+  padding: 1.2rem 0.8rem; border-radius: 18px; background: rgba(255, 255, 255, 0.025);
+  text-align: center;
+}
+.game-ring__wrap { position: relative; width: 84px; height: 84px; }
+.game-ring__label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 800; color: #fbfdfc; }
+@media (max-width: 900px) { .game-rings { grid-template-columns: repeat(2, 1fr); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .game-progress__fill { box-shadow: none; }
+}
