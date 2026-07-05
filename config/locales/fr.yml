@@ -380,6 +380,10 @@ fr:
         already_claimed: Récompense déjà récupérée cette semaine
         claim_button: Récupérer la récompense
         progress: "%{done}/%{total} objectifs complétés"
+      deals:
+        heading: Offres du jour
+        ends_at_midnight: Nouvelles offres à minuit
+        buy_button: Saisir l'offre
   leaderboard:
     index:
       page_title: Classement ligue hebdomadaire
@@ -675,7 +679,7 @@ fr:
       shop_challenge_completed: "+%{amount} Fragments recuperes via le defi boutique !"
       purchase_confirmed: Achat confirmé !
       unlocked_with_fragments: Objet débloqué avec tes Fragments !
-      purchase_success: Objet achete avec succes !
+      purchase_success: Objet acheté avec succès !
       impossible_purchase: Achat impossible.
       title_unlocked_by_objectives: Ce titre se deverrouille via des objectifs, pas en boutique.
       item_already_owned: Tu possedes deja cet objet.
@@ -697,6 +701,7 @@ fr:
       not_enough_orbs: Tu n'as pas assez d'Orbes pour acheter cet objet.
       invalid_pack: Pack invalide.
       invalid_payment_url: URL de paiement invalide.
+      unlocked_with_orbs_fallback: Objet débloqué avec tes Orbes (tarif de secours) !
     dashboard:
       daily_chest_opened: 'Coffre quotidien ouvert: +%{amount} Fragments.'
     daily_contracts:

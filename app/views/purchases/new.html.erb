@@ -17,6 +17,42 @@
 
 <div class="surface-card surface-card--shell">
   <div class="card-body">
+    <% if @daily_deals.any? %>
+      <section class="hud-section mb-3 daily-deals">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+          <h2 class="section-title mb-0">⚡ <%= t('purchases.new.deals.heading') %></h2>
+          <span class="shop-state-chip shop-state-chip--best"><%= t('purchases.new.deals.ends_at_midnight') %></span>
+        </div>
+        <div class="row g-3">
+          <% @daily_deals.each do |deal| %>
+            <% item = deal[:item] %>
+            <% owned = @owned_item_ids.include?(item.id) %>
+            <div class="col-md-4">
+              <div class="shop-row shop-row--flat daily-deal-card daily-deal-card--<%= item.rarity %>">
+                <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                  <strong class="shop-rarity-text shop-rarity-text--<%= item.rarity %>"><%= item.name %></strong>
+                  <span class="shop-state-chip shop-state-chip--best">-<%= (DailyShopDeals::DISCOUNT_RATE * 100).round %>%</span>
+                </div>
+                <p class="quest-meta mb-2"><%= item.description %></p>
+                <p class="quest-meta mb-2">
+                  <s class="muted-label"><%= t('purchases.new.prices.orbs', count: deal[:original_price]) %></s>
+                  <strong class="ms-1"><%= t('purchases.new.prices.orbs', count: deal[:deal_price]) %></strong>
+                </p>
+                <% if owned %>
+                  <span class="shop-state-chip shop-state-chip--owned"><%= t('purchases.new.cosmetics.status_owned') %></span>
+                <% else %>
+                  <%= form_with url: purchases_path, method: :post, local: true, class: "d-grid" do %>
+                    <%= hidden_field_tag :shop_item_id, item.id %>
+                    <%= submit_tag t('purchases.new.deals.buy_button'), class: "btn btn-brand" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+
     <section class="hud-section mb-3">
       <div class="shop-tab-nav">
         <%= link_to t('purchases.new.tabs.cosmetics'), new_purchase_path(tab: "cosmetics"), class: "shop-tab #{'shop-tab--active' if @active_shop_tab == 'cosmetics'}" %>

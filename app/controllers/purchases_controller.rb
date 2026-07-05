@@ -204,6 +204,8 @@ FREE_REWARD_ITEMS = [
     ensure_default_cosmetic_items!
     ensure_default_free_reward_items!
 
+    @daily_deals = DailyShopDeals.today
+
     @entry_offer_variant = Experimentation.variant_for(user: current_user, experiment_key: "entry_offer_copy")
     @entry_offer_enabled = entry_offer_eligible?
     @entry_offer_bonus_rate = entry_offer_bonus_rate
@@ -342,7 +344,7 @@ def handle_shop_item_purchase
   end
 
   if item.price_coins.present?
-    return purchase_with_orbes!(item, item.price_coins, new_purchase_path)
+    return purchase_with_orbes!(item, DailyShopDeals.price_for(item), new_purchase_path)
   end
 
   if item.price_free_credits.present?
@@ -381,13 +383,13 @@ def purchase_free_reward_with_explicit_currency!(item)
   end
 
   if selected_currency == "orbes"
-    return purchase_with_orbes!(item, fallback_orbes_price, new_purchase_path(tab: "rewards"), "Objet debloque avec tes Orbes (tarif de secours) !")
+    return purchase_with_orbes!(item, fallback_orbes_price, new_purchase_path(tab: "rewards"), I18n.t("flash.purchases.unlocked_with_orbs_fallback"))
   end
 
   redirect_to new_purchase_path(tab: "rewards"), alert: I18n.t("flash.purchases.invalid_currency")
 end
 
-def purchase_with_orbes!(item, orbes_price, redirect_path, success_notice = "Objet acheté avec succès!")
+def purchase_with_orbes!(item, orbes_price, redirect_path, success_notice = I18n.t("flash.purchases.purchase_success"))
   if current_user.coins >= orbes_price
     current_user.decrement!(:coins, orbes_price)
     current_user.user_items.find_or_create_by!(shop_item: item)

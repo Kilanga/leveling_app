@@ -380,6 +380,10 @@ en:
         already_claimed: Reward already claimed this week
         claim_button: Claim the reward
         progress: "%{done}/%{total} goals completed"
+      deals:
+        heading: Daily deals
+        ends_at_midnight: New deals at midnight
+        buy_button: Grab the deal
   leaderboard:
     index:
       page_title: Weekly league leaderboard
@@ -697,6 +701,7 @@ en:
       not_enough_orbs: You don't have enough Orbs to buy this item.
       invalid_pack: Invalid pack.
       invalid_payment_url: Invalid payment URL.
+      unlocked_with_orbs_fallback: Item unlocked with your Orbs (fallback price)!
     dashboard:
       daily_chest_opened: 'Daily chest opened: +%{amount} Fragments.'
     daily_contracts:
