@@ -16,6 +16,18 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.4.0] - 2026-07-05
+
+### Ajouté
+- V3 Phase 2 — Quêtes signature « boss » (`signature: true`) : une par catégorie, difficulté E→S à XP doublé, exclues du tirage quotidien du Système pour servir d'objectif d'aspiration.
+- V3 Phase 2 — Thème narratif sur chaque quête (colonne `theme` : Éveil, Donjon, Codex, Guilde, Faille), renseigné automatiquement par `QuestCatalog.sync!`.
+
+### Modifié
+- V3 Phase 2 — Densité réduite : le Système impose désormais 2-3 quêtes/jour au lieu de 3-4 (`SystemQuestAssigner`).
+- V3 Phase 2 — Barème XP relevé (~+20 % par difficulté) dans `QuestCatalog` ; journée parfaite plus gratifiante (`SystemQuestBoard` : bonus 35 % d'XP et 60 Fragments).
+- Migration de données `QuestCatalog.sync!` rejouée (barème + thèmes + boss), historique des joueurs préservé via le mapping par titre/legacy_title.
+
+
 ## [2.3.0] - 2026-07-05
 
 ### Ajouté

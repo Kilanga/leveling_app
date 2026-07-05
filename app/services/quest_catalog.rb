@@ -1,17 +1,25 @@
-# Catalogue officiel des quêtes du Système (V2, ton Solo Leveling).
-# Source de vérité unique : utilisé par db/seeds.rb et par la migration de
-# données qui réécrit le catalogue en production (mapping via legacy_title).
+# Catalogue officiel des quêtes du Système (ton Solo Leveling).
+# Source de vérité unique : utilisé par db/seeds.rb et par les migrations de
+# données qui réécrivent le catalogue en production (mapping via legacy_title).
 #
-# XP rééquilibré : chaque difficulté (alignée sur les rangs E→S) a un XP fixe.
+# V3 (« moins de bruit, plus de puissance ») :
+# - barème XP relevé (moins de quêtes/jour, mais chacune pèse plus) ;
+# - chaque quête porte un `theme` (axe narratif Solo Leveling) ;
+# - quêtes signature « boss » (`signature: true`) à fort XP, hors tirage
+#   quotidien, pour donner un objectif d'aspiration aligné sur les rangs.
 class QuestCatalog
+  # Barème V3 : ~+20 % sur chaque difficulté par rapport à la V2.
   XP_BY_DIFFICULTY = {
-    "E" => 100,
-    "D" => 150,
-    "C" => 220,
-    "B" => 300,
-    "A" => 420,
-    "S" => 600
+    "E" => 120,
+    "D" => 180,
+    "C" => 260,
+    "B" => 360,
+    "A" => 500,
+    "S" => 700
   }.freeze
+
+  # Les quêtes signature valent le double de leur difficulté : un vrai boss.
+  SIGNATURE_XP_MULTIPLIER = 2
 
   ENTRIES = {
     "Discipline" => [
@@ -126,32 +134,78 @@ class QuestCatalog
     ]
   }.freeze
 
+  # Axe narratif par défaut d'une catégorie (V3). Chaque quête hérite du
+  # thème de sa catégorie si elle n'en précise pas d'autre via `:theme`.
+  CATEGORY_THEME = {
+    "Discipline" => "Éveil",   # discipline mentale
+    "Physique"   => "Donjon",  # défis physiques longs
+    "Savoir"     => "Codex",   # étude et connaissance
+    "Social"     => "Guilde",  # quêtes sociales
+    "Défi"       => "Faille"   # sorties de zone de confort
+  }.freeze
+
+  # Quêtes signature « boss » (V3) : une par catégorie, difficulté A→S, XP
+  # doublé, hors tirage quotidien du Système. Objectifs d'aspiration.
+  SIGNATURE_ENTRIES = {
+    "Discipline" => [
+      { legacy_title: nil, title: "Monarque de la Discipline : 7 jours de routine parfaite", description: "Tiens l'intégralité de ta routine, sans une seule rupture, pendant 7 jours consécutifs.", difficulty: "S", theme: "Boss" }
+    ],
+    "Physique" => [
+      { legacy_title: nil, title: "Donjon Rouge : entraînement long au-delà de tes limites", description: "Boucle une séance physique exceptionnellement longue et exigeante, du type que tu redoutais.", difficulty: "A", theme: "Boss" }
+    ],
+    "Savoir" => [
+      { legacy_title: nil, title: "Grand Codex : un sujet complexe maîtrisé et enseigné", description: "Étudie un sujet ardu jusqu'à pouvoir l'expliquer clairement à quelqu'un d'autre.", difficulty: "A", theme: "Boss" }
+    ],
+    "Social" => [
+      { legacy_title: nil, title: "Maître de Guilde : un vrai rassemblement organisé", description: "Conçois, coordonne et mène à bien un événement collectif réunissant plusieurs personnes.", difficulty: "S", theme: "Boss" }
+    ],
+    "Défi" => [
+      { legacy_title: nil, title: "Souverain des Failles : la peur que tu repousses depuis des mois", description: "Affronte enfin l'action que tu évites depuis longtemps. Le vrai boss de ta vie réelle.", difficulty: "S", theme: "Boss" }
+    ]
+  }.freeze
+
   class << self
-    # Crée ou met à jour chaque quête du catalogue.
+    # Crée ou met à jour chaque quête du catalogue (standard + signature).
     # Les quêtes existantes sont retrouvées par leur nouveau titre, ou par
     # leur ancien titre (legacy_title) pour la migration en production —
     # ce qui préserve les user_quests et l'historique des joueurs.
     def sync!
       ENTRIES.each do |category_name, entries|
         category = Category.find_or_create_by!(name: category_name)
+        entries.each { |entry| upsert_quest!(entry, category, signature: false) }
+      end
 
-        entries.each do |entry|
-          quest = Quest.find_by(title: entry[:title]) || Quest.find_by(title: entry[:legacy_title])
-          quest ||= Quest.new
-
-          quest.assign_attributes(
-            title: entry[:title],
-            description: entry[:description],
-            difficulty: entry[:difficulty],
-            xp: XP_BY_DIFFICULTY.fetch(entry[:difficulty]),
-            category: category
-          )
-          quest.valid_until ||= 10.years.from_now
-          quest.save!
-        end
+      SIGNATURE_ENTRIES.each do |category_name, entries|
+        category = Category.find_or_create_by!(name: category_name)
+        entries.each { |entry| upsert_quest!(entry, category, signature: true) }
       end
 
       true
+    end
+
+    private
+
+    def upsert_quest!(entry, category, signature:)
+      quest = Quest.find_by(title: entry[:title])
+      quest ||= Quest.find_by(title: entry[:legacy_title]) if entry[:legacy_title].present?
+      quest ||= Quest.new
+
+      base_xp = XP_BY_DIFFICULTY.fetch(entry[:difficulty])
+      attributes = {
+        title: entry[:title],
+        description: entry[:description],
+        difficulty: entry[:difficulty],
+        xp: signature ? base_xp * SIGNATURE_XP_MULTIPLIER : base_xp,
+        category: category
+      }
+      # Colonnes V3 optionnelles : on ne les affecte que si la migration
+      # correspondante a bien été appliquée (robustesse à l'ordre de boot).
+      attributes[:theme] = entry[:theme] || CATEGORY_THEME[category.name] if Quest.column_names.include?("theme")
+      attributes[:signature] = signature if Quest.column_names.include?("signature")
+
+      quest.assign_attributes(attributes)
+      quest.valid_until ||= 10.years.from_now
+      quest.save!
     end
   end
 end

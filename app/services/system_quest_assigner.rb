@@ -1,10 +1,13 @@
-# Le Système : chaque nuit, il impose 3-4 quêtes du jour à chaque chasseur.
-# La sélection est pondérée vers les catégories faibles du joueur (user_stats
-# les plus bas) et la difficulté est alignée sur son rang de chasseur.
+# Le Système : chaque nuit, il impose 2-3 quêtes du jour à chaque chasseur.
+# V3 (« moins de bruit, plus de puissance ») : moins de quêtes, mais chacune
+# pèse plus (barème XP relevé dans QuestCatalog). La sélection est pondérée
+# vers les catégories faibles du joueur (user_stats les plus bas) et la
+# difficulté est alignée sur son rang de chasseur. Les quêtes signature
+# « boss » sont exclues du tirage quotidien : elles restent aspirationnelles.
 # Idempotent : relancer l'assignation le même jour ne change rien.
 class SystemQuestAssigner
-  MIN_QUESTS = 3
-  MAX_QUESTS = 4
+  MIN_QUESTS = 2
+  MAX_QUESTS = 3
 
   # Difficultés éligibles par rang : autour du rang du joueur,
   # avec toujours une porte d'entrée un cran en dessous.
@@ -43,15 +46,16 @@ class SystemQuestAssigner
 
     private
 
-    # 3 ou 4 quêtes, stable pour un joueur/jour donné.
+    # 2 ou 3 quêtes, stable pour un joueur/jour donné.
     def quest_count_for(user, date)
       MIN_QUESTS + (Digest::MD5.hexdigest("#{user.id}-#{date.iso8601}").to_i(16) % (MAX_QUESTS - MIN_QUESTS + 1))
     end
 
     def pick_quests(user, date:, count:)
       allowed = RANK_DIFFICULTIES.fetch(HunterRank.for_user(user)[:letter], %w[E D])
-      pool = Quest.with_difficulty(allowed).includes(:category).to_a
-      pool = Quest.includes(:category).to_a if pool.empty?
+      base = Quest.standard.includes(:category)
+      pool = base.with_difficulty(allowed).to_a
+      pool = base.to_a if pool.empty?
       return [] if pool.empty?
 
       yesterday_ids = user.system_quest_assignments.for_day(date - 1.day).pluck(:quest_id)
