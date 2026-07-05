@@ -52,11 +52,17 @@ il prouve sa valeur pour des récompenses exclusives.
 - Nouveaux objets : 7 cosmétiques (Cadre Monarque des Ombres, Thème XP
   Sang de Boss, Carte Rang S...) pour alimenter offres et passe
 
-## Phase 5 — Landing page « Arise-like »
-- Hero : « Solo Leveling pour ta vraie vie » + mockup du dashboard
-- Sections : le Système (quêtes du jour), les rangs, les saisons, la boutique
-- Preuve sociale : rangs des meilleurs chasseurs, stats globales
-- CTA unique « Commencer l'ascension » ; SEO/OG déjà en place
+## Phase 5 — Landing page « Arise-like » ✅ (implémenté)
+- Hero : « Solo Leveling pour ta vraie vie » + mockup statique du dashboard
+  (quêtes du jour, rang B, barre de progression, journée parfaite)
+- Sections : le Système, échelle des rangs E→S (seuils depuis `HunterRank`),
+  saisons (chip saison en cours si dispo, lecture seule), boutique
+- Preuve sociale : top 5 chasseurs par niveau total avec badge de rang
+  + stats globales (joueurs, quêtes complétées/disponibles, axes),
+  le tout en cache 10 min (`Rails.cache`) pour le trafic froid
+- CTA unique « Commencer l'ascension » (hero + section finale),
+  connexion reléguée en lien discret ; SEO/OG déjà en place
+- FR/EN complet (bloc `welcome.index` réécrit), specs requests mises à jour
 
 ## Principes
 - Jamais punir la progression acquise (XP/rang/succès permanents)

@@ -139,24 +139,74 @@ fr:
       divider_text: ou
   welcome:
     index:
-      page_title: Progression gamifiee
-      page_subtitle: Transforme ta progression en jeu competitif
-      main_heading: Transforme ta progression en jeu competitif
-      sub_heading: Construis ta discipline avec des quetes courtes, grimpe dans les ligues hebdomadaires, et garde ton elan avec des rewards quotidiennes.
-      start_button: Commencer maintenant
-      existing_account_button: J'ai deja un compte
-      detected_referral: 'Code parrainage detecte: %{code}'
+      page_title: Solo Leveling pour ta vraie vie
+      page_subtitle: Le Système t'assigne des quêtes chaque jour. Monte en rang de E à S, prouve ta valeur à chaque saison et deviens le chasseur de ta propre vie.
+      hero_kicker: Le Système t'a choisi
+      main_heading: Solo Leveling pour ta vraie vie
+      sub_heading: Chaque jour à minuit, le Système t'assigne tes quêtes. Complète-les, gagne de l'XP, monte en rang de chasseur. Ta progression acquise ne redescend jamais.
+      cta: Commencer l'ascension
+      existing_account_link: J'ai déjà un compte
+      detected_referral: 'Code parrainage détecté : %{code}'
+      mockup:
+        pseudo: Chasseur_Kael
+        rank_progress: Rang B — 62/85 niveaux vers le rang A
+        board_title: Quêtes du jour — assignées par le Système
+        quest_1: Séance de sport 30 minutes
+        quest_2: Lire 20 pages
+        quest_3: Terminer une tâche repoussée
+        completed: Fait
+        validate: Valider
+        perfect_day_hint: Plus qu'une quête pour la journée parfaite — +25% XP et +40 Fragments
+      system:
+        kicker: Le Système
+        heading: Tes quêtes du jour, imposées
+        desc: Pas de liste infinie où hésiter. Le Système décide, tu exécutes.
+        point_1_title: Assignées chaque nuit
+        point_1_desc: À minuit, 3 à 4 quêtes du jour t'attendent, pondérées vers tes catégories les plus faibles. Le Système sait où tu dois progresser.
+        point_2_title: Journée parfaite
+        point_2_desc: Complète toutes les quêtes du jour et empoche +25% d'XP sur ta catégorie faible et +40 Fragments.
+        point_3_title: Jamais de perte d'XP
+        point_3_desc: Rater 2 jours gèle ta progression hebdo, mais ton XP acquis reste intouchable. Une seule quête complétée lève le gel.
+      ranks:
+        kicker: Ton identité
+        heading: Rangs de chasseur E → S
+        desc: Ton rang est calculé depuis ton niveau total, toutes catégories confondues. Il est permanent — il ne redescend jamais.
+        start_label: Départ
+        threshold_label: Niveau %{level}
+        permanence_note: Chaque rang débloque son aura. Le rang S, lui, se voit de loin.
+      seasons:
+        kicker: Prouve ta valeur
+        heading: Saisons de 6 semaines
+        current_chip: 'Saison %{number} — %{name}'
+        desc: Chaque saison, un nouveau classement. Tes rangs et ton XP restent, seule la course recommence.
+        point_1_title: Classement saisonnier
+        point_1_desc: Tout l'XP gagné pendant la saison compte. Six semaines pour te hisser le plus haut possible.
+        point_2_title: Badge exclusif top 10%
+        point_2_desc: Termine dans le top 10% et repars avec un badge introuvable autrement.
+        point_3_title: Titre « Souverain » top 3
+        point_3_desc: Le podium reçoit le titre unique « Souverain de la Saison » — gravé à jamais sur le profil.
+      shop:
+        kicker: La boutique
+        heading: Équipe ton chasseur
+        desc: Cadres, thèmes et titres inspirés de l'univers Solo Leveling, gagnés ou achetés avec tes Fragments.
+        point_1_title: Offres du jour −25%
+        point_1_desc: 3 objets en promo, rotation chaque nuit. Compte à rebours en direct — quand c'est parti, c'est parti.
+        point_2_title: Passe de saison
+        point_2_desc: 10 paliers alimentés par ton XP saisonnier. Piste gratuite pour tous, piste premium avec titre exclusif au palier 10.
+        point_3_title: Cosmétiques légendaires
+        point_3_desc: Cadre Monarque des Ombres, thème Sang de Boss, Carte Rang S... les objets rares brillent d'une lueur animée.
+      social:
+        kicker: Preuve sociale
+        heading: Les meilleurs chasseurs sont déjà là
+        total_level: Niveau %{level}
       stats:
-        motivated_players: joueurs motives
-        available_quests: quetes disponibles
+        hunters: chasseurs inscrits
+        completed_quests: quêtes complétées
+        available_quests: quêtes disponibles
         progression_axes: axes de progression
-      benefits_heading: Pourquoi les joueurs restent
-      benefit_1_title: 1. Action immediate
-      benefit_1_desc: Tu choisis une quete, la valides aujourd'hui, gagnes l'XP immediatement.
-      benefit_2_title: 2. Competition saine
-      benefit_2_desc: Tu compares ta semaine contre ta ligue, pas le jeu entier.
-      benefit_3_title: 3. Regularite recompensee
-      benefit_3_desc: Streaks quotidiens, coffre quotidien, taches hebdo—tout pour construire l'habitude.
+      final_cta:
+        heading: Le Système n'attend pas
+        desc: Rang E aujourd'hui. Rang S un jour. Chaque quête complétée t'en rapproche.
   complete_profile:
     title: Finaliser votre profil
     subtitle: Choisissez votre pseudo et votre avatar pour commencer l'aventure.

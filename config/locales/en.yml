@@ -139,24 +139,74 @@ en:
       divider_text: or
   welcome:
     index:
-      page_title: Gamified Progress
-      page_subtitle: Turn your progression into a competitive game
-      main_heading: Transform your progression into a competitive game
-      sub_heading: Build discipline with short quests, climb weekly leagues, and maintain momentum with daily rewards.
-      start_button: Get started
-      existing_account_button: I already have an account
+      page_title: Solo Leveling for your real life
+      page_subtitle: The System assigns you quests every day. Climb from rank E to S, prove your worth each season and become the hunter of your own life.
+      hero_kicker: The System has chosen you
+      main_heading: Solo Leveling for your real life
+      sub_heading: Every day at midnight, the System assigns your quests. Complete them, earn XP, climb the hunter ranks. Your earned progression never goes down.
+      cta: Begin the ascent
+      existing_account_link: I already have an account
       detected_referral: 'Referral code detected: %{code}'
+      mockup:
+        pseudo: Hunter_Kael
+        rank_progress: Rank B — 62/85 levels toward rank A
+        board_title: Today's quests — assigned by the System
+        quest_1: 30-minute workout
+        quest_2: Read 20 pages
+        quest_3: Finish a postponed task
+        completed: Done
+        validate: Complete
+        perfect_day_hint: One quest away from a perfect day — +25% XP and +40 Fragments
+      system:
+        kicker: The System
+        heading: Your daily quests, assigned
+        desc: No endless list to browse. The System decides, you execute.
+        point_1_title: Assigned every night
+        point_1_desc: At midnight, 3 to 4 daily quests await you, weighted toward your weakest categories. The System knows where you need to grow.
+        point_2_title: Perfect day
+        point_2_desc: Complete every daily quest and pocket +25% XP on your weakest category plus +40 Fragments.
+        point_3_title: Never lose XP
+        point_3_desc: Missing 2 days freezes your weekly progression, but your earned XP is untouchable. A single completed quest lifts the freeze.
+      ranks:
+        kicker: Your identity
+        heading: Hunter ranks E → S
+        desc: Your rank is computed from your total level across all categories. It is permanent — it never goes down.
+        start_label: Start
+        threshold_label: Level %{level}
+        permanence_note: Every rank unlocks its aura. Rank S can be seen from afar.
+      seasons:
+        kicker: Prove your worth
+        heading: 6-week seasons
+        current_chip: 'Season %{number} — %{name}'
+        desc: Each season, a fresh leaderboard. Your ranks and XP remain — only the race restarts.
+        point_1_title: Seasonal leaderboard
+        point_1_desc: All XP earned during the season counts. Six weeks to climb as high as you can.
+        point_2_title: Exclusive top 10% badge
+        point_2_desc: Finish in the top 10% and walk away with a badge you cannot get any other way.
+        point_3_title: '"Sovereign" title for the top 3'
+        point_3_desc: The podium earns the unique "Sovereign of the Season" title — engraved on the profile forever.
+      shop:
+        kicker: The shop
+        heading: Gear up your hunter
+        desc: Frames, themes and titles inspired by the Solo Leveling universe, earned or bought with your Fragments.
+        point_1_title: Daily deals −25%
+        point_1_desc: 3 items on sale, rotating every night. Live countdown — once it's gone, it's gone.
+        point_2_title: Season pass
+        point_2_desc: 10 tiers fueled by your seasonal XP. Free track for everyone, premium track with an exclusive title at tier 10.
+        point_3_title: Legendary cosmetics
+        point_3_desc: Shadow Monarch Frame, Boss Blood theme, Rank S Card... rare items glow with an animated aura.
+      social:
+        kicker: Social proof
+        heading: The best hunters are already here
+        total_level: Level %{level}
       stats:
-        motivated_players: motivated players
+        hunters: registered hunters
+        completed_quests: completed quests
         available_quests: available quests
         progression_axes: progression axes
-      benefits_heading: Why players stay
-      benefit_1_title: 1. Immediate action
-      benefit_1_desc: You pick a quest, validate it today, earn XP immediately.
-      benefit_2_title: 2. Fair competition
-      benefit_2_desc: You compare your week against your league tier, not the entire game.
-      benefit_3_title: 3. Consistency rewarded
-      benefit_3_desc: Daily streaks, daily chest, weekly tasks—all designed to build habit.
+      final_cta:
+        heading: The System does not wait
+        desc: Rank E today. Rank S someday. Every completed quest brings you closer.
   complete_profile:
     title: Complete your profile
     subtitle: Choose your username and avatar to start the adventure.

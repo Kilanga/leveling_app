@@ -2573,3 +2573,180 @@ body::before {
     animation: none;
   }
 }
+
+/* ---- Landing V2 « Arise-like » (phase 5) ---- */
+
+.landing-secondary-link {
+  color: #a9def7;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 0.92rem;
+}
+
+.landing-secondary-link:hover {
+  color: #dff7ff;
+}
+
+.landing-mockup {
+  border: 1px solid rgba(86, 202, 248, 0.4);
+  border-radius: 16px;
+  background: linear-gradient(165deg, rgba(10, 26, 40, 0.96), rgba(7, 16, 27, 0.98));
+  box-shadow: 0 18px 40px rgba(3, 10, 18, 0.55), 0 0 24px rgba(42, 184, 242, 0.12);
+  padding: 1.15rem 1.25rem;
+}
+
+.landing-mockup__header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #dff7ff;
+  margin-bottom: 0.85rem;
+}
+
+.landing-mockup__chip {
+  margin-left: auto;
+  border: 1px solid rgba(86, 202, 248, 0.4);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.78rem;
+  color: #a9def7;
+}
+
+.landing-mockup__progress {
+  margin-bottom: 0.9rem;
+}
+
+.landing-mockup__progress-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #8fb7d0;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.04em;
+}
+
+.landing-mockup__bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(20, 42, 62, 0.9);
+  overflow: hidden;
+}
+
+.landing-mockup__bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2ab8f2, #7ddcff);
+}
+
+.landing-mockup__title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #a9def7;
+  margin-bottom: 0.55rem;
+}
+
+.landing-mockup__quest {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(62, 113, 151, 0.35);
+  border-radius: 10px;
+  background: rgba(11, 22, 33, 0.88);
+  color: #dcefff;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.landing-mockup__quest .badge,
+.landing-mockup__validate {
+  margin-left: auto;
+}
+
+.landing-mockup__quest--done {
+  opacity: 0.72;
+}
+
+.landing-mockup__validate {
+  border: 1px solid rgba(86, 202, 248, 0.5);
+  border-radius: 8px;
+  padding: 0.12rem 0.55rem;
+  font-size: 0.78rem;
+  color: #7ddcff;
+  white-space: nowrap;
+}
+
+.landing-mockup__hint {
+  font-size: 0.78rem;
+  color: #8fb7d0;
+  margin-top: 0.35rem;
+}
+
+.landing-rank-ladder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.landing-rank-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1 1 90px;
+  border: 1px solid rgba(62, 113, 151, 0.35);
+  border-radius: 12px;
+  background: rgba(11, 22, 33, 0.88);
+  padding: 0.85rem 0.5rem;
+}
+
+.landing-rank-step__label {
+  font-size: 0.74rem;
+  color: #8fb7d0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.landing-season-chip {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  border: 1px solid rgba(178, 135, 242, 0.55);
+  border-radius: 999px;
+  background: rgba(178, 135, 242, 0.14);
+  color: #d9c2ff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.7rem;
+  text-transform: uppercase;
+}
+
+.landing-top-hunters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.landing-top-hunter {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid rgba(62, 113, 151, 0.35);
+  border-radius: 10px;
+  background: rgba(11, 22, 33, 0.88);
+  color: #dcefff;
+  padding: 0.6rem 0.85rem;
+}
+
+.landing-top-hunter__position {
+  color: #7ddcff;
+  font-weight: 700;
+  min-width: 2rem;
+}
+
+.landing-top-hunter .quest-meta {
+  margin-left: auto;
+}

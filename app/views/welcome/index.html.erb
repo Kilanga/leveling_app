@@ -1,43 +1,183 @@
-<% content_for :title, "Leveling | #{t('welcome.index.page_title')}" %>
+<% content_for :title, "MotivUp | #{t('welcome.index.page_title')}" %>
 <% content_for :meta_description, t('welcome.index.page_subtitle') %>
 
+<%# Hero « Arise-like » : promesse + mockup du dashboard, CTA unique %>
 <section class="welcome-hero surface-card surface-card--shell mb-4">
   <div class="card-body">
-    <p class="welcome-kicker mb-2"><%= t('welcome.index.page_title') %></p>
-    <h1 class="page-title mb-3"><%= t('welcome.index.main_heading') %></h1>
-    <p class="page-subtitle mb-4">
-      <%= t('welcome.index.sub_heading') %>
-    </p>
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <p class="welcome-kicker mb-2"><%= t('welcome.index.hero_kicker') %></p>
+        <h1 class="page-title mb-3"><%= t('welcome.index.main_heading') %></h1>
+        <p class="page-subtitle mb-4"><%= t('welcome.index.sub_heading') %></p>
 
-    <div class="welcome-cta d-flex gap-2 flex-wrap">
-      <%= link_to t('welcome.index.start_button'), new_user_registration_path(@signup_params), class: "btn btn-brand btn-arcade" %>
-      <%= link_to t('welcome.index.existing_account_button'), new_user_session_path(@signup_params), class: "btn btn-outline-quest btn-arcade" %>
-    </div>
+        <div class="welcome-cta d-flex gap-3 flex-wrap align-items-center">
+          <%= link_to t('welcome.index.cta'), new_user_registration_path(@signup_params), class: "btn btn-brand btn-arcade btn-lg" %>
+          <%= link_to t('welcome.index.existing_account_link'), new_user_session_path(@signup_params), class: "landing-secondary-link" %>
+        </div>
 
-    <% if @invite_ref.present? %>
-      <div class="alert alert-warning mt-4 mb-0">
-        <%= t('welcome.index.detected_referral', code: @invite_ref) %>
+        <% if @invite_ref.present? %>
+          <div class="alert alert-warning mt-4 mb-0">
+            <%= t('welcome.index.detected_referral', code: @invite_ref) %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+
+      <div class="col-lg-6">
+        <%# Mockup statique du dashboard : quêtes du jour + rang + journée parfaite %>
+        <div class="landing-mockup" aria-hidden="true">
+          <div class="landing-mockup__header">
+            <span class="hunter-rank-badge hunter-rank-badge--b"><%= t('hunter_rank.badge', letter: 'B') %></span>
+            <strong><%= t('welcome.index.mockup.pseudo') %></strong>
+            <span class="landing-mockup__chip">2 / 3</span>
+          </div>
+          <div class="landing-mockup__progress">
+            <span class="landing-mockup__progress-label"><%= t('welcome.index.mockup.rank_progress') %></span>
+            <div class="landing-mockup__bar"><span style="width: 72%"></span></div>
+          </div>
+          <p class="landing-mockup__title"><%= t('welcome.index.mockup.board_title') %></p>
+          <div class="landing-mockup__quest landing-mockup__quest--done">
+            <span class="hunter-rank-badge hunter-rank-badge--e">E</span>
+            <span><%= t('welcome.index.mockup.quest_1') %></span>
+            <span class="badge text-bg-success"><%= t('welcome.index.mockup.completed') %></span>
+          </div>
+          <div class="landing-mockup__quest landing-mockup__quest--done">
+            <span class="hunter-rank-badge hunter-rank-badge--c">C</span>
+            <span><%= t('welcome.index.mockup.quest_2') %></span>
+            <span class="badge text-bg-success"><%= t('welcome.index.mockup.completed') %></span>
+          </div>
+          <div class="landing-mockup__quest">
+            <span class="hunter-rank-badge hunter-rank-badge--a">A</span>
+            <span><%= t('welcome.index.mockup.quest_3') %></span>
+            <span class="landing-mockup__validate"><%= t('welcome.index.mockup.validate') %></span>
+          </div>
+          <p class="landing-mockup__hint mb-0"><%= t('welcome.index.mockup.perfect_day_hint') %></p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<%# Le Système : quêtes du jour imposées %>
 <section class="surface-card mb-4">
   <div class="card-body">
+    <p class="welcome-kicker mb-1"><%= t('welcome.index.system.kicker') %></p>
+    <h2 class="section-title mb-2"><%= t('welcome.index.system.heading') %></h2>
+    <p class="quest-meta mb-3"><%= t('welcome.index.system.desc') %></p>
     <div class="row g-3">
-      <div class="col-md-4">
+      <% (1..3).each do |i| %>
+        <div class="col-md-4">
+          <div class="quest-row quest-row--flat h-100">
+            <strong><%= t("welcome.index.system.point_#{i}_title") %></strong>
+            <p class="quest-meta mb-0"><%= t("welcome.index.system.point_#{i}_desc") %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%# Les rangs de chasseur E→S %>
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <p class="welcome-kicker mb-1"><%= t('welcome.index.ranks.kicker') %></p>
+    <h2 class="section-title mb-2"><%= t('welcome.index.ranks.heading') %></h2>
+    <p class="quest-meta mb-3"><%= t('welcome.index.ranks.desc') %></p>
+    <div class="landing-rank-ladder">
+      <% HunterRank::THRESHOLDS.each do |letter, min_level| %>
+        <div class="landing-rank-step">
+          <span class="hunter-rank-badge hunter-rank-badge--<%= letter.downcase %>"><%= letter %></span>
+          <span class="landing-rank-step__label">
+            <%= min_level.zero? ? t('welcome.index.ranks.start_label') : t('welcome.index.ranks.threshold_label', level: min_level) %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <p class="quest-meta mb-0 mt-3"><%= t('welcome.index.ranks.permanence_note') %></p>
+  </div>
+</section>
+
+<%# Les saisons de 6 semaines %>
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <p class="welcome-kicker mb-1"><%= t('welcome.index.seasons.kicker') %></p>
+    <h2 class="section-title mb-2">
+      <%= t('welcome.index.seasons.heading') %>
+      <% if @current_season %>
+        <span class="landing-season-chip"><%= t('welcome.index.seasons.current_chip', number: @current_season.number, name: @current_season.name) %></span>
+      <% end %>
+    </h2>
+    <p class="quest-meta mb-3"><%= t('welcome.index.seasons.desc') %></p>
+    <div class="row g-3">
+      <% (1..3).each do |i| %>
+        <div class="col-md-4">
+          <div class="quest-row quest-row--flat h-100">
+            <strong><%= t("welcome.index.seasons.point_#{i}_title") %></strong>
+            <p class="quest-meta mb-0"><%= t("welcome.index.seasons.point_#{i}_desc") %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%# La boutique %>
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <p class="welcome-kicker mb-1"><%= t('welcome.index.shop.kicker') %></p>
+    <h2 class="section-title mb-2"><%= t('welcome.index.shop.heading') %></h2>
+    <p class="quest-meta mb-3"><%= t('welcome.index.shop.desc') %></p>
+    <div class="row g-3">
+      <% (1..3).each do |i| %>
+        <div class="col-md-4">
+          <div class="quest-row quest-row--flat h-100">
+            <strong><%= t("welcome.index.shop.point_#{i}_title") %></strong>
+            <p class="quest-meta mb-0"><%= t("welcome.index.shop.point_#{i}_desc") %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%# Preuve sociale : meilleurs chasseurs + stats globales %>
+<section class="surface-card mb-4">
+  <div class="card-body">
+    <p class="welcome-kicker mb-1"><%= t('welcome.index.social.kicker') %></p>
+    <h2 class="section-title mb-3"><%= t('welcome.index.social.heading') %></h2>
+
+    <% if @top_hunters.present? %>
+      <div class="landing-top-hunters mb-4">
+        <% @top_hunters.each_with_index do |hunter, index| %>
+          <div class="landing-top-hunter">
+            <span class="landing-top-hunter__position">#<%= index + 1 %></span>
+            <%= hunter_rank_badge(hunter[:rank]) %>
+            <strong><%= hunter[:pseudo] %></strong>
+            <span class="quest-meta"><%= t('welcome.index.social.total_level', level: hunter[:rank][:level]) %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
         <div class="welcome-stat">
-          <strong><%= @players_count %>+</strong>
-          <span><%= t('welcome.index.stats.motivated_players') %></span>
+          <strong><%= number_with_delimiter(@players_count) %></strong>
+          <span><%= t('welcome.index.stats.hunters') %></span>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-6 col-md-3">
         <div class="welcome-stat">
-          <strong><%= @quests_count %>+</strong>
+          <strong><%= number_with_delimiter(@completed_quests_total) %></strong>
+          <span><%= t('welcome.index.stats.completed_quests') %></span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="welcome-stat">
+          <strong><%= number_with_delimiter(@quests_count) %></strong>
           <span><%= t('welcome.index.stats.available_quests') %></span>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-6 col-md-3">
         <div class="welcome-stat">
           <strong><%= @categories_count %></strong>
           <span><%= t('welcome.index.stats.progression_axes') %></span>
@@ -47,30 +187,11 @@
   </div>
 </section>
 
-<section class="surface-card">
-  <div class="card-body">
-    <h2 class="section-title mb-3"><%= t('welcome.index.benefits_heading') %></h2>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <div class="quest-row quest-row--flat h-100">
-          <strong><%= t('welcome.index.benefit_1_title') %></strong>
-          <p class="quest-meta mb-0"><%= t('welcome.index.benefit_1_desc') %></p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="quest-row quest-row--flat h-100">
-          <strong><%= t('welcome.index.benefit_2_title') %></strong>
-          <p class="quest-meta mb-0"><%= t('welcome.index.benefit_2_desc') %></p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="quest-row quest-row--flat h-100">
-          <strong><%= t('welcome.index.benefit_3_title') %></strong>
-          <p class="quest-meta mb-0"><%= t('welcome.index.benefit_3_desc') %></p>
-        </div>
-      </div>
-    </div>
+<%# CTA final unique %>
+<section class="welcome-hero surface-card text-center">
+  <div class="card-body py-5">
+    <h2 class="section-title mb-2"><%= t('welcome.index.final_cta.heading') %></h2>
+    <p class="quest-meta mb-4"><%= t('welcome.index.final_cta.desc') %></p>
+    <%= link_to t('welcome.index.cta'), new_user_registration_path(@signup_params), class: "btn btn-brand btn-arcade btn-lg" %>
   </div>
 </section>
-
-
