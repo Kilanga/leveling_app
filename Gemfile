@@ -17,6 +17,11 @@ gem "devise"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 gem "stripe"
+# Rate limiting (login/inscription) [https://github.com/rack/rack-attack]
+gem "rack-attack"
+# Monitoring d'erreurs (actif seulement si SENTRY_DSN est défini)
+gem "sentry-ruby"
+gem "sentry-rails"
 gem "bootstrap"
 gem "stimulus-rails"
 gem "turbo-rails"
