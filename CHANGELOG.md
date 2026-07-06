@@ -16,6 +16,15 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.8.0] - 2026-07-06
+
+### Ajouté
+- Monitoring léger sans dépendance : notification webhook (Discord/Slack) sur toute exception non gérée, via `Rails.error.subscribe`. Actif si `ERROR_WEBHOOK_URL` est défini, sinon no-op.
+- Game juice : animation de remplissage des barres XP et des anneaux de progression au chargement, et confettis (canvas) à la journée parfaite. Respecte `prefers-reduced-motion`.
+
+### Corrigé
+- `db/schema.rb` régénéré et resynchronisé (version 2026_07_05_161000, 42 tables), nettoyé des artefacts propres à Supabase — CI et setup local repartent d'un schéma à jour.
+
 ## [2.7.2] - 2026-07-06
 
 ### Ajouté
