@@ -82,8 +82,6 @@ GEM
     ast (2.4.2)
     auth-sanitizer (0.2.2)
       version_gem (~> 1.1, >= 1.1.10)
-    autoprefixer-rails (10.4.19.0)
-      execjs (~> 2)
     base64 (0.3.0)
     bcrypt (3.1.22)
     bcrypt_pbkdf (1.1.1)
@@ -141,16 +139,15 @@ GEM
     drb (2.2.3)
     ed25519 (1.3.0)
     erb (6.0.4)
+    erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
-    erubi (1.13.1)
     event_stream_parser (1.0.0)
-    execjs (2.10.0)
-    factory_bot (6.5.1)
+    factory_bot (6.6.0)
       activesupport (>= 6.1.0)
-    factory_bot_rails (6.4.4)
+    factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
-      railties (>= 5.0.0)
+      railties (>= 6.1.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.14.3)
@@ -371,7 +368,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
-    rbs (4.0.2)
+    rbs (4.0.3)
       logger
       prism (>= 1.6.0)
       tsort
@@ -539,7 +536,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
-  factory_bot_rails (~> 6.4)
+  factory_bot_rails (~> 6.5)
   faker
   image_processing (~> 1.14)
   importmap-rails
@@ -566,9 +563,9 @@ DEPENDENCIES
   stripe
   thruster
   turbo-rails
-  web-push
   tzinfo-data
   web-console
+  web-push
 
 RUBY VERSION
   ruby 3.3.11p0
