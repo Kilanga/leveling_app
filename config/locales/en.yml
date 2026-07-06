@@ -294,6 +294,7 @@ en:
       cta: View boosts
     unknown_player: Unknown player
     weekly_streak_label: 'Weekly streak: %{count} week(s)'
+    streak_freeze_owned: '❄️ %{count} streak freeze(s)'
     completed_times: Completed %{count} times
     no_active_quest: No active quest. Start your next mission.
     reward_label: 'Reward: %{count} XP'
@@ -438,6 +439,11 @@ en:
         already_claimed: Reward already claimed this week
         claim_button: Claim the reward
         progress: "%{done}/%{total} goals completed"
+      streak_freeze:
+        heading: Streak freeze
+        hint: 'Protects your weekly streak if you miss a week. Costs %{cost} Fragments.'
+        owned: 'Freezes owned: %{count}'
+        buy_button: 'Buy (%{cost} Fragments)'
       deals:
         heading: Daily deals
         ends_at_midnight: New deals at midnight
@@ -722,6 +728,9 @@ en:
       read_badge: Read
       open_button: Open
       no_notifications: No notifications at the moment.
+    streak_freeze_used:
+      title: 'Streak saved!'
+      body: 'A streak freeze was used: your %{count}-week streak is preserved.'
     season_top3:
       title: 'Top 3 of %{season}!'
       body: 'Rank #%{rank} — the unique title and the exclusive season badge are yours.'
@@ -799,6 +808,7 @@ en:
       title_not_purchasable: This title unlocks through goals, not the shop.
       already_owned: You already own this item.
       not_enough_fragments: You don't have enough Fragments for this purchase.
+      streak_freeze_bought: 'Streak freeze bought! Your streak is protected for one miss.'
       not_enough_orbs: You don't have enough Orbs to buy this item.
       invalid_pack: Invalid pack.
       invalid_payment_url: Invalid payment URL.

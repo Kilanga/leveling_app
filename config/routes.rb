@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       get "success"
       get "cancel"
       post "claim_weekly_challenge"
+      post "buy_streak_freeze"
     end
   end
 

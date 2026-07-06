@@ -16,6 +16,11 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.9.0] - 2026-07-06
+
+### Ajouté
+- Gel de série : jeton achetable en Fragments (150) qui protège ta série hebdo quand tu rates une semaine, au-delà du gel gratuit existant. Achat dans l'onglet Récompenses de la boutique, compteur affiché sur le dashboard, notification in-app quand un gel est utilisé. (`WeeklyStreakTracker`, `streak_freeze_tokens`).
+
 ## [2.8.0] - 2026-07-06
 
 ### Ajouté

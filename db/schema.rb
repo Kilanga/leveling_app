@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_05_161000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_06_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
@@ -522,6 +522,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_161000) do
     t.integer "weekly_streak_count", default: 0, null: false
     t.date "weekly_streak_freeze_used_for_week"
     t.date "weekly_streak_last_completed_on"
+    t.integer "streak_freeze_tokens", default: 0, null: false
     t.integer "xp", default: 0
     t.index ["active_avatar_item_id"], name: "index_users_on_active_avatar_item_id"
     t.index ["active_profile_card_id"], name: "index_users_on_active_profile_card_id"

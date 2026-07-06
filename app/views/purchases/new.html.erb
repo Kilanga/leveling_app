@@ -343,6 +343,14 @@
           <% elsif @active_shop_tab == "rewards" %>
             <h2 class="section-title"><%= t('purchases.new.rewards.heading') %></h2>
             <p class="quest-meta mb-3"><%= t('purchases.new.rewards.instruction') %></p>
+            <div class="shop-row shop-row--flat mb-3">
+              <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                <strong>❄️ <%= t('purchases.new.streak_freeze.heading') %></strong>
+                <span class="shop-state-chip shop-state-chip--available"><%= t('purchases.new.streak_freeze.owned', count: current_user.streak_freeze_tokens) %></span>
+              </div>
+              <p class="quest-meta mb-2"><%= t('purchases.new.streak_freeze.hint', cost: PurchasesController::STREAK_FREEZE_COST_FRAGMENTS) %></p>
+              <%= button_to t('purchases.new.streak_freeze.buy_button', cost: PurchasesController::STREAK_FREEZE_COST_FRAGMENTS), buy_streak_freeze_purchases_path, method: :post, class: "btn btn-sm btn-brand" %>
+            </div>
             <% reward_items = Array(@free_reward_items) %>
             <% if reward_items.any? %>
               <div class="shop-list shop-list--flat">

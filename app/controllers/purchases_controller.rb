@@ -3,6 +3,7 @@ class PurchasesController < ApplicationController
 
   before_action :authenticate_user!
   SHOP_CHALLENGE_REWARD_FREE_CREDITS = 200
+  STREAK_FREEZE_COST_FRAGMENTS = 150
   WELCOME_BONUS_BY_VARIANT = {
     "control" => 0.10,
     "treatment" => 0.20
@@ -428,6 +429,19 @@ FREE_REWARD_ITEMS = [
 
   def cancel
     redirect_to new_purchase_path, alert: I18n.t("flash.purchases.payment_cancelled")
+  end
+
+  def buy_streak_freeze
+    if current_user.free_credits_balance >= STREAK_FREEZE_COST_FRAGMENTS
+      current_user.update!(
+        free_credits: current_user.free_credits_balance - STREAK_FREEZE_COST_FRAGMENTS,
+        streak_freeze_tokens: current_user.streak_freeze_tokens + 1
+      )
+      ProductAnalytics.track(user: current_user, event_name: "streak_freeze_bought", metadata: { cost: STREAK_FREEZE_COST_FRAGMENTS })
+      redirect_to new_purchase_path(tab: "rewards"), notice: I18n.t("flash.purchases.streak_freeze_bought")
+    else
+      redirect_to new_purchase_path(tab: "rewards"), alert: I18n.t("flash.purchases.not_enough_fragments")
+    end
   end
 
   private

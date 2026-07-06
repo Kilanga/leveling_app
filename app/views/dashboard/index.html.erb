@@ -25,6 +25,9 @@
 
     <div class="game-chips">
       <span class="game-chip">🔥 <%= t('dashboard.weekly_streak_label', count: @weekly_streak_count) %></span>
+      <% if current_user.streak_freeze_tokens.to_i > 0 %>
+        <span class="game-chip"><%= t('dashboard.streak_freeze_owned', count: current_user.streak_freeze_tokens) %></span>
+      <% end %>
       <span class="game-chip game-chip--accent"><%= t('dashboard.daily_objective.title') %> · <%= @completed_today_count %> / <%= @daily_target %></span>
       <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "game-chip", style: "text-decoration:none;" %>
     </div>

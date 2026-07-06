@@ -294,6 +294,7 @@ fr:
       cta: Voir les boosts
     unknown_player: Joueur inconnu
     weekly_streak_label: 'Streak hebdo : %{count} semaine(s)'
+    streak_freeze_owned: '❄️ %{count} gel(s) de série'
     completed_times: Complétée %{count} fois
     no_active_quest: Aucune quête active. Lance ta prochaine mission.
     reward_label: 'Récompense : %{count} XP'
@@ -438,6 +439,11 @@ fr:
         already_claimed: Récompense déjà récupérée cette semaine
         claim_button: Récupérer la récompense
         progress: "%{done}/%{total} objectifs complétés"
+      streak_freeze:
+        heading: Gel de série
+        hint: 'Protège ta série hebdo si tu rates une semaine. Coûte %{cost} Fragments.'
+        owned: 'Gels possédés : %{count}'
+        buy_button: 'Acheter (%{cost} Fragments)'
       deals:
         heading: Offres du jour
         ends_at_midnight: Nouvelles offres à minuit
@@ -722,6 +728,9 @@ fr:
       read_badge: Lue
       open_button: Ouvrir
       no_notifications: Aucune notification pour le moment.
+    streak_freeze_used:
+      title: 'Série sauvée !'
+      body: 'Un gel de série a été utilisé : ta série de %{count} semaine(s) est préservée.'
     season_top3:
       title: 'Top 3 de la %{season} !'
       body: 'Rang #%{rank} — le titre unique et le badge exclusif de la saison sont à toi.'
@@ -799,6 +808,7 @@ fr:
       title_not_purchasable: Ce titre se débloque via des objectifs, pas en boutique.
       already_owned: Vous possédez déjà cet objet.
       not_enough_fragments: Tu n'as pas assez de Fragments pour cet achat.
+      streak_freeze_bought: 'Gel de série acheté ! Ta série est protégée pour une absence.'
       not_enough_orbs: Tu n'as pas assez d'Orbes pour acheter cet objet.
       invalid_pack: Pack invalide.
       invalid_payment_url: URL de paiement invalide.
