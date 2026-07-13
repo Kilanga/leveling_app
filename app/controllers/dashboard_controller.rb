@@ -64,6 +64,7 @@ class DashboardController < ApplicationController
     @daily_chest_claimed_today = daily_chest_claimed_today?
     @daily_chest_reward_free_credits = DAILY_CHEST_REWARD_FREE_CREDITS
     @friends_activity = recent_friends_activity
+    @login_calendar = login_calendar
 
     cycle_anchor = FactionInfluence.current_cycle_anchor_date
     previous_cycle_anchor = cycle_anchor - 7.days
@@ -120,6 +121,19 @@ class DashboardController < ApplicationController
   end
 
   private
+
+  # Calendrier d'assiduité : 28 derniers jours, actif = au moins un événement.
+  def login_calendar(days: 28)
+    today = Time.zone.today
+    start = today - (days - 1)
+    active = ProductEvent
+      .where(user_id: current_user.id)
+      .where("created_at >= ?", start.beginning_of_day)
+      .pluck(:created_at)
+      .map { |t| t.in_time_zone.to_date }
+      .to_set
+    (start..today).map { |d| { date: d, active: active.include?(d), today: d == today } }
+  end
 
   def completed_today_count
     current_user.user_quests

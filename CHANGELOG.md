@@ -16,6 +16,11 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.11.0] - 2026-07-06
+
+### Ajouté
+- Calendrier d'assiduité sur le dashboard : grille des 28 derniers jours façon habit-tracker, chaque jour actif (au moins un événement) est mis en évidence, avec le total de jours actifs. Basé sur `product_events`.
+
 ## [2.10.0] - 2026-07-06
 
 ### Ajouté

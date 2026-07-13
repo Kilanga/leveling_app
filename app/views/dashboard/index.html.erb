@@ -143,6 +143,20 @@
 
 <div class="surface-card mb-4">
   <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+      <h2 class="section-title mb-0"><%= t('dashboard.activity.heading') %></h2>
+      <span class="muted-label"><%= t('dashboard.activity.days_active', count: @login_calendar.count { |d| d[:active] }) %></span>
+    </div>
+    <div class="login-cal">
+      <% @login_calendar.each do |day| %>
+        <span class="login-cal__cell<%= ' login-cal__cell--active' if day[:active] %><%= ' login-cal__cell--today' if day[:today] %>" title="<%= l(day[:date], format: :long) %>"></span>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="surface-card mb-4">
+  <div class="card-body">
         <h2 class="section-title mb-3"><%= t('dashboard.factions.title') %></h2>
         <% if @next_faction_reset_at.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.reset_in', time: @faction_reset_countdown) %></p>

@@ -294,6 +294,9 @@ fr:
       cta: Voir les boosts
     unknown_player: Joueur inconnu
     weekly_streak_label: 'Streak hebdo : %{count} semaine(s)'
+    activity:
+      heading: Ton assiduité (28 jours)
+      days_active: '%{count} jours actifs'
     streak_freeze_owned: '❄️ %{count} gel(s) de série'
     completed_times: Complétée %{count} fois
     no_active_quest: Aucune quête active. Lance ta prochaine mission.

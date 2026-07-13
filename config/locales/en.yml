@@ -294,6 +294,9 @@ en:
       cta: View boosts
     unknown_player: Unknown player
     weekly_streak_label: 'Weekly streak: %{count} week(s)'
+    activity:
+      heading: Your activity (28 days)
+      days_active: '%{count} active days'
     streak_freeze_owned: '❄️ %{count} streak freeze(s)'
     completed_times: Completed %{count} times
     no_active_quest: No active quest. Start your next mission.

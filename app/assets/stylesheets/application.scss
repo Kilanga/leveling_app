@@ -3060,3 +3060,18 @@ h1, h2, h3, h4,
 @media (max-width: 420px) {
   .game-chip { font-size: 0.8rem; padding: 0.45rem 0.8rem; }
 }
+
+/* === Calendrier d'assiduité (habit tracker) === */
+.login-cal { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; max-width: 440px; }
+.login-cal__cell {
+  aspect-ratio: 1; border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.login-cal__cell--active {
+  background: linear-gradient(140deg, var(--game-accent), var(--game-accent-2));
+  border-color: transparent;
+  box-shadow: 0 0 8px rgba(79, 168, 255, 0.4);
+}
+.login-cal__cell--today { outline: 2px solid #ffd27a; outline-offset: 1px; }
+@media (max-width: 480px) { .login-cal { grid-template-columns: repeat(7, 1fr); } }
