@@ -16,3 +16,7 @@ production:
   email_drip:
     command: "DripScheduler.call"
     schedule: every day at 10am
+
+  resolve_friend_challenges:
+    command: "FriendChallengeResolver.resolve_due_challenges!"
+    schedule: "0 * * * *"

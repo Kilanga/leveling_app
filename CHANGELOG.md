@@ -16,6 +16,11 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.12.0] - 2026-07-06
+
+### Corrigé
+- Défis entre amis : le résolveur (`FriendChallengeResolver`) n'était jamais planifié — les défis étaient créés mais jamais résolus. Ajout d'une tâche récurrente horaire qui clôture les défis échus, désigne le gagnant (plus d'XP sur la fenêtre), verse la récompense et notifie. La fonctionnalité est désormais complète de bout en bout.
+
 ## [2.11.0] - 2026-07-06
 
 ### Ajouté
