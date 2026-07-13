@@ -16,6 +16,11 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.10.0] - 2026-07-06
+
+### Ajouté
+- Succès étendus : 4 nouveaux hauts faits sur la page Succès — Souverain (rang S / niveau 130), Collectionneur (5 cosmétiques), Increvable (série de 8 semaines), Âme Sociale (3 amis). Décernés automatiquement, avec barre de progression et libellés FR/EN. (`TitleUnlocker`).
+
 ## [2.9.0] - 2026-07-06
 
 ### Ajouté

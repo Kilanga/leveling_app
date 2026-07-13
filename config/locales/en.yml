@@ -1040,6 +1040,9 @@ en:
       categories_with_500_xp: Categories at 500+ XP
       categories_with_1500_xp: Categories at 1500+ XP
       categories_with_level_20: Categories level 20+
+      cosmetics_owned: Cosmetics owned
+      weekly_streak_weeks: Streak weeks
+      friends_count: Friends
     defs:
       eclaireur:
         objective: Complete 5 quests in total.
@@ -1062,6 +1065,18 @@ en:
       ascension:
         objective: Reach level 20 in all 5 categories and a total level of 120.
         description: You embody the game's overall excellence.
+      souverain:
+        objective: Reach a total level of 130 (rank S).
+        description: The peak of the hunter hierarchy.
+      collectionneur:
+        objective: Own 5 cosmetics (frames, XP themes, cards).
+        description: A true style enthusiast.
+      increvable:
+        objective: Keep an 8-week weekly streak.
+        description: Nothing stops you.
+      ame_sociale:
+        objective: Have 3 friends.
+        description: The hunt is better in a pack.
   activerecord:
     errors:
       messages:

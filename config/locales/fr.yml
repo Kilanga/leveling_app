@@ -1044,6 +1044,9 @@ fr:
       categories_with_500_xp: Catégories à 500+ XP
       categories_with_1500_xp: Catégories à 1500+ XP
       categories_with_level_20: Catégories niveau 20+
+      cosmetics_owned: Cosmétiques possédés
+      weekly_streak_weeks: Semaines de série
+      friends_count: Amis
     defs:
       eclaireur:
         objective: Compléter 5 quêtes au total.
@@ -1066,6 +1069,18 @@ fr:
       ascension:
         objective: Atteindre le niveau 20 dans les 5 catégories et un niveau total de 120.
         description: Tu incarnes l'excellence globale du jeu.
+      souverain:
+        objective: Atteindre un niveau total de 130 (rang S).
+        description: Le sommet de la hiérarchie des chasseurs.
+      collectionneur:
+        objective: Posséder 5 cosmétiques (cadres, thèmes XP, cartes).
+        description: Un vrai amateur de style.
+      increvable:
+        objective: Tenir une série hebdomadaire de 8 semaines.
+        description: Rien ne t'arrête.
+      ame_sociale:
+        objective: Avoir 3 amis.
+        description: La chasse est meilleure en meute.
   activerecord:
     errors:
       messages:

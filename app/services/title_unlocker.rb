@@ -17,7 +17,15 @@ class TitleUnlocker
     { key: "architecte",  name: "Architecte du Progres", rarity: "epic",
       requirements: { unique_completed_quests: 70, categories_with_1500_xp: 4 } },
     { key: "ascension",   name: "Ascension Totale",      rarity: "legendary",
-      requirements: { categories_with_level_20: 5, total_level: 120 } }
+      requirements: { categories_with_level_20: 5, total_level: 120 } },
+    { key: "souverain",   name: "Souverain",             rarity: "legendary",
+      requirements: { total_level: 130 } },
+    { key: "collectionneur", name: "Collectionneur",     rarity: "rare",
+      requirements: { cosmetics_owned: 5 } },
+    { key: "increvable",  name: "Increvable",            rarity: "epic",
+      requirements: { weekly_streak_weeks: 8 } },
+    { key: "ame_sociale", name: "Ame Sociale",           rarity: "common",
+      requirements: { friends_count: 3 } }
   ].freeze
 
   class << self
@@ -90,7 +98,10 @@ class TitleUnlocker
         weekly_completed_total: user.user_weekly_quests.where(completed: true).count,
         categories_with_500_xp: user.user_stats.where("total_xp >= 500").distinct.count(:category_id),
         categories_with_1500_xp: user.user_stats.where("total_xp >= 1500").distinct.count(:category_id),
-        categories_with_level_20: user.user_stats.where("level >= 20").distinct.count(:category_id)
+        categories_with_level_20: user.user_stats.where("level >= 20").distinct.count(:category_id),
+        cosmetics_owned: user.user_items.joins(:shop_item).where(shop_items: { item_type: %w[profile_frame xp_theme profile_card] }).distinct.count(:shop_item_id),
+        weekly_streak_weeks: user.weekly_streak_count.to_i,
+        friends_count: user.accepted_friends.size
       }
     end
   end
