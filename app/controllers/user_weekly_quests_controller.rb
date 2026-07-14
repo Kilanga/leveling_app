@@ -4,6 +4,8 @@ class UserWeeklyQuestsController < ApplicationController
   def update
     user_weekly_quest = current_user.user_weekly_quests.find(params[:id])
     if params[:action_type] == "complete"
+      return if abuse_blocked?(dashboard_path)
+
       # Malus doux du Système : 2 jours ratés d'affilée gèlent le contrat
       # hebdo. Compléter une quête du jour lève le gel (aucune XP perdue).
       if SystemQuestBoard.weekly_progression_frozen?(current_user)

@@ -16,6 +16,11 @@ Regle de normalisation Keep a Changelog:
 - Toute nouvelle ligne ajoutee au changelog est publiee immediatement dans une version datee (pas d'entree conservee en attente dans `Non publié`).
 
 
+## [2.13.0] - 2026-07-06
+
+### Ajouté
+- Anti-abus (intégrité) : garde-fou de plausibilité par volume sur les validations de quêtes — blocage en cas de burst (≥ 10 validations en 60 s) ou de plafond quotidien (≥ 60/jour), avec message dédié et événement `abuse_blocked` pour le suivi. Basé sur les `product_events` existants, fail-open (aucun blocage en cas d'erreur), zéro friction pour un usage normal. (`AbuseGuard`, branché sur les 3 flux de complétion.)
+
 ## [2.12.0] - 2026-07-06
 
 ### Corrigé

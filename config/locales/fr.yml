@@ -786,6 +786,9 @@ fr:
         page_title: Analytics Produit
         top_events: Top events (7 jours)
   flash:
+    abuse:
+      burst: 'Doucement ! Tu valides trop de quêtes d''un coup. Réessaie dans un instant.'
+      daily_cap: 'Tu as atteint la limite quotidienne de validations. Reviens demain, chasseur.'
     friend_challenge:
       challenge_launched: Defi lance pour 48h.
     purchases:

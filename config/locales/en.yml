@@ -786,6 +786,9 @@ en:
         page_title: Product Analytics
         top_events: Top events (7 days)
   flash:
+    abuse:
+      burst: 'Easy there! You''re completing too many quests at once. Try again in a moment.'
+      daily_cap: 'You''ve reached today''s completion limit. Come back tomorrow, hunter.'
     friend_challenge:
       challenge_launched: Challenge launched for 48h.
     purchases:

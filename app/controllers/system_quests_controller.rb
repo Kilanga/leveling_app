@@ -4,6 +4,8 @@ class SystemQuestsController < ApplicationController
   before_action :authenticate_user!
 
   def complete
+    return if abuse_blocked?(dashboard_path)
+
     assignment = current_user.system_quest_assignments
       .for_day(Time.zone.today)
       .find(params[:id])

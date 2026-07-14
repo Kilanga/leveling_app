@@ -43,6 +43,8 @@ class UserQuestsController < ApplicationController
 
     case params[:action_type]
     when "complete"
+      return if abuse_blocked?(root_path)
+
       quest_title = @user_quest.quest.title
       weekly_xp_before = WeeklyLeague.weekly_xp(current_user)
       gained_xp = XpAwarder.complete_user_quest!(@user_quest)

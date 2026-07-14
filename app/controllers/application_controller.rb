@@ -74,6 +74,19 @@ class ApplicationController < ActionController::Base
     )
   end
 
+  # Anti-abus : bloque et redirige si le rythme de validations est implausible.
+  def abuse_blocked?(redirect_target)
+    return false unless user_signed_in?
+    return false unless feature_tables_ready?(:product_events)
+
+    reason = AbuseGuard.block_reason(current_user)
+    return false unless reason
+
+    ProductAnalytics.track(user: current_user, event_name: "abuse_blocked", metadata: { reason: reason.to_s })
+    redirect_to redirect_target, alert: I18n.t("flash.abuse.#{reason}")
+    true
+  end
+
   def feature_tables_ready?(*table_names)
     connection = ActiveRecord::Base.connection
     table_names.all? { |name| connection.data_source_exists?(name.to_s) }
