@@ -82,12 +82,10 @@ GEM
     ast (2.4.2)
     auth-sanitizer (0.2.2)
       version_gem (~> 1.1, >= 1.1.10)
-    autoprefixer-rails (10.4.19.0)
-      execjs (~> 2)
     base64 (0.3.0)
     bcrypt (3.1.22)
-    bcrypt_pbkdf (1.1.1)
-    bcrypt_pbkdf (1.1.1-x64-mingw-ucrt)
+    bcrypt_pbkdf (1.1.2)
+    bcrypt_pbkdf (1.1.2-x64-mingw-ucrt)
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
@@ -139,13 +137,12 @@ GEM
       dotenv (= 3.1.8)
       railties (>= 6.1)
     drb (2.2.3)
-    ed25519 (1.3.0)
+    ed25519 (1.4.0)
     erb (6.0.4)
+    erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
-    erubi (1.13.1)
     event_stream_parser (1.0.0)
-    execjs (2.10.0)
     factory_bot (6.5.1)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.4.4)
@@ -203,13 +200,13 @@ GEM
     json (2.20.0)
     jwt (3.2.0)
       base64
-    kamal (2.5.2)
+    kamal (2.12.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
       concurrent-ruby (~> 1.2)
       dotenv (~> 3.1)
-      ed25519 (~> 1.2)
+      ed25519 (~> 1.4)
       net-ssh (~> 7.3)
       sshkit (>= 1.23.0, < 2.0)
       thor (~> 1.3)
@@ -265,7 +262,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.1)
       net-protocol
-    net-ssh (7.3.0)
+    net-ssh (7.3.3)
     nio4r (2.7.5)
     nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
@@ -302,7 +299,7 @@ GEM
       omniauth (~> 2.0)
     openssl (4.0.2)
     orm_adapter (0.5.0)
-    ostruct (0.6.1)
+    ostruct (0.6.3)
     parallel (1.26.3)
     parser (3.3.7.1)
       ast (~> 2.4.1)
@@ -476,7 +473,7 @@ GEM
       fugit (~> 1.11)
       railties (>= 7.1)
       thor (>= 1.3.1)
-    sshkit (1.24.0)
+    sshkit (1.25.0)
       base64
       logger
       net-scp (>= 1.1.2)
@@ -566,9 +563,9 @@ DEPENDENCIES
   stripe
   thruster
   turbo-rails
-  web-push
   tzinfo-data
   web-console
+  web-push
 
 RUBY VERSION
   ruby 3.3.11p0
