@@ -27,7 +27,7 @@ gem "stimulus-rails"
 gem "turbo-rails"
 gem "importmap-rails"
 gem "cloudinary"
-gem "image_processing", "~> 1.14"
+gem "image_processing", "~> 2.0"
 gem "dartsass-rails"
 
 group :development do
