@@ -82,8 +82,6 @@ GEM
     ast (2.4.2)
     auth-sanitizer (0.2.2)
       version_gem (~> 1.1, >= 1.1.10)
-    autoprefixer-rails (10.4.19.0)
-      execjs (~> 2)
     base64 (0.3.0)
     bcrypt (3.1.22)
     bcrypt_pbkdf (1.1.1)
@@ -93,7 +91,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
-    bootstrap (5.3.5)
+    bootstrap (5.3.8)
       popper_js (>= 2.11.8, < 3)
     brakeman (8.0.5)
       racc
@@ -141,11 +139,10 @@ GEM
     drb (2.2.3)
     ed25519 (1.3.0)
     erb (6.0.4)
+    erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
-    erubi (1.13.1)
     event_stream_parser (1.0.0)
-    execjs (2.10.0)
     factory_bot (6.5.1)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.4.4)
@@ -566,9 +563,9 @@ DEPENDENCIES
   stripe
   thruster
   turbo-rails
-  web-push
   tzinfo-data
   web-console
+  web-push
 
 RUBY VERSION
   ruby 3.3.11p0
