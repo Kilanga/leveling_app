@@ -1,104 +1,288 @@
-<h1 class="page-title d-flex align-items-center gap-2 flex-wrap">
-  <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
-  <%= hunter_rank_badge(HunterRank.for_user(current_user)) %>
-</h1>
-<p class="page-subtitle">
-  <%= t('dashboard.subtitle') %>
-  <% if current_user.boost_active? %>
-    <span class="badge text-bg-warning ms-2"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
-  <% end %>
-</p>
+<%#
+  Dashboard V3 — « moins de cards ».
+  On passe d'une pile de ~9 surface-card à 4 panneaux :
+  1. En-tête chasseur unifié (identité + streak + objectif du jour)
+  2. Zone d'alertes condensée (push, quickstart, bonus, boutique)
+  3. Le Système — quêtes du jour, seul bloc mis en avant
+  4. Panneau secondaire regroupé (quêtes, progression, factions repliables)
+%>
 
-<% if ENV["VAPID_PUBLIC_KEY"].present? %>
-  <div class="surface-card mb-4 push-prompt" role="complementary">
-    <div class="card-body d-flex justify-content-between align-items-center gap-3 flex-wrap">
+<%# ===== 1. En-tête chasseur unifié ===== %>
+<section class="surface-card hunter-header mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
       <div>
-        <strong><%= t('dashboard.push_prompt.heading') %></strong>
-        <p class="quest-meta mb-0"><%= t('dashboard.push_prompt.hint') %></p>
+        <h1 class="page-title d-flex align-items-center gap-2 flex-wrap mb-1">
+          <%= t('dashboard.welcome', pseudo: current_user.pseudo) %>
+          <%= hunter_rank_badge(HunterRank.for_user(current_user)) %>
+          <% if current_user.boost_active? %>
+            <span class="badge text-bg-warning"><%= t('dashboard.xp_boost_active', date: l(current_user.boost_expires_at, format: :short)) %></span>
+          <% end %>
+        </h1>
+        <p class="page-subtitle mb-0"><%= t('dashboard.subtitle') %></p>
       </div>
-      <button id="enable-push-btn" class="btn btn-sm btn-brand"
-              data-vapid-key="<%= ENV["VAPID_PUBLIC_KEY"] %>"
-              data-csrf="<%= form_authenticity_token %>">
-        <%= t('dashboard.push_prompt.cta') %>
-      </button>
+      <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
+    </div>
+
+    <div class="hunter-header__stats d-flex flex-wrap gap-2 mt-3">
+      <span class="shop-state-chip shop-state-chip--equipped">
+        <%= t('dashboard.weekly_streak_label', count: @weekly_streak_count) %>
+      </span>
+      <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+        <%= t('dashboard.daily_objective.title') %> · <%= @completed_today_count %> / <%= @daily_target %>
+      </span>
+    </div>
+
+    <%# Objectif du jour + coffre : action clé conservée dans l'en-tête %>
+    <div class="daily-objective-inline mt-3">
+      <div class="xp-track">
+        <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-2">
+        <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
+        <% if @daily_chest_claimed_today %>
+          <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
+        <% else %>
+          <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
+        <% end %>
+      </div>
     </div>
   </div>
-<% end %>
+</section>
 
-<% if @show_quickstart_guide %>
-  <div class="surface-card mb-4" role="status" aria-live="polite">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-2">
+<%# ===== 2. Zone d'alertes condensée (une seule zone, lignes discrètes) ===== %>
+<%
+  has_alerts = (ENV["VAPID_PUBLIC_KEY"].present?) ||
+               @show_quickstart_guide ||
+               @daily_login_claim[:claimed] ||
+               (flash[:streak_up_quest_title].present? && flash[:streak_up_value].present?) ||
+               @shop_upgrade_prompt.present?
+%>
+<% if has_alerts %>
+  <section class="hud-alerts mb-4" role="complementary">
+    <% if ENV["VAPID_PUBLIC_KEY"].present? %>
+      <div class="hud-alert d-flex justify-content-between align-items-center gap-3 flex-wrap">
         <div>
-          <h2 class="section-title mb-1"><%= t('dashboard.quickstart.heading') %></h2>
-          <p class="quest-meta mb-0"><%= t('dashboard.quickstart.progress_hint', done: @quickstart_guide[:completed_count], total: @quickstart_guide[:total_count]) %></p>
+          <strong><%= t('dashboard.push_prompt.heading') %></strong>
+          <p class="quest-meta mb-0"><%= t('dashboard.push_prompt.hint') %></p>
         </div>
-        <span class="shop-state-chip <%= @quickstart_guide[:completed_count] == @quickstart_guide[:total_count] ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-          <%= @quickstart_guide[:completed_count] %> / <%= @quickstart_guide[:total_count] %>
-        </span>
+        <button id="enable-push-btn" class="btn btn-sm btn-brand"
+                data-vapid-key="<%= ENV["VAPID_PUBLIC_KEY"] %>"
+                data-csrf="<%= form_authenticity_token %>">
+          <%= t('dashboard.push_prompt.cta') %>
+        </button>
       </div>
+    <% end %>
 
-      <div class="quest-list quest-list--flat mb-0">
-        <% @quickstart_guide[:steps].each do |step| %>
-          <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
-            <div>
+    <% if @show_quickstart_guide %>
+      <div class="hud-alert" role="status" aria-live="polite">
+        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-2">
+          <div>
+            <strong><%= t('dashboard.quickstart.heading') %></strong>
+            <p class="quest-meta mb-0"><%= t('dashboard.quickstart.progress_hint', done: @quickstart_guide[:completed_count], total: @quickstart_guide[:total_count]) %></p>
+          </div>
+          <span class="shop-state-chip <%= @quickstart_guide[:completed_count] == @quickstart_guide[:total_count] ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+            <%= @quickstart_guide[:completed_count] %> / <%= @quickstart_guide[:total_count] %>
+          </span>
+        </div>
+        <div class="quest-list quest-list--flat mb-0">
+          <% @quickstart_guide[:steps].each do |step| %>
+            <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
               <strong><%= step[:label] %></strong>
-            </div>
-            <div class="d-flex align-items-center gap-2 flex-wrap">
               <% if step[:completed] %>
                 <span class="badge text-bg-success"><%= t('dashboard.quickstart.done_badge') %></span>
               <% else %>
                 <%= link_to step[:cta_label], step[:cta_path], class: "btn btn-sm btn-outline-quest" %>
               <% end %>
             </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @daily_login_claim[:claimed] %>
+      <div class="hud-alert d-flex justify-content-between align-items-center gap-3 flex-wrap" role="status" aria-live="polite">
+        <div>
+          <strong><%= t('dashboard.daily_bonus_claimed', amount: @daily_login_claim[:reward]) %></strong>
+          <p class="quest-meta mb-0"><%= t('dashboard.streak_days', days: @daily_login_claim[:streak]) %></p>
+        </div>
+        <span class="shop-state-chip shop-state-chip--equipped"><%= t('dashboard.daily_login_chip') %></span>
+      </div>
+    <% end %>
+
+    <% if flash[:streak_up_quest_title].present? && flash[:streak_up_value].present? %>
+      <div class="hud-alert streak-up-banner d-flex justify-content-between align-items-center gap-2 flex-wrap" role="status" aria-live="polite">
+        <strong><%= t('dashboard.streak_up_label', title: flash[:streak_up_quest_title]) %></strong>
+        <span class="streak-up-banner__value">x<%= flash[:streak_up_value] %></span>
+      </div>
+    <% end %>
+
+    <% if @shop_upgrade_prompt.present? %>
+      <div class="hud-alert d-flex justify-content-between align-items-center gap-3 flex-wrap">
+        <div>
+          <strong><%= t('dashboard.boost_prompt.heading') %></strong>
+          <p class="quest-meta mb-0"><%= t('dashboard.boost_prompt.hint', count: @shop_upgrade_prompt[:quest_completions_7d]) %></p>
+        </div>
+        <%= link_to t('dashboard.boost_prompt.cta'), @shop_upgrade_prompt[:cta_path], class: "btn btn-sm btn-brand" %>
+      </div>
+    <% end %>
+  </section>
+<% end %>
+
+<%# ===== 3. Le Système — quêtes du jour (bloc prioritaire, seul mis en avant) ===== %>
+<section class="surface-card surface-card--primary mb-4" id="system-quests">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
+      <div>
+        <h2 class="section-title mb-1"><%= t('dashboard.system_quests.title') %></h2>
+        <p class="quest-meta mb-0"><%= t('dashboard.system_quests.subtitle') %></p>
+      </div>
+      <span class="shop-state-chip <%= @system_perfect_day ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
+        <%= @system_assignments.count(&:completed?) %> / <%= @system_assignments.size %>
+      </span>
+    </div>
+
+    <% if @weekly_progression_frozen %>
+      <div class="alert alert-warning" role="alert">
+        <%= t('dashboard.system_quests.frozen_warning') %>
+      </div>
+    <% end %>
+
+    <% if @system_assignments.any? %>
+      <div class="quest-list quest-list--flat mb-3">
+        <% @system_assignments.each do |assignment| %>
+          <div class="quest-row quest-row--flat">
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+              <div>
+                <span class="hunter-rank-badge hunter-rank-badge--<%= assignment.quest.difficulty.downcase %>" title="<%= t('dashboard.system_quests.difficulty_label', letter: assignment.quest.difficulty) %>"><%= assignment.quest.difficulty %></span>
+                <strong><%= assignment.quest.title %></strong>
+                <p class="quest-meta mb-0"><%= assignment.quest.category.name %> - <%= assignment.quest.xp %> XP</p>
+              </div>
+              <% if assignment.completed? %>
+                <span class="badge text-bg-success"><%= t('dashboard.completed_badge') %></span>
+              <% else %>
+                <%= button_to t('dashboard.active_quests.validate_button'), complete_system_quest_path(assignment), method: :post, class: "btn btn-sm btn-brand" %>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
-    </div>
-  </div>
-<% end %>
 
-<% if @daily_login_claim[:claimed] %>
-  <div class="surface-card mb-4" role="status" aria-live="polite">
-    <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
-      <div>
-        <strong><%= t('dashboard.daily_bonus_claimed', amount: @daily_login_claim[:reward]) %></strong>
-        <p class="quest-meta mb-0"><%= t('dashboard.streak_days', days: @daily_login_claim[:streak]) %></p>
+      <% if @system_perfect_day %>
+        <div class="alert alert-success mb-0" role="status">
+          <%= t('dashboard.system_quests.perfect_day_done') %>
+        </div>
+      <% else %>
+        <p class="quest-meta mb-0"><%= t('dashboard.system_quests.perfect_day_hint', fragments: @system_perfect_day_fragments) %></p>
+      <% end %>
+    <% else %>
+      <div class="alert alert-warning mb-0"><%= t('dashboard.system_quests.empty') %></div>
+    <% end %>
+  </div>
+</section>
+
+<%# ===== 4. Panneau secondaire regroupé ===== %>
+<section class="surface-card surface-card--shell mb-4">
+  <div class="card-body">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="hud-section h-100">
+          <h2 class="section-title"><%= t('dashboard.active_quests.title') %></h2>
+          <div class="quest-list quest-list--flat mb-3">
+            <% active_quests = @user_quests.where(completed: false, active: true) %>
+            <% if active_quests.any? %>
+              <% active_quests.each do |user_quest| %>
+                <div class="quest-row quest-row--flat">
+                  <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                    <div>
+                      <strong><%= user_quest.quest.title %></strong>
+                      <p class="quest-meta mb-1"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
+                      <p class="quest-meta mb-0"><%= t('dashboard.completed_times', count: user_quest.completed_count) %></p>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap quest-actions">
+                      <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
+                        <%= hidden_field_tag :action_type, "complete" %>
+                        <%= submit_tag t('dashboard.active_quests.validate_button'), class: "btn btn-sm btn-brand" %>
+                      <% end %>
+
+                      <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
+                        <%= hidden_field_tag :action_type, "unfollow" %>
+                        <%= submit_tag t('dashboard.active_quests.stop_button'), class: "btn btn-sm btn-outline-danger" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="alert alert-warning mb-0"><%= t('dashboard.no_active_quest') %></div>
+            <% end %>
+          </div>
+        </div>
       </div>
-      <span class="shop-state-chip shop-state-chip--equipped"><%= t('dashboard.daily_login_chip') %></span>
-    </div>
-  </div>
-<% end %>
 
-<% if flash[:streak_up_quest_title].present? && flash[:streak_up_value].present? %>
-  <div class="surface-card streak-up-banner mb-4" role="status" aria-live="polite">
-    <div class="card-body d-flex justify-content-between align-items-center gap-2 flex-wrap">
-      <strong><%= t('dashboard.streak_up_label', title: flash[:streak_up_quest_title]) %></strong>
-      <span class="streak-up-banner__value">x<%= flash[:streak_up_value] %></span>
-    </div>
-  </div>
-<% end %>
-
-<% if @shop_upgrade_prompt.present? %>
-  <div class="surface-card mb-4" role="complementary" aria-label="Suggestion boutique">
-    <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
-      <div>
-        <h2 class="section-title mb-1"><%= t('dashboard.boost_prompt.heading') %></h2>
-        <p class="quest-meta mb-0"><%= t('dashboard.boost_prompt.hint', count: @shop_upgrade_prompt[:quest_completions_7d]) %></p>
+      <div class="col-lg-6">
+        <div class="hud-section h-100">
+          <h2 class="section-title"><%= t('dashboard.weekly_quests.title') %></h2>
+          <% if @weekly_quests.any? %>
+            <div class="quest-list quest-list--flat">
+              <% @weekly_quests.each do |user_weekly_quest| %>
+                <div class="quest-row quest-row--flat d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                  <div>
+                    <strong><%= user_weekly_quest.weekly_quest.title %></strong>
+                    <p class="quest-meta mb-1"><%= user_weekly_quest.weekly_quest.description %></p>
+                    <p class="quest-meta mb-0"><%= t('dashboard.reward_label', count: user_weekly_quest.weekly_quest.xp_reward) %></p>
+                  </div>
+                  <% unless user_weekly_quest.completed? %>
+                    <%= button_to t('dashboard.active_quests.validate_button'), user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-sm btn-brand" %>
+                  <% else %>
+                    <span class="badge text-bg-success"><%= t('dashboard.completed_badge') %></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="alert alert-warning mb-0"><%= t('dashboard.weekly_quests_soon') %></div>
+          <% end %>
+        </div>
       </div>
-      <%= link_to t('dashboard.boost_prompt.cta'), @shop_upgrade_prompt[:cta_path], class: "btn btn-sm btn-brand" %>
     </div>
-  </div>
-<% end %>
 
-<div class="row g-4 mb-4">
-  <div class="col-lg-8">
-    <div class="surface-card h-100">
-      <div class="card-body">
-        <h2 class="section-title mb-3"><%= t('dashboard.factions.title') %></h2>
+    <hr class="hud-divider">
+
+    <%# Progression par catégorie (section réparée : le fichier était tronqué ici) %>
+    <div class="hud-section mb-2">
+      <h2 class="section-title mb-3"><%= t('dashboard.progression_heading') %></h2>
+      <% @stats.each do |stat| %>
+        <% xp_needed = xp_needed_for_next_level(stat.level) %>
+        <% percent = (stat.xp.to_f / [xp_needed, 1].max * 100).round %>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between flex-wrap gap-2 mb-1">
+            <strong><%= stat.category.name %> - <%= t('dashboard.level_label', level: stat.level) %></strong>
+            <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
+          </div>
+          <div class="xp-track <%= xp_theme_classes(current_user.active_xp_theme) %>">
+            <div class="xp-fill" style="width: <%= [percent, 100].min %>%"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <hr class="hud-divider">
+
+    <%# Factions repliées par défaut pour alléger l'écran %>
+    <details class="hud-section faction-details">
+      <summary class="section-title d-flex justify-content-between align-items-center gap-2 flex-wrap" style="cursor: pointer;">
+        <span><%= t('dashboard.factions.title') %></span>
+        <% if @leading_faction.present? %>
+          <span class="shop-state-chip shop-state-chip--available"><%= t('dashboard.factions.dominant_faction', name: @leading_faction.name) %></span>
+        <% end %>
+      </summary>
+
+      <div class="mt-3">
         <% if @next_faction_reset_at.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.reset_in', time: @faction_reset_countdown) %></p>
         <% end %>
+
         <% if current_user.faction.present? %>
           <p class="quest-meta mb-2"><%= t('dashboard.factions.current_faction', name: current_user.faction.name) %></p>
           <% boss = FactionBoss.progress_for(current_user.faction) %>
@@ -149,13 +333,6 @@
           </details>
         <% end %>
 
-        <% if @leading_faction.present? %>
-          <div class="quest-row quest-row--flat mb-3">
-            <strong><%= t('dashboard.factions.dominant_faction', name: @leading_faction.name) %></strong>
-            <p class="quest-meta mb-0"><%= t('dashboard.factions.influence_points', count: @leading_faction.try(:today_points).to_i) %></p>
-          </div>
-        <% end %>
-
         <div class="quest-list quest-list--flat">
           <% @faction_scores_today.each do |faction| %>
             <div class="quest-row quest-row--flat d-flex justify-content-between align-items-center gap-3 flex-wrap">
@@ -174,179 +351,6 @@
           <% end %>
         </div>
       </div>
-    </div>
+    </details>
   </div>
-
-  <div class="col-lg-4">
-    <div class="surface-card mb-4">
-      <div class="card-body d-flex justify-content-between align-items-start gap-3 flex-wrap">
-        <div>
-          <strong><%= t('dashboard.weekly_streak_label', count: @weekly_streak_count) %></strong>
-          <p class="quest-meta mb-0">
-            <% if @weekly_streak_last_completed_on.present? %>
-              <%= t('dashboard.last_completion', date: l(@weekly_streak_last_completed_on, format: :short)) %>
-            <% else %>
-              <%= t('dashboard.no_completion_week') %>
-            <% end %>
-          </p>
-        </div>
-        <%= link_to t('dashboard.view_league'), leaderboard_index_path, class: "btn btn-sm btn-outline-quest" %>
-      </div>
-    </div>
-
-    <div class="surface-card daily-objective-card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-          <div>
-            <h2 class="section-title mb-1"><%= t('dashboard.daily_objective.title') %></h2>
-            <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.instruction', count: @daily_target) %></p>
-          </div>
-          <span class="shop-state-chip <%= @completed_today_count >= @daily_target ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-            <%= @completed_today_count %> / <%= @daily_target %>
-          </span>
-        </div>
-        <div class="xp-track mt-3">
-          <div class="xp-fill" style="width: <%= @daily_progress_percent %>%"></div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
-          <p class="quest-meta mb-0"><%= t('dashboard.daily_objective.chest_reward', amount: @daily_chest_reward_free_credits) %></p>
-          <% if @daily_chest_claimed_today %>
-            <span class="badge text-bg-success"><%= t('dashboard.daily_objective.chest_opened') %></span>
-          <% else %>
-            <%= button_to t('dashboard.daily_objective.open_chest_button'), claim_daily_chest_path, method: :post, class: "btn btn-sm btn-brand", disabled: @completed_today_count < @daily_target %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="surface-card mb-4" id="system-quests">
-  <div class="card-body">
-    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
-      <div>
-        <h2 class="section-title mb-1"><%= t('dashboard.system_quests.title') %></h2>
-        <p class="quest-meta mb-0"><%= t('dashboard.system_quests.subtitle') %></p>
-      </div>
-      <span class="shop-state-chip <%= @system_perfect_day ? 'shop-state-chip--equipped' : 'shop-state-chip--available' %>">
-        <%= @system_assignments.count(&:completed?) %> / <%= @system_assignments.size %>
-      </span>
-    </div>
-
-    <% if @weekly_progression_frozen %>
-      <div class="alert alert-warning" role="alert">
-        <%= t('dashboard.system_quests.frozen_warning') %>
-      </div>
-    <% end %>
-
-    <% if @system_assignments.any? %>
-      <div class="quest-list quest-list--flat mb-3">
-        <% @system_assignments.each do |assignment| %>
-          <div class="quest-row quest-row--flat">
-            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-              <div>
-                <span class="hunter-rank-badge hunter-rank-badge--<%= assignment.quest.difficulty.downcase %>" title="<%= t('dashboard.system_quests.difficulty_label', letter: assignment.quest.difficulty) %>"><%= assignment.quest.difficulty %></span>
-                <strong><%= assignment.quest.title %></strong>
-                <p class="quest-meta mb-0"><%= assignment.quest.category.name %> - <%= assignment.quest.xp %> XP</p>
-              </div>
-              <% if assignment.completed? %>
-                <span class="badge text-bg-success"><%= t('dashboard.completed_badge') %></span>
-              <% else %>
-                <%= button_to t('dashboard.active_quests.validate_button'), complete_system_quest_path(assignment), method: :post, class: "btn btn-sm btn-brand" %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-
-      <% if @system_perfect_day %>
-        <div class="alert alert-success mb-0" role="status">
-          <%= t('dashboard.system_quests.perfect_day_done') %>
-        </div>
-      <% else %>
-        <p class="quest-meta mb-0"><%= t('dashboard.system_quests.perfect_day_hint', fragments: @system_perfect_day_fragments) %></p>
-      <% end %>
-    <% else %>
-      <div class="alert alert-warning mb-0"><%= t('dashboard.system_quests.empty') %></div>
-    <% end %>
-  </div>
-</div>
-
-<div class="surface-card surface-card--shell mb-4">
-  <div class="card-body">
-    <div class="row g-4">
-      <div class="col-lg-6">
-        <section class="hud-section h-100">
-          <h2 class="section-title"><%= t('dashboard.active_quests.title') %></h2>
-          <div class="quest-list quest-list--flat mb-3">
-            <% active_quests = @user_quests.where(completed: false, active: true) %>
-            <% if active_quests.any? %>
-              <% active_quests.each do |user_quest| %>
-                <div class="quest-row quest-row--flat">
-                  <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-                    <div>
-                      <strong><%= user_quest.quest.title %></strong>
-                      <p class="quest-meta mb-1"><%= user_quest.quest.category.name %> - <%= user_quest.quest.xp %> XP</p>
-                      <p class="quest-meta mb-0"><%= t('dashboard.completed_times', count: user_quest.completed_count) %></p>
-                    </div>
-                    <div class="d-flex gap-2 flex-wrap quest-actions">
-                      <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
-                        <%= hidden_field_tag :action_type, "complete" %>
-                        <%= submit_tag t('dashboard.active_quests.validate_button'), class: "btn btn-sm btn-brand" %>
-                      <% end %>
-
-                      <%= form_with url: user_quest_path(user_quest), method: :patch, local: true do %>
-                        <%= hidden_field_tag :action_type, "unfollow" %>
-                        <%= submit_tag t('dashboard.active_quests.stop_button'), class: "btn btn-sm btn-outline-danger" %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            <% else %>
-              <div class="alert alert-warning mb-0"><%= t('dashboard.no_active_quest') %></div>
-            <% end %>
-          </div>
-        </section>
-      </div>
-
-      <div class="col-lg-6">
-        <section class="hud-section h-100">
-          <h2 class="section-title"><%= t('dashboard.weekly_quests.title') %></h2>
-          <% if @weekly_quests.any? %>
-            <div class="quest-list quest-list--flat">
-              <% @weekly_quests.each do |user_weekly_quest| %>
-                <div class="quest-row quest-row--flat d-flex justify-content-between align-items-start gap-3 flex-wrap">
-                  <div>
-                    <strong><%= user_weekly_quest.weekly_quest.title %></strong>
-                    <p class="quest-meta mb-1"><%= user_weekly_quest.weekly_quest.description %></p>
-                    <p class="quest-meta mb-0"><%= t('dashboard.reward_label', count: user_weekly_quest.weekly_quest.xp_reward) %></p>
-                  </div>
-                  <% unless user_weekly_quest.completed? %>
-                    <%= button_to t('dashboard.active_quests.validate_button'), user_weekly_quest_path(user_weekly_quest), method: :patch, params: { action_type: "complete" }, class: "btn btn-sm btn-brand" %>
-                  <% else %>
-                    <span class="badge text-bg-success"><%= t('dashboard.completed_badge') %></span>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="alert alert-warning mb-0"><%= t('dashboard.weekly_quests_soon') %></div>
-          <% end %>
-        </section>
-      </div>
-    </div>
-
-    <hr class="hud-divider">
-
-    <section class="hud-section mb-4">
-      <h2 class="section-title mb-3"><%= t('dashboard.progression_heading') %></h2>
-      <% @stats.each do |stat| %>
-        <% xp_needed = xp_needed_for_next_level(stat.level) %>
-        <% percent = (stat.xp.to_f / [xp_needed, 1].max * 100).round %>
-        <div class="mb-3">
-          <div class="d-flex justify-content-between flex-wrap gap-2 mb-1">
-            <strong><%= stat.category.name %> - <%= t('dashboard.level_label', level: stat.level) %></strong>
-            <span class="muted-label"><%= stat.xp %> / <%= xp_needed %> XP</span>
-          </div>
-          <div class="xp-track <%= xp_theme_classes(curre
+</section>

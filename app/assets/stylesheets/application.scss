@@ -235,6 +235,63 @@ body::before {
   padding: 1.8rem;
 }
 
+/* --- V3 : redesign « moins de cards » --- */
+/* Bloc prioritaire (Le Système) : léger liseré d'accent pour le distinguer. */
+.surface-card--primary {
+  border-color: rgba(86, 202, 248, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(86, 202, 248, 0.28), 0 12px 30px rgba(6, 27, 42, 0.5);
+}
+
+/* En-tête chasseur : chips de stats sur une ligne discrète. */
+.hunter-header__stats .shop-state-chip {
+  font-size: 0.82rem;
+}
+
+.daily-objective-inline {
+  max-width: 640px;
+}
+
+/* Zone d'alertes condensée : lignes discrètes, plus de cartes empilées. */
+.hud-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.hud-alert {
+  border: 1px solid var(--hud-line-soft);
+  border-left: 2px solid rgba(86, 202, 248, 0.55);
+  border-radius: 2px;
+  background: rgba(11, 21, 33, 0.7);
+  padding: 0.7rem 0.9rem;
+}
+
+/* Factions repliables : le résumé reste lisible et cliquable. */
+.faction-details > summary {
+  list-style: none;
+}
+
+.faction-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.faction-details > summary::after {
+  content: "▾";
+  margin-left: auto;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.faction-details[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faction-details > summary::after {
+    transition: none;
+  }
+}
+
 .hud-section {
   background: transparent;
   padding: 0.45rem 0;

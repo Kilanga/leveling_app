@@ -5,8 +5,9 @@
 # doux — la progression du contrat hebdo est bloquée tant que le chasseur
 # n'a pas repris une quête du Système.
 class SystemQuestBoard
-  PERFECT_DAY_FRAGMENTS = 40
-  PERFECT_DAY_XP_RATIO = 0.25 # bonus = 25% de l'XP des quêtes du jour
+  # V3 : moins de quêtes par jour, mais boucler la journée vaut plus cher.
+  PERFECT_DAY_FRAGMENTS = 60
+  PERFECT_DAY_XP_RATIO = 0.35 # bonus = 35% de l'XP des quêtes du jour
 
   Result = Struct.new(:assignment, :perfect_day, :bonus_xp, :bonus_fragments, keyword_init: true)
 
